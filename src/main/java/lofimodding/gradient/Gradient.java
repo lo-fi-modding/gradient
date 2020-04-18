@@ -1,5 +1,6 @@
 package lofimodding.gradient;
 
+import lofimodding.gradient.client.GradientClient;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -22,7 +23,7 @@ public class Gradient {
 
     bus.addListener(this::setup);
     bus.addListener(this::enqueueIMC);
-    bus.addListener(this::doClientStuff);
+    bus.addListener(this::clientSetup);
 
     GradientBlocks.init(bus);
     GradientItems.init(bus);
@@ -34,8 +35,9 @@ public class Gradient {
     LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
   }
 
-  private void doClientStuff(final FMLClientSetupEvent event) {
-    LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
+  private void clientSetup(final FMLClientSetupEvent event) {
+    LOGGER.info("Loading client-only features...");
+    GradientClient.clientSetup(event);
   }
 
   private void enqueueIMC(final InterModEnqueueEvent event) {

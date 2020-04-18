@@ -1,3 +1,11 @@
 {
+  "block.gradient.azurite_ore": "Azurite Ore",
+  "block.gradient.cassiterite_ore": "Cassiterite Ore",
+  "block.gradient.copper_ore": "Copper Ore",
+  "block.gradient.gold_ore": "Gold Ore",
+  "block.gradient.graphite_ore": "Graphite Ore",
+  "block.gradient.hematite_ore": "Hematite Ore",
+  "block.gradient.pyrite_ore": "Pyrite Ore",
+  "block.gradient.sphalerite_ore": "Sphalerite Ore",
   "item.gradient.fibre": "Fibre"
 }

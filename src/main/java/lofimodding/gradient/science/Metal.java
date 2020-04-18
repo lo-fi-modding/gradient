@@ -6,6 +6,8 @@ public class Metal {
   public final float hardness;
   public final float weight;
 
+  public final int harvestLevel;
+
   public final int colourDiffuse;
   public final int colourSpecular;
   public final int colourShadow1;
@@ -14,11 +16,13 @@ public class Metal {
   public final int colourEdge2;
   public final int colourEdge3;
 
-  public Metal(final String name, final float meltTemp, final float hardness, final float weight, final int colourDiffuse, final int colourSpecular, final int colourShadow1, final int colourShadow2, final int colourEdge1, final int colourEdge2, final int colourEdge3) {
+  public Metal(final String name, final float meltTemp, final float hardness, final float weight, final int harvestLevel, final int colourDiffuse, final int colourSpecular, final int colourShadow1, final int colourShadow2, final int colourEdge1, final int colourEdge2, final int colourEdge3) {
     this.name = name;
     this.meltTemp = meltTemp;
     this.hardness = hardness;
     this.weight = weight;
+
+    this.harvestLevel = harvestLevel;
 
     this.colourDiffuse = colourDiffuse;
     this.colourSpecular = colourSpecular;

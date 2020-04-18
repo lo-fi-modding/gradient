@@ -1,5 +1,8 @@
 package lofimodding.gradient;
 
+import lofimodding.gradient.science.Ore;
+import lofimodding.gradient.science.Ores;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -8,6 +11,9 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public final class GradientItems {
   private GradientItems() { }
 
@@ -15,11 +21,23 @@ public final class GradientItems {
 
   private static final ItemGroup GROUP = new GradientItemGroup();
 
+  private static final Map<Ore, RegistryObject<BlockItem>> ORES = new HashMap<>();
+
+  static {
+    for(final Ore ore : Ores.all()) {
+      ORES.put(ore, REGISTRY.register(GradientIds.ORE(ore), () -> new BlockItem(GradientBlocks.ORE(ore).get(), new Item.Properties().group(GROUP))));
+    }
+  }
+
   public static final RegistryObject<Item> FIBRE = REGISTRY.register(GradientIds.FIBRE, () -> new Item(new Item.Properties().group(GROUP)));
 
   static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering items...");
     REGISTRY.register(bus);
+  }
+
+  public static RegistryObject<BlockItem> ORE(final Ore ore) {
+    return ORES.get(ore);
   }
 
   private static final class GradientItemGroup extends ItemGroup {
