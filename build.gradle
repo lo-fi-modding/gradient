@@ -75,7 +75,7 @@ minecraft {
       // Recommended logging level for the console
       property 'forge.logging.console.level', 'info'
 
-      args '--mod', 'gradient', '--all', '--output', file('src/generated/resources/')
+      args '--mod', 'gradient', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
       mods {
         gradient {

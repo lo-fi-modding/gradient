@@ -13,11 +13,11 @@ version="${file.jarVersion}" #mandatory
  # A display name for the mod
 displayName="Gradient" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification <here>
-updateJSONURL="https://myurl.me/" #optional
+#TODO updateJSONURL="https://myurl.me/" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
 displayURL="https://github.com/lo-fi-modding/gradient" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
-logoFile="gradient.png" #optional
+#TODO logoFile="gradient.png" #optional
 # A text field displayed in the mod UI
 credits="Corey Frenette (Monoxide)" #optional
 # A text field displayed in the mod UI
