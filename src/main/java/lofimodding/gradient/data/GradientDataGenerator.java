@@ -2,9 +2,11 @@ package lofimodding.gradient.data;
 
 import lofimodding.gradient.Gradient;
 import lofimodding.gradient.GradientIds;
+import lofimodding.gradient.GradientItems;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
+import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
@@ -19,6 +21,7 @@ public final class GradientDataGenerator {
 
     if(event.includeClient()) {
       gen.addProvider(new ItemModels(gen, event.getExistingFileHelper()));
+      gen.addProvider(new EnglishLang(gen));
     }
   }
 
@@ -29,12 +32,23 @@ public final class GradientDataGenerator {
 
     @Override
     protected void registerModels() {
-      this.singleTexture(GradientIds.FIBRE, this.mcLoc("item/generated"), this.modLoc("item/" + GradientIds.FIBRE));
+      this.singleTexture(GradientIds.FIBRE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.FIBRE));
     }
 
     @Override
     public String getName() {
       return "Gradient item model generator";
+    }
+  }
+
+  public static class EnglishLang extends LanguageProvider {
+    public EnglishLang(final DataGenerator gen) {
+      super(gen, Gradient.MOD_ID, "en_us");
+    }
+
+    @Override
+    protected void addTranslations() {
+      this.add(GradientItems.FIBRE.get(), "Fibre");
     }
   }
 }

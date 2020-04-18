@@ -86,6 +86,8 @@ minecraft {
   }
 }
 
+sourceSets.main.resources.srcDirs += ['src/generated/resources']
+
 repositories {
   mavenLocal()
 }

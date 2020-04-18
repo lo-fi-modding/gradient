@@ -29,7 +29,7 @@ public final class GradientItems {
 
     @Override
     public ItemStack createIcon() {
-      return null;
+      return ItemStack.EMPTY; //TODO
     }
   }
 }

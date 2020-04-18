@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "texture": "gradient:item/fibre"
+    "layer0": "gradient:item/fibre"
   }
 }
