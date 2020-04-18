@@ -1,2 +1,4 @@
 5074898be0227d13b9d2ac7ec6b297d17e7d3f77 assets\gradient\lang\en_us.json
 18b9e0d9665332a673dc9ddf17143bd320d597ac assets\gradient\models\item\fibre.json
+db042ec9288076769d0b557be29166f538eae08e data\gradient\loot_tables\blocks\fibre_additions.json
+49ce2c9c3ffe8fb1aac89563a6fcedfb1342e478 data\gradient\tags\blocks\fibre_sources.json

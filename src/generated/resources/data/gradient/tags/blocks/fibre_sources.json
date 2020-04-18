@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:dirt",
+    "#minecraft:crops",
+    "#minecraft:leaves",
+    "minecraft:grass",
+    "minecraft:tall_grass"
+  ]
+}

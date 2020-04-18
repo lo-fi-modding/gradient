@@ -1,7 +1,6 @@
 package lofimodding.gradient;
 
 import net.minecraft.block.Blocks;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.InterModComms;
@@ -27,6 +26,7 @@ public class Gradient {
 
     GradientBlocks.init(bus);
     GradientItems.init(bus);
+    GradientLoot.init(bus);
   }
 
   private void setup(final FMLCommonSetupEvent event) {
