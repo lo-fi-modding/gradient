@@ -1,6 +1,7 @@
 package lofimodding.gradient;
 
 import lofimodding.gradient.items.MetalItem;
+import lofimodding.gradient.items.PebbleItem;
 import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.science.Metals;
 import lofimodding.gradient.science.Ore;
@@ -23,6 +24,8 @@ public final class GradientItems {
   private static final DeferredRegister<Item> REGISTRY = new DeferredRegister<>(ForgeRegistries.ITEMS, Gradient.MOD_ID);
 
   private static final ItemGroup GROUP = new GradientItemGroup();
+
+  public static final RegistryObject<PebbleItem> PEBBLE = REGISTRY.register(GradientIds.PEBBLE, () -> new PebbleItem(new Item.Properties().group(GROUP)));
 
   private static final Map<Ore, RegistryObject<BlockItem>> ORES = new HashMap<>();
 

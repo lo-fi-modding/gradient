@@ -1,6 +1,7 @@
 package lofimodding.gradient;
 
 import lofimodding.gradient.blocks.MetalBlock;
+import lofimodding.gradient.blocks.PebbleBlock;
 import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.science.Metals;
 import lofimodding.gradient.science.Ore;
@@ -21,6 +22,16 @@ public final class GradientBlocks {
 
   private static final DeferredRegister<Block> REGISTRY = new DeferredRegister<>(ForgeRegistries.BLOCKS, Gradient.MOD_ID);
 
+  public static final RegistryObject<PebbleBlock> PEBBLE = REGISTRY.register(GradientIds.PEBBLE, () -> new PebbleBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(0.0f).doesNotBlockMovement()));
+
+  private static final Map<Ore, RegistryObject<PebbleBlock>> PEBBLES = new HashMap<>();
+
+  static {
+    for(final Ore ore : Ores.all()) {
+      PEBBLES.put(ore, REGISTRY.register(GradientIds.PEBBLE(ore), () -> new PebbleBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0f))));
+    }
+  }
+
   private static final Map<Ore, RegistryObject<MetalBlock>> ORES = new HashMap<>();
 
   static {
@@ -40,6 +51,10 @@ public final class GradientBlocks {
   static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering blocks...");
     REGISTRY.register(bus);
+  }
+
+  public static RegistryObject<PebbleBlock> PEBBLE(final Ore ore) {
+    return PEBBLES.get(ore);
   }
 
   public static RegistryObject<MetalBlock> ORE(final Ore ore) {

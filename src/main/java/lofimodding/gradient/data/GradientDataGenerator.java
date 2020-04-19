@@ -26,11 +26,13 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.storage.loot.ConstantRange;
 import net.minecraft.world.storage.loot.ItemLootEntry;
 import net.minecraft.world.storage.loot.LootParameterSet;
 import net.minecraft.world.storage.loot.LootParameterSets;
 import net.minecraft.world.storage.loot.LootPool;
 import net.minecraft.world.storage.loot.LootTable;
+import net.minecraft.world.storage.loot.RandomValueRange;
 import net.minecraft.world.storage.loot.ValidationTracker;
 import net.minecraft.world.storage.loot.conditions.Inverted;
 import net.minecraft.world.storage.loot.conditions.MatchTool;
@@ -88,6 +90,45 @@ public final class GradientDataGenerator {
 
     @Override
     protected void registerModels() {
+      this.getBuilder(GradientIds.PEBBLE)
+        .parent(this.getExistingFile(this.mcLoc("block/block")))
+        .texture("particle", this.mcLoc("block/andesite"))
+        .texture("stone", this.mcLoc("block/andesite"))
+        .element()
+        .from(4.0f, 0.0f, 6.0f)
+        .to(12.0f, 2.0f, 11.0f)
+        .face(Direction.DOWN ).texture("stone").uvs(0.0f, 0.0f, 8.0f, 5.0f).end()
+        .face(Direction.UP   ).texture("stone").uvs(0.0f, 0.0f, 8.0f, 5.0f).end()
+        .face(Direction.NORTH).texture("stone").uvs(0.0f, 0.0f, 8.0f, 2.0f).end()
+        .face(Direction.SOUTH).texture("stone").uvs(8.0f, 2.0f, 0.0f, 0.0f).end()
+        .face(Direction.WEST ).texture("stone").uvs(0.0f, 0.0f, 5.0f, 2.0f).end()
+        .face(Direction.EAST ).texture("stone").uvs(0.0f, 0.0f, 5.0f, 2.0f).end()
+        .end()
+        .element()
+        .from(5.0f, 2.0f, 7.0f)
+        .to(11.0f, 3.0f, 10.0f)
+        .face(Direction.DOWN ).texture("stone").uvs(0.0f, 0.0f, 6.0f, 3.0f).end()
+        .face(Direction.UP   ).texture("stone").uvs(0.0f, 0.0f, 6.0f, 3.0f).end()
+        .face(Direction.NORTH).texture("stone").uvs(0.0f, 0.0f, 6.0f, 1.0f).end()
+        .face(Direction.SOUTH).texture("stone").uvs(0.0f, 0.0f, 6.0f, 1.0f).end()
+        .face(Direction.WEST ).texture("stone").uvs(0.0f, 0.0f, 3.0f, 1.0f).end()
+        .face(Direction.EAST ).texture("stone").uvs(0.0f, 0.0f, 3.0f, 1.0f).end()
+        .end()
+        .element()
+        .from(5.0f, 0.0f, 5.0f)
+        .to(11.0f, 1.0f, 12.0f)
+        .face(Direction.DOWN ).texture("stone").uvs(0.0f, 0.0f, 6.0f, 7.0f).end()
+        .face(Direction.UP   ).texture("stone").uvs(0.0f, 0.0f, 6.0f, 7.0f).end()
+        .face(Direction.NORTH).texture("stone").uvs(0.0f, 0.0f, 6.0f, 1.0f).end()
+        .face(Direction.SOUTH).texture("stone").uvs(0.0f, 0.0f, 6.0f, 1.0f).end()
+        .face(Direction.WEST ).texture("stone").uvs(0.0f, 0.0f, 7.0f, 1.0f).end()
+        .face(Direction.EAST ).texture("stone").uvs(0.0f, 0.0f, 7.0f, 1.0f).end()
+        .end();
+
+      for(final Ore ore : Ores.all()) {
+        this.getBuilder(GradientIds.PEBBLE(ore)).parent(this.getExistingFile(this.modLoc("block/" + GradientIds.PEBBLE)));
+      }
+
       this.getBuilder("ore")
         .parent(this.getExistingFile(this.mcLoc("block/block")))
         .texture("particle", this.mcLoc("block/stone"))
@@ -109,16 +150,16 @@ public final class GradientDataGenerator {
         .element().allFaces(this.addTexture("edge_3").andThen((dir, f) -> f.cullface(dir).tintindex(7))).end()
       ;
 
+      for(final Ore ore : Ores.all()) {
+        this.getBuilder(GradientIds.ORE(ore)).parent(this.getExistingFile(this.modLoc("block/ore")));
+      }
+
       this.getBuilder("metal_block")
         .parent(this.getExistingFile(this.mcLoc("block/block")))
         .texture("particle", this.modLoc("block/metal_block"))
         .texture("all", this.modLoc("block/metal_block"))
         .element().allFaces(this.addTexture("all").andThen((dir, f) -> f.cullface(dir).tintindex(1))).end()
       ;
-
-      for(final Ore ore : Ores.all()) {
-        this.getBuilder(GradientIds.ORE(ore)).parent(this.getExistingFile(this.modLoc("block/ore")));
-      }
 
       for(final Metal metal : Metals.all()) {
         this.getBuilder(GradientIds.METAL_BLOCK(metal)).parent(this.getExistingFile(this.modLoc("block/metal_block")));
@@ -142,6 +183,8 @@ public final class GradientDataGenerator {
 
     @Override
     protected void registerModels() {
+      this.singleTexture(GradientIds.PEBBLE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.PEBBLE));
+
       for(final Ore ore : Ores.all()) {
         this.getBuilder(GradientIds.ORE(ore)).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.ORE(ore))));
       }
@@ -247,6 +290,12 @@ public final class GradientDataGenerator {
 
     @Override
     protected void registerStatesAndModels() {
+      this.simpleBlock(GradientBlocks.PEBBLE.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.PEBBLE)));
+
+      for(final Ore ore : Ores.all()) {
+        this.simpleBlock(GradientBlocks.PEBBLE(ore).get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.PEBBLE(ore))));
+      }
+
       for(final Ore ore : Ores.all()) {
         this.simpleBlock(GradientBlocks.ORE(ore).get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.ORE(ore))));
       }
@@ -264,7 +313,11 @@ public final class GradientDataGenerator {
 
     @Override
     protected void addTranslations() {
+      this.add(GradientBlocks.PEBBLE.get(), "Pebble");
+      this.add(GradientItems.PEBBLE.get(), "Pebble");
+
       for(final Ore ore : Ores.all()) {
+        this.add(GradientBlocks.PEBBLE(ore).get(), StringUtils.capitalize(ore.name) + " Pebble");
         this.add(GradientBlocks.ORE(ore).get(), StringUtils.capitalize(ore.name) + " Ore");
       }
 
@@ -392,9 +445,38 @@ public final class GradientDataGenerator {
     public static class BlockTables extends BlockLootTables {
       private final List<Block> knownBlocks = new ArrayList<>();
 
+      private static LootTable.Builder pebbleDrops() {
+        return LootTable.builder()
+          .addLootPool(
+            withSurvivesExplosion(
+              GradientItems.PEBBLE.get(),
+              LootPool.builder()
+                .rolls(RandomValueRange.of(0, 3))
+                .addEntry(ItemLootEntry.builder(GradientItems.PEBBLE.get()).weight(5))
+                .addEntry(ItemLootEntry.builder(Items.FLINT).weight(1))
+            )
+          );
+      }
+
+      private static LootTable.Builder metalPebbleDrops(final Metal metal) {
+        return pebbleDrops()
+          .addLootPool(
+            withSurvivesExplosion(
+              GradientItems.NUGGET(metal).get(),
+              LootPool.builder()
+                .rolls(ConstantRange.of(1))
+                .addEntry(ItemLootEntry.builder(GradientItems.NUGGET(metal).get()))
+                .acceptCondition(RandomChance.builder(0.5f))
+            )
+          );
+      }
+
       @Override
       protected void addTables() {
+        this.registerLootTable(GradientBlocks.PEBBLE.get(), pebbleDrops());
+
         for(final Ore ore : Ores.all()) {
+          this.registerLootTable(GradientBlocks.PEBBLE(ore).get(), metalPebbleDrops(ore.metal));
           this.registerDropSelfLootTable(GradientBlocks.ORE(ore).get());
         }
 

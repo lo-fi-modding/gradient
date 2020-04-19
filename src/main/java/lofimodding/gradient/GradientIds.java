@@ -6,6 +6,12 @@ import lofimodding.gradient.science.Ore;
 public final class GradientIds {
   private GradientIds() { }
 
+  public static final String PEBBLE = "pebble";
+
+  public static String PEBBLE(final Ore ore) {
+    return ore.metal.name + "_pebble";
+  }
+
   public static String ORE(final Ore ore) {
     return ore.metal.name + "_ore";
   }
