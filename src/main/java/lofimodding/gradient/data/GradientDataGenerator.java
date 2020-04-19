@@ -135,6 +135,18 @@ public final class GradientDataGenerator {
         this.getBuilder(GradientIds.ORE(ore)).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.ORE(ore))));
       }
 
+      this.getBuilder("ingot")
+        .parent(new ModelFile.ExistingModelFile(this.mcLoc("item/generated"), this.existingFileHelper))
+        .texture("layer0", this.modLoc("item/ingot_background"))
+        .texture("layer1", this.modLoc("item/ingot_diffuse"))
+        .texture("layer2", this.modLoc("item/ingot_specular"))
+        .texture("layer3", this.modLoc("item/ingot_shadow_1"))
+        .texture("layer4", this.modLoc("item/ingot_shadow_2"))
+        .texture("layer5", this.modLoc("item/ingot_edge_1"))
+        .texture("layer6", this.modLoc("item/ingot_edge_2"))
+        .texture("layer7", this.modLoc("item/ingot_edge_3"))
+      ;
+
       this.getBuilder("nugget")
         .parent(new ModelFile.ExistingModelFile(this.mcLoc("item/generated"), this.existingFileHelper))
         .texture("layer0", this.modLoc("item/nugget_background"))
@@ -148,6 +160,7 @@ public final class GradientDataGenerator {
       ;
 
       for(final Metal metal : Metals.all()) {
+        this.getBuilder(GradientIds.INGOT(metal)).parent(this.getExistingFile(this.modLoc("item/ingot")));
         this.getBuilder(GradientIds.NUGGET(metal)).parent(this.getExistingFile(this.modLoc("item/nugget")));
       }
 
@@ -185,6 +198,7 @@ public final class GradientDataGenerator {
       }
 
       for(final Metal metal : Metals.all()) {
+        this.add(GradientItems.INGOT(metal).get(), StringUtils.capitalize(metal.name) + " Ingot");
         this.add(GradientItems.NUGGET(metal).get(), StringUtils.capitalize(metal.name) + " Nugget");
       }
 
@@ -226,6 +240,9 @@ public final class GradientDataGenerator {
       }
 
       for(final Metal metal : Metals.all()) {
+        this.getBuilder(GradientTags.Items.INGOT.get(metal)).add(GradientItems.INGOT(metal).get());
+        this.getBuilder(Tags.Items.INGOTS).add(GradientTags.Items.INGOT.get(metal));
+
         this.getBuilder(GradientTags.Items.NUGGET.get(metal)).add(GradientItems.NUGGET(metal).get());
         this.getBuilder(Tags.Items.NUGGETS).add(GradientTags.Items.NUGGET.get(metal));
       }

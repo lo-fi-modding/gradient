@@ -1,0 +1,13 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "gradient:item/ingot_background",
+    "layer1": "gradient:item/ingot_diffuse",
+    "layer2": "gradient:item/ingot_specular",
+    "layer3": "gradient:item/ingot_shadow_1",
+    "layer4": "gradient:item/ingot_shadow_2",
+    "layer5": "gradient:item/ingot_edge_1",
+    "layer6": "gradient:item/ingot_edge_2",
+    "layer7": "gradient:item/ingot_edge_3"
+  }
+}

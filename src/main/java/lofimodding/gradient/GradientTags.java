@@ -52,6 +52,12 @@ public final class GradientTags {
       }
     }));
 
+    public static final Map<Metal, Tag<Item>> INGOT = Collections.unmodifiableMap(Util.make(new LinkedHashMap<>(), tags -> {
+      for(final Metal metal : Metals.all()) {
+        tags.put(metal, forgeTag("ingots/" + metal.name));
+      }
+    }));
+
     public static final Map<Metal, Tag<Item>> NUGGET = Collections.unmodifiableMap(Util.make(new LinkedHashMap<>(), tags -> {
       for(final Metal metal : Metals.all()) {
         tags.put(metal, forgeTag("nuggets/" + metal.name));
