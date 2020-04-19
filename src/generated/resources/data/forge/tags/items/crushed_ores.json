@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:crushed_ores/azurite",
+    "#forge:crushed_ores/bronze",
+    "#forge:crushed_ores/cassiterite",
+    "#forge:crushed_ores/copper",
+    "#forge:crushed_ores/gold",
+    "#forge:crushed_ores/graphite",
+    "#forge:crushed_ores/hematite",
+    "#forge:crushed_ores/iron",
+    "#forge:crushed_ores/lead",
+    "#forge:crushed_ores/magnesium",
+    "#forge:crushed_ores/pyrite",
+    "#forge:crushed_ores/sphalerite",
+    "#forge:crushed_ores/tin",
+    "#forge:crushed_ores/zinc"
+  ]
+}

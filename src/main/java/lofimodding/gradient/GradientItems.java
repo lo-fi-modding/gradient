@@ -32,6 +32,14 @@ public final class GradientItems {
     }
   }
 
+  private static final Map<Metal, RegistryObject<MetalItem>> CRUSHED = new HashMap<>();
+
+  static {
+    for(final Metal metal : Metals.all()) {
+      CRUSHED.put(metal, REGISTRY.register(GradientIds.CRUSHED(metal), () -> new MetalItem(metal, new Item.Properties().group(GROUP))));
+    }
+  }
+
   private static final Map<Metal, RegistryObject<MetalItem>> INGOTS = new HashMap<>();
 
   static {
@@ -57,6 +65,10 @@ public final class GradientItems {
 
   public static RegistryObject<BlockItem> ORE(final Ore ore) {
     return ORES.get(ore);
+  }
+
+  public static RegistryObject<MetalItem> CRUSHED(final Metal metal) {
+    return CRUSHED.get(metal);
   }
 
   public static RegistryObject<MetalItem> INGOT(final Metal metal) {

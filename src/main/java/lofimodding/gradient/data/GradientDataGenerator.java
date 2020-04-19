@@ -135,6 +135,18 @@ public final class GradientDataGenerator {
         this.getBuilder(GradientIds.ORE(ore)).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.ORE(ore))));
       }
 
+      this.getBuilder("crushed")
+        .parent(new ModelFile.ExistingModelFile(this.mcLoc("item/generated"), this.existingFileHelper))
+        .texture("layer0", this.modLoc("item/crushed_background"))
+        .texture("layer1", this.modLoc("item/crushed_diffuse"))
+        .texture("layer2", this.modLoc("item/crushed_specular"))
+        .texture("layer3", this.modLoc("item/crushed_shadow_1"))
+        .texture("layer4", this.modLoc("item/crushed_shadow_2"))
+        .texture("layer5", this.modLoc("item/crushed_edge_1"))
+        .texture("layer6", this.modLoc("item/crushed_edge_2"))
+        .texture("layer7", this.modLoc("item/crushed_edge_3"))
+      ;
+
       this.getBuilder("ingot")
         .parent(new ModelFile.ExistingModelFile(this.mcLoc("item/generated"), this.existingFileHelper))
         .texture("layer0", this.modLoc("item/ingot_background"))
@@ -160,6 +172,7 @@ public final class GradientDataGenerator {
       ;
 
       for(final Metal metal : Metals.all()) {
+        this.getBuilder(GradientIds.CRUSHED(metal)).parent(this.getExistingFile(this.modLoc("item/crushed")));
         this.getBuilder(GradientIds.INGOT(metal)).parent(this.getExistingFile(this.modLoc("item/ingot")));
         this.getBuilder(GradientIds.NUGGET(metal)).parent(this.getExistingFile(this.modLoc("item/nugget")));
       }
@@ -198,6 +211,7 @@ public final class GradientDataGenerator {
       }
 
       for(final Metal metal : Metals.all()) {
+        this.add(GradientItems.CRUSHED(metal).get(), "Crushed " + StringUtils.capitalize(metal.name) + " Ore");
         this.add(GradientItems.INGOT(metal).get(), StringUtils.capitalize(metal.name) + " Ingot");
         this.add(GradientItems.NUGGET(metal).get(), StringUtils.capitalize(metal.name) + " Nugget");
       }
@@ -240,6 +254,9 @@ public final class GradientDataGenerator {
       }
 
       for(final Metal metal : Metals.all()) {
+        this.getBuilder(GradientTags.Items.CRUSHED_ORE.get(metal)).add(GradientItems.CRUSHED(metal).get());
+        this.getBuilder(GradientTags.Items.CRUSHED_ORES).add(GradientTags.Items.CRUSHED_ORE.get(metal));
+
         this.getBuilder(GradientTags.Items.INGOT.get(metal)).add(GradientItems.INGOT(metal).get());
         this.getBuilder(Tags.Items.INGOTS).add(GradientTags.Items.INGOT.get(metal));
 
