@@ -1,6 +1,7 @@
 package lofimodding.gradient.client;
 
 import lofimodding.gradient.GradientBlocks;
+import lofimodding.gradient.GradientEntities;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.blocks.MetalBlock;
 import lofimodding.gradient.items.MetalItem;
@@ -14,11 +15,13 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.ItemColors;
+import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraft.client.renderer.model.ItemModelGenerator;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ILightReader;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 public final class GradientClient {
@@ -57,6 +60,8 @@ public final class GradientClient {
       blockColors.register(GradientClient::metalBlockColour, GradientBlocks.METAL_BLOCK(metal).get());
       itemColors.register(GradientClient::metalBlockColour, GradientItems.METAL_BLOCK(metal).get());
     }
+
+    RenderingRegistry.registerEntityRenderingHandler(GradientEntities.PEBBLE.get(), manager -> new SpriteRenderer<>(manager, Minecraft.getInstance().getItemRenderer()));
   }
 
   private static int metalBlockColour(final BlockState state, final ILightReader world, final BlockPos pos, final int tintIndex) {

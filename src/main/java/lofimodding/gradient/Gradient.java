@@ -27,6 +27,7 @@ public class Gradient {
 
     GradientBlocks.init(bus);
     GradientItems.init(bus);
+    GradientEntities.init(bus);
     GradientLoot.init(bus);
   }
 
