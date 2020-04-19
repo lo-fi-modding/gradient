@@ -34,5 +34,9 @@ public final class GradientIds {
     return metal.name + "_plate";
   }
 
+  public static String METAL_BLOCK(final Metal metal) {
+    return metal.name + "_block";
+  }
+
   public static final String FIBRE = "fibre";
 }

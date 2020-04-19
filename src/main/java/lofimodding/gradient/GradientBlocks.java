@@ -1,6 +1,8 @@
 package lofimodding.gradient;
 
 import lofimodding.gradient.blocks.MetalBlock;
+import lofimodding.gradient.science.Metal;
+import lofimodding.gradient.science.Metals;
 import lofimodding.gradient.science.Ore;
 import lofimodding.gradient.science.Ores;
 import net.minecraft.block.Block;
@@ -27,6 +29,14 @@ public final class GradientBlocks {
     }
   }
 
+  private static final Map<Metal, RegistryObject<MetalBlock>> METAL_BLOCKS = new HashMap<>();
+
+  static {
+    for(final Metal metal : Metals.all()) {
+      METAL_BLOCKS.put(metal, REGISTRY.register(GradientIds.METAL_BLOCK(metal), () -> new MetalBlock(metal, Block.Properties.create(Material.ROCK).hardnessAndResistance(metal.hardness).harvestTool(ToolType.PICKAXE).harvestLevel(metal.harvestLevel))));
+    }
+  }
+
   static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering blocks...");
     REGISTRY.register(bus);
@@ -34,5 +44,9 @@ public final class GradientBlocks {
 
   public static RegistryObject<MetalBlock> ORE(final Ore ore) {
     return ORES.get(ore);
+  }
+
+  public static RegistryObject<MetalBlock> METAL_BLOCK(final Metal metal) {
+    return METAL_BLOCKS.get(metal);
   }
 }

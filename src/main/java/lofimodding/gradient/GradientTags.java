@@ -30,6 +30,12 @@ public final class GradientTags {
       }
     }));
 
+    public static final Map<Metal, Tag<Block>> STORAGE_BLOCK = Collections.unmodifiableMap(Util.make(new LinkedHashMap<>(), tags -> {
+      for(final Metal metal : Metals.all()) {
+        tags.put(metal, forgeTag("storage_blocks/" + metal.name));
+      }
+    }));
+
     private static Tag<Block> tag(final String name) {
       return tag(Gradient.loc(name));
     }
@@ -88,6 +94,12 @@ public final class GradientTags {
     public static final Map<Metal, Tag<Item>> PLATE = Collections.unmodifiableMap(Util.make(new LinkedHashMap<>(), tags -> {
       for(final Metal metal : Metals.all()) {
         tags.put(metal, forgeTag("plates/" + metal.name));
+      }
+    }));
+
+    public static final Map<Metal, Tag<Item>> STORAGE_BLOCK = Collections.unmodifiableMap(Util.make(new LinkedHashMap<>(), tags -> {
+      for(final Metal metal : Metals.all()) {
+        tags.put(metal, forgeTag("storage_blocks/" + metal.name));
       }
     }));
 

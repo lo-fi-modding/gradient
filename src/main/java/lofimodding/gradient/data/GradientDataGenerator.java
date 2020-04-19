@@ -109,8 +109,19 @@ public final class GradientDataGenerator {
         .element().allFaces(this.addTexture("edge_3").andThen((dir, f) -> f.cullface(dir).tintindex(7))).end()
       ;
 
+      this.getBuilder("metal_block")
+        .parent(this.getExistingFile(this.mcLoc("block/block")))
+        .texture("particle", this.modLoc("block/metal_block"))
+        .texture("all", this.modLoc("block/metal_block"))
+        .element().allFaces(this.addTexture("all").andThen((dir, f) -> f.cullface(dir).tintindex(1))).end()
+      ;
+
       for(final Ore ore : Ores.all()) {
         this.getBuilder(GradientIds.ORE(ore)).parent(this.getExistingFile(this.modLoc("block/ore")));
+      }
+
+      for(final Metal metal : Metals.all()) {
+        this.getBuilder(GradientIds.METAL_BLOCK(metal)).parent(this.getExistingFile(this.modLoc("block/metal_block")));
       }
     }
 
@@ -120,7 +131,7 @@ public final class GradientDataGenerator {
 
     @Override
     public String getName() {
-      return "Thaumcraft block model generator";
+      return "Gradient block model generator";
     }
   }
 
@@ -216,6 +227,10 @@ public final class GradientDataGenerator {
         this.getBuilder(GradientIds.PLATE(metal)).parent(this.getExistingFile(this.modLoc("item/plate")));
       }
 
+      for(final Metal metal : Metals.all()) {
+        this.getBuilder(GradientIds.METAL_BLOCK(metal)).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.METAL_BLOCK(metal))));
+      }
+
       this.singleTexture(GradientIds.FIBRE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.FIBRE));
     }
 
@@ -234,6 +249,10 @@ public final class GradientDataGenerator {
     protected void registerStatesAndModels() {
       for(final Ore ore : Ores.all()) {
         this.simpleBlock(GradientBlocks.ORE(ore).get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.ORE(ore))));
+      }
+
+      for(final Metal metal : Metals.all()) {
+        this.simpleBlock(GradientBlocks.METAL_BLOCK(metal).get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.METAL_BLOCK(metal))));
       }
     }
   }
@@ -256,6 +275,7 @@ public final class GradientDataGenerator {
         this.add(GradientItems.INGOT(metal).get(), StringUtils.capitalize(metal.name) + " Ingot");
         this.add(GradientItems.NUGGET(metal).get(), StringUtils.capitalize(metal.name) + " Nugget");
         this.add(GradientItems.PLATE(metal).get(), StringUtils.capitalize(metal.name) + " Plate");
+        this.add(GradientItems.METAL_BLOCK(metal).get(), "Block of " + StringUtils.capitalize(metal.name));
       }
 
       this.add(GradientItems.FIBRE.get(), "Fibre");
@@ -279,6 +299,11 @@ public final class GradientDataGenerator {
       for(final Ore ore : Ores.all()) {
         this.getBuilder(GradientTags.Blocks.ORE.get(ore)).add(GradientBlocks.ORE(ore).get());
         this.getBuilder(Tags.Blocks.ORES).add(GradientTags.Blocks.ORE.get(ore));
+      }
+
+      for(final Metal metal : Metals.all()) {
+        this.getBuilder(GradientTags.Blocks.STORAGE_BLOCK.get(metal)).add(GradientBlocks.METAL_BLOCK(metal).get());
+        this.getBuilder(Tags.Blocks.STORAGE_BLOCKS).add(GradientTags.Blocks.STORAGE_BLOCK.get(metal));
       }
     }
   }
@@ -313,6 +338,9 @@ public final class GradientDataGenerator {
 
         this.getBuilder(GradientTags.Items.PLATE.get(metal)).add(GradientItems.PLATE(metal).get());
         this.getBuilder(GradientTags.Items.PLATES).add(GradientTags.Items.PLATE.get(metal));
+
+        this.getBuilder(GradientTags.Items.STORAGE_BLOCK.get(metal)).add(GradientItems.METAL_BLOCK(metal).get());
+        this.getBuilder(Tags.Items.STORAGE_BLOCKS).add(GradientTags.Items.STORAGE_BLOCK.get(metal));
       }
     }
   }
@@ -368,6 +396,10 @@ public final class GradientDataGenerator {
       protected void addTables() {
         for(final Ore ore : Ores.all()) {
           this.registerDropSelfLootTable(GradientBlocks.ORE(ore).get());
+        }
+
+        for(final Metal metal : Metals.all()) {
+          this.registerDropSelfLootTable(GradientBlocks.METAL_BLOCK(metal).get());
         }
       }
 
