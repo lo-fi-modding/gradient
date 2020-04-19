@@ -7,5 +7,19 @@
   "block.gradient.hematite_ore": "Hematite Ore",
   "block.gradient.pyrite_ore": "Pyrite Ore",
   "block.gradient.sphalerite_ore": "Sphalerite Ore",
-  "item.gradient.fibre": "Fibre"
+  "item.gradient.azurite_nugget": "Azurite Nugget",
+  "item.gradient.bronze_nugget": "Bronze Nugget",
+  "item.gradient.cassiterite_nugget": "Cassiterite Nugget",
+  "item.gradient.copper_nugget": "Copper Nugget",
+  "item.gradient.fibre": "Fibre",
+  "item.gradient.gold_nugget": "Gold Nugget",
+  "item.gradient.graphite_nugget": "Graphite Nugget",
+  "item.gradient.hematite_nugget": "Hematite Nugget",
+  "item.gradient.iron_nugget": "Iron Nugget",
+  "item.gradient.lead_nugget": "Lead Nugget",
+  "item.gradient.magnesium_nugget": "Magnesium Nugget",
+  "item.gradient.pyrite_nugget": "Pyrite Nugget",
+  "item.gradient.sphalerite_nugget": "Sphalerite Nugget",
+  "item.gradient.tin_nugget": "Tin Nugget",
+  "item.gradient.zinc_nugget": "Zinc Nugget"
 }

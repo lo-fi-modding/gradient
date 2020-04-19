@@ -8,6 +8,8 @@ import lofimodding.gradient.GradientIds;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientLoot;
 import lofimodding.gradient.GradientTags;
+import lofimodding.gradient.science.Metal;
+import lofimodding.gradient.science.Metals;
 import lofimodding.gradient.science.Ore;
 import lofimodding.gradient.science.Ores;
 import net.minecraft.advancements.criterion.ItemPredicate;
@@ -133,6 +135,22 @@ public final class GradientDataGenerator {
         this.getBuilder(GradientIds.ORE(ore)).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.ORE(ore))));
       }
 
+      this.getBuilder("nugget")
+        .parent(new ModelFile.ExistingModelFile(this.mcLoc("item/generated"), this.existingFileHelper))
+        .texture("layer0", this.modLoc("item/nugget_background"))
+        .texture("layer1", this.modLoc("item/nugget_diffuse"))
+        .texture("layer2", this.modLoc("item/nugget_specular"))
+        .texture("layer3", this.modLoc("item/nugget_shadow_1"))
+        .texture("layer4", this.modLoc("item/nugget_shadow_2"))
+        .texture("layer5", this.modLoc("item/nugget_edge_1"))
+        .texture("layer6", this.modLoc("item/nugget_edge_2"))
+        .texture("layer7", this.modLoc("item/nugget_edge_3"))
+      ;
+
+      for(final Metal metal : Metals.all()) {
+        this.getBuilder(GradientIds.NUGGET(metal)).parent(this.getExistingFile(this.modLoc("item/nugget")));
+      }
+
       this.singleTexture(GradientIds.FIBRE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.FIBRE));
     }
 
@@ -166,6 +184,10 @@ public final class GradientDataGenerator {
         this.add(GradientBlocks.ORE(ore).get(), StringUtils.capitalize(ore.name) + " Ore");
       }
 
+      for(final Metal metal : Metals.all()) {
+        this.add(GradientItems.NUGGET(metal).get(), StringUtils.capitalize(metal.name) + " Nugget");
+      }
+
       this.add(GradientItems.FIBRE.get(), "Fibre");
     }
   }
@@ -183,6 +205,11 @@ public final class GradientDataGenerator {
         .add(BlockTags.LEAVES)
         .add(Blocks.GRASS)
         .add(Blocks.TALL_GRASS);
+
+      for(final Ore ore : Ores.all()) {
+        this.getBuilder(GradientTags.Blocks.ORE.get(ore)).add(GradientBlocks.ORE(ore).get());
+        this.getBuilder(Tags.Blocks.ORES).add(GradientTags.Blocks.ORE.get(ore));
+      }
     }
   }
 
@@ -193,7 +220,15 @@ public final class GradientDataGenerator {
 
     @Override
     protected void registerTags() {
+      for(final Ore ore : Ores.all()) {
+        this.getBuilder(GradientTags.Items.ORE.get(ore)).add(GradientItems.ORE(ore).get());
+        this.getBuilder(Tags.Items.ORES).add(GradientTags.Items.ORE.get(ore));
+      }
 
+      for(final Metal metal : Metals.all()) {
+        this.getBuilder(GradientTags.Items.NUGGET.get(metal)).add(GradientItems.NUGGET(metal).get());
+        this.getBuilder(Tags.Items.NUGGETS).add(GradientTags.Items.NUGGET.get(metal));
+      }
     }
   }
 

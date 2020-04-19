@@ -1,0 +1,13 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "gradient:item/nugget_background",
+    "layer1": "gradient:item/nugget_diffuse",
+    "layer2": "gradient:item/nugget_specular",
+    "layer3": "gradient:item/nugget_shadow_1",
+    "layer4": "gradient:item/nugget_shadow_2",
+    "layer5": "gradient:item/nugget_edge_1",
+    "layer6": "gradient:item/nugget_edge_2",
+    "layer7": "gradient:item/nugget_edge_3"
+  }
+}

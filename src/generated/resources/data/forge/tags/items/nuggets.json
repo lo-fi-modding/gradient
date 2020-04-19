@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:nuggets/azurite",
+    "#forge:nuggets/bronze",
+    "#forge:nuggets/cassiterite",
+    "#forge:nuggets/copper",
+    "#forge:nuggets/gold",
+    "#forge:nuggets/graphite",
+    "#forge:nuggets/hematite",
+    "#forge:nuggets/iron",
+    "#forge:nuggets/lead",
+    "#forge:nuggets/magnesium",
+    "#forge:nuggets/pyrite",
+    "#forge:nuggets/sphalerite",
+    "#forge:nuggets/tin",
+    "#forge:nuggets/zinc"
+  ]
+}

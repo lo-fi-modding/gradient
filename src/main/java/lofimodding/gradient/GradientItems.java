@@ -1,5 +1,8 @@
 package lofimodding.gradient;
 
+import lofimodding.gradient.items.MetalItem;
+import lofimodding.gradient.science.Metal;
+import lofimodding.gradient.science.Metals;
 import lofimodding.gradient.science.Ore;
 import lofimodding.gradient.science.Ores;
 import net.minecraft.item.BlockItem;
@@ -29,6 +32,14 @@ public final class GradientItems {
     }
   }
 
+  private static final Map<Metal, RegistryObject<MetalItem>> NUGGETS = new HashMap<>();
+
+  static {
+    for(final Metal metal : Metals.all()) {
+      NUGGETS.put(metal, REGISTRY.register(GradientIds.NUGGET(metal), () -> new MetalItem(metal, new Item.Properties().group(GROUP))));
+    }
+  }
+
   public static final RegistryObject<Item> FIBRE = REGISTRY.register(GradientIds.FIBRE, () -> new Item(new Item.Properties().group(GROUP)));
 
   static void init(final IEventBus bus) {
@@ -38,6 +49,10 @@ public final class GradientItems {
 
   public static RegistryObject<BlockItem> ORE(final Ore ore) {
     return ORES.get(ore);
+  }
+
+  public static RegistryObject<MetalItem> NUGGET(final Metal metal) {
+    return NUGGETS.get(metal);
   }
 
   private static final class GradientItemGroup extends ItemGroup {
