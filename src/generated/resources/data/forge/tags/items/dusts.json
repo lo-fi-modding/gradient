@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:dusts/azurite",
+    "#forge:dusts/bronze",
+    "#forge:dusts/cassiterite",
+    "#forge:dusts/copper",
+    "#forge:dusts/gold",
+    "#forge:dusts/graphite",
+    "#forge:dusts/hematite",
+    "#forge:dusts/iron",
+    "#forge:dusts/lead",
+    "#forge:dusts/magnesium",
+    "#forge:dusts/pyrite",
+    "#forge:dusts/sphalerite",
+    "#forge:dusts/tin",
+    "#forge:dusts/zinc"
+  ]
+}

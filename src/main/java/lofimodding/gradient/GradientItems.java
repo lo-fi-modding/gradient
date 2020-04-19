@@ -48,6 +48,14 @@ public final class GradientItems {
     }
   }
 
+  private static final Map<Metal, RegistryObject<MetalItem>> DUSTS = new HashMap<>();
+
+  static {
+    for(final Metal metal : Metals.all()) {
+      DUSTS.put(metal, REGISTRY.register(GradientIds.DUST(metal), () -> new MetalItem(metal, new Item.Properties().group(GROUP))));
+    }
+  }
+
   private static final Map<Metal, RegistryObject<MetalItem>> INGOTS = new HashMap<>();
 
   static {
@@ -81,6 +89,10 @@ public final class GradientItems {
 
   public static RegistryObject<MetalItem> PURIFIED(final Metal metal) {
     return PURIFIED.get(metal);
+  }
+
+  public static RegistryObject<MetalItem> DUST(final Metal metal) {
+    return DUSTS.get(metal);
   }
 
   public static RegistryObject<MetalItem> INGOT(final Metal metal) {

@@ -1,0 +1,13 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "gradient:item/dust_background",
+    "layer1": "gradient:item/dust_diffuse",
+    "layer2": "gradient:item/dust_specular",
+    "layer3": "gradient:item/dust_shadow_1",
+    "layer4": "gradient:item/dust_shadow_2",
+    "layer5": "gradient:item/dust_edge_1",
+    "layer6": "gradient:item/dust_edge_2",
+    "layer7": "gradient:item/dust_edge_3"
+  }
+}

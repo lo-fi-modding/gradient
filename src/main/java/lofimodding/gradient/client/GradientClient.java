@@ -51,6 +51,7 @@ public final class GradientClient {
       itemColors.register(GradientClient::metalItemColour, GradientItems.CRUSHED(metal).get());
       itemColors.register(GradientClient::metalItemColour, GradientItems.PURIFIED(metal).get());
       itemColors.register(GradientClient::metalItemColour, GradientItems.INGOT(metal).get());
+      itemColors.register(GradientClient::metalItemColour, GradientItems.DUST(metal).get());
       itemColors.register(GradientClient::metalItemColour, GradientItems.NUGGET(metal).get());
     }
   }
