@@ -59,6 +59,13 @@ public final class GradientTags {
       }
     }));
 
+    public static final Tag<Item> PURIFIED_ORES = forgeTag("purified_ores");
+    public static final Map<Metal, Tag<Item>> PURIFIED_ORE = Collections.unmodifiableMap(Util.make(new LinkedHashMap<>(), tags -> {
+      for(final Metal metal : Metals.all()) {
+        tags.put(metal, forgeTag("purified_ores/" + metal.name));
+      }
+    }));
+
     public static final Map<Metal, Tag<Item>> INGOT = Collections.unmodifiableMap(Util.make(new LinkedHashMap<>(), tags -> {
       for(final Metal metal : Metals.all()) {
         tags.put(metal, forgeTag("ingots/" + metal.name));

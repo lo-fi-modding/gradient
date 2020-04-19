@@ -14,6 +14,10 @@ public final class GradientIds {
     return metal.name + "_crushed";
   }
 
+  public static String PURIFIED(final Metal metal) {
+    return metal.name + "_purified";
+  }
+
   public static String INGOT(final Metal metal) {
     return metal.name + "_ingot";
   }
