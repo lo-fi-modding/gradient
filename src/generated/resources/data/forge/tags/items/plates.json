@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:plates/azurite",
+    "#forge:plates/bronze",
+    "#forge:plates/cassiterite",
+    "#forge:plates/copper",
+    "#forge:plates/gold",
+    "#forge:plates/graphite",
+    "#forge:plates/hematite",
+    "#forge:plates/iron",
+    "#forge:plates/lead",
+    "#forge:plates/magnesium",
+    "#forge:plates/pyrite",
+    "#forge:plates/sphalerite",
+    "#forge:plates/tin",
+    "#forge:plates/zinc"
+  ]
+}

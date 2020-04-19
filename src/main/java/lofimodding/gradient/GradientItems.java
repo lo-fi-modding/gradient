@@ -72,6 +72,14 @@ public final class GradientItems {
     }
   }
 
+  private static final Map<Metal, RegistryObject<MetalItem>> PLATES = new HashMap<>();
+
+  static {
+    for(final Metal metal : Metals.all()) {
+      PLATES.put(metal, REGISTRY.register(GradientIds.PLATE(metal), () -> new MetalItem(metal, new Item.Properties().group(GROUP))));
+    }
+  }
+
   public static final RegistryObject<Item> FIBRE = REGISTRY.register(GradientIds.FIBRE, () -> new Item(new Item.Properties().group(GROUP)));
 
   static void init(final IEventBus bus) {
@@ -101,6 +109,10 @@ public final class GradientItems {
 
   public static RegistryObject<MetalItem> NUGGET(final Metal metal) {
     return NUGGETS.get(metal);
+  }
+
+  public static RegistryObject<MetalItem> PLATE(final Metal metal) {
+    return PLATES.get(metal);
   }
 
   private static final class GradientItemGroup extends ItemGroup {

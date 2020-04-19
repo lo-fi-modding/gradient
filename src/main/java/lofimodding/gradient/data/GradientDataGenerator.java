@@ -195,12 +195,25 @@ public final class GradientDataGenerator {
         .texture("layer7", this.modLoc("item/nugget_edge_3"))
       ;
 
+      this.getBuilder("plate")
+        .parent(new ModelFile.ExistingModelFile(this.mcLoc("item/generated"), this.existingFileHelper))
+        .texture("layer0", this.modLoc("item/plate_background"))
+        .texture("layer1", this.modLoc("item/plate_diffuse"))
+        .texture("layer2", this.modLoc("item/plate_specular"))
+        .texture("layer3", this.modLoc("item/plate_shadow_1"))
+        .texture("layer4", this.modLoc("item/plate_shadow_2"))
+        .texture("layer5", this.modLoc("item/plate_edge_1"))
+        .texture("layer6", this.modLoc("item/plate_edge_2"))
+        .texture("layer7", this.modLoc("item/plate_edge_3"))
+      ;
+
       for(final Metal metal : Metals.all()) {
         this.getBuilder(GradientIds.CRUSHED(metal)).parent(this.getExistingFile(this.modLoc("item/crushed")));
         this.getBuilder(GradientIds.PURIFIED(metal)).parent(this.getExistingFile(this.modLoc("item/purified")));
         this.getBuilder(GradientIds.DUST(metal)).parent(this.getExistingFile(this.modLoc("item/dust")));
         this.getBuilder(GradientIds.INGOT(metal)).parent(this.getExistingFile(this.modLoc("item/ingot")));
         this.getBuilder(GradientIds.NUGGET(metal)).parent(this.getExistingFile(this.modLoc("item/nugget")));
+        this.getBuilder(GradientIds.PLATE(metal)).parent(this.getExistingFile(this.modLoc("item/plate")));
       }
 
       this.singleTexture(GradientIds.FIBRE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.FIBRE));
@@ -242,6 +255,7 @@ public final class GradientDataGenerator {
         this.add(GradientItems.DUST(metal).get(), StringUtils.capitalize(metal.name) + " Dust");
         this.add(GradientItems.INGOT(metal).get(), StringUtils.capitalize(metal.name) + " Ingot");
         this.add(GradientItems.NUGGET(metal).get(), StringUtils.capitalize(metal.name) + " Nugget");
+        this.add(GradientItems.PLATE(metal).get(), StringUtils.capitalize(metal.name) + " Plate");
       }
 
       this.add(GradientItems.FIBRE.get(), "Fibre");
@@ -296,6 +310,9 @@ public final class GradientDataGenerator {
 
         this.getBuilder(GradientTags.Items.NUGGET.get(metal)).add(GradientItems.NUGGET(metal).get());
         this.getBuilder(Tags.Items.NUGGETS).add(GradientTags.Items.NUGGET.get(metal));
+
+        this.getBuilder(GradientTags.Items.PLATE.get(metal)).add(GradientItems.PLATE(metal).get());
+        this.getBuilder(GradientTags.Items.PLATES).add(GradientTags.Items.PLATE.get(metal));
       }
     }
   }

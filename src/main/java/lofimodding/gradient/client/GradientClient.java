@@ -53,6 +53,7 @@ public final class GradientClient {
       itemColors.register(GradientClient::metalItemColour, GradientItems.INGOT(metal).get());
       itemColors.register(GradientClient::metalItemColour, GradientItems.DUST(metal).get());
       itemColors.register(GradientClient::metalItemColour, GradientItems.NUGGET(metal).get());
+      itemColors.register(GradientClient::metalItemColour, GradientItems.PLATE(metal).get());
     }
   }
 
