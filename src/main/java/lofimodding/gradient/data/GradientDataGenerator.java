@@ -1,6 +1,7 @@
 package lofimodding.gradient.data;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Streams;
 import com.mojang.datafixers.util.Pair;
 import lofimodding.gradient.Gradient;
 import lofimodding.gradient.GradientBlocks;
@@ -28,7 +29,6 @@ import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Items;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Direction;
-import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.ConstantRange;
 import net.minecraft.world.storage.loot.ItemLootEntry;
@@ -62,8 +62,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber(modid = Gradient.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class GradientDataGenerator {
@@ -468,8 +468,6 @@ public final class GradientDataGenerator {
     }
 
     public static class BlockTables extends BlockLootTables {
-      private final List<Block> knownBlocks = new ArrayList<>();
-
       private static LootTable.Builder pebbleDrops() {
         return LootTable.builder()
           .addLootPool(
@@ -510,53 +508,9 @@ public final class GradientDataGenerator {
         }
       }
 
-      //TODO: remove these overrides once all blocks are implemented
-      @Override
-      public void registerFlowerPot(final Block flowerPot) {
-        super.registerFlowerPot(flowerPot);
-        this.knownBlocks.add(flowerPot);
-      }
-
-      @Override
-      public void registerSilkTouch(final Block block, final Block silkTouchDrop) {
-        super.registerSilkTouch(block, silkTouchDrop);
-        this.knownBlocks.add(block);
-      }
-
-      @Override
-      public void registerDropping(final Block block, final IItemProvider drop) {
-        super.registerDropping(block, drop);
-        this.knownBlocks.add(block);
-      }
-
-      @Override
-      public void registerSilkTouch(final Block block) {
-        super.registerSilkTouch(block);
-        this.knownBlocks.add(block);
-      }
-
-      @Override
-      public void registerDropSelfLootTable(final Block block) {
-        super.registerDropSelfLootTable(block);
-        this.knownBlocks.add(block);
-      }
-
-      @Override
-      protected void registerLootTable(final Block block, final Function<Block, LootTable.Builder> factory) {
-        super.registerLootTable(block, factory);
-        this.knownBlocks.add(block);
-      }
-
-      @Override
-      protected void registerLootTable(final Block block, final LootTable.Builder table) {
-        super.registerLootTable(block, table);
-        this.knownBlocks.add(block);
-      }
-
       @Override
       protected Iterable<Block> getKnownBlocks() {
-        return this.knownBlocks;
-        //TODO return Streams.stream(super.getKnownBlocks()).filter(block -> Thaumcraft.MOD_ID.equals(block.getRegistryName().getNamespace())).collect(Collectors.toCollection(ArrayList::new));
+        return Streams.stream(super.getKnownBlocks()).filter(block -> Gradient.MOD_ID.equals(block.getRegistryName().getNamespace())).collect(Collectors.toCollection(ArrayList::new));
       }
     }
   }
