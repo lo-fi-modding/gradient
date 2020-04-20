@@ -319,6 +319,8 @@ public final class GradientDataGenerator {
 
     @Override
     protected void addTranslations() {
+      this.add("stage.gradient.age_1", "Age 1 (Nomadic)");
+
       this.add(GradientBlocks.PEBBLE.get(), "Pebble");
       this.add(GradientItems.PEBBLE.get(), "Pebble");
 

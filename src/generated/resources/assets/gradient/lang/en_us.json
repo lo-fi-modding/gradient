@@ -116,5 +116,6 @@
   "item.gradient.zinc_ingot": "Zinc Ingot",
   "item.gradient.zinc_nugget": "Zinc Nugget",
   "item.gradient.zinc_plate": "Zinc Plate",
-  "item.gradient.zinc_purified": "Purified Zinc Ore"
+  "item.gradient.zinc_purified": "Purified Zinc Ore",
+  "stage.gradient.age_1": "Age 1 (Nomadic)"
 }
