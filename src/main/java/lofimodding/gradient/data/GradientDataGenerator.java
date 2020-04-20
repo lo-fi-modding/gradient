@@ -7,18 +7,22 @@ import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientIds;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientLoot;
+import lofimodding.gradient.GradientStages;
 import lofimodding.gradient.GradientTags;
 import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.science.Metals;
 import lofimodding.gradient.science.Ore;
 import lofimodding.gradient.science.Ores;
+import lofimodding.progression.recipes.StagedRecipeBuilder;
 import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.ItemTagsProvider;
 import net.minecraft.data.LootTableProvider;
+import net.minecraft.data.RecipeProvider;
 import net.minecraft.data.loot.BlockLootTables;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Items;
@@ -79,6 +83,7 @@ public final class GradientDataGenerator {
     if(event.includeServer()) {
       gen.addProvider(new BlockTagProvider(gen));
       gen.addProvider(new ItemTagProvider(gen));
+      gen.addProvider(new Recipes(gen));
       gen.addProvider(new Loot(gen));
     }
   }
@@ -275,6 +280,7 @@ public final class GradientDataGenerator {
       }
 
       this.singleTexture(GradientIds.FIBRE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.FIBRE));
+      this.singleTexture(GradientIds.TWINE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.TWINE));
     }
 
     @Override
@@ -332,6 +338,7 @@ public final class GradientDataGenerator {
       }
 
       this.add(GradientItems.FIBRE.get(), "Fibre");
+      this.add(GradientItems.TWINE.get(), "Twine");
     }
   }
 
@@ -395,6 +402,24 @@ public final class GradientDataGenerator {
         this.getBuilder(GradientTags.Items.STORAGE_BLOCK.get(metal)).add(GradientItems.METAL_BLOCK(metal).get());
         this.getBuilder(Tags.Items.STORAGE_BLOCKS).add(GradientTags.Items.STORAGE_BLOCK.get(metal));
       }
+
+      this.getBuilder(Tags.Items.STRING).add(GradientItems.TWINE.get());
+    }
+  }
+
+  public static class Recipes extends RecipeProvider {
+    public Recipes(final DataGenerator gen) {
+      super(gen);
+    }
+
+    @Override
+    protected void registerRecipes(final Consumer<IFinishedRecipe> finished) {
+      StagedRecipeBuilder
+        .shapelessRecipe(GradientItems.TWINE.get())
+        .stage(GradientStages.AGE_1)
+        .addIngredient(GradientItems.FIBRE.get(), 4)
+        .addCriterion("has_fibre", this.hasItem(GradientItems.FIBRE.get()))
+        .build(finished, Gradient.loc("age1/twine"));
     }
   }
 

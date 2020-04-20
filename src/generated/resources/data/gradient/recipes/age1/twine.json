@@ -1,0 +1,23 @@
+{
+  "type": "progression:shapeless_staged",
+  "stages": [
+    "gradient:age_1"
+  ],
+  "ingredients": [
+    {
+      "item": "gradient:fibre"
+    },
+    {
+      "item": "gradient:fibre"
+    },
+    {
+      "item": "gradient:fibre"
+    },
+    {
+      "item": "gradient:fibre"
+    }
+  ],
+  "result": {
+    "item": "gradient:twine"
+  }
+}
