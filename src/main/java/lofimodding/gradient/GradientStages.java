@@ -12,13 +12,15 @@ public final class GradientStages {
   private GradientStages() { }
 
   public static final Stage AGE_1 = null;
+  public static final Stage AGE_2 = null;
 
   @SubscribeEvent
   public static void registerStages(final RegistryEvent.Register<Stage> event) {
     Gradient.LOGGER.info("Registering stages...");
 
     event.getRegistry().registerAll(
-      new Stage().setRegistryName("age_1")
+      new Stage().setRegistryName("age_1"),
+      new Stage().setRegistryName("age_2")
     );
   }
 }

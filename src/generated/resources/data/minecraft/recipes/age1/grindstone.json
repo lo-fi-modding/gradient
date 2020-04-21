@@ -1,0 +1,25 @@
+{
+  "type": "progression:shaped_staged",
+  "stages": [
+    "gradient:age_1"
+  ],
+  "pattern": [
+    " P ",
+    "S S",
+    "CSC"
+  ],
+  "key": {
+    "P": {
+      "item": "gradient:pebble"
+    },
+    "S": {
+      "tag": "forge:cobblestone"
+    },
+    "C": {
+      "item": "minecraft:clay_ball"
+    }
+  },
+  "result": {
+    "item": "gradient:grindstone"
+  }
+}

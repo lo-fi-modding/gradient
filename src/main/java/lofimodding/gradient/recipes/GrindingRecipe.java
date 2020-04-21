@@ -7,7 +7,6 @@ import com.google.gson.JsonParseException;
 import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientRecipeSerializers;
 import lofimodding.progression.Stage;
-import lofimodding.progression.StageUtils;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -21,14 +20,19 @@ import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.RecipeMatcher;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class GrindingRecipe implements IRecipe<IInventory> {
   public static final IRecipeType<GrindingRecipe> TYPE = IRecipeType.register("grinding");
+
+  private static final RecipeItemHelper RECIPE_ITEM_HELPER = new RecipeItemHelper();
+  private static final List<ItemStack> INPUT_STACKS = new ArrayList<>();
 
   private final ResourceLocation id;
   private final String group;
@@ -77,32 +81,49 @@ public class GrindingRecipe implements IRecipe<IInventory> {
   }
 
   @Override
-  public boolean matches(final IInventory inv, final World worldIn) {
-
+  @Deprecated
+  public boolean matches(final IInventory inv, final World world) {
+    return false;
   }
 
-  public boolean matches(final IItemHandler inv) {
-    if(!StageUtils.hasStage(inv, this.stages.toArray(new Stage[0]))) {
-      return false;
+  public boolean matches(final IItemHandler inv, final Set<Stage> stages, final int firstSlot, final int lastSlot) {
+    for(final Stage stage : this.stages) {
+      if(!stages.contains(stage)) {
+        return false;
+      }
     }
 
-    final RecipeItemHelper recipeitemhelper = new RecipeItemHelper();
-    final List<ItemStack> inputs = new ArrayList<>();
-    int i = 0;
+    return this.matches(inv, firstSlot, lastSlot);
+  }
 
-    for(int j = 0; j < inv.getSizeInventory(); ++j) {
-      final ItemStack itemstack = inv.getStackInSlot(j);
+  public boolean matches(final IItemHandler inv, final int firstSlot, final int lastSlot) {
+    RECIPE_ITEM_HELPER.clear();
+    INPUT_STACKS.clear();
+
+    int ingredientCount = 0;
+    for(int slot = firstSlot; slot <= lastSlot; ++slot) {
+      final ItemStack itemstack = inv.getStackInSlot(slot);
+
       if(!itemstack.isEmpty()) {
-        ++i;
+        ++ingredientCount;
+
         if(this.simple) {
-          recipeitemhelper.func_221264_a(itemstack, 1);
+          RECIPE_ITEM_HELPER.accountStack(itemstack);
         } else {
-          inputs.add(itemstack);
+          INPUT_STACKS.add(itemstack);
         }
       }
     }
 
-    return i == this.ingredients.size() && (this.simple ? recipeitemhelper.canCraft(this, null) : net.minecraftforge.common.util.RecipeMatcher.findMatches(inputs, this.ingredients) != null);
+    if(ingredientCount != this.ingredients.size()) {
+      return false;
+    }
+
+    if(this.simple) {
+      return RECIPE_ITEM_HELPER.canCraft(this, null);
+    }
+
+    return RecipeMatcher.findMatches(INPUT_STACKS, this.ingredients) != null;
   }
 
   @Override

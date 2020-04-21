@@ -2,6 +2,7 @@ package lofimodding.gradient.tileentities.pieces;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -24,5 +25,16 @@ public class ManualEnergySource implements IEnergySource {
     }
 
     return false;
+  }
+
+  @Override
+  public CompoundNBT write(final CompoundNBT compound) {
+    compound.putBoolean("has_energy", this.hasEnergy);
+    return compound;
+  }
+
+  @Override
+  public void read(final CompoundNBT compound) {
+    this.hasEnergy = compound.getBoolean("has_energy");
   }
 }

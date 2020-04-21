@@ -15,6 +15,7 @@
   "block.gradient.graphite_block": "Block of Graphite",
   "block.gradient.graphite_ore": "Graphite Ore",
   "block.gradient.graphite_pebble": "Graphite Pebble",
+  "block.gradient.grindstone": "Grindstone",
   "block.gradient.hematite_block": "Block of Hematite",
   "block.gradient.hematite_ore": "Hematite Ore",
   "block.gradient.hematite_pebble": "Hematite Pebble",
@@ -119,5 +120,6 @@
   "item.gradient.zinc_nugget": "Zinc Nugget",
   "item.gradient.zinc_plate": "Zinc Plate",
   "item.gradient.zinc_purified": "Purified Zinc Ore",
-  "stage.gradient.age_1": "Age 1 (Nomadic)"
+  "stage.gradient.age_1": "Age 1 (Nomadic)",
+  "stage.gradient.age_2": "Age 2 (Agricultural)"
 }

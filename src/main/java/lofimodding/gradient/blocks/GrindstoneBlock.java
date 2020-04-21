@@ -24,6 +24,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.common.model.animation.IAnimationStateMachine;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 
@@ -38,6 +39,11 @@ public class GrindstoneBlock extends Block {
   public GrindstoneBlock() {
     super(Properties.create(Material.ROCK).hardnessAndResistance(1.0f, 5.0f));
     this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
+  }
+
+  @Override
+  public boolean canHarvestBlock(final BlockState state, final IBlockReader world, final BlockPos pos, final PlayerEntity player) {
+    return true;
   }
 
   @Override
@@ -91,7 +97,7 @@ public class GrindstoneBlock extends Block {
         return ActionResultType.SUCCESS;
       }
 
-      grindstone.crank();
+      grindstone.crank(state, world, pos, player, hand, hit);
     }
 
     return ActionResultType.SUCCESS;

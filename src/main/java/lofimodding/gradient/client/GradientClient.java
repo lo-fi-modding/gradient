@@ -3,7 +3,9 @@ package lofimodding.gradient.client;
 import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientEntities;
 import lofimodding.gradient.GradientItems;
+import lofimodding.gradient.GradientTileEntities;
 import lofimodding.gradient.blocks.MetalBlock;
+import lofimodding.gradient.client.tesr.GrindstoneRenderer;
 import lofimodding.gradient.items.MetalItem;
 import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.science.Metals;
@@ -21,6 +23,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ILightReader;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
@@ -62,6 +65,8 @@ public final class GradientClient {
     }
 
     RenderingRegistry.registerEntityRenderingHandler(GradientEntities.PEBBLE.get(), manager -> new SpriteRenderer<>(manager, Minecraft.getInstance().getItemRenderer()));
+
+    ClientRegistry.bindTileEntityRenderer(GradientTileEntities.GRINDSTONE.get(), GrindstoneRenderer::new);
   }
 
   private static int metalBlockColour(final BlockState state, final ILightReader world, final BlockPos pos, final int tintIndex) {

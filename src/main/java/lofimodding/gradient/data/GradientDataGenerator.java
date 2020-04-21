@@ -169,6 +169,115 @@ public final class GradientDataGenerator {
       for(final Metal metal : Metals.all()) {
         this.getBuilder(GradientIds.METAL_BLOCK(metal)).parent(this.getExistingFile(this.modLoc("block/metal_block")));
       }
+
+      this.getBuilder(GradientIds.GRINDSTONE)
+        .parent(this.getExistingFile(this.mcLoc("block/block")))
+        .texture("particle", this.mcLoc("block/polished_andesite"))
+        .texture("surface", this.mcLoc("block/polished_andesite"))
+        .texture("case", this.mcLoc("block/stone"))
+        .texture("wheel", this.mcLoc("block/polished_andesite"))
+        .texture("rod", this.mcLoc("block/oak_log"))
+
+        .element() // wheel
+        .from(7.0f, 6.0f, 6.0f)
+        .to(9.0f, 10.0f, 10.0f)
+        .face(Direction.NORTH).uvs(0.0f, 8.0f, 16.0f, 16.0f).rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).texture("wheel").end()
+        .face(Direction.EAST).uvs(0.0f, 0.0f, 16.0f, 16.0f).texture("surface").end()
+        .face(Direction.SOUTH).uvs(0.0f, 0.0f, 16.0f, 8.0f).rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).texture("wheel").end()
+        .face(Direction.WEST).uvs(0.0f, 0.0f, 16.0f, 16.0f).texture("surface").end()
+        .face(Direction.UP).uvs(0.0f, 8.0f, 16.0f, 16.0f).rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).texture("wheel").end()
+        .face(Direction.DOWN).uvs(0.0f, 0.0f, 16.0f, 8.0f).rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).texture("wheel").end()
+        .end()
+
+        .element() // handle
+        .from(4.0f, 7.5f, 7.5f)
+        .to(12.0f, 8.5f, 8.5f)
+        .face(Direction.NORTH).uvs(0.0f, 0.0f, 16.0f, 2.0f).texture("rod").end()
+        .face(Direction.EAST).uvs(5.0f, 0.0f, 7.0f, 2.0f).texture("rod").end()
+        .face(Direction.SOUTH).uvs(0.0f, 4.0f, 16.0f, 6.0f).texture("rod").end()
+        .face(Direction.WEST).uvs(10.0f, 5.0f, 12.0f, 7.0f).texture("rod").end()
+        .face(Direction.UP).uvs(0.0f, 2.0f, 16.0f, 4.0f).texture("rod").end()
+        .face(Direction.DOWN).uvs(0.0f, 6.0f, 16.0f, 8.0f).texture("rod").end()
+        .end()
+
+        .element() // south
+        .from(5.0f, 0.0f, 14.0f)
+        .to(11.0f, 3.31f, 15.0f)
+        .face(Direction.NORTH).uvs(5.0f, 13.0f, 11.0f, 16.0f).texture("case").end()
+        .face(Direction.EAST).uvs(0.0f, 0.0f, 1.0f, 3.0f).texture("case").end()
+        .face(Direction.SOUTH).uvs(6.0f, 13.0f, 12.0f, 16.0f).texture("case").end()
+        .face(Direction.WEST).uvs(0.0f, 0.0f, 1.0f, 3.0f).texture("case").end()
+        .face(Direction.UP).uvs(5.0f, 11.0f, 11.0f, 12.0f).texture("case").end()
+        .face(Direction.DOWN).uvs(5.0f, 14.0f, 11.0f, 15.0f).texture("case").end()
+        .end()
+
+        .element() // bottom east
+        .from(7.0f, 0.5f, 2.0f)
+        .to(10.5f, 2.5f, 14.0f)
+        .rotation().angle(-22.5f).axis(Direction.Axis.Z).origin(8.0f, 8.0f, 8.0f).end()
+        .face(Direction.NORTH).uvs(0.0f, 0.0f, 4.0f, 2.0f).texture("surface").end()
+        .face(Direction.EAST).uvs(0.0f, 0.0f, 12.0f, 2.0f).texture("surface").end()
+        .face(Direction.SOUTH).uvs(0.0f, 0.0f, 4.0f, 2.0f).texture("surface").end()
+        .face(Direction.WEST).uvs(0.0f, 0.0f, 12.0f, 2.0f).texture("surface").end()
+        .face(Direction.UP).uvs(0.0f, 2.0f, 4.0f, 14.0f).texture("surface").end()
+        .face(Direction.DOWN).uvs(0.0f, 0.0f, 4.0f, 14.0f).texture("surface").end()
+        .end()
+
+        .element() // bottom west
+        .from(5.5f, 0.5f, 2.0f)
+        .to(9.0f, 2.5f, 14.0f)
+        .rotation().angle(22.5f).axis(Direction.Axis.Z).origin(8.0f, 8.0f, 8.0f).end()
+        .face(Direction.NORTH).uvs(0.0f, 0.0f, 4.0f, 2.0f).texture("surface").end()
+        .face(Direction.EAST).uvs(2.0f, 0.0f, 14.0f, 2.0f).texture("surface").end()
+        .face(Direction.SOUTH).uvs(0.0f, 0.0f, 4.0f, 2.0f).texture("surface").end()
+        .face(Direction.WEST).uvs(0.0f, 0.0f, 12.0f, 2.0f).texture("surface").end()
+        .face(Direction.UP).uvs(12.0f, 2.0f, 16.0f, 14.0f).texture("surface").end()
+        .face(Direction.DOWN).uvs(0.0f, 0.0f, 4.0f, 12.0f).texture("surface").end()
+        .end()
+
+        .element() // east
+        .from(4.0f, 0.0f, 1.0f)
+        .to(5.0f, 3.31f, 15.0f)
+        .face(Direction.NORTH).uvs(11.0f, 13.0f, 12.0f, 16.0f).texture("case").end()
+        .face(Direction.EAST).uvs(1.0f, 0.0f, 15.0f, 3.0f).texture("case").end()
+        .face(Direction.SOUTH).uvs(5.0f, 13.0f, 6.0f, 16.0f).texture("case").end()
+        .face(Direction.WEST).uvs(1.0f, 13.0f, 15.0f, 16.0f).texture("case").end()
+        .face(Direction.UP).uvs(1.0f, 10.0f, 15.0f, 11.0f).texture("case").end()
+        .face(Direction.DOWN).uvs(11.0f, 1.0f, 12.0f, 15.0f).texture("case").end()
+        .end()
+
+        .element() // west
+        .from(11.0f, 0.0f, 1.0f)
+        .to(12.0f, 3.31f, 15.0f)
+        .face(Direction.NORTH).uvs(4.0f, 13.0f, 5.0f, 16.0f).texture("case").end()
+        .face(Direction.EAST).uvs(1.0f, 13.0f, 15.0f, 16.0f).texture("case").end()
+        .face(Direction.SOUTH).uvs(12.0f, 13.0f, 15.0f, 16.0f).texture("case").end()
+        .face(Direction.WEST).uvs(1.0f, 0.0f, 15.0f, 3.0f).texture("case").end()
+        .face(Direction.UP).uvs(1.0f, 11.0f, 15.0f, 12.0f).texture("case").end()
+        .face(Direction.DOWN).uvs(4.0f, 1.0f, 5.0f, 15.0f).texture("case").end()
+        .end()
+
+        .element() // north
+        .from(5.0f, 0.0f, 1.0f)
+        .to(11.0f, 3.31f, 2.0f)
+        .face(Direction.NORTH).uvs(5.0f, 13.0f, 11.0f, 16.0f).texture("case").end()
+        .face(Direction.EAST).uvs(0.0f, 0.0f, 1.0f, 3.0f).texture("case").end()
+        .face(Direction.SOUTH).uvs(5.0f, 13.0f, 11.0f, 16.0f).texture("case").end()
+        .face(Direction.WEST).uvs(0.0f, 0.0f, 1.0f, 3.0f).texture("case").end()
+        .face(Direction.UP).uvs(5.0f, 3.0f, 11.0f, 4.0f).texture("case").end()
+        .face(Direction.DOWN).uvs(5.0f, 1.0f, 11.0f, 2.0f).texture("case").end()
+        .end()
+
+        .element() // south
+        .from(5.0f, 0.0f, 2.0f)
+        .to(11.0f, 1.0f, 14.0f)
+        .face(Direction.NORTH).uvs(0.0f, 0.0f, 6.0f, 1.0f).texture("case").end()
+        .face(Direction.EAST).uvs(0.0f, 0.0f, 12.0f, 1.0f).texture("case").end()
+        .face(Direction.SOUTH).uvs(0.0f, 0.0f, 6.0f, 1.0f).texture("case").end()
+        .face(Direction.WEST).uvs(0.0f, 0.0f, 12.0f, 1.0f).texture("case").end()
+        .face(Direction.UP).uvs(0.0f, 0.0f, 6.0f, 12.0f).texture("case").end()
+        .face(Direction.DOWN).uvs(5.0f, 2.0f, 11.0f, 14.0f).texture("case").end()
+        .end();
     }
 
     private BiConsumer<Direction, ModelBuilder<BlockModelBuilder>.ElementBuilder.FaceBuilder> addTexture(final String texture) {
@@ -283,6 +392,8 @@ public final class GradientDataGenerator {
       this.singleTexture(GradientIds.TWINE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.TWINE));
       this.singleTexture(GradientIds.BARK, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.BARK));
       this.singleTexture(GradientIds.MULCH, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.MULCH));
+
+      this.getBuilder(GradientIds.GRINDSTONE).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.GRINDSTONE)));
     }
 
     @Override
@@ -311,6 +422,8 @@ public final class GradientDataGenerator {
       for(final Metal metal : Metals.all()) {
         this.simpleBlock(GradientBlocks.METAL_BLOCK(metal).get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.METAL_BLOCK(metal))));
       }
+
+      this.simpleBlock(GradientBlocks.GRINDSTONE.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.GRINDSTONE)));
     }
   }
 
@@ -322,6 +435,7 @@ public final class GradientDataGenerator {
     @Override
     protected void addTranslations() {
       this.add("stage.gradient.age_1", "Age 1 (Nomadic)");
+      this.add("stage.gradient.age_2", "Age 2 (Agricultural)");
 
       this.add(GradientBlocks.PEBBLE.get(), "Pebble");
       this.add(GradientItems.PEBBLE.get(), "Pebble");
@@ -345,6 +459,8 @@ public final class GradientDataGenerator {
       this.add(GradientItems.TWINE.get(), "Twine");
       this.add(GradientItems.BARK.get(), "Bark");
       this.add(GradientItems.MULCH.get(), "Mulch");
+
+      this.add(GradientItems.GRINDSTONE.get(), "Grindstone");
     }
   }
 
@@ -426,6 +542,28 @@ public final class GradientDataGenerator {
         .addIngredient(GradientItems.FIBRE.get(), 4)
         .addCriterion("has_fibre", this.hasItem(GradientItems.FIBRE.get()))
         .build(finished, Gradient.loc("age1/twine"));
+
+      GradientRecipeBuilder
+        .grinding(GradientItems.MULCH.get())
+        .stage(GradientStages.AGE_2)
+        .ticks(120)
+        .addIngredient(GradientItems.BARK.get())
+        .addCriterion("has_bark", this.hasItem(GradientItems.BARK.get()))
+        .build(finished, Gradient.loc("age2/mulch"));
+
+      StagedRecipeBuilder
+        .shaped(GradientItems.GRINDSTONE.get())
+        .stage(GradientStages.AGE_1)
+        .patternLine(" P ")
+        .patternLine("S S")
+        .patternLine("CSC")
+        .key('P', GradientItems.PEBBLE.get())
+        .key('S', Tags.Items.COBBLESTONE)
+        .key('C', Items.CLAY_BALL)
+        .addCriterion("has_pebble", this.hasItem(GradientItems.PEBBLE.get()))
+        .addCriterion("has_cobblestone", this.hasItem(Tags.Items.COBBLESTONE))
+        .addCriterion("has_clay_ball", this.hasItem(Items.CLAY_BALL))
+        .build(finished, "age1/grindstone");
     }
   }
 
@@ -512,6 +650,8 @@ public final class GradientDataGenerator {
         for(final Metal metal : Metals.all()) {
           this.registerDropSelfLootTable(GradientBlocks.METAL_BLOCK(metal).get());
         }
+
+        this.registerDropSelfLootTable(GradientBlocks.GRINDSTONE.get());
       }
 
       @Override
