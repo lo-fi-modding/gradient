@@ -24,7 +24,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
-import net.minecraftforge.common.model.animation.IAnimationStateMachine;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
@@ -38,9 +37,6 @@ import java.util.Set;
 public class GrindstoneTile extends ProcessorTile<GrindingRecipe, ManualEnergySource, GrinderProcessor> {
   @CapabilityInject(IItemHandler.class)
   private static Capability<IItemHandler> ITEM_HANDLER_CAPABILITY;
-
-  @CapabilityInject(IAnimationStateMachine.class)
-  private static Capability<IAnimationStateMachine> ANIMATION_CAPABILITY;
 
   private static final int INPUT_SLOT = 0;
   private static final int OUTPUT_SLOT = 1;
@@ -133,6 +129,11 @@ public class GrindstoneTile extends ProcessorTile<GrindingRecipe, ManualEnergySo
   @Override
   protected void onProcessorTick() {
     ((ServerWorld)this.world).spawnParticle(ParticleTypes.SMOKE, this.pos.getX() + 0.5d, this.pos.getY() + 0.5d, this.pos.getZ() + 0.5d, 10, 0.1d, 0.1d, 0.1d, 0.01d);
+  }
+
+  @Override
+  protected void onAnimationTick(final int ticks) {
+
   }
 
   @Override

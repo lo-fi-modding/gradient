@@ -21,18 +21,19 @@ public abstract class ProcessorTile<Recipe extends IRecipe<?>, Source extends IE
 
   @Override
   public void tick() {
-    if(this.world.isRemote) {
-      return;
-    }
-
     if(this.energy.consumeEnergy()) {
       if(this.processor.tick()) {
-        this.onProcessorTick();
         this.markDirty();
 
-        if(this.processor.isFinished()) {
-          this.onFinished(this.recipe);
-          this.processor.restart();
+        if(!this.world.isRemote) {
+          this.onProcessorTick();
+
+          if(this.processor.isFinished()) {
+            this.onFinished(this.recipe);
+            this.processor.restart();
+          }
+        } else {
+          this.onAnimationTick(this.processor.getTicks());
         }
       }
     }
@@ -51,6 +52,10 @@ public abstract class ProcessorTile<Recipe extends IRecipe<?>, Source extends IE
     this.recipe = recipe;
   }
 
+  protected Recipe getRecipe() {
+    return this.recipe;
+  }
+
   protected boolean hasRecipe() {
     return this.recipe != null;
   }
@@ -61,6 +66,7 @@ public abstract class ProcessorTile<Recipe extends IRecipe<?>, Source extends IE
   }
 
   protected abstract void onProcessorTick();
+  protected abstract void onAnimationTick(final int ticks);
   protected abstract void onFinished(final Recipe recipe);
 
   @Override

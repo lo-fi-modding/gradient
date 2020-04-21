@@ -27,6 +27,11 @@ public class GrinderProcessor implements IProcessor<GrindingRecipe> {
   }
 
   @Override
+  public int getTicks() {
+    return this.ticks;
+  }
+
+  @Override
   public boolean isFinished() {
     return this.recipe != null && this.ticks >= this.recipe.getTicks();
   }
