@@ -29,6 +29,8 @@ public class Gradient {
     GradientItems.init(bus);
     GradientEntities.init(bus);
     GradientLoot.init(bus);
+    GradientRecipeSerializers.init(bus);
+    GradientTileEntities.init(bus);
   }
 
   private void setup(final FMLCommonSetupEvent event) {

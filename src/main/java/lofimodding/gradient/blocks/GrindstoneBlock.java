@@ -1,7 +1,6 @@
 package lofimodding.gradient.blocks;
 
 import lofimodding.gradient.tileentities.GrindstoneTile;
-import lofimodding.gradient.tileentities.ManualProcessorTile;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
@@ -12,7 +11,6 @@ import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -43,8 +41,8 @@ public class GrindstoneBlock extends Block {
   }
 
   @Override
-  public ManualProcessorTile createTileEntity(final BlockState state, final IBlockReader world) {
-    return new ManualProcessorTile();
+  public GrindstoneTile createTileEntity(final BlockState state, final IBlockReader world) {
+    return new GrindstoneTile();
   }
 
   @Override
