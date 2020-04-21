@@ -93,6 +93,7 @@ public final class GradientItems {
 
   public static final RegistryObject<Item> FIBRE = REGISTRY.register(GradientIds.FIBRE, () -> new Item(new Item.Properties().group(GROUP)));
   public static final RegistryObject<Item> TWINE = REGISTRY.register(GradientIds.TWINE, () -> new Item(new Item.Properties().group(GROUP)));
+  public static final RegistryObject<Item> BARK = REGISTRY.register(GradientIds.BARK, () -> new Item(new Item.Properties().group(GROUP)));
 
   static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering items...");

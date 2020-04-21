@@ -29,7 +29,7 @@ a0016d5667baac99448c6ae420af424cdef616b9 assets\gradient\blockstates\pyrite_pebb
 9cd5d7faf97e983af9500adf787a140102b22d5e assets\gradient\blockstates\sphalerite_pebble.json
 eb8d4f1c91261a830147471c6b41a48e93d7882e assets\gradient\blockstates\tin_block.json
 659fa450fe62cdecc69d9276f01c713a1e62a205 assets\gradient\blockstates\zinc_block.json
-b8f012c15d9c0f256f7a3c14be6499a792c69b2c assets\gradient\lang\en_us.json
+69bacfdf0a976f4c99d3af7ed2b6706160423bcb assets\gradient\lang\en_us.json
 f295f4e7338854665f216e2f0ca3e339b0d284a7 assets\gradient\models\block\azurite_block.json
 910f0617e8b2433ac0f97c48cbbc8251b4f162b3 assets\gradient\models\block\azurite_ore.json
 79a72e81ecb79d9775041b9a2d526a90f646005b assets\gradient\models\block\azurite_pebble.json
@@ -71,6 +71,7 @@ c028599b8d6b58e50b201992076c965e23e12953 assets\gradient\models\item\azurite_nug
 3ca68ac0c7e4a78dfabec4647c2732f8972c2dee assets\gradient\models\item\azurite_ore.json
 6dd0847d00c407a2fcf785b05353775236d195b9 assets\gradient\models\item\azurite_plate.json
 8cca93b84cab794d001adf994b8b6ed6ea38d8b2 assets\gradient\models\item\azurite_purified.json
+739d1250b4af8dbd99e194ed34be8ad4342360c8 assets\gradient\models\item\bark.json
 ee1b9bcfbbc50d9316797c1293c12175a6f2089d assets\gradient\models\item\bronze_block.json
 65fd911a0d0991ae744faeb83e40613ba6d290a6 assets\gradient\models\item\bronze_crushed.json
 aaaa7a7618b0e6cb38b490992401a55788c41bdd assets\gradient\models\item\bronze_dust.json
