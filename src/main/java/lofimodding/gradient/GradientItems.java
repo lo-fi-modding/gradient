@@ -97,6 +97,8 @@ public final class GradientItems {
   public static final RegistryObject<Item> BARK = REGISTRY.register(GradientIds.BARK, () -> new Item(new Item.Properties().group(GROUP)));
   public static final RegistryObject<MulchItem> MULCH = REGISTRY.register(GradientIds.MULCH, () -> new MulchItem(new Item.Properties().group(GROUP)));
 
+  public static final RegistryObject<BlockItem> GRINDSTONE = REGISTRY.register(GradientIds.GRINDSTONE, () -> new BlockItem(GradientBlocks.GRINDSTONE.get(), new Item.Properties().group(GROUP)));
+
   static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering items...");
     REGISTRY.register(bus);

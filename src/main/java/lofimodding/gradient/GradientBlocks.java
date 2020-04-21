@@ -1,5 +1,6 @@
 package lofimodding.gradient;
 
+import lofimodding.gradient.blocks.GrindstoneBlock;
 import lofimodding.gradient.blocks.MetalBlock;
 import lofimodding.gradient.blocks.PebbleBlock;
 import lofimodding.gradient.science.Metal;
@@ -47,6 +48,8 @@ public final class GradientBlocks {
       METAL_BLOCKS.put(metal, REGISTRY.register(GradientIds.METAL_BLOCK(metal), () -> new MetalBlock(metal, Block.Properties.create(Material.ROCK).hardnessAndResistance(metal.hardness).harvestTool(ToolType.PICKAXE).harvestLevel(metal.harvestLevel))));
     }
   }
+
+  public static final RegistryObject<GrindstoneBlock> GRINDSTONE = REGISTRY.register(GradientIds.GRINDSTONE, GrindstoneBlock::new);
 
   static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering blocks...");

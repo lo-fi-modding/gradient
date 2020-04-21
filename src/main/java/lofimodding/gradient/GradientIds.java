@@ -48,4 +48,6 @@ public final class GradientIds {
   public static final String TWINE = "twine";
   public static final String BARK = "bark";
   public static final String MULCH = "mulch";
+
+  public static final String GRINDSTONE = "grindstone";
 }
