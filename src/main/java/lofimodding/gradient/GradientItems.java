@@ -1,6 +1,7 @@
 package lofimodding.gradient;
 
 import lofimodding.gradient.items.MetalItem;
+import lofimodding.gradient.items.MulchItem;
 import lofimodding.gradient.items.PebbleItem;
 import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.science.Metals;
@@ -94,6 +95,7 @@ public final class GradientItems {
   public static final RegistryObject<Item> FIBRE = REGISTRY.register(GradientIds.FIBRE, () -> new Item(new Item.Properties().group(GROUP)));
   public static final RegistryObject<Item> TWINE = REGISTRY.register(GradientIds.TWINE, () -> new Item(new Item.Properties().group(GROUP)));
   public static final RegistryObject<Item> BARK = REGISTRY.register(GradientIds.BARK, () -> new Item(new Item.Properties().group(GROUP)));
+  public static final RegistryObject<MulchItem> MULCH = REGISTRY.register(GradientIds.MULCH, () -> new MulchItem(new Item.Properties().group(GROUP)));
 
   static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering items...");

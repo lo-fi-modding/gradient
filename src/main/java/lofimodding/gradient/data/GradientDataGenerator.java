@@ -282,6 +282,7 @@ public final class GradientDataGenerator {
       this.singleTexture(GradientIds.FIBRE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.FIBRE));
       this.singleTexture(GradientIds.TWINE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.TWINE));
       this.singleTexture(GradientIds.BARK, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.BARK));
+      this.singleTexture(GradientIds.MULCH, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.MULCH));
     }
 
     @Override
@@ -343,6 +344,7 @@ public final class GradientDataGenerator {
       this.add(GradientItems.FIBRE.get(), "Fibre");
       this.add(GradientItems.TWINE.get(), "Twine");
       this.add(GradientItems.BARK.get(), "Bark");
+      this.add(GradientItems.MULCH.get(), "Mulch");
     }
   }
 
