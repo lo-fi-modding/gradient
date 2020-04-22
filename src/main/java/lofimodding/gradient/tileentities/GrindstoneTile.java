@@ -128,7 +128,7 @@ public class GrindstoneTile extends ProcessorTile<GrindingRecipe, ManualEnergySo
 
   @Override
   protected void onProcessorTick() {
-    ((ServerWorld)this.world).spawnParticle(ParticleTypes.SMOKE, this.pos.getX() + 0.5d, this.pos.getY() + 0.5d, this.pos.getZ() + 0.5d, 2, 0.1d, 0.1d, 0.1d, 0.01d);
+    ((ServerWorld)this.world).spawnParticle(ParticleTypes.SMOKE, this.pos.getX() + 0.5d, this.pos.getY() + 0.5d, this.pos.getZ() + 0.5d, 1, 0.1d, 0.1d, 0.1d, 0.01d);
   }
 
   private float animation;
