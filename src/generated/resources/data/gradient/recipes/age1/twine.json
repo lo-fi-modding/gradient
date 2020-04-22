@@ -1,8 +1,5 @@
 {
-  "type": "progression:shapeless_staged",
-  "stages": [
-    "gradient:age_1"
-  ],
+  "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
       "item": "gradient:fibre"

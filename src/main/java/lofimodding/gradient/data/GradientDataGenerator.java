@@ -24,6 +24,8 @@ import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.ItemTagsProvider;
 import net.minecraft.data.LootTableProvider;
 import net.minecraft.data.RecipeProvider;
+import net.minecraft.data.ShapedRecipeBuilder;
+import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.data.loot.BlockLootTables;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Items;
@@ -169,6 +171,8 @@ public final class GradientDataGenerator {
       for(final Metal metal : Metals.all()) {
         this.getBuilder(GradientIds.METAL_BLOCK(metal)).parent(this.getExistingFile(this.modLoc("block/metal_block")));
       }
+
+      this.cubeAll(GradientIds.SALT_BLOCK, this.modLoc("block/salt_block"));
 
       this.getBuilder(GradientIds.GRINDSTONE)
         .parent(this.getExistingFile(this.mcLoc("block/block")))
@@ -392,6 +396,8 @@ public final class GradientDataGenerator {
         this.getBuilder(GradientIds.METAL_BLOCK(metal)).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.METAL_BLOCK(metal))));
       }
 
+      this.getBuilder(GradientIds.SALT_BLOCK).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.SALT_BLOCK)));
+      this.singleTexture(GradientIds.SALT, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.SALT));
       this.singleTexture(GradientIds.FIBRE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.FIBRE));
       this.singleTexture(GradientIds.TWINE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.TWINE));
       this.singleTexture(GradientIds.BARK, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.BARK));
@@ -427,6 +433,8 @@ public final class GradientDataGenerator {
         this.simpleBlock(GradientBlocks.METAL_BLOCK(metal).get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.METAL_BLOCK(metal))));
       }
 
+      this.simpleBlock(GradientBlocks.SALT_BLOCK.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.SALT_BLOCK)));
+
       this.horizontalBlock(GradientBlocks.GRINDSTONE.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.GRINDSTONE)));
     }
   }
@@ -459,6 +467,8 @@ public final class GradientDataGenerator {
         this.add(GradientItems.METAL_BLOCK(metal).get(), "Block of " + StringUtils.capitalize(metal.name));
       }
 
+      this.add(GradientItems.SALT_BLOCK.get(), "Block of Salt");
+      this.add(GradientItems.SALT.get(), "Salt");
       this.add(GradientItems.FIBRE.get(), "Fibre");
       this.add(GradientItems.TWINE.get(), "Twine");
       this.add(GradientItems.BARK.get(), "Bark");
@@ -540,12 +550,19 @@ public final class GradientDataGenerator {
 
     @Override
     protected void registerRecipes(final Consumer<IFinishedRecipe> finished) {
-      StagedRecipeBuilder
+      ShapedRecipeBuilder
+        .shapedRecipe(GradientItems.SALT_BLOCK.get())
+        .patternLine("SS")
+        .patternLine("SS")
+        .key('S', GradientItems.SALT.get())
+        .addCriterion("has_salt", this.hasItem(GradientItems.SALT.get()))
+        .build(finished, Gradient.loc("age1/" + GradientIds.SALT_BLOCK));
+
+      ShapelessRecipeBuilder
         .shapelessRecipe(GradientItems.TWINE.get())
-        .stage(GradientStages.AGE_1)
         .addIngredient(GradientItems.FIBRE.get(), 4)
         .addCriterion("has_fibre", this.hasItem(GradientItems.FIBRE.get()))
-        .build(finished, Gradient.loc("age1/twine"));
+        .build(finished, Gradient.loc("age1/" + GradientIds.TWINE));
 
       GradientRecipeBuilder
         .grinding(GradientItems.MULCH.get())
@@ -553,7 +570,7 @@ public final class GradientDataGenerator {
         .ticks(40)
         .addIngredient(GradientItems.BARK.get())
         .addCriterion("has_bark", this.hasItem(GradientItems.BARK.get()))
-        .build(finished, Gradient.loc("age2/mulch"));
+        .build(finished, Gradient.loc("age2/" + GradientIds.MULCH));
 
       StagedRecipeBuilder
         .shaped(GradientItems.GRINDSTONE.get())
@@ -567,7 +584,7 @@ public final class GradientDataGenerator {
         .addCriterion("has_pebble", this.hasItem(GradientItems.PEBBLE.get()))
         .addCriterion("has_cobblestone", this.hasItem(Tags.Items.COBBLESTONE))
         .addCriterion("has_clay_ball", this.hasItem(Items.CLAY_BALL))
-        .build(finished, "age1/grindstone");
+        .build(finished, "age1/" + GradientIds.GRINDSTONE);
     }
   }
 
@@ -654,6 +671,8 @@ public final class GradientDataGenerator {
         for(final Metal metal : Metals.all()) {
           this.registerDropSelfLootTable(GradientBlocks.METAL_BLOCK(metal).get());
         }
+
+        this.registerLootTable(GradientBlocks.SALT_BLOCK.get(), block -> droppingWithSilkTouchOrRandomly(block, GradientItems.SALT.get(), ConstantRange.of(4)));
 
         this.registerDropSelfLootTable(GradientBlocks.GRINDSTONE.get());
       }

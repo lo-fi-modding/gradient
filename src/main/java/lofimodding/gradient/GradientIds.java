@@ -44,6 +44,9 @@ public final class GradientIds {
     return metal.name + "_block";
   }
 
+  public static final String SALT_BLOCK = "salt_block";
+  public static final String SALT = "salt";
+
   public static final String FIBRE = "fibre";
   public static final String TWINE = "twine";
   public static final String BARK = "bark";

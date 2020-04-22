@@ -92,6 +92,8 @@ public final class GradientItems {
     }
   }
 
+  public static final RegistryObject<BlockItem> SALT_BLOCK = REGISTRY.register(GradientIds.SALT_BLOCK, () -> new BlockItem(GradientBlocks.SALT_BLOCK.get(), new Item.Properties().group(GROUP)));
+  public static final RegistryObject<Item> SALT = REGISTRY.register(GradientIds.SALT, () -> new Item(new Item.Properties().group(GROUP)));
   public static final RegistryObject<Item> FIBRE = REGISTRY.register(GradientIds.FIBRE, () -> new Item(new Item.Properties().group(GROUP)));
   public static final RegistryObject<Item> TWINE = REGISTRY.register(GradientIds.TWINE, () -> new Item(new Item.Properties().group(GROUP)));
   public static final RegistryObject<Item> BARK = REGISTRY.register(GradientIds.BARK, () -> new Item(new Item.Properties().group(GROUP)));
