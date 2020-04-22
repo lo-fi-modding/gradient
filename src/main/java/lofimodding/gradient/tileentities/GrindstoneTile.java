@@ -120,6 +120,7 @@ public class GrindstoneTile extends ProcessorTile<GrindingRecipe, ManualEnergySo
 
   public void crank(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
     this.getEnergy().crank(state, world, pos, player, hand, hit);
+    this.sync();
   }
 
   private void updateRecipe() {
@@ -131,9 +132,15 @@ public class GrindstoneTile extends ProcessorTile<GrindingRecipe, ManualEnergySo
     ((ServerWorld)this.world).spawnParticle(ParticleTypes.SMOKE, this.pos.getX() + 0.5d, this.pos.getY() + 0.5d, this.pos.getZ() + 0.5d, 10, 0.1d, 0.1d, 0.1d, 0.01d);
   }
 
+  private float animation;
+
+  public float getAnimation() {
+    return this.animation;
+  }
+
   @Override
   protected void onAnimationTick(final int ticks) {
-
+    this.animation = Math.abs(ticks % 20 - 10.0f) / 10.0f;
   }
 
   @Override
