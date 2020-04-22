@@ -1,6 +1,5 @@
 package lofimodding.gradient.tileentities;
 
-import lofimodding.gradient.GradientTileEntities;
 import lofimodding.gradient.tileentities.pieces.IEnergySource;
 import lofimodding.gradient.tileentities.pieces.IProcessor;
 import net.minecraft.block.BlockState;
@@ -10,14 +9,15 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
 
 public abstract class ProcessorTile<Recipe extends IRecipe<?>, Source extends IEnergySource, Processor extends IProcessor<Recipe>> extends TileEntity implements ITickableTileEntity {
   private final Source energy;
   private final Processor processor;
   private Recipe recipe;
 
-  public ProcessorTile(final Source energy, final Processor processor) {
-    super(GradientTileEntities.GRINDSTONE.get());
+  public ProcessorTile(final TileEntityType<?> type, final Source energy, final Processor processor) {
+    super(type);
     this.energy = energy;
     this.processor = processor;
   }

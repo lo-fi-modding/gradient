@@ -1,5 +1,6 @@
 package lofimodding.gradient.tileentities;
 
+import lofimodding.gradient.GradientTileEntities;
 import lofimodding.gradient.recipes.GrindingRecipe;
 import lofimodding.gradient.tileentities.pieces.GrinderProcessor;
 import lofimodding.gradient.tileentities.pieces.ManualEnergySource;
@@ -79,7 +80,7 @@ public class GrindstoneTile extends ProcessorTile<GrindingRecipe, ManualEnergySo
   private boolean forceInsert;
 
   public GrindstoneTile() {
-    super(new ManualEnergySource(), new GrinderProcessor());
+    super(GradientTileEntities.GRINDSTONE.get(), new ManualEnergySource(), new GrinderProcessor());
   }
 
   public boolean hasInput() {
