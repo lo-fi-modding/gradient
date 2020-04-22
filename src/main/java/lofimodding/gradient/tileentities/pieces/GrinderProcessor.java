@@ -9,11 +9,18 @@ public class GrinderProcessor implements IProcessor<GrindingRecipe> {
   @Nullable
   private GrindingRecipe recipe;
   private int ticks;
+  private int maxTicks;
 
   @Override
   public void setRecipe(@Nullable final GrindingRecipe recipe) {
     this.recipe = recipe;
     this.ticks = 0;
+
+    if(recipe != null) {
+      this.maxTicks = recipe.getTicks() * 3;
+    } else {
+      this.maxTicks = Integer.MAX_VALUE;
+    }
   }
 
   @Override
@@ -33,7 +40,7 @@ public class GrinderProcessor implements IProcessor<GrindingRecipe> {
 
   @Override
   public boolean isFinished() {
-    return this.recipe != null && this.ticks >= this.recipe.getTicks();
+    return this.recipe != null && this.ticks >= this.maxTicks;
   }
 
   @Override

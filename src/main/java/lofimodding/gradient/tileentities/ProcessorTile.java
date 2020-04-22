@@ -3,8 +3,11 @@ package lofimodding.gradient.tileentities;
 import lofimodding.gradient.GradientTileEntities;
 import lofimodding.gradient.tileentities.pieces.IEnergySource;
 import lofimodding.gradient.tileentities.pieces.IProcessor;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
@@ -31,6 +34,7 @@ public abstract class ProcessorTile<Recipe extends IRecipe<?>, Source extends IE
           if(this.processor.isFinished()) {
             this.onFinished(this.recipe);
             this.processor.restart();
+            this.sync();
           }
         } else {
           this.onAnimationTick(this.processor.getTicks());
@@ -81,5 +85,29 @@ public abstract class ProcessorTile<Recipe extends IRecipe<?>, Source extends IE
     this.energy.read(compound.getCompound("energy"));
     this.processor.read(compound.getCompound("processor"));
     super.read(compound);
+  }
+
+  protected void sync() {
+    if(!this.world.isRemote) {
+      final BlockState state = this.world.getBlockState(this.getPos());
+      this.world.notifyBlockUpdate(this.getPos(), state, state, 3);
+      this.markDirty();
+    }
+  }
+
+  @Override
+  public SUpdateTileEntityPacket getUpdatePacket() {
+    return new SUpdateTileEntityPacket(this.pos, 0, this.getUpdateTag());
+  }
+
+  @Override
+  public CompoundNBT getUpdateTag() {
+    return this.write(new CompoundNBT());
+  }
+
+  @Override
+  public void onDataPacket(final NetworkManager net, final SUpdateTileEntityPacket packet) {
+    this.read(packet.getNbtCompound());
+    this.onAnimationTick(this.processor.getTicks());
   }
 }

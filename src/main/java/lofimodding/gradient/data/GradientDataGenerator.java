@@ -550,7 +550,7 @@ public final class GradientDataGenerator {
       GradientRecipeBuilder
         .grinding(GradientItems.MULCH.get())
         .stage(GradientStages.AGE_2)
-        .ticks(120)
+        .ticks(40)
         .addIngredient(GradientItems.BARK.get())
         .addCriterion("has_bark", this.hasItem(GradientItems.BARK.get()))
         .build(finished, Gradient.loc("age2/mulch"));

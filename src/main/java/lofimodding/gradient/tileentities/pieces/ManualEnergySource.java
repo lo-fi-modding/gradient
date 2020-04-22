@@ -10,17 +10,17 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 
 public class ManualEnergySource implements IEnergySource {
-  private boolean hasEnergy;
+  private int energy;
 
   public ActionResultType crank(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
-    this.hasEnergy = true;
+    this.energy = 4;
     return ActionResultType.SUCCESS;
   }
 
   @Override
   public boolean consumeEnergy() {
-    if(this.hasEnergy) {
-      this.hasEnergy = false;
+    if(this.energy > 0) {
+      this.energy--;
       return true;
     }
 
@@ -29,12 +29,12 @@ public class ManualEnergySource implements IEnergySource {
 
   @Override
   public CompoundNBT write(final CompoundNBT compound) {
-    compound.putBoolean("has_energy", this.hasEnergy);
+    compound.putInt("energy", this.energy);
     return compound;
   }
 
   @Override
   public void read(final CompoundNBT compound) {
-    this.hasEnergy = compound.getBoolean("has_energy");
+    this.energy = compound.getInt("energy");
   }
 }

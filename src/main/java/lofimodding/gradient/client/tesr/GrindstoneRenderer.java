@@ -36,9 +36,8 @@ public class GrindstoneRenderer extends TileEntityRenderer<GrindstoneTile> {
   @Override
   public void render(final GrindstoneTile te, final float partialTicks, final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final int combinedLight, final int combinedOverlay) {
     matrixStack.push();
-    matrixStack.translate(0.0d, 0.3125d, 0.0d);
+    matrixStack.translate(0.0d, 0.3125d, 0.2d + te.getAnimation() * 0.6d);
     matrixStack.rotate(Vector3f.XP.rotation(te.getAnimation() * (float)Math.PI));
-//    matrixStack.translate(0.05d + te.getAnimation() * 0.9d, 0.0d, 0.0d);
     this.renderWheel(te, matrixStack, buffer, combinedLight);
     matrixStack.pop();
 

@@ -12,8 +12,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -180,29 +178,6 @@ public class GrindstoneTile extends ProcessorTile<GrindingRecipe, ManualEnergySo
     this.updateRecipe();
 
     super.read(compound);
-  }
-
-  private void sync() {
-    if(!this.world.isRemote) {
-      final BlockState state = this.world.getBlockState(this.getPos());
-      this.world.notifyBlockUpdate(this.getPos(), state, state, 3);
-      this.markDirty();
-    }
-  }
-
-  @Override
-  public SUpdateTileEntityPacket getUpdatePacket() {
-    return new SUpdateTileEntityPacket(this.pos, 0, this.getUpdateTag());
-  }
-
-  @Override
-  public CompoundNBT getUpdateTag() {
-    return this.write(new CompoundNBT());
-  }
-
-  @Override
-  public void onDataPacket(final NetworkManager net, final SUpdateTileEntityPacket packet) {
-    this.read(packet.getNbtCompound());
   }
 
   @Nonnull
