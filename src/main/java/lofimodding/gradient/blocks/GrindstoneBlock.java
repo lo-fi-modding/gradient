@@ -5,8 +5,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.DirectionProperty;
@@ -115,8 +115,10 @@ public class GrindstoneBlock extends Block {
     if(grindstone != null) {
       grindstone.getCapability(ITEM_HANDLER_CAPABILITY).ifPresent(inv -> {
         for(int i = 0; i < inv.getSlots(); i++) {
-          if(!inv.getStackInSlot(i).isEmpty()) {
-            world.addEntity(new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), inv.getStackInSlot(i)));
+          final ItemStack stack = inv.getStackInSlot(i);
+
+          if(!stack.isEmpty()) {
+            InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
           }
         }
       });
