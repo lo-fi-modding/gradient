@@ -15,6 +15,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 
 public class GrindstoneRenderer extends TileEntityRenderer<GrindstoneTile> {
+  //TODO: pull in wheel model
+
   public GrindstoneRenderer(final TileEntityRendererDispatcher rendererDispatcher) {
     super(rendererDispatcher);
   }

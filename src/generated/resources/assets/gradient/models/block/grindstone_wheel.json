@@ -1,0 +1,150 @@
+{
+  "parent": "block/block",
+  "textures": {
+    "surface": "block/polished_andesite",
+    "wheel": "block/polished_andesite",
+    "rod": "block/oak_log"
+  },
+  "elements": [
+    {
+      "from": [
+        7,
+        6,
+        6
+      ],
+      "to": [
+        9,
+        10,
+        10
+      ],
+      "faces": {
+        "down": {
+          "texture": "wheel",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            8.0
+          ],
+          "rotation": 270
+        },
+        "up": {
+          "texture": "wheel",
+          "uv": [
+            0.0,
+            8.0,
+            16.0,
+            16.0
+          ],
+          "rotation": 270
+        },
+        "north": {
+          "texture": "wheel",
+          "uv": [
+            0.0,
+            8.0,
+            16.0,
+            16.0
+          ],
+          "rotation": 90
+        },
+        "south": {
+          "texture": "wheel",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            8.0
+          ],
+          "rotation": 270
+        },
+        "west": {
+          "texture": "surface",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ]
+        },
+        "east": {
+          "texture": "surface",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        4,
+        7.5,
+        7.5
+      ],
+      "to": [
+        12,
+        8.5,
+        8.5
+      ],
+      "faces": {
+        "down": {
+          "texture": "rod",
+          "uv": [
+            0.0,
+            6.0,
+            16.0,
+            8.0
+          ]
+        },
+        "up": {
+          "texture": "rod",
+          "uv": [
+            0.0,
+            2.0,
+            16.0,
+            4.0
+          ]
+        },
+        "north": {
+          "texture": "rod",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            2.0
+          ]
+        },
+        "south": {
+          "texture": "rod",
+          "uv": [
+            0.0,
+            4.0,
+            16.0,
+            6.0
+          ]
+        },
+        "west": {
+          "texture": "rod",
+          "uv": [
+            10.0,
+            5.0,
+            12.0,
+            7.0
+          ]
+        },
+        "east": {
+          "texture": "rod",
+          "uv": [
+            5.0,
+            0.0,
+            7.0,
+            2.0
+          ]
+        }
+      }
+    }
+  ]
+}
