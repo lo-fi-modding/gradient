@@ -2,6 +2,7 @@ package lofimodding.gradient;
 
 import lofimodding.gradient.data.AppendLootTable;
 import lofimodding.gradient.data.BlockTagCondition;
+import lofimodding.gradient.data.EntityCondition;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
@@ -22,6 +23,7 @@ public final class GradientLoot {
   static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering loot modifier serializers...");
     LootConditionManager.registerCondition(new BlockTagCondition.Serializer());
+    LootConditionManager.registerCondition(new EntityCondition.Serializer());
     REGISTRY.register(bus);
   }
 }

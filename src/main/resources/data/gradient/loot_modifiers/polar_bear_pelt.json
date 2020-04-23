@@ -1,0 +1,10 @@
+{
+  "type": "gradient:append_loot",
+  "conditions": [
+    {
+      "condition": "gradient:entity",
+      "type": "minecraft:polar_bear"
+    }
+  ],
+  "add_loot": "gradient:entities/polar_bear_pelt_additions"
+}

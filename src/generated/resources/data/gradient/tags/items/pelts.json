@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "#gradient:pelts/cow",
+    "#gradient:pelts/donkey",
+    "#gradient:pelts/horse",
+    "#gradient:pelts/llama",
+    "#gradient:pelts/mule",
+    "#gradient:pelts/ocelot",
+    "#gradient:pelts/pig",
+    "#gradient:pelts/polar_bear",
+    "#gradient:pelts/sheep",
+    "#gradient:pelts/wolf"
+  ]
+}

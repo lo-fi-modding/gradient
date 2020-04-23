@@ -1,0 +1,10 @@
+{
+  "type": "gradient:append_loot",
+  "conditions": [
+    {
+      "condition": "gradient:entity",
+      "type": "minecraft:donkey"
+    }
+  ],
+  "add_loot": "gradient:entities/donkey_pelt_additions"
+}

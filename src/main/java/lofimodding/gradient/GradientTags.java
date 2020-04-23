@@ -103,6 +103,18 @@ public final class GradientTags {
       }
     }));
 
+    public static final Tag<Item> PELTS = tag("pelts");
+    public static final Tag<Item> PELTS_COW = tag("pelts/cow");
+    public static final Tag<Item> PELTS_DONKEY = tag("pelts/donkey");
+    public static final Tag<Item> PELTS_HORSE = tag("pelts/horse");
+    public static final Tag<Item> PELTS_LLAMA = tag("pelts/llama");
+    public static final Tag<Item> PELTS_MULE = tag("pelts/mule");
+    public static final Tag<Item> PELTS_OCELOT = tag("pelts/ocelot");
+    public static final Tag<Item> PELTS_PIG = tag("pelts/pig");
+    public static final Tag<Item> PELTS_POLAR_BEAR = tag("pelts/polar_bear");
+    public static final Tag<Item> PELTS_SHEEP = tag("pelts/sheep");
+    public static final Tag<Item> PELTS_WOLF = tag("pelts/wolf");
+
     private static Tag<Item> tag(final String name) {
       return tag(Gradient.loc(name));
     }

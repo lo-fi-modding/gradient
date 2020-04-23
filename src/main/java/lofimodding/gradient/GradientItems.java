@@ -98,6 +98,16 @@ public final class GradientItems {
   public static final RegistryObject<Item> TWINE = REGISTRY.register(GradientIds.TWINE, () -> new Item(new Item.Properties().group(GROUP)));
   public static final RegistryObject<Item> BARK = REGISTRY.register(GradientIds.BARK, () -> new Item(new Item.Properties().group(GROUP)));
   public static final RegistryObject<MulchItem> MULCH = REGISTRY.register(GradientIds.MULCH, () -> new MulchItem(new Item.Properties().group(GROUP)));
+  public static final RegistryObject<Item> COW_PELT = REGISTRY.register(GradientIds.COW_PELT, () -> new Item(new Item.Properties().group(GROUP)));
+  public static final RegistryObject<Item> DONKEY_PELT = REGISTRY.register(GradientIds.DONKEY_PELT, () -> new Item(new Item.Properties().group(GROUP)));
+  public static final RegistryObject<Item> HORSE_PELT = REGISTRY.register(GradientIds.HORSE_PELT, () -> new Item(new Item.Properties().group(GROUP)));
+  public static final RegistryObject<Item> LLAMA_PELT = REGISTRY.register(GradientIds.LLAMA_PELT, () -> new Item(new Item.Properties().group(GROUP)));
+  public static final RegistryObject<Item> MULE_PELT = REGISTRY.register(GradientIds.MULE_PELT, () -> new Item(new Item.Properties().group(GROUP)));
+  public static final RegistryObject<Item> OCELOT_PELT = REGISTRY.register(GradientIds.OCELOT_PELT, () -> new Item(new Item.Properties().group(GROUP)));
+  public static final RegistryObject<Item> PIG_PELT = REGISTRY.register(GradientIds.PIG_PELT, () -> new Item(new Item.Properties().group(GROUP)));
+  public static final RegistryObject<Item> POLAR_BEAR_PELT = REGISTRY.register(GradientIds.POLAR_BEAR_PELT, () -> new Item(new Item.Properties().group(GROUP)));
+  public static final RegistryObject<Item> SHEEP_PELT = REGISTRY.register(GradientIds.SHEEP_PELT, () -> new Item(new Item.Properties().group(GROUP)));
+  public static final RegistryObject<Item> WOLF_PELT = REGISTRY.register(GradientIds.WOLF_PELT, () -> new Item(new Item.Properties().group(GROUP)));
 
   public static final RegistryObject<BlockItem> GRINDSTONE = REGISTRY.register(GradientIds.GRINDSTONE, () -> new BlockItem(GradientBlocks.GRINDSTONE.get(), new Item.Properties().group(GROUP)));
 

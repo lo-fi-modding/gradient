@@ -1,0 +1,10 @@
+{
+  "type": "gradient:append_loot",
+  "conditions": [
+    {
+      "condition": "gradient:entity",
+      "type": "minecraft:cow"
+    }
+  ],
+  "add_loot": "gradient:entities/cow_pelt_additions"
+}

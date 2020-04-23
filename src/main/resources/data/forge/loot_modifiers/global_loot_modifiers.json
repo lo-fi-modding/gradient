@@ -1,6 +1,16 @@
 {
   "replace": false,
   "entries": [
-      "gradient:fibre"
+    "gradient:fibre",
+    "gradient:cow_pelt",
+    "gradient:donkey_pelt",
+    "gradient:horse_pelt",
+    "gradient:llama_pelt",
+    "gradient:mule_pelt",
+    "gradient:ocelot_pelt",
+    "gradient:pig_pelt",
+    "gradient:polar_bear_pelt",
+    "gradient:sheep_pelt",
+    "gradient:wolf_pelt"
   ]
 }

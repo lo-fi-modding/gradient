@@ -1,0 +1,10 @@
+{
+  "type": "gradient:append_loot",
+  "conditions": [
+    {
+      "condition": "gradient:entity",
+      "type": "minecraft:horse"
+    }
+  ],
+  "add_loot": "gradient:entities/horse_pelt_additions"
+}

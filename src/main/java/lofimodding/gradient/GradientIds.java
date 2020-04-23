@@ -51,6 +51,16 @@ public final class GradientIds {
   public static final String TWINE = "twine";
   public static final String BARK = "bark";
   public static final String MULCH = "mulch";
+  public static final String COW_PELT = "cow_pelt";
+  public static final String DONKEY_PELT = "donkey_pelt";
+  public static final String HORSE_PELT = "horse_pelt";
+  public static final String LLAMA_PELT = "llama_pelt";
+  public static final String MULE_PELT = "mule_pelt";
+  public static final String OCELOT_PELT = "ocelot_pelt";
+  public static final String PIG_PELT = "pig_pelt";
+  public static final String POLAR_BEAR_PELT = "polar_bear_pelt";
+  public static final String SHEEP_PELT = "sheep_pelt";
+  public static final String WOLF_PELT = "wolf_pelt";
 
   public static final String GRINDSTONE = "grindstone";
 }
