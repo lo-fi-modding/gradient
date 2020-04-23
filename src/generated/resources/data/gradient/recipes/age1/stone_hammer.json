@@ -1,0 +1,25 @@
+{
+  "type": "progression:shaped_staged",
+  "stages": [
+    "gradient:age_1"
+  ],
+  "pattern": [
+    "P",
+    "F",
+    "S"
+  ],
+  "key": {
+    "P": {
+      "item": "gradient:pebble"
+    },
+    "F": {
+      "tag": "forge:string"
+    },
+    "S": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "result": {
+    "item": "gradient:stone_hammer"
+  }
+}

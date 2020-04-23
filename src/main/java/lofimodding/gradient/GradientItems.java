@@ -3,6 +3,7 @@ package lofimodding.gradient;
 import lofimodding.gradient.items.MetalItem;
 import lofimodding.gradient.items.MulchItem;
 import lofimodding.gradient.items.PebbleItem;
+import lofimodding.gradient.items.StoneHammerItem;
 import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.science.Metals;
 import lofimodding.gradient.science.Ore;
@@ -24,7 +25,7 @@ public final class GradientItems {
 
   private static final DeferredRegister<Item> REGISTRY = new DeferredRegister<>(ForgeRegistries.ITEMS, Gradient.MOD_ID);
 
-  private static final ItemGroup GROUP = new GradientItemGroup();
+  public static final ItemGroup GROUP = new GradientItemGroup();
 
   public static final RegistryObject<PebbleItem> PEBBLE = REGISTRY.register(GradientIds.PEBBLE, () -> new PebbleItem(new Item.Properties().group(GROUP)));
 
@@ -108,6 +109,8 @@ public final class GradientItems {
   public static final RegistryObject<Item> POLAR_BEAR_PELT = REGISTRY.register(GradientIds.POLAR_BEAR_PELT, () -> new Item(new Item.Properties().group(GROUP)));
   public static final RegistryObject<Item> SHEEP_PELT = REGISTRY.register(GradientIds.SHEEP_PELT, () -> new Item(new Item.Properties().group(GROUP)));
   public static final RegistryObject<Item> WOLF_PELT = REGISTRY.register(GradientIds.WOLF_PELT, () -> new Item(new Item.Properties().group(GROUP)));
+
+  public static final RegistryObject<StoneHammerItem> STONE_HAMMER = REGISTRY.register(GradientIds.STONE_HAMMER, StoneHammerItem::new);
 
   public static final RegistryObject<BlockItem> GRINDSTONE = REGISTRY.register(GradientIds.GRINDSTONE, () -> new BlockItem(GradientBlocks.GRINDSTONE.get(), new Item.Properties().group(GROUP)));
 

@@ -1,0 +1,10 @@
+{
+  "type": "gradient:append_loot",
+  "conditions": [
+    {
+      "condition": "gradient:block_tag",
+      "tag": "gradient:pebble_sources"
+    }
+  ],
+  "add_loot": "gradient:blocks/pebble_additions"
+}

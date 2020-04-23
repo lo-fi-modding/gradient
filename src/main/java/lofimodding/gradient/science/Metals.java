@@ -12,9 +12,9 @@ public final class Metals {
 
   public static final Metal INVALID_METAL = new Metal("invalid", Float.POSITIVE_INFINITY, 0.0f, 0.0f, 0, 0, 0, 0, 0, 0, 0, 0);
 
-  public static final Metal AZURITE     = add("azurite",     m -> m.meltTemp(1165.00f).hardness(3.5f).weight(344.67f).harvestLevel(2).colours(0xFF2E01E2, 0xFF9B81D8, 0xFF2901B9, 0xFF271770, 0xFF231C3D, 0xFF1C1630, 0xFF130F21));
+  public static final Metal AZURITE     = add("azurite",     m -> m.meltTemp(1165.00f).hardness(3.5f).weight(344.67f).harvestLevel(1).colours(0xFF2E01E2, 0xFF9B81D8, 0xFF2901B9, 0xFF271770, 0xFF231C3D, 0xFF1C1630, 0xFF130F21));
   public static final Metal BRONZE      = add("bronze",      m -> m.meltTemp( 950.00f).hardness(3.5f).weight(182.26f).harvestLevel(2).colours(0xFFFFE48B, 0xFFFFEAA8, 0xFFFFC400, 0xFFDEAA00, 0xFFDB7800, 0xFF795D00, 0xFF795D00));
-  public static final Metal CASSITERITE = add("cassiterite", m -> m.meltTemp(1127.00f).hardness(6.5f).weight(150.71f).harvestLevel(2).colours(0xFF7F7F7F, 0xFFB9B9B9, 0xFF707070, 0xFF676767, 0xFF6D6D6D, 0xFF595959, 0xFF505050));
+  public static final Metal CASSITERITE = add("cassiterite", m -> m.meltTemp(1127.00f).hardness(6.5f).weight(150.71f).harvestLevel(1).colours(0xFF7F7F7F, 0xFFB9B9B9, 0xFF707070, 0xFF676767, 0xFF6D6D6D, 0xFF595959, 0xFF505050));
   public static final Metal COPPER      = add("copper",      m -> m.meltTemp(1085.00f).hardness(3.0f).weight( 63.55f).harvestLevel(2).colours(0xFFFFB88B, 0xFFFFB88B, 0xFFFF6300, 0xFFDE5600, 0xFFDB2400, 0xFF792F00, 0xFF492914));
   public static final Metal GOLD        = add("gold",        m -> m.meltTemp(1064.00f).hardness(2.0f).weight(196.97f).harvestLevel(3).colours(0xFFFFFF8B, 0xFFFFFFFF, 0xFFDEDE00, 0xFFDC7613, 0xFF868600, 0xFF505000, 0xFF3C3C00));
   public static final Metal GRAPHITE    = add("graphite",    m -> m.meltTemp(3730.00f).hardness(1.5f).weight( 12.01f).harvestLevel(3).colours(0xFF807875, 0xFFBDBDBD, 0xFF383431, 0xFF222222, 0xFF4F4D50, 0xFF404050, 0xFF2F2D30));

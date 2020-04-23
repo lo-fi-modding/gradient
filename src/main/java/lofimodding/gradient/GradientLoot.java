@@ -19,6 +19,7 @@ public final class GradientLoot {
   public static final RegistryObject<GlobalLootModifierSerializer<AppendLootTable>> APPEND_LOOT = REGISTRY.register("append_loot", AppendLootTable.Serializer::new);
 
   public static final ResourceLocation FIBRE_ADDITIONS = Gradient.loc("blocks/fibre_additions");
+  public static final ResourceLocation PEBBLE_ADDITIONS = Gradient.loc("blocks/pebble_additions");
 
   static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering loot modifier serializers...");

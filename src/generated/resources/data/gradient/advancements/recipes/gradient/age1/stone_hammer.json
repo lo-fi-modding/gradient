@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "gradient:age1/stone_hammer"
+    ]
+  },
+  "criteria": {
+    "has_pebble": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "gradient:pebble"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "gradient:age1/stone_hammer"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_pebble",
+      "has_the_recipe"
+    ]
+  ]
+}

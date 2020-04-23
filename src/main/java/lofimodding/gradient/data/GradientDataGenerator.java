@@ -10,6 +10,8 @@ import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientLoot;
 import lofimodding.gradient.GradientStages;
 import lofimodding.gradient.GradientTags;
+import lofimodding.gradient.blocks.MetalBlock;
+import lofimodding.gradient.items.PebbleItem;
 import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.science.Metals;
 import lofimodding.gradient.science.Ore;
@@ -41,6 +43,7 @@ import net.minecraft.world.storage.loot.LootPool;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.RandomValueRange;
 import net.minecraft.world.storage.loot.ValidationTracker;
+import net.minecraft.world.storage.loot.conditions.ILootCondition;
 import net.minecraft.world.storage.loot.conditions.Inverted;
 import net.minecraft.world.storage.loot.conditions.MatchTool;
 import net.minecraft.world.storage.loot.conditions.RandomChance;
@@ -414,6 +417,8 @@ public final class GradientDataGenerator {
       this.singleTexture(GradientIds.SHEEP_PELT, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.SHEEP_PELT));
       this.singleTexture(GradientIds.WOLF_PELT, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.WOLF_PELT));
 
+      this.singleTexture(GradientIds.STONE_HAMMER, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.STONE_HAMMER));
+
       this.getBuilder(GradientIds.GRINDSTONE).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.GRINDSTONE)));
     }
 
@@ -495,6 +500,9 @@ public final class GradientDataGenerator {
       this.add(GradientItems.SHEEP_PELT.get(), "Sheep Pelt");
       this.add(GradientItems.WOLF_PELT.get(), "Wolf Pelt");
 
+      this.add(GradientItems.STONE_HAMMER.get(), "Stone Hammer");
+      this.add(GradientItems.STONE_HAMMER.get().getTranslationKey() + ".tooltip", "Use on ores to get metal nuggets");
+
       this.add(GradientItems.GRINDSTONE.get(), "Grindstone");
     }
   }
@@ -512,6 +520,9 @@ public final class GradientDataGenerator {
         .add(BlockTags.LEAVES)
         .add(Blocks.GRASS)
         .add(Blocks.TALL_GRASS);
+
+      this.getBuilder(GradientTags.Blocks.PEBBLE_SOURCES)
+        .add(Tags.Blocks.GRAVEL);
 
       for(final Ore ore : Ores.all()) {
         this.getBuilder(GradientTags.Blocks.ORE.get(ore)).add(GradientBlocks.ORE(ore).get());
@@ -606,6 +617,18 @@ public final class GradientDataGenerator {
         .build(finished, Gradient.loc("age2/" + GradientIds.MULCH));
 
       StagedRecipeBuilder
+        .shaped(GradientItems.STONE_HAMMER.get())
+        .stage(GradientStages.AGE_1)
+        .patternLine("P")
+        .patternLine("F")
+        .patternLine("S")
+        .key('P', GradientItems.PEBBLE.get())
+        .key('F', Tags.Items.STRING)
+        .key('S', Tags.Items.RODS_WOODEN)
+        .addCriterion("has_pebble", this.hasItem(GradientItems.PEBBLE.get()))
+        .build(finished, Gradient.loc("age1/" + GradientIds.STONE_HAMMER));
+
+      StagedRecipeBuilder
         .shaped(GradientItems.GRINDSTONE.get())
         .stage(GradientStages.AGE_1)
         .patternLine(" P ")
@@ -622,6 +645,10 @@ public final class GradientDataGenerator {
   }
 
   public static class Loot extends LootTableProvider {
+    //TODO: register a custom item predicate that accepts the hammer tool type
+    private static final ILootCondition.IBuilder STONE_HAMMER = MatchTool.builder(ItemPredicate.Builder.create().item(GradientItems.STONE_HAMMER.get()));
+    private static final ILootCondition.IBuilder NOT_STONE_HAMMER = STONE_HAMMER.inverted();
+
     public Loot(final DataGenerator gen) {
       super(gen);
     }
@@ -630,6 +657,7 @@ public final class GradientDataGenerator {
     protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootParameterSet>> getTables() {
       return ImmutableList.of(
         Pair.of(FibreAdditionsLootTable::new, LootParameterSets.BLOCK),
+        Pair.of(PebbleAdditionsLootTable::new, LootParameterSets.BLOCK),
         Pair.of(() -> new PeltDropsTable(GradientIds.COW_PELT, GradientItems.COW_PELT.get()), LootParameterSets.ENTITY),
         Pair.of(() -> new PeltDropsTable(GradientIds.DONKEY_PELT, GradientItems.DONKEY_PELT.get()), LootParameterSets.ENTITY),
         Pair.of(() -> new PeltDropsTable(GradientIds.HORSE_PELT, GradientItems.HORSE_PELT.get()), LootParameterSets.ENTITY),
@@ -667,10 +695,24 @@ public final class GradientDataGenerator {
               .acceptFunction(
                 ApplyBonus.uniformBonusCount(Enchantments.FORTUNE, 2)
               )
-            .acceptFunction(
-              ExplosionDecay.builder()
-            )
+              .acceptFunction(
+                ExplosionDecay.builder()
+              )
           )
+        ));
+      }
+    }
+
+    public static class PebbleAdditionsLootTable implements Consumer<BiConsumer<ResourceLocation, LootTable.Builder>> {
+      @Override
+      public void accept(final BiConsumer<ResourceLocation, LootTable.Builder> builder) {
+        builder.accept(GradientLoot.PEBBLE_ADDITIONS, LootTable.builder().addLootPool(
+          LootPool.builder().addEntry(
+            ItemLootEntry
+              .builder(GradientItems.PEBBLE.get())
+              .acceptCondition(RandomChance.builder(0.125f))
+              .acceptFunction(ExplosionDecay.builder())
+          ).rolls(ConstantRange.of(3))
         ));
       }
     }
@@ -690,7 +732,6 @@ public final class GradientDataGenerator {
           LootPool.builder().addEntry(
             ItemLootEntry
               .builder(this.pelt)
-              .acceptFunction(ApplyBonus.uniformBonusCount(Enchantments.LOOTING, 2))
               .acceptFunction(ExplosionDecay.builder())
           )
         ));
@@ -724,13 +765,78 @@ public final class GradientDataGenerator {
           );
       }
 
+      private static LootTable.Builder oreDrops(final Ore ore) {
+        final MetalBlock block = GradientBlocks.ORE(ore).get();
+        final Item nugget = GradientItems.NUGGET(ore.metal).get();
+        final PebbleItem pebble = GradientItems.PEBBLE.get();
+
+        return LootTable.builder()
+          .addLootPool(
+            withSurvivesExplosion(
+              block,
+              LootPool.builder()
+                .rolls(ConstantRange.of(1))
+                .addEntry(ItemLootEntry.builder(block))
+            )
+            .acceptCondition(NOT_STONE_HAMMER)
+          )
+          .addLootPool(
+            withSurvivesExplosion(
+              block,
+              LootPool.builder()
+                .rolls(RandomValueRange.of(1, 4))
+                .addEntry(ItemLootEntry.builder(pebble))
+            )
+            .acceptCondition(STONE_HAMMER)
+          )
+          .addLootPool(
+            withSurvivesExplosion(
+              block,
+              LootPool.builder()
+                .rolls(RandomValueRange.of(3, 7))
+                .addEntry(ItemLootEntry.builder(nugget))
+            )
+            .acceptCondition(STONE_HAMMER)
+          );
+      }
+
+      private static LootTable.Builder hammerDrops(final Block block) {
+        final PebbleItem pebble = GradientItems.PEBBLE.get();
+
+        return LootTable.builder()
+          .addLootPool(
+            withSurvivesExplosion(
+              block,
+              LootPool.builder()
+                .rolls(ConstantRange.of(1))
+                .addEntry(ItemLootEntry.builder(block))
+            )
+            .acceptCondition(NOT_STONE_HAMMER)
+          )
+          .addLootPool(
+            withSurvivesExplosion(
+              block,
+              LootPool.builder()
+                .rolls(RandomValueRange.of(1, 6))
+                .addEntry(ItemLootEntry.builder(pebble))
+            )
+            .acceptCondition(STONE_HAMMER)
+          );
+      }
+
       @Override
       protected void addTables() {
+        this.registerLootTable(Blocks.STONE, hammerDrops(Blocks.STONE));
+        this.registerLootTable(Blocks.ANDESITE, hammerDrops(Blocks.ANDESITE));
+        this.registerLootTable(Blocks.DIORITE, hammerDrops(Blocks.DIORITE));
+        this.registerLootTable(Blocks.GRANITE, hammerDrops(Blocks.GRANITE));
+        this.registerLootTable(Blocks.COBBLESTONE, hammerDrops(Blocks.COBBLESTONE));
+
         this.registerLootTable(GradientBlocks.PEBBLE.get(), pebbleDrops());
 
         for(final Ore ore : Ores.all()) {
           this.registerLootTable(GradientBlocks.PEBBLE(ore).get(), metalPebbleDrops(ore.metal));
-          this.registerDropSelfLootTable(GradientBlocks.ORE(ore).get());
+          this.registerLootTable(GradientBlocks.ORE(ore).get(), oreDrops(ore));
         }
 
         for(final Metal metal : Metals.all()) {
@@ -742,9 +848,17 @@ public final class GradientDataGenerator {
         this.registerDropSelfLootTable(GradientBlocks.GRINDSTONE.get());
       }
 
+      private final List<Block> blocks = new ArrayList<>();
+
+      @Override
+      protected void registerLootTable(final Block block, final LootTable.Builder table) {
+        super.registerLootTable(block, table);
+        this.blocks.add(block);
+      }
+
       @Override
       protected Iterable<Block> getKnownBlocks() {
-        return Streams.stream(super.getKnownBlocks()).filter(block -> Gradient.MOD_ID.equals(block.getRegistryName().getNamespace())).collect(Collectors.toCollection(ArrayList::new));
+        return Streams.stream(super.getKnownBlocks()).filter(block -> Gradient.MOD_ID.equals(block.getRegistryName().getNamespace()) || this.blocks.contains(block)).collect(Collectors.toCollection(ArrayList::new));
       }
     }
   }

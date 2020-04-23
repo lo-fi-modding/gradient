@@ -23,6 +23,7 @@ public final class GradientTags {
     private Blocks() { }
 
     public static final Tag<Block> FIBRE_SOURCES = tag("fibre_sources");
+    public static final Tag<Block> PEBBLE_SOURCES = tag("pebble_sources");
 
     public static final Map<Ore, Tag<Block>> ORE = Collections.unmodifiableMap(Util.make(new LinkedHashMap<>(), tags -> {
       for(final Ore ore : Ores.all()) {

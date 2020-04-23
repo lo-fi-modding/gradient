@@ -118,6 +118,8 @@
   "item.gradient.sphalerite_nugget": "Sphalerite Nugget",
   "item.gradient.sphalerite_plate": "Sphalerite Plate",
   "item.gradient.sphalerite_purified": "Purified Sphalerite Ore",
+  "item.gradient.stone_hammer": "Stone Hammer",
+  "item.gradient.stone_hammer.tooltip": "Use on ores to get metal nuggets",
   "item.gradient.tin_crushed": "Crushed Tin Ore",
   "item.gradient.tin_dust": "Tin Dust",
   "item.gradient.tin_ingot": "Tin Ingot",
