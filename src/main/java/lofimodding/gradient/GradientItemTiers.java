@@ -1,6 +1,7 @@
 package lofimodding.gradient;
 
 import net.minecraft.item.IItemTier;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.LazyValue;
 
@@ -10,6 +11,7 @@ public final class GradientItemTiers {
   private GradientItemTiers() { }
 
   public static final IItemTier PEBBLE = new ItemTier(1, 20, 0.5f, 1.0f, 5, () -> Ingredient.fromItems(GradientItems.PEBBLE.get()));
+  public static final IItemTier FLINT = new ItemTier(1, 50, 1.0f, 2.0f, 5, () -> Ingredient.fromItems(Items.FLINT));
 
   public static class ItemTier implements IItemTier {
     private final int harvestLevel;

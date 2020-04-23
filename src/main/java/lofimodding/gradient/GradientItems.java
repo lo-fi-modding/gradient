@@ -1,5 +1,6 @@
 package lofimodding.gradient;
 
+import lofimodding.gradient.items.FlintKnifeItem;
 import lofimodding.gradient.items.MetalItem;
 import lofimodding.gradient.items.MulchItem;
 import lofimodding.gradient.items.PebbleItem;
@@ -111,6 +112,7 @@ public final class GradientItems {
   public static final RegistryObject<Item> WOLF_PELT = REGISTRY.register(GradientIds.WOLF_PELT, () -> new Item(new Item.Properties().group(GROUP)));
 
   public static final RegistryObject<StoneHammerItem> STONE_HAMMER = REGISTRY.register(GradientIds.STONE_HAMMER, StoneHammerItem::new);
+  public static final RegistryObject<FlintKnifeItem> FLINT_KNIFE = REGISTRY.register(GradientIds.FLINT_KNIFE, FlintKnifeItem::new);
 
   public static final RegistryObject<BlockItem> GRINDSTONE = REGISTRY.register(GradientIds.GRINDSTONE, () -> new BlockItem(GradientBlocks.GRINDSTONE.get(), new Item.Properties().group(GROUP)));
 
