@@ -417,6 +417,8 @@ public final class GradientDataGenerator {
       this.singleTexture(GradientIds.SHEEP_PELT, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.SHEEP_PELT));
       this.singleTexture(GradientIds.WOLF_PELT, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.WOLF_PELT));
 
+      this.singleTexture(GradientIds.RAW_HIDE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.RAW_HIDE));
+
       this.singleTexture(GradientIds.STONE_HAMMER, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.STONE_HAMMER));
       this.singleTexture(GradientIds.FLINT_KNIFE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.FLINT_KNIFE));
 
@@ -500,6 +502,8 @@ public final class GradientDataGenerator {
       this.add(GradientItems.POLAR_BEAR_PELT.get(), "Polar Bear Pelt");
       this.add(GradientItems.SHEEP_PELT.get(), "Sheep Pelt");
       this.add(GradientItems.WOLF_PELT.get(), "Wolf Pelt");
+
+      this.add(GradientItems.RAW_HIDE.get(), "Rawhide");
 
       this.add(GradientItems.STONE_HAMMER.get(), "Stone Hammer");
       this.add(GradientItems.STONE_HAMMER.get().getTranslationKey() + ".tooltip", "Use on ores to get metal nuggets");
@@ -617,6 +621,13 @@ public final class GradientDataGenerator {
         .addIngredient(GradientItems.BARK.get())
         .addCriterion("has_bark", this.hasItem(GradientItems.BARK.get()))
         .build(finished, Gradient.loc("age2/" + GradientIds.MULCH));
+
+      StagedRecipeBuilder
+        .shapelessRecipe(GradientItems.RAW_HIDE.get())
+        .addIngredient(GradientTags.Items.PELTS)
+        .addIngredient(GradientItems.FLINT_KNIFE.get())
+        .addCriterion("has_hide", this.hasItem(GradientTags.Items.PELTS))
+        .build(finished, Gradient.loc("age2/" + GradientIds.RAW_HIDE));
 
       StagedRecipeBuilder
         .shaped(GradientItems.STONE_HAMMER.get())

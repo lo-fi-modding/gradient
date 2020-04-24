@@ -1,0 +1,15 @@
+{
+  "type": "progression:shapeless_staged",
+  "stages": [],
+  "ingredients": [
+    {
+      "tag": "gradient:pelts"
+    },
+    {
+      "item": "gradient:flint_knife"
+    }
+  ],
+  "result": {
+    "item": "gradient:raw_hide"
+  }
+}
