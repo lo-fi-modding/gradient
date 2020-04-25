@@ -74,6 +74,7 @@ public final class GradientIds {
   public static final String UNHARDENED_CLAY_CRUCIBLE = "unhardened_clay_crucible";
   public static final String UNHARDENED_CLAY_OVEN = "unhardened_clay_oven";
   public static final String UNHARDENED_CLAY_MIXER = "unhardened_clay_mixer";
+  public static final String UNHARDENED_CLAY_BUCKET = "unhardened_clay_bucket";
   public static final String UNHARDENED_CLAY_CAST_BLANK = "unhardened_clay_cast";
 
   public static String UNHARDENED_CLAY_CAST(final GradientCasts cast) {

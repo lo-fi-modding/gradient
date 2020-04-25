@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gradient:block/unhardened_clay_bucket"
+    },
+    "facing=south": {
+      "model": "gradient:block/unhardened_clay_bucket",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "gradient:block/unhardened_clay_bucket",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "gradient:block/unhardened_clay_bucket",
+      "y": 90
+    }
+  }
+}

@@ -63,7 +63,8 @@ public final class GradientBlocks {
   public static final RegistryObject<UnhardenedClayBlock> UNHARDENED_CLAY_FURNACE = REGISTRY.register(GradientIds.UNHARDENED_CLAY_FURNACE, () -> new UnhardenedClayBlock(VoxelShapes.fullCube()));
   public static final RegistryObject<UnhardenedClayBlock> UNHARDENED_CLAY_CRUCIBLE = REGISTRY.register(GradientIds.UNHARDENED_CLAY_CRUCIBLE, () -> new UnhardenedClayBlock(Block.makeCuboidShape(1.0d, 0.0d, 1.0d, 15.0d, 12.0d, 15.0d)));
   public static final RegistryObject<UnhardenedClayBlock> UNHARDENED_CLAY_OVEN = REGISTRY.register(GradientIds.UNHARDENED_CLAY_OVEN, () -> new UnhardenedClayBlock(Block.makeCuboidShape(2.0d, 0.0d, 2.0d, 14.0d, 6.0d, 14.0d)));
-  public static final RegistryObject<UnhardenedClayBlock> UNHARDENED_CLAY_MIXER = REGISTRY.register(GradientIds.UNHARDENED_CLAY_MIXER, () -> new UnhardenedClayBlock(Block.makeCuboidShape(2.0d, 0.0d, 2.0d, 14.0d, 6.0d, 14.0d)));
+  public static final RegistryObject<UnhardenedClayBlock> UNHARDENED_CLAY_MIXER = REGISTRY.register(GradientIds.UNHARDENED_CLAY_MIXER, () -> new UnhardenedClayBlock(Block.makeCuboidShape(0.0d, 0.0d, 0.0d, 16.0d, 2.0d, 16.0d)));
+  public static final RegistryObject<UnhardenedClayBlock> UNHARDENED_CLAY_BUCKET = REGISTRY.register(GradientIds.UNHARDENED_CLAY_BUCKET, () -> new UnhardenedClayBlock(Block.makeCuboidShape(3.0d, 0.0d, 3.0d, 13.0d, 8.0d, 13.0d)));
   public static final RegistryObject<UnhardenedClayBlock> UNHARDENED_CLAY_CAST_BLANK = REGISTRY.register(GradientIds.UNHARDENED_CLAY_CAST_BLANK, () -> new UnhardenedClayBlock(Block.makeCuboidShape(0.0d, 0.0d, 0.0d, 16.0d, 2.0d, 16.0d)));
   private static final Map<GradientCasts, RegistryObject<UnhardenedClayBlock>> UNHARDENED_CLAY_CASTS = new EnumMap<>(GradientCasts.class);
 

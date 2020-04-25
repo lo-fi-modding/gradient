@@ -1064,6 +1064,7 @@ public final class GradientDataGenerator {
       this.getBuilder(GradientIds.UNHARDENED_CLAY_CRUCIBLE).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.UNHARDENED_CLAY_CRUCIBLE)));
       this.getBuilder(GradientIds.UNHARDENED_CLAY_OVEN).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.UNHARDENED_CLAY_OVEN)));
       this.getBuilder(GradientIds.UNHARDENED_CLAY_MIXER).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.UNHARDENED_CLAY_MIXER)));
+      this.getBuilder(GradientIds.UNHARDENED_CLAY_BUCKET).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.UNHARDENED_CLAY_BUCKET)));
       this.getBuilder(GradientIds.UNHARDENED_CLAY_CAST_BLANK).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.UNHARDENED_CLAY_CAST_BLANK)));
 
       for(final GradientCasts cast : GradientCasts.values()) {
@@ -1107,6 +1108,7 @@ public final class GradientDataGenerator {
       this.horizontalBlock(GradientBlocks.UNHARDENED_CLAY_CRUCIBLE.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.UNHARDENED_CLAY_CRUCIBLE)));
       this.horizontalBlock(GradientBlocks.UNHARDENED_CLAY_OVEN.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.UNHARDENED_CLAY_OVEN)));
       this.horizontalBlock(GradientBlocks.UNHARDENED_CLAY_MIXER.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.UNHARDENED_CLAY_MIXER)));
+      this.horizontalBlock(GradientBlocks.UNHARDENED_CLAY_BUCKET.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.UNHARDENED_CLAY_BUCKET)));
       this.horizontalBlock(GradientBlocks.UNHARDENED_CLAY_CAST_BLANK.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.UNHARDENED_CLAY_CAST_BLANK)));
 
       for(final GradientCasts cast : GradientCasts.values()) {
@@ -1181,6 +1183,7 @@ public final class GradientDataGenerator {
       this.add(GradientItems.UNHARDENED_CLAY_CRUCIBLE.get(), "Unhardened Clay Crucible");
       this.add(GradientItems.UNHARDENED_CLAY_OVEN.get(), "Unhardened Clay Oven");
       this.add(GradientItems.UNHARDENED_CLAY_MIXER.get(), "Unhardened Clay Mixer");
+      this.add(GradientItems.UNHARDENED_CLAY_BUCKET.get(), "Unhardened Clay Bucket");
       this.add(GradientItems.UNHARDENED_CLAY_CAST_BLANK.get(), "Unhardened Clay Cast (Blank)");
       this.add(GradientItems.UNHARDENED_CLAY_CAST_BLANK.get().getTranslationKey() + ".tooltip", "Right click to switch cast");
 
@@ -1397,6 +1400,15 @@ public final class GradientDataGenerator {
         .key('P', GradientItems.PEBBLE.get())
         .addCriterion("has_clay_ball", this.hasItem(Items.CLAY_BALL))
         .build(finished, Gradient.loc("age2/" + GradientIds.UNHARDENED_CLAY_MIXER));
+
+      StagedRecipeBuilder
+        .shaped(GradientItems.UNHARDENED_CLAY_BUCKET.get())
+        .stage(GradientStages.AGE_2)
+        .patternLine("C C")
+        .patternLine("CCC")
+        .key('C', Items.CLAY_BALL)
+        .addCriterion("has_clay_ball", this.hasItem(Items.CLAY_BALL))
+        .build(finished, Gradient.loc("age2/" + GradientIds.UNHARDENED_CLAY_BUCKET));
 
       StagedRecipeBuilder
         .shapelessRecipe(GradientItems.UNHARDENED_CLAY_CAST_BLANK.get())
@@ -1762,6 +1774,7 @@ public final class GradientDataGenerator {
         this.registerDropSelfLootTable(GradientBlocks.UNHARDENED_CLAY_CRUCIBLE.get());
         this.registerDropSelfLootTable(GradientBlocks.UNHARDENED_CLAY_OVEN.get());
         this.registerDropSelfLootTable(GradientBlocks.UNHARDENED_CLAY_MIXER.get());
+        this.registerDropSelfLootTable(GradientBlocks.UNHARDENED_CLAY_BUCKET.get());
         this.registerDropSelfLootTable(GradientBlocks.UNHARDENED_CLAY_CAST_BLANK.get());
 
         for(final GradientCasts cast : GradientCasts.values()) {
