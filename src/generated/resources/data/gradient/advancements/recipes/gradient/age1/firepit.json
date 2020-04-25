@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "gradient:age1/firepit"
+    ]
+  },
+  "criteria": {
+    "has_stick": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:rods/wooden"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "gradient:age1/firepit"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_stick",
+      "has_the_recipe"
+    ]
+  ]
+}

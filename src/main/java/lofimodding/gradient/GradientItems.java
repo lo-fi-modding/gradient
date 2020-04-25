@@ -116,6 +116,7 @@ public final class GradientItems {
   public static final RegistryObject<StoneHammerItem> STONE_HAMMER = REGISTRY.register(GradientIds.STONE_HAMMER, StoneHammerItem::new);
   public static final RegistryObject<FlintKnifeItem> FLINT_KNIFE = REGISTRY.register(GradientIds.FLINT_KNIFE, FlintKnifeItem::new);
 
+  public static final RegistryObject<BlockItem> FIREPIT = REGISTRY.register(GradientIds.FIREPIT, () -> new BlockItem(GradientBlocks.FIREPIT.get(), new Item.Properties().group(GROUP)));
   public static final RegistryObject<BlockItem> GRINDSTONE = REGISTRY.register(GradientIds.GRINDSTONE, () -> new BlockItem(GradientBlocks.GRINDSTONE.get(), new Item.Properties().group(GROUP)));
 
   static void init(final IEventBus bus) {

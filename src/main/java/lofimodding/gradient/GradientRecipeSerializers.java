@@ -1,5 +1,7 @@
 package lofimodding.gradient;
 
+import lofimodding.gradient.recipes.CookingRecipe;
+import lofimodding.gradient.recipes.FuelRecipe;
 import lofimodding.gradient.recipes.GrindingRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -12,6 +14,8 @@ public final class GradientRecipeSerializers {
 
   private static final DeferredRegister<IRecipeSerializer<?>> REGISTRY = new DeferredRegister<>(ForgeRegistries.RECIPE_SERIALIZERS, Gradient.MOD_ID);
 
+  public static final RegistryObject<IRecipeSerializer<CookingRecipe>> COOKING = REGISTRY.register("cooking", CookingRecipe.Serializer::new);
+  public static final RegistryObject<IRecipeSerializer<FuelRecipe>> FUEL = REGISTRY.register("fuel", FuelRecipe.Serializer::new);
   public static final RegistryObject<IRecipeSerializer<GrindingRecipe>> GRINDING = REGISTRY.register("grinding", GrindingRecipe.Serializer::new);
 
   static void init(final IEventBus bus) {

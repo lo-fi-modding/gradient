@@ -1,0 +1,10 @@
+{
+  "type": "gradient:fuel",
+  "duration": 900,
+  "ignition_temp": 300.0,
+  "burn_temp": 750.0,
+  "heat_per_sec": 0.76,
+  "ingredient": {
+    "tag": "minecraft:logs"
+  }
+}

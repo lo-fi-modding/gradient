@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "gradient:cooking/age1/porkchop"
+    ]
+  },
+  "criteria": {
+    "has_porkchop": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:porkchop"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "gradient:cooking/age1/porkchop"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_porkchop",
+      "has_the_recipe"
+    ]
+  ]
+}

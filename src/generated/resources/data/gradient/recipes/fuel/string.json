@@ -1,0 +1,10 @@
+{
+  "type": "gradient:fuel",
+  "duration": 20,
+  "ignition_temp": 50.0,
+  "burn_temp": 125.0,
+  "heat_per_sec": 18.0,
+  "ingredient": {
+    "tag": "forge:string"
+  }
+}

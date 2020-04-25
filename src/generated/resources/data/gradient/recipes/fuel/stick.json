@@ -1,0 +1,10 @@
+{
+  "type": "gradient:fuel",
+  "duration": 30,
+  "ignition_temp": 100.0,
+  "burn_temp": 350.0,
+  "heat_per_sec": 2.16,
+  "ingredient": {
+    "tag": "forge:rods/wooden"
+  }
+}

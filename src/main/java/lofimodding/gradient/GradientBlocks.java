@@ -1,5 +1,6 @@
 package lofimodding.gradient;
 
+import lofimodding.gradient.blocks.FirepitBlock;
 import lofimodding.gradient.blocks.GrindstoneBlock;
 import lofimodding.gradient.blocks.MetalBlock;
 import lofimodding.gradient.blocks.PebbleBlock;
@@ -53,6 +54,7 @@ public final class GradientBlocks {
 
   public static final RegistryObject<Block> SALT_BLOCK = REGISTRY.register(GradientIds.SALT_BLOCK, () -> new Block(Block.Properties.create(Material.SAND, MaterialColor.QUARTZ).sound(SoundType.SAND).hardnessAndResistance(0.5f)));
 
+  public static final RegistryObject<FirepitBlock> FIREPIT = REGISTRY.register(GradientIds.FIREPIT, FirepitBlock::new);
   public static final RegistryObject<GrindstoneBlock> GRINDSTONE = REGISTRY.register(GradientIds.GRINDSTONE, GrindstoneBlock::new);
 
   static void init(final IEventBus bus) {

@@ -1,0 +1,16 @@
+{
+  "type": "gradient:cooking",
+  "stages": [
+    "gradient:age_1"
+  ],
+  "ticks": 2400,
+  "temperature": 200.0,
+  "ingredients": [
+    {
+      "item": "minecraft:salmon"
+    }
+  ],
+  "result": {
+    "item": "minecraft:cooked_salmon"
+  }
+}

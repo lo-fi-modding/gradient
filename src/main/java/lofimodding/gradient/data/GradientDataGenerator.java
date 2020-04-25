@@ -33,6 +33,7 @@ import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.ConstantRange;
@@ -177,6 +178,59 @@ public final class GradientDataGenerator {
       }
 
       this.cubeAll(GradientIds.SALT_BLOCK, this.modLoc("block/salt_block"));
+
+      this.getBuilder(GradientIds.FIREPIT)
+        .parent(this.getExistingFile(this.mcLoc("block/block")))
+        .texture("particle", this.modLoc("block/fire_pit_log"))
+        .texture("end", this.modLoc("block/fire_pit_log_end"))
+        .texture("side", this.modLoc("block/fire_pit_log"))
+
+        .element()
+        .from(5.0f, 0.0f, 2.0f)
+        .to(6.5f, 1.5f, 15.0f)
+        .rotation().angle(22.5f).axis(Direction.Axis.Y).origin(4.0f, 1.0f, 5.5f).end()
+        .face(Direction.NORTH).uvs(0.0f, 0.0f, 2.0f, 2.0f).texture("end").end()
+        .face(Direction.EAST).uvs(1.0f, 0.0f, 15.0f, 2.0f).texture("side").end()
+        .face(Direction.SOUTH).uvs(0.0f, 0.0f, 2.0f, 2.0f).texture("end").end()
+        .face(Direction.WEST).uvs(1.0f, 5.0f, 15.0f, 7.0f).texture("side").end()
+        .face(Direction.UP).uvs(1.0f, 3.0f, 15.0f, 5.0f).texture("side").rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).end()
+        .face(Direction.DOWN).uvs(1.0f, 7.0f, 15.0f, 9.0f).texture("side").rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).end()
+        .end()
+
+        .element()
+        .from(-1.5f, 0.001f, 8.5f)
+        .to(11.5f, 1.501f, 10.0f)
+        .rotation().angle(45.0f).axis(Direction.Axis.Y).origin(4.0f, 1.0f, 5.5f).end()
+        .face(Direction.NORTH).uvs(1.0f, 0.0f, 15.0f, 2.0f).texture("side").end()
+        .face(Direction.EAST).uvs(0.0f, 0.0f, 2.0f, 2.0f).texture("end").end()
+        .face(Direction.SOUTH).uvs(1.0f, 5.0f, 15.0f, 7.0f).texture("side").end()
+        .face(Direction.WEST).uvs(0.0f, 0.0f, 2.0f, 2.0f).texture("end").end()
+        .face(Direction.UP).uvs(1.0f, 3.0f, 15.0f, 5.0f).texture("side").end()
+        .face(Direction.DOWN).uvs(1.0f, 7.0f, 15.0f, 9.0f).texture("side").rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN).end()
+        .end()
+
+        .element()
+        .from(1.5f, 0.0005f, 4.5f)
+        .to(14.5f, 1.5005f, 6.0f)
+        .face(Direction.NORTH).uvs(1.0f, 5.0f, 15.0f, 7.0f).texture("side").end()
+        .face(Direction.EAST).uvs(0.0f, 0.0f, 2.0f, 2.0f).texture("end").end()
+        .face(Direction.SOUTH).uvs(1.0f, 0.0f, 15.0f, 2.0f).texture("side").end()
+        .face(Direction.WEST).uvs(0.0f, 0.0f, 2.0f, 2.0f).texture("end").end()
+        .face(Direction.UP).uvs(1.0f, 3.0f, 15.0f, 5.0f).texture("side").rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN).end()
+        .face(Direction.DOWN).uvs(1.0f, 7.0f, 15.0f, 9.0f).texture("side").end()
+        .end()
+
+        .element()
+        .from(2.5f, -0.001f, 5.5f)
+        .to(15.5f, 1.499f, 7.0f)
+        .rotation().angle(-22.5f).axis(Direction.Axis.Y).origin(4.0f, 1.0f, 5.5f).end()
+        .face(Direction.NORTH).uvs(1.0f, 5.0f, 15.0f, 7.0f).texture("side").end()
+        .face(Direction.EAST).uvs(0.0f, 0.0f, 2.0f, 2.0f).texture("end").end()
+        .face(Direction.SOUTH).uvs(1.0f, 0.0f, 15.0f, 2.0f).texture("side").end()
+        .face(Direction.WEST).uvs(0.0f, 0.0f, 2.0f, 2.0f).texture("end").end()
+        .face(Direction.UP).uvs(1.0f, 3.0f, 15.0f, 5.0f).texture("side").rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN).end()
+        .face(Direction.DOWN).uvs(1.0f, 7.0f, 15.0f, 9.0f).texture("side").end()
+        .end();
 
       this.getBuilder(GradientIds.GRINDSTONE)
         .parent(this.getExistingFile(this.mcLoc("block/block")))
@@ -422,6 +476,7 @@ public final class GradientDataGenerator {
       this.singleTexture(GradientIds.STONE_HAMMER, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.STONE_HAMMER));
       this.singleTexture(GradientIds.FLINT_KNIFE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.FLINT_KNIFE));
 
+      this.getBuilder(GradientIds.FIREPIT).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.FIREPIT)));
       this.getBuilder(GradientIds.GRINDSTONE).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.GRINDSTONE)));
     }
 
@@ -454,6 +509,7 @@ public final class GradientDataGenerator {
 
       this.simpleBlock(GradientBlocks.SALT_BLOCK.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.SALT_BLOCK)));
 
+      this.horizontalBlock(GradientBlocks.FIREPIT.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.FIREPIT)));
       this.horizontalBlock(GradientBlocks.GRINDSTONE.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.GRINDSTONE)));
     }
   }
@@ -509,6 +565,7 @@ public final class GradientDataGenerator {
       this.add(GradientItems.STONE_HAMMER.get().getTranslationKey() + ".tooltip", "Use on ores to get metal nuggets");
       this.add(GradientItems.FLINT_KNIFE.get(), "Flint Knife");
 
+      this.add(GradientItems.FIREPIT.get(), "Firepit");
       this.add(GradientItems.GRINDSTONE.get(), "Grindstone");
     }
   }
@@ -600,6 +657,9 @@ public final class GradientDataGenerator {
 
     @Override
     protected void registerRecipes(final Consumer<IFinishedRecipe> finished) {
+      this.registerFuelRecipes(finished);
+      this.registerCookingRecipes(finished);
+
       ShapedRecipeBuilder
         .shapedRecipe(GradientItems.SALT_BLOCK.get())
         .patternLine("SS")
@@ -654,6 +714,16 @@ public final class GradientDataGenerator {
         .build(finished, Gradient.loc("age1/" + GradientIds.FLINT_KNIFE));
 
       StagedRecipeBuilder
+        .shaped(GradientItems.FIREPIT.get())
+        .stage(GradientStages.AGE_1)
+        .patternLine(" S ")
+        .patternLine("SSS")
+        .patternLine(" S ")
+        .key('S', Tags.Items.RODS_WOODEN)
+        .addCriterion("has_stick", this.hasItem(Tags.Items.RODS_WOODEN))
+        .build(finished, Gradient.loc("age1/" + GradientIds.FIREPIT));
+
+      StagedRecipeBuilder
         .shaped(GradientItems.GRINDSTONE.get())
         .stage(GradientStages.AGE_1)
         .patternLine(" P ")
@@ -665,7 +735,153 @@ public final class GradientDataGenerator {
         .addCriterion("has_pebble", this.hasItem(GradientItems.PEBBLE.get()))
         .addCriterion("has_cobblestone", this.hasItem(Tags.Items.COBBLESTONE))
         .addCriterion("has_clay_ball", this.hasItem(Items.CLAY_BALL))
-        .build(finished, "age1/" + GradientIds.GRINDSTONE);
+        .build(finished, Gradient.loc("age1/" + GradientIds.GRINDSTONE));
+    }
+
+    private void registerFuelRecipes(final Consumer<IFinishedRecipe> finished) {
+      GradientRecipeBuilder
+        .fuel()
+        .duration(1200)
+        .ignitionTemp(700.0f)
+        .burnTemp(2700.0f)
+        .heatPerSecond(1.5f)
+        .ingredient(ItemTags.COALS)
+        .addCriterion("has_coal", this.hasItem(ItemTags.COALS))
+        .build(finished, Gradient.loc("fuel/coal"));
+
+      GradientRecipeBuilder
+        .fuel()
+        .duration(5)
+        .ignitionTemp(50.0f)
+        .burnTemp(125.0f)
+        .heatPerSecond(18.0f)
+        .ingredient(GradientItems.FIBRE.get())
+        .addCriterion("has_fibre", this.hasItem(GradientItems.FIBRE.get()))
+        .build(finished, Gradient.loc("fuel/" + GradientIds.FIBRE));
+
+      GradientRecipeBuilder
+        .fuel()
+        .duration(900)
+        .ignitionTemp(300.0f)
+        .burnTemp(750.0f)
+        .heatPerSecond(0.76f)
+        .ingredient(ItemTags.LOGS)
+        .addCriterion("has_log", this.hasItem(ItemTags.LOGS))
+        .build(finished, Gradient.loc("fuel/log"));
+
+      GradientRecipeBuilder
+        .fuel()
+        .duration(600)
+        .ignitionTemp(230.0f)
+        .burnTemp(750.0f)
+        .heatPerSecond(1.04f)
+        .ingredient(ItemTags.PLANKS)
+        .addCriterion("has_planks", this.hasItem(ItemTags.PLANKS))
+        .build(finished, Gradient.loc("fuel/planks"));
+
+      GradientRecipeBuilder
+        .fuel()
+        .duration(60)
+        .ignitionTemp(150.0f)
+        .burnTemp(350.0f)
+        .heatPerSecond(1.38f)
+        .ingredient(ItemTags.SAPLINGS)
+        .addCriterion("has_sapling", this.hasItem(ItemTags.SAPLINGS))
+        .build(finished, Gradient.loc("fuel/sapling"));
+
+      GradientRecipeBuilder
+        .fuel()
+        .duration(30)
+        .ignitionTemp(100.0f)
+        .burnTemp(350.0f)
+        .heatPerSecond(2.16f)
+        .ingredient(Tags.Items.RODS_WOODEN)
+        .addCriterion("has_stick", this.hasItem(Tags.Items.RODS_WOODEN))
+        .build(finished, Gradient.loc("fuel/stick"));
+
+      GradientRecipeBuilder
+        .fuel()
+        .duration(20)
+        .ignitionTemp(50.0f)
+        .burnTemp(125.0f)
+        .heatPerSecond(18.0f)
+        .ingredient(Tags.Items.STRING)
+        .addCriterion("has_string", this.hasItem(Tags.Items.STRING))
+        .build(finished, Gradient.loc("fuel/string"));
+    }
+
+    private void registerCookingRecipes(final Consumer<IFinishedRecipe> finished) {
+      GradientRecipeBuilder
+        .cooking(Items.COOKED_BEEF)
+        .stage(GradientStages.AGE_1)
+        .ticks(2400)
+        .temperature(200.0f)
+        .addIngredient(Items.BEEF)
+        .addCriterion("has_beef", this.hasItem(Items.BEEF))
+        .build(finished, Gradient.loc("cooking/age1/beef"));
+
+      GradientRecipeBuilder
+        .cooking(Items.COOKED_CHICKEN)
+        .stage(GradientStages.AGE_1)
+        .ticks(2400)
+        .temperature(200.0f)
+        .addIngredient(Items.CHICKEN)
+        .addCriterion("has_chicken", this.hasItem(Items.CHICKEN))
+        .build(finished, Gradient.loc("cooking/age1/chicken"));
+
+      GradientRecipeBuilder
+        .cooking(Items.COOKED_COD)
+        .stage(GradientStages.AGE_1)
+        .ticks(2400)
+        .temperature(200.0f)
+        .addIngredient(Items.COD)
+        .addCriterion("has_cod", this.hasItem(Items.COD))
+        .build(finished, Gradient.loc("cooking/age1/cod"));
+
+      GradientRecipeBuilder
+        .cooking(Items.COOKED_MUTTON)
+        .stage(GradientStages.AGE_1)
+        .ticks(2400)
+        .temperature(200.0f)
+        .addIngredient(Items.MUTTON)
+        .addCriterion("has_mutton", this.hasItem(Items.MUTTON))
+        .build(finished, Gradient.loc("cooking/age1/mutton"));
+
+      GradientRecipeBuilder
+        .cooking(Items.COOKED_PORKCHOP)
+        .stage(GradientStages.AGE_1)
+        .ticks(2400)
+        .temperature(200.0f)
+        .addIngredient(Items.PORKCHOP)
+        .addCriterion("has_porkchop", this.hasItem(Items.PORKCHOP))
+        .build(finished, Gradient.loc("cooking/age1/porkchop"));
+
+      GradientRecipeBuilder
+        .cooking(Items.BAKED_POTATO)
+        .stage(GradientStages.AGE_1)
+        .ticks(2400)
+        .temperature(200.0f)
+        .addIngredient(Items.POTATO)
+        .addCriterion("has_potato", this.hasItem(Items.POTATO))
+        .build(finished, Gradient.loc("cooking/age1/potato"));
+
+      GradientRecipeBuilder
+        .cooking(Items.COOKED_RABBIT)
+        .stage(GradientStages.AGE_1)
+        .ticks(2400)
+        .temperature(200.0f)
+        .addIngredient(Items.RABBIT)
+        .addCriterion("has_rabbit", this.hasItem(Items.RABBIT))
+        .build(finished, Gradient.loc("cooking/age1/rabbit"));
+
+      GradientRecipeBuilder
+        .cooking(Items.COOKED_SALMON)
+        .stage(GradientStages.AGE_1)
+        .ticks(2400)
+        .temperature(200.0f)
+        .addIngredient(Items.SALMON)
+        .addCriterion("has_salmon", this.hasItem(Items.SALMON))
+        .build(finished, Gradient.loc("cooking/age1/salmon"));
     }
   }
 
@@ -870,6 +1086,7 @@ public final class GradientDataGenerator {
 
         this.registerLootTable(GradientBlocks.SALT_BLOCK.get(), block -> droppingWithSilkTouchOrRandomly(block, GradientItems.SALT.get(), ConstantRange.of(4)));
 
+        this.registerLootTable(GradientBlocks.FIREPIT.get(), droppingRandomly(Items.STICK, RandomValueRange.of(2, 5)));
         this.registerDropSelfLootTable(GradientBlocks.GRINDSTONE.get());
       }
 

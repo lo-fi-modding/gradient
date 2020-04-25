@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "minecraft:age1/grindstone"
+      "gradient:age1/grindstone"
     ]
   },
   "criteria": {
@@ -39,7 +39,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "minecraft:age1/grindstone"
+        "recipe": "gradient:age1/grindstone"
       }
     }
   },
