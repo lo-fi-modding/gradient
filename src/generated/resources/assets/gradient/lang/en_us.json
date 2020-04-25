@@ -32,6 +32,8 @@
   "block.gradient.sphalerite_ore": "Sphalerite Ore",
   "block.gradient.sphalerite_pebble": "Sphalerite Pebble",
   "block.gradient.tin_block": "Block of Tin",
+  "block.gradient.unhardened_clay_crucible": "Unhardened Clay Crucible",
+  "block.gradient.unhardened_clay_furnace": "Unhardened Clay Furnace",
   "block.gradient.zinc_block": "Block of Zinc",
   "item.gradient.azurite_crushed": "Crushed Azurite Ore",
   "item.gradient.azurite_dust": "Azurite Dust",
@@ -138,5 +140,6 @@
   "item.gradient.zinc_plate": "Zinc Plate",
   "item.gradient.zinc_purified": "Purified Zinc Ore",
   "stage.gradient.age_1": "Age 1 (Nomadic)",
-  "stage.gradient.age_2": "Age 2 (Agricultural)"
+  "stage.gradient.age_2": "Age 2 (Agricultural)",
+  "unhardened_clay.tooltip": "Place next to a fire pit to harden"
 }

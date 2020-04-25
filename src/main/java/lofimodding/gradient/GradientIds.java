@@ -69,4 +69,7 @@ public final class GradientIds {
 
   public static final String FIREPIT = "firepit";
   public static final String GRINDSTONE = "grindstone";
+
+  public static final String UNHARDENED_CLAY_FURNACE = "unhardened_clay_furnace";
+  public static final String UNHARDENED_CLAY_CRUCIBLE = "unhardened_clay_crucible";
 }

@@ -1,41 +1,50 @@
 package lofimodding.gradient.blocks;
 
-import lofimodding.gradient.tileentities.FirepitTile;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.BooleanProperty;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
-public class FirepitBlock extends Block {
+public class UnhardenedClayBlock extends Block {
   public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-  public static final BooleanProperty HAS_FURNACE = BooleanProperty.create("has_furnace");
 
-  public FirepitBlock() {
-    super(Properties.create(Material.WOOD, MaterialColor.RED).hardnessAndResistance(1.0f, 5.0f).notSolid());
-    this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(HAS_FURNACE, Boolean.FALSE));
-  }
+  private final VoxelShape shape;
 
-  @Nullable
-  @Override
-  public TileEntity createTileEntity(final BlockState state, final IBlockReader world) {
-    return new FirepitTile();
+  public UnhardenedClayBlock(final VoxelShape shape) {
+    super(Properties.create(Material.CLAY).sound(SoundType.GROUND).hardnessAndResistance(1.0f, 2.0f).notSolid());
+    this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
+    this.shape = shape;
   }
 
   @Override
-  public boolean hasTileEntity(final BlockState state) {
-    return true;
+  public void addInformation(final ItemStack stack, @Nullable final IBlockReader world, final List<ITextComponent> tooltip, final ITooltipFlag flag) {
+    super.addInformation(stack, world, tooltip, flag);
+    tooltip.add(new TranslationTextComponent("unhardened_clay.tooltip"));
+  }
+
+  @SuppressWarnings("deprecation")
+  @Override
+  @Deprecated
+  public VoxelShape getShape(final BlockState state, final IBlockReader worldIn, final BlockPos pos, final ISelectionContext context) {
+    return this.shape;
   }
 
   @Override
@@ -57,6 +66,7 @@ public class FirepitBlock extends Block {
 
   @Override
   protected void fillStateContainer(final StateContainer.Builder<Block, BlockState> builder) {
-    builder.add(FACING, HAS_FURNACE);
+    super.fillStateContainer(builder);
+    builder.add(FACING);
   }
 }
