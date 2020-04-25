@@ -466,14 +466,14 @@ public final class GradientDataGenerator {
         .texture("clay", this.mcLoc("block/clay"))
 
         .element() // Right
-        .from(0.0f, 12.0001f, 1.0f)
-        .to(2.0f, 15.0001f, 15.0f)
+        .from(0.0f, 12.001f, 1.0f)
+        .to(2.0f, 15.001f, 15.0f)
         .face(Direction.NORTH).uvs(14.0f, 1.0f, 16.0f, 4.0f).texture("clay").end()
         .face(Direction.EAST).uvs(1.0f, 1.0f, 15.0f, 4.0f).texture("clay").end()
         .face(Direction.SOUTH).uvs(0.0f, 1.0f, 2.0f, 4.0f).texture("clay").end()
         .face(Direction.WEST).uvs(1.0f, 1.0f, 15.0f, 4.0f).texture("clay").end()
         .face(Direction.UP).uvs(14.0f, 1.0f, 16.0f, 15.0f).texture("clay").end()
-        .face(Direction.DOWN).uvs(1.0f, 0.0f, 15.0f, 2.0f).texture("clay").end()
+        .face(Direction.DOWN).uvs(1.0f, 0.0f, 15.0f, 2.0f).texture("clay").rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).end()
         .end()
 
         .element() // Back
@@ -483,19 +483,19 @@ public final class GradientDataGenerator {
         .face(Direction.EAST).uvs(0.0f, 1.0f, 2.0f, 4.0f).texture("clay").end()
         .face(Direction.SOUTH).uvs(1.0f, 1.0f, 15.0f, 4.0f).texture("clay").end()
         .face(Direction.WEST).uvs(14.0f, 1.0f, 16.0f, 4.0f).texture("clay").end()
-        .face(Direction.UP).uvs(14.0f, 1.0f, 16.0f, 15.0f).texture("clay").end()
+        .face(Direction.UP).uvs(14.0f, 1.0f, 16.0f, 15.0f).texture("clay").rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).end()
         .face(Direction.DOWN).uvs(1.0f, 0.0f, 15.0f, 2.0f).texture("clay").end()
         .end()
 
         .element() // Left
-        .from(14.0f, 12.0001f, 1.0f)
-        .to(16.0f, 15.0001f, 15.0f)
+        .from(14.0f, 12.001f, 1.0f)
+        .to(16.0f, 15.001f, 15.0f)
         .face(Direction.NORTH).uvs(0.0f, 1.0f, 2.0f, 4.0f).texture("clay").end()
         .face(Direction.EAST).uvs(1.0f, 1.0f, 15.0f, 4.0f).texture("clay").end()
         .face(Direction.SOUTH).uvs(14.0f, 1.0f, 16.0f, 4.0f).texture("clay").end()
         .face(Direction.WEST).uvs(1.0f, 1.0f, 15.0f, 4.0f).texture("clay").end()
-        .face(Direction.UP).uvs(14.0f, 1.0f, 16.0f, 15.0f).texture("clay").end()
-        .face(Direction.DOWN).uvs(1.0f, 0.0f, 15.0f, 2.0f).texture("clay").end()
+        .face(Direction.UP).uvs(14.0f, 1.0f, 16.0f, 15.0f).texture("clay").rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN).end()
+        .face(Direction.DOWN).uvs(1.0f, 0.0f, 15.0f, 2.0f).texture("clay").rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).end()
         .end()
 
         .element() // Front
@@ -505,18 +505,18 @@ public final class GradientDataGenerator {
         .face(Direction.EAST).uvs(14.0f, 1.0f, 16.0f, 4.0f).texture("clay").end()
         .face(Direction.SOUTH).uvs(1.0f, 1.0f, 15.0f, 4.0f).texture("clay").end()
         .face(Direction.WEST).uvs(0.0f, 1.0f, 15.0f, 4.0f).texture("clay").end()
-        .face(Direction.UP).uvs(14.0f, 1.0f, 16.0f, 15.0f).texture("clay").end()
+        .face(Direction.UP).uvs(14.0f, 1.0f, 16.0f, 15.0f).texture("clay").rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).end()
         .face(Direction.DOWN).uvs(1.0f, 0.0f, 15.0f, 2.0f).texture("clay").end()
         .end()
 
         .element() // Right
-        .from(1.0f, 0.0001f, 2.0f)
-        .to(3.0f, 13.0001f, 14.0f)
+        .from(1.0f, 0.001f, 2.0f)
+        .to(3.0f, 13.001f, 14.0f)
         .face(Direction.NORTH).uvs(13.0f, 3.0f, 15.0f, 16.0f).texture("clay").end()
         .face(Direction.EAST).uvs(2.0f, 3.0f, 14.0f, 16.0f).texture("clay").end()
         .face(Direction.SOUTH).uvs(1.0f, 3.0f, 3.0f, 16.0f).texture("clay").end()
         .face(Direction.WEST).uvs(2.0f, 3.0f, 14.0f, 16.0f).texture("clay").end()
-        .face(Direction.UP).uvs(2.0f, 2.0f, 14.0f, 4.0f).texture("clay").end()
+        .face(Direction.UP).uvs(2.0f, 2.0f, 14.0f, 4.0f).texture("clay").rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).end()
         .face(Direction.DOWN).uvs(13.0f, 2.0f, 15.0f, 14.0f).texture("clay").end()
         .end()
 
@@ -528,18 +528,18 @@ public final class GradientDataGenerator {
         .face(Direction.SOUTH).uvs(2.0f, 3.0f, 14.0f, 16.0f).texture("clay").end()
         .face(Direction.WEST).uvs(13.0f, 3.0f, 15.0f, 16.0f).texture("clay").end()
         .face(Direction.UP).uvs(2.0f, 2.0f, 13.0f, 4.0f).texture("clay").end()
-        .face(Direction.DOWN).uvs(1.0f, 2.0f, 3.0f, 14.0f).texture("clay").end()
+        .face(Direction.DOWN).uvs(1.0f, 2.0f, 3.0f, 14.0f).texture("clay").rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).end()
         .end()
 
         .element() // Left
-        .from(13.0f, 0.0001f, 2.0f)
-        .to(15.0f, 13.0001f, 14.0f)
+        .from(13.0f, 0.001f, 2.0f)
+        .to(15.0f, 13.001f, 14.0f)
         .face(Direction.NORTH).uvs(1.0f, 3.0f, 3.0f, 16.0f).texture("clay").end()
         .face(Direction.EAST).uvs(2.0f, 3.0f, 14.0f, 16.0f).texture("clay").end()
         .face(Direction.SOUTH).uvs(13.0f, 3.0f, 15.0f, 16.0f).texture("clay").end()
         .face(Direction.WEST).uvs(2.0f, 3.0f, 14.0f, 16.0f).texture("clay").end()
-        .face(Direction.UP).uvs(2.0f, 2.0f, 14.0f, 4.0f).texture("clay").end()
-        .face(Direction.DOWN).uvs(1.0f, 2.0f, 3.0f, 14.0f).texture("clay").end()
+        .face(Direction.UP).uvs(2.0f, 2.0f, 14.0f, 4.0f).texture("clay").rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).end()
+        .face(Direction.DOWN).uvs(1.0f, 2.0f, 3.0f, 14.0f).texture("clay").rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN).end()
         .end()
 
         .element() // Front
@@ -549,8 +549,8 @@ public final class GradientDataGenerator {
         .face(Direction.EAST).uvs(13.0f, 3.0f, 15.0f, 16.0f).texture("clay").end()
         .face(Direction.SOUTH).uvs(2.0f, 3.0f, 14.0f, 16.0f).texture("clay").end()
         .face(Direction.WEST).uvs(1.0f, 3.0f, 3.0f, 16.0f).texture("clay").end()
-        .face(Direction.UP).uvs(2.0f, 2.0f, 14.0f, 4.0f).texture("clay").end()
-        .face(Direction.DOWN).uvs(1.0f, 2.0f, 3.0f, 14.0f).texture("clay").end()
+        .face(Direction.UP).uvs(2.0f, 2.0f, 14.0f, 4.0f).texture("clay").rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN).end()
+        .face(Direction.DOWN).uvs(1.0f, 2.0f, 3.0f, 14.0f).texture("clay").rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).end()
         .end()
 
         .element() // Bottom
