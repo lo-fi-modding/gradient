@@ -1,0 +1,22 @@
+{
+  "type": "progression:shaped_staged",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "pattern": [
+    "CCC",
+    "PCP",
+    "PCP"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:clay_ball"
+    },
+    "P": {
+      "item": "gradient:pebble"
+    }
+  },
+  "result": {
+    "item": "gradient:unhardened_clay_mixer"
+  }
+}
