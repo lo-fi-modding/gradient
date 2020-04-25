@@ -5,6 +5,7 @@ import lofimodding.gradient.items.MetalItem;
 import lofimodding.gradient.items.MulchItem;
 import lofimodding.gradient.items.PebbleItem;
 import lofimodding.gradient.items.StoneHammerItem;
+import lofimodding.gradient.items.UnhardenedClayCastItem;
 import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.science.Metals;
 import lofimodding.gradient.science.Ore;
@@ -18,6 +19,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -123,6 +125,14 @@ public final class GradientItems {
   public static final RegistryObject<BlockItem> UNHARDENED_CLAY_CRUCIBLE = REGISTRY.register(GradientIds.UNHARDENED_CLAY_CRUCIBLE, () -> new BlockItem(GradientBlocks.UNHARDENED_CLAY_CRUCIBLE.get(), new Item.Properties().group(GROUP)));
   public static final RegistryObject<BlockItem> UNHARDENED_CLAY_OVEN = REGISTRY.register(GradientIds.UNHARDENED_CLAY_OVEN, () -> new BlockItem(GradientBlocks.UNHARDENED_CLAY_OVEN.get(), new Item.Properties().group(GROUP)));
   public static final RegistryObject<BlockItem> UNHARDENED_CLAY_MIXER = REGISTRY.register(GradientIds.UNHARDENED_CLAY_MIXER, () -> new BlockItem(GradientBlocks.UNHARDENED_CLAY_MIXER.get(), new Item.Properties().group(GROUP)));
+  public static final RegistryObject<BlockItem> UNHARDENED_CLAY_CAST_BLANK = REGISTRY.register(GradientIds.UNHARDENED_CLAY_CAST_BLANK, () -> new UnhardenedClayCastItem(GradientBlocks.UNHARDENED_CLAY_CAST_BLANK.get(), new Item.Properties().group(GROUP)));
+  private static final Map<GradientCasts, RegistryObject<BlockItem>> UNHARDENED_CLAY_CASTS = new EnumMap<>(GradientCasts.class);
+
+  static {
+    for(final GradientCasts cast : GradientCasts.values()) {
+      UNHARDENED_CLAY_CASTS.put(cast, REGISTRY.register(GradientIds.UNHARDENED_CLAY_CAST(cast), () -> new UnhardenedClayCastItem(GradientBlocks.UNHARDENED_CLAY_CAST(cast).get(), cast, new Item.Properties().group(GROUP))));
+    }
+  }
 
   static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering items...");
@@ -159,6 +169,10 @@ public final class GradientItems {
 
   public static RegistryObject<BlockItem> METAL_BLOCK(final Metal metal) {
     return METAL_BLOCKS.get(metal);
+  }
+
+  public static RegistryObject<BlockItem> UNHARDENED_CLAY_CAST(final GradientCasts cast) {
+    return UNHARDENED_CLAY_CASTS.get(cast);
   }
 
   private static final class GradientItemGroup extends ItemGroup {

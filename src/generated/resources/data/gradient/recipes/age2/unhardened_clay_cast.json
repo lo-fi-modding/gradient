@@ -1,0 +1,17 @@
+{
+  "type": "progression:shapeless_staged",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:clay_ball"
+    },
+    {
+      "tag": "minecraft:sand"
+    }
+  ],
+  "result": {
+    "item": "gradient:unhardened_clay_cast"
+  }
+}

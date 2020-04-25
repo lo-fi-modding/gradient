@@ -2,6 +2,7 @@ package lofimodding.gradient.client;
 
 import lofimodding.gradient.Gradient;
 import lofimodding.gradient.GradientBlocks;
+import lofimodding.gradient.GradientCasts;
 import lofimodding.gradient.GradientEntities;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientTileEntities;
@@ -48,6 +49,10 @@ public final class GradientClient {
 
     for(final Ore ore : Ores.all()) {
       RenderTypeLookup.setRenderLayer(GradientBlocks.ORE(ore).get(), cutoutMipped);
+    }
+
+    for(final GradientCasts cast : GradientCasts.values()) {
+      RenderTypeLookup.setRenderLayer(GradientBlocks.UNHARDENED_CLAY_CAST(cast).get(), cutoutMipped);
     }
 
     final Minecraft mc = event.getMinecraftSupplier().get();

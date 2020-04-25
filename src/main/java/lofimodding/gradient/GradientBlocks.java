@@ -20,6 +20,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,6 +64,14 @@ public final class GradientBlocks {
   public static final RegistryObject<UnhardenedClayBlock> UNHARDENED_CLAY_CRUCIBLE = REGISTRY.register(GradientIds.UNHARDENED_CLAY_CRUCIBLE, () -> new UnhardenedClayBlock(Block.makeCuboidShape(1.0d, 0.0d, 1.0d, 15.0d, 12.0d, 15.0d)));
   public static final RegistryObject<UnhardenedClayBlock> UNHARDENED_CLAY_OVEN = REGISTRY.register(GradientIds.UNHARDENED_CLAY_OVEN, () -> new UnhardenedClayBlock(Block.makeCuboidShape(2.0d, 0.0d, 2.0d, 14.0d, 6.0d, 14.0d)));
   public static final RegistryObject<UnhardenedClayBlock> UNHARDENED_CLAY_MIXER = REGISTRY.register(GradientIds.UNHARDENED_CLAY_MIXER, () -> new UnhardenedClayBlock(Block.makeCuboidShape(2.0d, 0.0d, 2.0d, 14.0d, 6.0d, 14.0d)));
+  public static final RegistryObject<UnhardenedClayBlock> UNHARDENED_CLAY_CAST_BLANK = REGISTRY.register(GradientIds.UNHARDENED_CLAY_CAST_BLANK, () -> new UnhardenedClayBlock(Block.makeCuboidShape(0.0d, 0.0d, 0.0d, 16.0d, 2.0d, 16.0d)));
+  private static final Map<GradientCasts, RegistryObject<UnhardenedClayBlock>> UNHARDENED_CLAY_CASTS = new EnumMap<>(GradientCasts.class);
+
+  static {
+    for(final GradientCasts cast : GradientCasts.values()) {
+      UNHARDENED_CLAY_CASTS.put(cast, REGISTRY.register(GradientIds.UNHARDENED_CLAY_CAST(cast), () -> new UnhardenedClayBlock(Block.makeCuboidShape(0.0d, 0.0d, 0.0d, 16.0d, 2.0d, 16.0d))));
+    }
+  }
 
   static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering blocks...");
@@ -79,5 +88,9 @@ public final class GradientBlocks {
 
   public static RegistryObject<MetalBlock> METAL_BLOCK(final Metal metal) {
     return METAL_BLOCKS.get(metal);
+  }
+
+  public static RegistryObject<UnhardenedClayBlock> UNHARDENED_CLAY_CAST(final GradientCasts cast) {
+    return UNHARDENED_CLAY_CASTS.get(cast);
   }
 }

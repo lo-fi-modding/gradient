@@ -1,7 +1,7 @@
 package lofimodding.gradient;
 
 import lofimodding.gradient.client.GradientClient;
-import net.minecraft.block.Blocks;
+import lofimodding.gradient.network.Packets;
 import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -42,8 +42,7 @@ public class Gradient {
   }
 
   private void setup(final FMLCommonSetupEvent event) {
-    LOGGER.info("HELLO FROM PREINIT");
-    LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+    Packets.register();
   }
 
   private void clientSetup(final FMLClientSetupEvent event) {
