@@ -415,7 +415,7 @@ public class FirepitTile extends HeatProducerTile {
       hardening.tick();
 
       if(hardening.isHardened()) {
-        toAdd.put(pos, hardening.recipe.getCraftingResult());
+        toAdd.put(pos, hardening.recipe.getCraftingResult(current));
         it.remove();
       }
     }
@@ -431,10 +431,7 @@ public class FirepitTile extends HeatProducerTile {
     final int light = this.getLightLevel(this.getBlockState());
 
     if(this.lastLight != light) {
-//      this.getWorld().markBlockRangeForRenderUpdate(this.pos, this.pos);
-//      this.getWorld().checkLight(this.pos);
-      Gradient.LOGGER.warn("Is light changing?");
-      //TODO not sure if this is still needed
+      this.world.getLightManager().checkBlock(this.pos);
 
       this.lastLight = light;
     }

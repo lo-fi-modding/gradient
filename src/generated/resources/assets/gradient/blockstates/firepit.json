@@ -1,34 +1,78 @@
 {
-  "variants": {
-    "facing=north,has_furnace=false": {
-      "model": "gradient:block/firepit"
+  "multipart": [
+    {
+      "when": {
+        "facing": "north"
+      },
+      "apply": {
+        "model": "gradient:block/firepit"
+      }
     },
-    "facing=south,has_furnace=false": {
-      "model": "gradient:block/firepit",
-      "y": 180
+    {
+      "when": {
+        "facing": "east"
+      },
+      "apply": {
+        "model": "gradient:block/firepit",
+        "y": 90
+      }
     },
-    "facing=west,has_furnace=false": {
-      "model": "gradient:block/firepit",
-      "y": 270
+    {
+      "when": {
+        "facing": "south"
+      },
+      "apply": {
+        "model": "gradient:block/firepit",
+        "y": 180
+      }
     },
-    "facing=east,has_furnace=false": {
-      "model": "gradient:block/firepit",
-      "y": 90
+    {
+      "when": {
+        "facing": "west"
+      },
+      "apply": {
+        "model": "gradient:block/firepit",
+        "y": 270
+      }
     },
-    "facing=north,has_furnace=true": {
-      "model": "gradient:block/firepit"
+    {
+      "when": {
+        "has_furnace": "true",
+        "facing": "north"
+      },
+      "apply": {
+        "model": "gradient:block/clay_furnace_used"
+      }
     },
-    "facing=south,has_furnace=true": {
-      "model": "gradient:block/firepit",
-      "y": 180
+    {
+      "when": {
+        "has_furnace": "true",
+        "facing": "east"
+      },
+      "apply": {
+        "model": "gradient:block/clay_furnace_used",
+        "y": 90
+      }
     },
-    "facing=west,has_furnace=true": {
-      "model": "gradient:block/firepit",
-      "y": 270
+    {
+      "when": {
+        "has_furnace": "true",
+        "facing": "south"
+      },
+      "apply": {
+        "model": "gradient:block/clay_furnace_used",
+        "y": 180
+      }
     },
-    "facing=east,has_furnace=true": {
-      "model": "gradient:block/firepit",
-      "y": 90
+    {
+      "when": {
+        "has_furnace": "true",
+        "facing": "west"
+      },
+      "apply": {
+        "model": "gradient:block/clay_furnace_used",
+        "y": 270
+      }
     }
-  }
+  ]
 }

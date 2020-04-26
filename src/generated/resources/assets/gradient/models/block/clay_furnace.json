@@ -1,11 +1,11 @@
 {
   "parent": "block/block",
   "textures": {
-    "side": "block/clay",
-    "front": "block/clay",
-    "top": "block/clay",
-    "inside": "block/clay",
-    "particle": "block/clay"
+    "side": "block/terracotta",
+    "front": "block/terracotta",
+    "top": "block/terracotta",
+    "inside": "block/terracotta",
+    "particle": "block/terracotta"
   },
   "elements": [
     {

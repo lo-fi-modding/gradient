@@ -15,12 +15,12 @@ public final class WorldUtils {
   @CapabilityInject(IItemHandler.class)
   private static Capability<IItemHandler> ITEM_HANDLER_CAPABILITY;
 
-  public static void dropInventory(final World world, final BlockPos pos) {
+  public static void dropInventory(final World world, final BlockPos pos, final int firstSlot) {
     final TileEntity te = world.getTileEntity(pos);
 
     if(te != null) {
       te.getCapability(ITEM_HANDLER_CAPABILITY).ifPresent(inv -> {
-        for(int i = 0; i < inv.getSlots(); i++) {
+        for(int i = firstSlot; i < inv.getSlots(); i++) {
           final ItemStack stack = inv.getStackInSlot(i);
 
           if(!stack.isEmpty()) {
@@ -29,5 +29,9 @@ public final class WorldUtils {
         }
       });
     }
+  }
+
+  public static void dropInventory(final World world, final BlockPos pos) {
+    dropInventory(world, pos, 0);
   }
 }

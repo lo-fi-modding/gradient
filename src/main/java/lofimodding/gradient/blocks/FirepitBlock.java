@@ -1,6 +1,7 @@
 package lofimodding.gradient.blocks;
 
 import lofimodding.gradient.Gradient;
+import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientSounds;
 import lofimodding.gradient.tileentities.FirepitTile;
@@ -111,23 +112,23 @@ public class FirepitBlock extends Block {
 //            return ActionResultType.SUCCESS;
 //          }
 //        }
-//
-//        if(Block.getBlockFromItem(held.getItem()) == GradientBlocks.CLAY_FURNACE_HARDENED) {
-//          if(!state.get(HAS_FURNACE)) {
-//            world.playSound(null, pos, SoundEvents.BLOCK_STONE_PLACE, SoundCategory.NEUTRAL, 1.0f, world.rand.nextFloat() * 0.1f + 0.9f);
-//            world.setBlockState(pos, state.with(HAS_FURNACE, true));
-//
-//            firepit.validate();
-//            world.setTileEntity(pos, firepit);
-//            firepit.attachFurnace();
-//
-//            if(!player.isCreative()) {
-//              held.shrink(1);
-//            }
-//
-//            return ActionResultType.SUCCESS;
-//          }
-//        }
+
+        if(Block.getBlockFromItem(held.getItem()) == GradientBlocks.CLAY_FURNACE.get()) {
+          if(!state.get(HAS_FURNACE)) {
+            world.playSound(null, pos, SoundEvents.BLOCK_STONE_PLACE, SoundCategory.NEUTRAL, 1.0f, world.rand.nextFloat() * 0.1f + 0.9f);
+            world.setBlockState(pos, state.with(HAS_FURNACE, true));
+
+            firepit.validate();
+            world.setTileEntity(pos, firepit);
+            firepit.attachFurnace();
+
+            if(!player.isCreative()) {
+              held.shrink(1);
+            }
+
+            return ActionResultType.SUCCESS;
+          }
+        }
       }
 
       // Remove input
@@ -180,7 +181,10 @@ public class FirepitBlock extends Block {
   @SuppressWarnings("deprecation")
   @Override
   public void onReplaced(final BlockState state, final World world, final BlockPos pos, final BlockState newState, final boolean isMoving) {
-    WorldUtils.dropInventory(world, pos);
+    if(newState.getBlock() != this) {
+      WorldUtils.dropInventory(world, pos, FirepitTile.FIRST_INPUT_SLOT);
+    }
+
     super.onReplaced(state, world, pos, newState, isMoving);
   }
 

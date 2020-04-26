@@ -1,11 +1,11 @@
 {
   "parent": "block/block",
   "textures": {
-    "side": "block/clay",
-    "front": "block/clay",
-    "top": "block/clay",
-    "inside": "block/clay",
-    "particle": "block/clay"
+    "side": "block/terracotta",
+    "front": "gradient:block/clay_furnace_front",
+    "top": "gradient:block/clay_furnace_top",
+    "inside": "gradient:block/clay_seared",
+    "particle": "block/terracotta"
   },
   "elements": [
     {

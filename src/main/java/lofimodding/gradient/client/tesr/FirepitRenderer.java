@@ -55,6 +55,7 @@ public class FirepitRenderer extends TileEntityRenderer<FirepitTile> {
         if(firepit.isBurning(slot)) {
           matrixStack.translate(-0.1f, 0.2f, 0.0f);
           matrixStack.scale(0.2f * (1.0f - firepit.getBurningFuel(slot).percentBurned()), 0.025f, 1.0f);
+          //TODO
 //          GlStateManager.disableCull();
 //          this.setLightmapDisabled(true);
 //          GlStateManager.disableLighting();
@@ -84,6 +85,7 @@ public class FirepitRenderer extends TileEntityRenderer<FirepitTile> {
       if(firepit.isCooking()) {
         matrixStack.translate(-0.1f, 0.2f, 0.0f);
         matrixStack.scale(0.2f * (1.0f - firepit.getCookingPercent()), 0.025f, 1.0f);
+        //TODO
 //        GlStateManager.disableCull();
 //        this.setLightmapDisabled(true);
 //        GlStateManager.disableLighting();

@@ -81,4 +81,6 @@ public final class GradientIds {
   public static String UNHARDENED_CLAY_CAST(final GradientCasts cast) {
     return "unhardened_clay_cast_" + cast.name().toLowerCase();
   }
+
+  public static final String CLAY_FURNACE = "clay_furnace";
 }
