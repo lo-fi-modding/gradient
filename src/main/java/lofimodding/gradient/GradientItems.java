@@ -115,6 +115,7 @@ public final class GradientItems {
 
   public static final RegistryObject<Item> RAW_HIDE = REGISTRY.register(GradientIds.RAW_HIDE, () -> new Item(new Item.Properties().group(GROUP)));
 
+  public static final RegistryObject<Item> FIRE_STARTER = REGISTRY.register(GradientIds.FIRE_STARTER, () -> new Item(new Item.Properties().group(GROUP).maxDamage(4)));
   public static final RegistryObject<StoneHammerItem> STONE_HAMMER = REGISTRY.register(GradientIds.STONE_HAMMER, StoneHammerItem::new);
   public static final RegistryObject<FlintKnifeItem> FLINT_KNIFE = REGISTRY.register(GradientIds.FLINT_KNIFE, FlintKnifeItem::new);
 

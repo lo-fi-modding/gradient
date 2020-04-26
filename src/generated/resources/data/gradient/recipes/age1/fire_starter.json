@@ -1,0 +1,18 @@
+{
+  "type": "progression:shapeless_staged",
+  "stages": [],
+  "ingredients": [
+    {
+      "tag": "forge:rods/wooden"
+    },
+    {
+      "tag": "forge:string"
+    },
+    {
+      "tag": "forge:rods/wooden"
+    }
+  ],
+  "result": {
+    "item": "gradient:fire_starter"
+  }
+}

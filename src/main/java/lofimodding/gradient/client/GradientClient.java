@@ -7,6 +7,7 @@ import lofimodding.gradient.GradientEntities;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientTileEntities;
 import lofimodding.gradient.blocks.MetalBlock;
+import lofimodding.gradient.client.tesr.FirepitRenderer;
 import lofimodding.gradient.client.tesr.GrindstoneRenderer;
 import lofimodding.gradient.items.MetalItem;
 import lofimodding.gradient.science.Metal;
@@ -77,6 +78,7 @@ public final class GradientClient {
 
     RenderingRegistry.registerEntityRenderingHandler(GradientEntities.PEBBLE.get(), manager -> new SpriteRenderer<>(manager, Minecraft.getInstance().getItemRenderer()));
 
+    ClientRegistry.bindTileEntityRenderer(GradientTileEntities.FIREPIT.get(), FirepitRenderer::new);
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.GRINDSTONE.get(), GrindstoneRenderer::new);
   }
 

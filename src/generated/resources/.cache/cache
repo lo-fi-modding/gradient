@@ -42,7 +42,7 @@ abd64e323a1f42d255d6541a6591641903cc20ce assets\gradient\blockstates\unhardened_
 8ea7674c4f6232589d0cfcabd89de12d2629b988 assets\gradient\blockstates\unhardened_clay_mixer.json
 dccc3a018ecf212e5d43d811cd942d57ea4133b0 assets\gradient\blockstates\unhardened_clay_oven.json
 659fa450fe62cdecc69d9276f01c713a1e62a205 assets\gradient\blockstates\zinc_block.json
-1d11d1d2e30120ac3300eff49d80ea4b2397f05c assets\gradient\lang\en_us.json
+b215878fca3ff7a8fd0d8382c63247f400c24704 assets\gradient\lang\en_us.json
 f295f4e7338854665f216e2f0ca3e339b0d284a7 assets\gradient\models\block\azurite_block.json
 910f0617e8b2433ac0f97c48cbbc8251b4f162b3 assets\gradient\models\block\azurite_ore.json
 79a72e81ecb79d9775041b9a2d526a90f646005b assets\gradient\models\block\azurite_pebble.json
@@ -127,6 +127,7 @@ c028599b8d6b58e50b201992076c965e23e12953 assets\gradient\models\item\copper_nugg
 eba9253717a0cd896b815929b1d0963ebb801421 assets\gradient\models\item\dust.json
 18b9e0d9665332a673dc9ddf17143bd320d597ac assets\gradient\models\item\fibre.json
 faa6bb90df516ddfb16943b50938014120d678d3 assets\gradient\models\item\firepit.json
+1db96db1f29b02cfb25d46d6a9f1b5f16bb3557a assets\gradient\models\item\fire_starter.json
 35c8e1c5067d17aa270a716b10fc76f64db8387d assets\gradient\models\item\flint_knife.json
 a8469d3897255e8153e39eaa638074d633c235a6 assets\gradient\models\item\gold_block.json
 65fd911a0d0991ae744faeb83e40613ba6d290a6 assets\gradient\models\item\gold_crushed.json
@@ -388,6 +389,7 @@ e776a90ac45e14ec5bf062bd1ee5bdccc4193447 data\gradient\advancements\recipes\fuel
 0235f5c6056e7f143db85fa89e90f5f2b6628ccb data\gradient\advancements\recipes\fuel\stick.json
 c822d0542391a6b257f9b96358a72e9b8fd697fe data\gradient\advancements\recipes\fuel\string.json
 504e29ef54d3230ee6e6b28d1412b94dc93a721c data\gradient\advancements\recipes\gradient\age1\firepit.json
+720d3a699908f2c249d6d47aa8caced5f290612f data\gradient\advancements\recipes\gradient\age1\fire_starter.json
 f95a70f169c1d0541b1e07a6f7389fccbcf1d173 data\gradient\advancements\recipes\gradient\age1\flint_knife.json
 27c5398efd63f00cd10907ec7bf572b98c9ddd1e data\gradient\advancements\recipes\gradient\age1\grindstone.json
 b8091a4679dcf280ae8b266fc073b9b145536cae data\gradient\advancements\recipes\gradient\age1\salt_block.json
@@ -458,6 +460,7 @@ bf0af1bd221506852b1a85994f7038c6e3c351d6 data\gradient\loot_tables\entities\pola
 524656c908c6563bd63a7430506a9efe611b1837 data\gradient\loot_tables\entities\sheep_pelt_additions.json
 231ce8e13160b18ecee6054d53b40fc9e582b995 data\gradient\loot_tables\entities\wolf_pelt_additions.json
 a37373c8ffab3a9a612d04b955d2e0ebb29e9ac8 data\gradient\recipes\age1\firepit.json
+b96772638995ee1644848a854c6e1349b4ac5051 data\gradient\recipes\age1\fire_starter.json
 450050be3a9e81600a52da643b29ca545d2e37b5 data\gradient\recipes\age1\flint_knife.json
 bba4857c81c6d8ddbbe7c1bb57c64238e82272cd data\gradient\recipes\age1\grindstone.json
 1f7c12f36d4c3be44f5daec85e5bbc555c1d2fee data\gradient\recipes\age1\salt_block.json

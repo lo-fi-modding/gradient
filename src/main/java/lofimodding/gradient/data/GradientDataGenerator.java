@@ -1054,6 +1054,7 @@ public final class GradientDataGenerator {
 
       this.singleTexture(GradientIds.RAW_HIDE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.RAW_HIDE));
 
+      this.singleTexture(GradientIds.FIRE_STARTER, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.FIRE_STARTER));
       this.singleTexture(GradientIds.STONE_HAMMER, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.STONE_HAMMER));
       this.singleTexture(GradientIds.FLINT_KNIFE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.FLINT_KNIFE));
 
@@ -1172,6 +1173,7 @@ public final class GradientDataGenerator {
 
       this.add(GradientItems.RAW_HIDE.get(), "Rawhide");
 
+      this.add(GradientItems.FIRE_STARTER.get(), "Fire Starter");
       this.add(GradientItems.STONE_HAMMER.get(), "Stone Hammer");
       this.add(GradientItems.STONE_HAMMER.get().getTranslationKey() + ".tooltip", "Use on ores to get metal nuggets");
       this.add(GradientItems.FLINT_KNIFE.get(), "Flint Knife");
@@ -1311,6 +1313,14 @@ public final class GradientDataGenerator {
         .addIngredient(GradientItems.FLINT_KNIFE.get())
         .addCriterion("has_hide", this.hasItem(GradientTags.Items.PELTS))
         .build(finished, Gradient.loc("age2/" + GradientIds.RAW_HIDE));
+
+      StagedRecipeBuilder
+        .shapelessRecipe(GradientItems.FIRE_STARTER.get())
+        .addIngredient(Tags.Items.RODS_WOODEN)
+        .addIngredient(Tags.Items.STRING)
+        .addIngredient(Tags.Items.RODS_WOODEN)
+        .addCriterion("has_sticks", this.hasItem(Tags.Items.RODS_WOODEN))
+        .build(finished, Gradient.loc("age1/" + GradientIds.FIRE_STARTER));
 
       StagedRecipeBuilder
         .shaped(GradientItems.STONE_HAMMER.get())

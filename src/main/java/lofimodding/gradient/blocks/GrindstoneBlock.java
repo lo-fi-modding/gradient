@@ -1,12 +1,12 @@
 package lofimodding.gradient.blocks;
 
 import lofimodding.gradient.tileentities.GrindstoneTile;
+import lofimodding.gradient.utils.WorldUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.DirectionProperty;
@@ -22,15 +22,9 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 public class GrindstoneBlock extends Block {
-  @CapabilityInject(IItemHandler.class)
-  private static Capability<IItemHandler> ITEM_HANDLER_CAPABILITY;
-
   private static final VoxelShape SHAPE = Block.makeCuboidShape(1.0d, 0.0d, 1.0d, 15.0d, 2.0d, 15.0d);
 
   public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
@@ -110,20 +104,7 @@ public class GrindstoneBlock extends Block {
   @SuppressWarnings("deprecation")
   @Override
   public void onReplaced(final BlockState state, final World world, final BlockPos pos, final BlockState newState, final boolean isMoving) {
-    final GrindstoneTile grindstone = (GrindstoneTile)world.getTileEntity(pos);
-
-    if(grindstone != null) {
-      grindstone.getCapability(ITEM_HANDLER_CAPABILITY).ifPresent(inv -> {
-        for(int i = 0; i < inv.getSlots(); i++) {
-          final ItemStack stack = inv.getStackInSlot(i);
-
-          if(!stack.isEmpty()) {
-            InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
-          }
-        }
-      });
-    }
-
+    WorldUtils.dropInventory(world, pos);
     super.onReplaced(state, world, pos, newState, isMoving);
   }
 

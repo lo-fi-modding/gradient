@@ -34,10 +34,12 @@ public class Gradient {
     bus.addListener(this::serverSetup);
 
     GradientBlocks.init(bus);
+    GradientFluids.init(bus);
     GradientItems.init(bus);
     GradientEntities.init(bus);
     GradientLoot.init(bus);
     GradientRecipeSerializers.init(bus);
+    GradientSounds.init(bus);
     GradientTileEntities.init(bus);
   }
 

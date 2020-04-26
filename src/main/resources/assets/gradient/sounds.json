@@ -1,0 +1,7 @@
+{
+  "fire_starter": {
+    "category": "neutral",
+    "subtitle": "gradient.subtitle.fire_starter",
+    "sounds": ["gradient:fire_starter"]
+  }
+}

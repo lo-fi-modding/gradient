@@ -41,9 +41,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 // With a single furnace, a crucible will heat up to 1038 degrees
 // Two furnaces, 1152
@@ -307,7 +309,7 @@ public class FirepitTile extends HeatProducerTile {
     this.sync();
   }
 
-  public void updateHardenable(final BlockPos pos, final NonNullList<Stage> stages) {
+  public void updateHardenable(final BlockPos pos, final Set<Stage> stages) {
     if(this.world.isRemote) {
       return;
     }
@@ -324,7 +326,7 @@ public class FirepitTile extends HeatProducerTile {
     this.hardenables.put(pos, new Hardening(recipe, stages));
   }
 
-  public void updateSurroundingHardenables(final NonNullList<Stage> stages) {
+  public void updateSurroundingHardenables(final Set<Stage> stages) {
     final BlockPos north = this.pos.north();
     final BlockPos south = this.pos.south();
 
@@ -644,7 +646,7 @@ public class FirepitTile extends HeatProducerTile {
       final BlockPos pos = NBTUtil.readBlockPos(hardeningNbt.getCompound("pos"));
       Gradient.getRecipeManager().getRecipe(new ResourceLocation(hardeningNbt.getString("recipe"))).ifPresent(recipe -> {
         final ListNBT recipeStagesNbt = compound.getList("stages", Constants.NBT.TAG_STRING);
-        final NonNullList<Stage> stages = NonNullList.create();
+        final Set<Stage> stages = new HashSet<>();
         for(int i = 0; i < recipeStagesNbt.size(); i++) {
           final Stage stage = Stage.REGISTRY.get().getValue(new ResourceLocation(recipeStagesNbt.getString(i)));
 
@@ -710,10 +712,10 @@ public class FirepitTile extends HeatProducerTile {
 
   public static final class Hardening {
     public final HardeningRecipe recipe;
-    public final NonNullList<Stage> stages;
+    public final Set<Stage> stages;
     private int hardenTicks;
 
-    private Hardening(final HardeningRecipe recipe, final NonNullList<Stage> stages) {
+    private Hardening(final HardeningRecipe recipe, final Set<Stage> stages) {
       this.recipe = recipe;
       this.stages = stages;
     }

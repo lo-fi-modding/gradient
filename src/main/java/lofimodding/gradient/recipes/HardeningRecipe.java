@@ -27,6 +27,7 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class HardeningRecipe implements IRecipe<IInventory> {
   public static final IRecipeType<HardeningRecipe> TYPE = IRecipeType.register("hardening");
@@ -57,7 +58,7 @@ public class HardeningRecipe implements IRecipe<IInventory> {
     return false;
   }
 
-  public boolean matches(final BlockState state, final NonNullList<Stage> stages) {
+  public boolean matches(final BlockState state, final Set<Stage> stages) {
     for(final Stage stage : this.stages) {
       if(!stages.contains(stage)) {
         return false;
