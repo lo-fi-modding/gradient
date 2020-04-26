@@ -7,6 +7,8 @@ import com.google.gson.JsonParseException;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientRecipeSerializers;
 import lofimodding.progression.Stage;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -21,12 +23,10 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.RecipeMatcher;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class HardeningRecipe implements IRecipe<IInventory> {
   public static final IRecipeType<HardeningRecipe> TYPE = IRecipeType.register("hardening");
@@ -57,49 +57,41 @@ public class HardeningRecipe implements IRecipe<IInventory> {
     return false;
   }
 
-  public boolean matches(final IItemHandler inv, final Set<Stage> stages, final int firstSlot, final int lastSlot) {
+  public boolean matches(final BlockState state, final NonNullList<Stage> stages) {
     for(final Stage stage : this.stages) {
       if(!stages.contains(stage)) {
         return false;
       }
     }
 
-    return this.matches(inv, firstSlot, lastSlot);
+    return this.matches(state);
   }
 
-  public boolean matches(final IItemHandler inv, final int firstSlot, final int lastSlot) {
+  public boolean matches(final BlockState state) {
+    final Block block = state.getBlock();
+    final ItemStack stack = new ItemStack(block);
+
     RECIPE_ITEM_HELPER.clear();
     INPUT_STACKS.clear();
 
-    int ingredientCount = 0;
-    for(int slot = firstSlot; slot <= lastSlot; ++slot) {
-      final ItemStack itemstack = inv.getStackInSlot(slot);
-
-      if(!itemstack.isEmpty()) {
-        ++ingredientCount;
-
-        if(this.simple) {
-          RECIPE_ITEM_HELPER.accountStack(itemstack);
-        } else {
-          INPUT_STACKS.add(itemstack);
-        }
-      }
-    }
-
-    if(ingredientCount != this.ingredients.size()) {
-      return false;
-    }
-
     if(this.simple) {
+      RECIPE_ITEM_HELPER.accountStack(stack);
       return RECIPE_ITEM_HELPER.canCraft(this, null);
     }
 
+    INPUT_STACKS.add(stack);
     return RecipeMatcher.findMatches(INPUT_STACKS, this.ingredients) != null;
+
   }
 
   @Override
+  @Deprecated
   public ItemStack getCraftingResult(final IInventory inv) {
     return this.result.copy();
+  }
+
+  public BlockState getCraftingResult() {
+    return Block.getBlockFromItem(this.result.getItem()).getDefaultState();
   }
 
   @Override

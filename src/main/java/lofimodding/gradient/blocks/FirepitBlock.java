@@ -18,6 +18,7 @@ import net.minecraft.world.IBlockReader;
 
 import javax.annotation.Nullable;
 
+//TODO: lots of methods in here from 1.12
 public class FirepitBlock extends Block {
   public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
   public static final BooleanProperty HAS_FURNACE = BooleanProperty.create("has_furnace");

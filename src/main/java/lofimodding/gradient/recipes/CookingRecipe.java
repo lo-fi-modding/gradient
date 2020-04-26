@@ -26,7 +26,6 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class CookingRecipe implements IRecipe<IInventory> {
   public static final IRecipeType<CookingRecipe> TYPE = IRecipeType.register("cooking");
@@ -59,7 +58,7 @@ public class CookingRecipe implements IRecipe<IInventory> {
     return false;
   }
 
-  public boolean matches(final IItemHandler inv, final Set<Stage> stages, final int firstSlot, final int lastSlot) {
+  public boolean matches(final IItemHandler inv, final NonNullList<Stage> stages, final int firstSlot, final int lastSlot) {
     for(final Stage stage : this.stages) {
       if(!stages.contains(stage)) {
         return false;
