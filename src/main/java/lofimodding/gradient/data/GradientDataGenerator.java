@@ -1136,6 +1136,8 @@ public final class GradientDataGenerator {
         this.add("screens.gradient.unhardened_clay_cast." + cast.name().toLowerCase(), StringUtils.capitalize(cast.name().toLowerCase()));
       }
 
+      this.add("fluids.gradient.air", "Air");
+
       this.add(GradientBlocks.PEBBLE.get(), "Pebble");
       this.add(GradientItems.PEBBLE.get(), "Pebble");
 
@@ -1179,6 +1181,7 @@ public final class GradientDataGenerator {
       this.add(GradientItems.FLINT_KNIFE.get(), "Flint Knife");
 
       this.add(GradientItems.FIREPIT.get(), "Firepit");
+      this.add(GradientItems.FIREPIT.get().getTranslationKey() + ".heat", "%d °C");
       this.add(GradientItems.GRINDSTONE.get(), "Grindstone");
 
       this.add(GradientItems.UNHARDENED_CLAY_FURNACE.get(), "Unhardened Clay Furnace");

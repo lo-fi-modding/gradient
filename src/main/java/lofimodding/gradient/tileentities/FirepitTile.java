@@ -60,22 +60,24 @@ public class FirepitTile extends HeatProducerTile {
   private static Capability<IFluidHandler> FLUID_HANDLER_CAPABILITY;
 
   public static final int FUEL_SLOTS_COUNT = 3;
-  public static final int TOTAL_SLOTS_COUNT = FUEL_SLOTS_COUNT + 2;
+  public static final int INPUT_SLOTS_COUNT = 1;
+  public static final int OUTPUT_SLOTS_COUNT = 1;
+  public static final int TOTAL_SLOTS_COUNT = FUEL_SLOTS_COUNT + INPUT_SLOTS_COUNT + OUTPUT_SLOTS_COUNT;
 
   public static final int FIRST_FUEL_SLOT = 0;
   public static final int FIRST_INPUT_SLOT = FIRST_FUEL_SLOT + FUEL_SLOTS_COUNT;
-  public static final int FIRST_OUTPUT_SLOT = FIRST_INPUT_SLOT + 1;
+  public static final int FIRST_OUTPUT_SLOT = FIRST_INPUT_SLOT + INPUT_SLOTS_COUNT;
 
   private static final int FLUID_CAPACITY = 100;
 
   private final Fluid air = GradientFluids.AIR.get();
 
   private final ItemStackHandler inventory = new ItemStackHandler(TOTAL_SLOTS_COUNT) {
-    private final ItemStackHandler temp = new ItemStackHandler(this.getSlots());
+    private final ItemStackHandler inputTemp = new ItemStackHandler(INPUT_SLOTS_COUNT);
 
     @Override
     public int getSlotLimit(final int slot) {
-      if(slot == FIRST_OUTPUT_SLOT) {
+      if(slot >= FIRST_OUTPUT_SLOT) {
         return super.getSlotLimit(slot);
       }
 
@@ -84,6 +86,10 @@ public class FirepitTile extends HeatProducerTile {
 
     @Override
     public boolean isItemValid(final int slot, @Nonnull final ItemStack stack) {
+      if(FirepitTile.this.force) {
+        return true;
+      }
+
       // Fuel
       if(slot < FUEL_SLOTS_COUNT) {
         return
@@ -93,14 +99,16 @@ public class FirepitTile extends HeatProducerTile {
 
       // Input
       if(slot < FIRST_OUTPUT_SLOT) {
-        for(int i = 0; i < this.getSlots(); i++) {
-          this.temp.setStackInSlot(i, this.getStackInSlot(i));
+        for(int i = 0; i < INPUT_SLOTS_COUNT; i++) {
+          this.inputTemp.setStackInSlot(i, this.getStackInSlot(i + FIRST_INPUT_SLOT));
         }
+
+        this.inputTemp.setStackInSlot(slot - FIRST_INPUT_SLOT, stack);
 
         return
           !FirepitTile.this.hasInput() &&
           !FirepitTile.this.hasFurnace(FirepitTile.this.world.getBlockState(FirepitTile.this.pos)) &&
-          RecipeUtils.getRecipe(CookingRecipe.TYPE, recipe -> recipe.matches(this.temp, 0, 0)).isPresent();
+          RecipeUtils.getRecipe(CookingRecipe.TYPE, recipe -> recipe.matches(this.inputTemp, 0, INPUT_SLOTS_COUNT - 1)).isPresent();
       }
 
       // Output
@@ -109,23 +117,15 @@ public class FirepitTile extends HeatProducerTile {
 
     @Nonnull
     @Override
-    public ItemStack insertItem(final int slot, @Nonnull final ItemStack stack, final boolean simulate) {
-      if(!this.isItemValid(slot, stack) && !FirepitTile.this.forceInsert) {
-        return stack;
-      }
-
-      return super.insertItem(slot, stack, simulate);
-    }
-
-    @Nonnull
-    @Override
     public ItemStack extractItem(final int slot, final int amount, final boolean simulate) {
-      if(slot < FUEL_SLOTS_COUNT && FirepitTile.this.isBurning(slot)) {
-        return ItemStack.EMPTY;
-      }
+      if(!FirepitTile.this.force) {
+        if(slot < FUEL_SLOTS_COUNT && FirepitTile.this.isBurning(slot)) {
+          return ItemStack.EMPTY;
+        }
 
-      if(slot < FIRST_OUTPUT_SLOT && FirepitTile.this.isCooking()) {
-        return ItemStack.EMPTY;
+        if(slot < FIRST_OUTPUT_SLOT && FirepitTile.this.isCooking()) {
+          return ItemStack.EMPTY;
+        }
       }
 
       return super.extractItem(slot, amount, simulate);
@@ -185,7 +185,7 @@ public class FirepitTile extends HeatProducerTile {
   private final NonNullList<Stage> stages = NonNullList.create();
   private int ticks;
 
-  private boolean forceInsert;
+  private boolean force;
   private final Fuel[] fuels = new Fuel[FUEL_SLOTS_COUNT];
 
   private final Map<BlockPos, Hardening> hardenables = new HashMap<>();
@@ -385,10 +385,10 @@ public class FirepitTile extends HeatProducerTile {
 
     if(this.ticks >= this.recipe.ticks) {
       final ItemStack output = this.recipe.getRecipeOutput().copy();
+      this.force = true;
       this.inventory.extractItem(FIRST_INPUT_SLOT, 1, false);
-      this.forceInsert = true;
       this.inventory.insertItem(FIRST_OUTPUT_SLOT, output, false);
-      this.forceInsert = false;
+      this.force = false;
     }
   }
 
@@ -538,7 +538,7 @@ public class FirepitTile extends HeatProducerTile {
   }
 
   private void updateRecipe() {
-    this.recipe = RecipeUtils.getRecipe(CookingRecipe.TYPE, recipe -> recipe.matches(this.inventory, this.stages, 0, 0)).orElse(null);
+    this.recipe = RecipeUtils.getRecipe(CookingRecipe.TYPE, recipe -> recipe.matches(this.inventory, this.stages, FIRST_INPUT_SLOT, FIRST_INPUT_SLOT + INPUT_SLOTS_COUNT - 1)).orElse(null);
   }
 
   @Override

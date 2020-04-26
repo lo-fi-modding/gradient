@@ -1,18 +1,21 @@
 package lofimodding.gradient.client.tesr;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.platform.GlStateManager;
 import lofimodding.gradient.blocks.FirepitBlock;
+import lofimodding.gradient.client.RenderUtils;
 import lofimodding.gradient.tileentities.FirepitTile;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.RayTraceResult;
 
 public class FirepitRenderer extends TileEntityRenderer<FirepitTile> {
   public FirepitRenderer(final TileEntityRendererDispatcher rendererDispatcher) {
@@ -30,6 +33,8 @@ public class FirepitRenderer extends TileEntityRenderer<FirepitTile> {
 
     final double fuelAngleOffset = firepit.hasFurnace(state) ? Math.PI / 2 : 0.0d;
 
+    final Minecraft mc = Minecraft.getInstance();
+
     for(int slot = 0; slot < FirepitTile.FUEL_SLOTS_COUNT; slot++) {
       if(firepit.hasFuel(slot)) {
         final ItemStack fuel = firepit.getFuel(slot);
@@ -40,23 +45,23 @@ public class FirepitRenderer extends TileEntityRenderer<FirepitTile> {
 
         matrixStack.push();
         matrixStack.translate(inputX, -0.4375d, inputZ);
-        matrixStack.rotate(-facing.getHorizontalAngle(), 0.0f, 1.0f, 0.0f);
+        matrixStack.rotate(Vector3f .YP.rotationDegrees(-facing.getHorizontalAngle()));
 
         matrixStack.push();
         matrixStack.scale(0.5f, 0.5f, 0.5f);
-        Minecraft.getMinecraft().getRenderItem().renderItem(fuel, ItemCameraTransforms.TransformType.GROUND);
+        mc.getItemRenderer().renderItem(fuel, ItemCameraTransforms.TransformType.GROUND, combinedLight, combinedOverlay, matrixStack, buffer);
         matrixStack.pop();
 
         if(firepit.isBurning(slot)) {
           matrixStack.translate(-0.1f, 0.2f, 0.0f);
           matrixStack.scale(0.2f * (1.0f - firepit.getBurningFuel(slot).percentBurned()), 0.025f, 1.0f);
-          GlStateManager.disableCull();
-          this.setLightmapDisabled(true);
-          GlStateManager.disableLighting();
-          Gui.drawRect(0, 0, 1, 1, 0xFF1AFF00);
-          GlStateManager.enableLighting();
-          this.setLightmapDisabled(false);
-          GlStateManager.enableCull();
+//          GlStateManager.disableCull();
+//          this.setLightmapDisabled(true);
+//          GlStateManager.disableLighting();
+//          Gui.drawRect(0, 0, 1, 1, 0xFF1AFF00);
+//          GlStateManager.enableLighting();
+//          this.setLightmapDisabled(false);
+//          GlStateManager.enableCull();
         }
 
         matrixStack.pop();
@@ -69,23 +74,23 @@ public class FirepitRenderer extends TileEntityRenderer<FirepitTile> {
       matrixStack.push();
 
       matrixStack.translate(0.0d, -0.3125d, 0.0d);
-      matrixStack.rotate(-facing.getHorizontalAngle(), 0.0f, 1.0f, 0.0f);
+      matrixStack.rotate(Vector3f.YP.rotationDegrees(-facing.getHorizontalAngle()));
 
       matrixStack.push();
       matrixStack.scale(0.5f, 0.5f, 0.5f);
-      Minecraft.getMinecraft().getRenderItem().renderItem(input, ItemCameraTransforms.TransformType.GROUND);
+      mc.getItemRenderer().renderItem(input, ItemCameraTransforms.TransformType.GROUND, combinedLight, combinedOverlay, matrixStack, buffer);
       matrixStack.pop();
 
       if(firepit.isCooking()) {
         matrixStack.translate(-0.1f, 0.2f, 0.0f);
         matrixStack.scale(0.2f * (1.0f - firepit.getCookingPercent()), 0.025f, 1.0f);
-        GlStateManager.disableCull();
-        this.setLightmapDisabled(true);
-        GlStateManager.disableLighting();
-        Gui.drawRect(0, 0, 1, 1, 0xFF1AFF00);
-        GlStateManager.enableLighting();
-        this.setLightmapDisabled(false);
-        GlStateManager.enableCull();
+//        GlStateManager.disableCull();
+//        this.setLightmapDisabled(true);
+//        GlStateManager.disableLighting();
+//        Gui.drawRect(0, 0, 1, 1, 0xFF1AFF00);
+//        GlStateManager.enableLighting();
+//        this.setLightmapDisabled(false);
+//        GlStateManager.enableCull();
       }
 
       matrixStack.pop();
@@ -101,20 +106,28 @@ public class FirepitRenderer extends TileEntityRenderer<FirepitTile> {
       matrixStack.translate(inputX, -0.40625d, inputZ);
 
       if(output.getCount() > 1) {
-        this.drawNameplate(firepit, Integer.toString(output.getCount()), -0.5d, -1.05d, -0.5d, 16);
+        matrixStack.push();
+        matrixStack.translate(-0.5d, -1.05d, -0.5d);
+        RenderUtils.renderText(Integer.toString(output.getCount()), matrixStack, buffer, combinedLight);
+        matrixStack.pop();
       }
 
-      matrixStack.rotate(-facing.getHorizontalAngle(), 0.0f, 1.0f, 0.0f);
+      matrixStack.rotate(Vector3f.YP.rotationDegrees(-facing.getHorizontalAngle()));
       matrixStack.scale(0.5f, 0.5f, 0.5f);
-      Minecraft.getMinecraft().getRenderItem().renderItem(output, ItemCameraTransforms.TransformType.GROUND);
+      mc.getItemRenderer().renderItem(output, ItemCameraTransforms.TransformType.GROUND, combinedLight, combinedOverlay, matrixStack, buffer);
 
       matrixStack.pop();
     }
 
-    final Minecraft mc = Minecraft.getMinecraft();
+    if(mc.objectMouseOver != null && mc.objectMouseOver.getType() == RayTraceResult.Type.BLOCK) {
+      final BlockRayTraceResult trace = (BlockRayTraceResult)mc.objectMouseOver;
 
-    if(mc.objectMouseOver != null && mc.objectMouseOver.getBlockPos() != null && mc.objectMouseOver.getBlockPos().equals(firepit.getPos())) {
-      this.drawNameplate(firepit, I18n.format("tile.fire_pit.heat", Math.round(firepit.getHeat())), -0.5d, -0.75d, -0.5d, 8);
+      if(trace.getPos().equals(firepit.getPos())) {
+        matrixStack.push();
+        matrixStack.translate(0.0d, 0.5d, 0.0d);
+        RenderUtils.renderText(I18n.format(state.getBlock().getTranslationKey() + ".heat", Math.round(firepit.getHeat())), matrixStack, buffer, combinedLight);
+        matrixStack.pop();
+      }
     }
 
     matrixStack.pop();
