@@ -535,8 +535,8 @@ public final class GradientDataGenerator {
       this.singleTexture(GradientIds.FLINT_KNIFE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.FLINT_KNIFE));
 
       this.getBuilder(GradientIds.FIREPIT).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.FIREPIT)));
-      this.getBuilder(GradientIds.UNLIT_FIBRE_TORCH).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.UNLIT_FIBRE_TORCH)));
-      this.getBuilder(GradientIds.LIT_FIBRE_TORCH).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.LIT_FIBRE_TORCH)));
+      this.singleTexture(GradientIds.UNLIT_FIBRE_TORCH, this.mcLoc("item/generated"), "layer0", this.modLoc("block/" + GradientIds.UNLIT_FIBRE_TORCH));
+      this.singleTexture(GradientIds.LIT_FIBRE_TORCH, this.mcLoc("item/generated"), "layer0", this.modLoc("block/" + GradientIds.LIT_FIBRE_TORCH));
 
       this.getBuilder(GradientIds.GRINDSTONE).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.GRINDSTONE)));
 
