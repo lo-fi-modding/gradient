@@ -63,6 +63,7 @@ public final class GradientIds {
   public static final String WOLF_PELT = "wolf_pelt";
 
   public static final String RAW_HIDE = "raw_hide";
+  public static final String SALTED_HIDE = "salted_hide";
 
   public static final String FIRE_STARTER = "fire_starter";
   public static final String STONE_HAMMER = "stone_hammer";

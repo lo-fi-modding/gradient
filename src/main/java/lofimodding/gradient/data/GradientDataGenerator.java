@@ -33,6 +33,7 @@ import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.data.loot.BlockLootTables;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.tags.BlockTags;
@@ -63,6 +64,7 @@ import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import org.apache.commons.lang3.StringUtils;
@@ -612,6 +614,7 @@ public final class GradientDataGenerator {
       this.singleTexture(GradientIds.WOLF_PELT, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.WOLF_PELT));
 
       this.singleTexture(GradientIds.RAW_HIDE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.RAW_HIDE));
+      this.singleTexture(GradientIds.SALTED_HIDE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.SALTED_HIDE));
 
       this.singleTexture(GradientIds.FIRE_STARTER, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.FIRE_STARTER));
       this.singleTexture(GradientIds.STONE_HAMMER, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.STONE_HAMMER));
@@ -829,6 +832,7 @@ public final class GradientDataGenerator {
       this.add(GradientItems.WOLF_PELT.get(), "Wolf Pelt");
 
       this.add(GradientItems.RAW_HIDE.get(), "Rawhide");
+      this.add(GradientItems.SALTED_HIDE.get(), "Salted Hide");
 
       this.add(GradientItems.FIRE_STARTER.get(), "Fire Starter");
       this.add(GradientItems.STONE_HAMMER.get(), "Stone Hammer");
@@ -980,10 +984,22 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shapelessRecipe(GradientItems.RAW_HIDE.get())
+        .stage(GradientStages.AGE_2)
         .addIngredient(GradientTags.Items.PELTS)
         .addIngredient(GradientItems.FLINT_KNIFE.get())
         .addCriterion("has_hide", this.hasItem(GradientTags.Items.PELTS))
         .build(finished, Gradient.loc("age2/" + GradientIds.RAW_HIDE));
+
+      GradientRecipeBuilder
+        .mixing(GradientItems.SALTED_HIDE.get(), 3)
+        .stage(GradientStages.AGE_2)
+        .passes(3)
+        .ticks(60)
+        .addIngredient(GradientItems.RAW_HIDE.get(), 3)
+        .addIngredient(GradientItems.SALT.get())
+        .fluid(new FluidStack(Fluids.WATER, 1000))
+        .addCriterion("has_rawhide", this.hasItem(GradientItems.RAW_HIDE.get()))
+        .build(finished, Gradient.loc("mixing/" + GradientIds.SALTED_HIDE));
 
       StagedRecipeBuilder
         .shapelessRecipe(GradientItems.FIRE_STARTER.get())

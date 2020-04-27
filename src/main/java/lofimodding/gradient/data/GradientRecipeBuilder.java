@@ -705,7 +705,7 @@ public final class GradientRecipeBuilder {
     private int ticks;
     private int passes;
     private final List<Ingredient> ingredients = Lists.newArrayList();
-    private FluidStack fluid;
+    private FluidStack fluid = FluidStack.EMPTY;
     private final Advancement.Builder advancementBuilder = Advancement.Builder.builder();
     private String group;
 

@@ -49,7 +49,7 @@ dccc3a018ecf212e5d43d811cd942d57ea4133b0 assets\gradient\blockstates\unhardened_
 8c9ea90afdb74672dc643fb70026ecb2c5c64cd6 assets\gradient\blockstates\unlit_fibre_torch.json
 330b640372ea555412786edb807d0e3e053b7813 assets\gradient\blockstates\unlit_fibre_wall_torch.json
 659fa450fe62cdecc69d9276f01c713a1e62a205 assets\gradient\blockstates\zinc_block.json
-bc89b71dc15195dc77d7390eeeeb3a445c070167 assets\gradient\lang\en_us.json
+c1669654f5e1d90f6a97783d05ba4f06ccf0b66c assets\gradient\lang\en_us.json
 f295f4e7338854665f216e2f0ca3e339b0d284a7 assets\gradient\models\block\azurite_block.json
 910f0617e8b2433ac0f97c48cbbc8251b4f162b3 assets\gradient\models\block\azurite_ore.json
 79a72e81ecb79d9775041b9a2d526a90f646005b assets\gradient\models\block\azurite_pebble.json
@@ -217,6 +217,7 @@ bf0534a2719fcc09f79d18650a0a96cf6087901b assets\gradient\models\item\pyrite_ore.
 8cca93b84cab794d001adf994b8b6ed6ea38d8b2 assets\gradient\models\item\pyrite_purified.json
 e38de92c8d00fd63ff583e8ad112e001c0802124 assets\gradient\models\item\raw_hide.json
 8d646b6006a6ca3fca710cad3bb16cc7f08eb0d1 assets\gradient\models\item\salt.json
+455f6f61a2eca2c1972198956e5cdda8d7d91a8a assets\gradient\models\item\salted_hide.json
 a273f2694b6a20ac491073ad4ccd42efe4ec4fae assets\gradient\models\item\salt_block.json
 d61af7d98670aab4d81bbc9426131a5eb78758fa assets\gradient\models\item\sheep_pelt.json
 b18f14e02b02e929adb7699ae0b4a8ff51361ebe assets\gradient\models\item\sphalerite_block.json
@@ -428,6 +429,7 @@ b0dc0cfa6d0c196e55d1cabb84e77f0fd760975d data\gradient\advancements\recipes\grad
 c2b35e3a52b61600856cc5ddf05a6eee83a120b7 data\gradient\advancements\recipes\gradient\age2\unhardened_clay_oven.json
 33b127815851dec920ffcfff6d0f59e810c4745b data\gradient\advancements\recipes\gradient\hardening\age2\clay_furnace.json
 5e1a326656a582a4e79d493204e13e210bc3a4b8 data\gradient\advancements\recipes\gradient\hardening\age2\clay_oven.json
+777ecb05987521aaeedf643c0baf75c7021b5366 data\gradient\advancements\recipes\gradient\mixing\salted_hide.json
 bf0af792a5ddfbce56234424af9170c03fbe206e data\gradient\loot_tables\blocks\azurite_block.json
 e57d91f1e447ce6620e7f739ca419fa4ed2d552b data\gradient\loot_tables\blocks\azurite_ore.json
 f142b5a2a88a232691ac4e4c16efeb1b7b7fd8d0 data\gradient\loot_tables\blocks\azurite_pebble.json
@@ -501,7 +503,7 @@ bba4857c81c6d8ddbbe7c1bb57c64238e82272cd data\gradient\recipes\age1\grindstone.j
 f5456c33ef511f9660d8c3284d9de7fd5be2dbe9 data\gradient\recipes\age1\twine.json
 ddc7add657f591699113f597551219e34fdc0af0 data\gradient\recipes\age1\unlit_fibre_torch.json
 d233253e0a8b095237f1f890fd45c75decc7f4f8 data\gradient\recipes\age2\mulch.json
-aed2fe1a0d5fc20603c322f4b398c15c1b0b031c data\gradient\recipes\age2\raw_hide.json
+21696c03c7fdecfe7883afa70e979d15ef397d7a data\gradient\recipes\age2\raw_hide.json
 22f72cc1b07542b10d2dcf3f4573255cfcdf8e53 data\gradient\recipes\age2\unhardened_clay_bucket.json
 bb924dde7d912274e6b5d92efd9d79589a81f9d1 data\gradient\recipes\age2\unhardened_clay_cast.json
 c456942ff5a352895d051e8b95170b22abc93d57 data\gradient\recipes\age2\unhardened_clay_crucible.json
@@ -525,6 +527,7 @@ d044cd520abb35d7976362092cfdd9f383eaf2ef data\gradient\recipes\fuel\coal.json
 f36afb8b7d8a3d8f174f73879b4390125b8f934e data\gradient\recipes\fuel\string.json
 1a5e16462e87967a133b0984ed806eff4ac33e70 data\gradient\recipes\hardening\age2\clay_furnace.json
 2044aadb8ee681dd63f7c29ca3217b7dfdeeb40b data\gradient\recipes\hardening\age2\clay_oven.json
+93b65f47eb9c46d75717cfb35463b8686509b6f2 data\gradient\recipes\mixing\salted_hide.json
 49ce2c9c3ffe8fb1aac89563a6fcedfb1342e478 data\gradient\tags\blocks\fibre_sources.json
 e7cd8ed9065b30a836c0fce53939ef05cd486b13 data\gradient\tags\blocks\pebble_sources.json
 149fbf8fa7cd80664f258d0035d183f78f5388fd data\gradient\tags\items\fibre_torch_lighters.json

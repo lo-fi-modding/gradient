@@ -47,14 +47,31 @@ public class MixingBasinTile extends TileEntity implements ITickableTileEntity {
   private static Capability<IFluidHandler> FLUID_HANDLER_CAPABILITY;
 
   private final FluidTank tank = new FluidTank(1000, fluid -> fluid.getFluid() == Fluids.WATER) {
+    //TODO: for some reason, onContentsChanged is called when draining even on simulate mode
+    private boolean simulating;
+
+    @Override
+    public int fill(final FluidStack resource, final FluidAction action) {
+      this.simulating = action.simulate();
+      return super.fill(resource, action);
+    }
+
+    @Nonnull
+    @Override
+    public FluidStack drain(final int maxDrain, final FluidAction action) {
+      this.simulating = action.simulate();
+      return super.drain(maxDrain, action);
+    }
+
     @Override
     protected void onContentsChanged() {
       super.onContentsChanged();
 
-      MixingBasinTile.this.world.setBlockState(MixingBasinTile.this.pos, MixingBasinTile.this.getBlockState().with(MixingBasinBlock.HAS_WATER, !this.fluid.isEmpty()));
-
-      MixingBasinTile.this.updateRecipe();
-      MixingBasinTile.this.sync();
+      if(!this.simulating) {
+        MixingBasinTile.this.world.setBlockState(MixingBasinTile.this.pos, MixingBasinTile.this.getBlockState().with(MixingBasinBlock.HAS_WATER, !this.fluid.isEmpty()));
+        MixingBasinTile.this.updateRecipe();
+        MixingBasinTile.this.sync();
+      }
     }
   };
 
@@ -73,21 +90,13 @@ public class MixingBasinTile extends TileEntity implements ITickableTileEntity {
 
     @Override
     public boolean isItemValid(final int slot, @Nonnull final ItemStack stack) {
-      if(slot == OUTPUT_SLOT) {
-        return false;
+      if(!MixingBasinTile.this.force) {
+        if(slot == OUTPUT_SLOT) {
+          return false;
+        }
       }
 
       return super.isItemValid(slot, stack);
-    }
-
-    @Nonnull
-    @Override
-    public ItemStack insertItem(final int slot, @Nonnull final ItemStack stack, final boolean simulate) {
-      if(!this.isItemValid(slot, stack) && !MixingBasinTile.this.forceInsert) {
-        return stack;
-      }
-
-      return super.insertItem(slot, stack, simulate);
     }
 
     @Override
@@ -124,7 +133,7 @@ public class MixingBasinTile extends TileEntity implements ITickableTileEntity {
   private final Set<Stage> stages = new HashSet<>();
   private int passes;
   private int ticks;
-  private boolean forceInsert;
+  private boolean force;
 
   public MixingBasinTile() {
     super(GradientTileEntities.MIXING_BASIN.get());
@@ -218,18 +227,18 @@ public class MixingBasinTile extends TileEntity implements ITickableTileEntity {
     }
 
     if(this.ticks >= this.recipe.getTicks() && this.passes >= this.recipe.getPasses()) {
-      this.passes = 0;
-      this.tank.setFluid(null);
-
       final ItemStack output = this.recipe.getRecipeOutput().copy();
+
+      this.passes = 0;
+      this.tank.drain(this.recipe.getFluid(), IFluidHandler.FluidAction.EXECUTE);
 
       for(int slot = 0; slot < INPUT_SIZE; slot++) {
         this.inventory.setStackInSlot(slot, ItemStack.EMPTY);
       }
 
-      this.forceInsert = true;
+      this.force = true;
       this.inventory.setStackInSlot(OUTPUT_SLOT, output);
-      this.forceInsert = false;
+      this.force = false;
     }
   }
 

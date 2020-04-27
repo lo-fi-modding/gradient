@@ -1,6 +1,8 @@
 {
   "type": "progression:shapeless_staged",
-  "stages": [],
+  "stages": [
+    "gradient:age_2"
+  ],
   "ingredients": [
     {
       "tag": "gradient:pelts"

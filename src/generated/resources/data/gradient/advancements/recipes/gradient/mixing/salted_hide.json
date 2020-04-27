@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "gradient:mixing/salted_hide"
+    ]
+  },
+  "criteria": {
+    "has_rawhide": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "gradient:raw_hide"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "gradient:mixing/salted_hide"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_rawhide",
+      "has_the_recipe"
+    ]
+  ]
+}
