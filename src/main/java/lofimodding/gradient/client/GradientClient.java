@@ -57,6 +57,11 @@ public final class GradientClient {
       RenderTypeLookup.setRenderLayer(GradientBlocks.UNHARDENED_CLAY_CAST(cast).get(), cutoutMipped);
     }
 
+    RenderTypeLookup.setRenderLayer(GradientBlocks.UNLIT_FIBRE_TORCH.get(), cutoutMipped);
+    RenderTypeLookup.setRenderLayer(GradientBlocks.UNLIT_FIBRE_WALL_TORCH.get(), cutoutMipped);
+    RenderTypeLookup.setRenderLayer(GradientBlocks.LIT_FIBRE_TORCH.get(), cutoutMipped);
+    RenderTypeLookup.setRenderLayer(GradientBlocks.LIT_FIBRE_WALL_TORCH.get(), cutoutMipped);
+
     final Minecraft mc = event.getMinecraftSupplier().get();
     final BlockColors blockColors = mc.getBlockColors();
     final ItemColors itemColors = mc.getItemColors();

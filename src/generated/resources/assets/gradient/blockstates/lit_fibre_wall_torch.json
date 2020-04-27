@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gradient:block/lit_fibre_wall_torch",
+      "y": 270
+    },
+    "facing=south": {
+      "model": "gradient:block/lit_fibre_wall_torch",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "gradient:block/lit_fibre_wall_torch",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "gradient:block/lit_fibre_wall_torch"
+    }
+  }
+}

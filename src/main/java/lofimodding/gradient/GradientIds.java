@@ -69,6 +69,11 @@ public final class GradientIds {
   public static final String FLINT_KNIFE = "flint_knife";
 
   public static final String FIREPIT = "firepit";
+  public static final String UNLIT_FIBRE_TORCH = "unlit_fibre_torch";
+  public static final String UNLIT_FIBRE_WALL_TORCH = "unlit_fibre_wall_torch";
+  public static final String LIT_FIBRE_TORCH = "lit_fibre_torch";
+  public static final String LIT_FIBRE_WALL_TORCH = "lit_fibre_wall_torch";
+
   public static final String GRINDSTONE = "grindstone";
 
   public static final String UNHARDENED_CLAY_FURNACE = "unhardened_clay_furnace";

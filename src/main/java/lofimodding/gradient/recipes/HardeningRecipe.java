@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientRecipeSerializers;
+import lofimodding.gradient.utils.WorldUtils;
 import lofimodding.progression.Stage;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -18,8 +19,6 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.RecipeItemHelper;
 import net.minecraft.item.crafting.ShapedRecipe;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.state.IProperty;
-import net.minecraft.state.IStateHolder;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -29,8 +28,6 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 public class HardeningRecipe implements IRecipe<IInventory> {
@@ -96,28 +93,7 @@ public class HardeningRecipe implements IRecipe<IInventory> {
   }
 
   public BlockState getCraftingResult(final BlockState currentState) {
-    BlockState newState = Block.getBlockFromItem(this.result.getItem()).getDefaultState();
-
-    for(final Map.Entry<IProperty<?>, Comparable<?>> entry : currentState.getValues().entrySet()) {
-      final IProperty<?> property = entry.getKey();
-
-      if(newState.has(property)) {
-        newState = setValueHelper(newState, property, getName(property, entry.getValue()));
-      }
-    }
-
-    return newState;
-  }
-
-  // Avoids generics issues
-  private static <S extends IStateHolder<S>, T extends Comparable<T>> S setValueHelper(final S state, final IProperty<T> property, final String value) {
-    final Optional<T> optional = property.parseValue(value);
-    return optional.map(t -> state.with(property, t)).orElse(state);
-  }
-
-  // Avoids generics issues
-  private static <T extends Comparable<T>> String getName(final IProperty<T> property, final Comparable<?> value) {
-    return property.getName((T)value);
+    return WorldUtils.copyStateProperties(currentState, Block.getBlockFromItem(this.result.getItem()).getDefaultState());
   }
 
   @Override

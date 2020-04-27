@@ -4,15 +4,20 @@ import lofimodding.gradient.blocks.ClayFurnaceBlock;
 import lofimodding.gradient.blocks.ClayOvenBlock;
 import lofimodding.gradient.blocks.FirepitBlock;
 import lofimodding.gradient.blocks.GrindstoneBlock;
+import lofimodding.gradient.blocks.LitFibreTorchBlock;
+import lofimodding.gradient.blocks.LitFibreWallTorchBlock;
 import lofimodding.gradient.blocks.MetalBlock;
 import lofimodding.gradient.blocks.PebbleBlock;
 import lofimodding.gradient.blocks.UnhardenedClayBlock;
+import lofimodding.gradient.blocks.UnlitFibreTorchBlock;
+import lofimodding.gradient.blocks.UnlitFibreWallTorchBlock;
 import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.science.Metals;
 import lofimodding.gradient.science.Ore;
 import lofimodding.gradient.science.Ores;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.TorchBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.util.math.shapes.VoxelShapes;
@@ -25,6 +30,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public final class GradientBlocks {
   private GradientBlocks() { }
@@ -60,6 +66,11 @@ public final class GradientBlocks {
   public static final RegistryObject<Block> SALT_BLOCK = REGISTRY.register(GradientIds.SALT_BLOCK, () -> new Block(Block.Properties.create(Material.SAND, MaterialColor.QUARTZ).sound(SoundType.SAND).hardnessAndResistance(0.5f)));
 
   public static final RegistryObject<FirepitBlock> FIREPIT = REGISTRY.register(GradientIds.FIREPIT, FirepitBlock::new);
+  public static final RegistryObject<UnlitFibreTorchBlock> UNLIT_FIBRE_TORCH = REGISTRY.register(GradientIds.UNLIT_FIBRE_TORCH, () -> new UnlitFibreTorchBlock(() -> litFibreTorch().get(), Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.0f).sound(SoundType.WOOD)));
+  public static final RegistryObject<UnlitFibreWallTorchBlock> UNLIT_FIBRE_WALL_TORCH = REGISTRY.register(GradientIds.UNLIT_FIBRE_WALL_TORCH, () -> new UnlitFibreWallTorchBlock(() -> litFibreWallTorch().get(), Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.0f).sound(SoundType.WOOD)));
+  public static final RegistryObject<LitFibreTorchBlock> LIT_FIBRE_TORCH = REGISTRY.register(GradientIds.LIT_FIBRE_TORCH, () -> new LitFibreTorchBlock(UNLIT_FIBRE_TORCH::get, Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.0f).lightValue(10).sound(SoundType.WOOD)));
+  public static final RegistryObject<LitFibreWallTorchBlock> LIT_FIBRE_WALL_TORCH = REGISTRY.register(GradientIds.LIT_FIBRE_WALL_TORCH, () -> new LitFibreWallTorchBlock(UNLIT_FIBRE_WALL_TORCH::get, Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.0f).lightValue(10).sound(SoundType.WOOD)));
+
   public static final RegistryObject<GrindstoneBlock> GRINDSTONE = REGISTRY.register(GradientIds.GRINDSTONE, GrindstoneBlock::new);
 
   public static final RegistryObject<UnhardenedClayBlock> UNHARDENED_CLAY_FURNACE = REGISTRY.register(GradientIds.UNHARDENED_CLAY_FURNACE, () -> new UnhardenedClayBlock(VoxelShapes.fullCube()));
@@ -82,6 +93,14 @@ public final class GradientBlocks {
   static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering blocks...");
     REGISTRY.register(bus);
+  }
+
+  private static Supplier<TorchBlock> litFibreTorch() {
+    return () -> LIT_FIBRE_TORCH.get();
+  }
+
+  private static Supplier<TorchBlock> litFibreWallTorch() {
+    return () -> LIT_FIBRE_WALL_TORCH.get();
   }
 
   public static RegistryObject<PebbleBlock> PEBBLE(final Ore ore) {

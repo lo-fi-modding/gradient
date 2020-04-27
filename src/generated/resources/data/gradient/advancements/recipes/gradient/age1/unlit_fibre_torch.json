@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "gradient:age1/unlit_fibre_torch"
+    ]
+  },
+  "criteria": {
+    "has_string": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:string"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "gradient:age1/unlit_fibre_torch"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_string",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -234,6 +234,11 @@ public final class GradientDataGenerator {
         .face(Direction.DOWN).uvs(1.0f, 7.0f, 15.0f, 9.0f).texture("side").end()
         .end();
 
+      this.torch(GradientIds.UNLIT_FIBRE_TORCH, this.modLoc("block/unlit_fibre_torch"));
+      this.torchWall(GradientIds.UNLIT_FIBRE_WALL_TORCH, this.modLoc("block/unlit_fibre_torch"));
+      this.torch(GradientIds.LIT_FIBRE_TORCH, this.modLoc("block/lit_fibre_torch"));
+      this.torchWall(GradientIds.LIT_FIBRE_WALL_TORCH, this.modLoc("block/lit_fibre_torch"));
+
       this.getBuilder(GradientIds.GRINDSTONE)
         .parent(this.getExistingFile(this.mcLoc("block/block")))
         .texture("particle", this.mcLoc("block/polished_andesite"))
@@ -530,6 +535,9 @@ public final class GradientDataGenerator {
       this.singleTexture(GradientIds.FLINT_KNIFE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.FLINT_KNIFE));
 
       this.getBuilder(GradientIds.FIREPIT).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.FIREPIT)));
+      this.getBuilder(GradientIds.UNLIT_FIBRE_TORCH).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.UNLIT_FIBRE_TORCH)));
+      this.getBuilder(GradientIds.LIT_FIBRE_TORCH).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.LIT_FIBRE_TORCH)));
+
       this.getBuilder(GradientIds.GRINDSTONE).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.GRINDSTONE)));
 
       this.getBuilder(GradientIds.UNHARDENED_CLAY_FURNACE).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.UNHARDENED_CLAY_FURNACE)));
@@ -628,6 +636,11 @@ public final class GradientDataGenerator {
         .condition(FirepitBlock.FACING, Direction.WEST)
         .condition(FirepitBlock.HAS_FURNACE, true)
         .end();
+      this.simpleBlock(GradientBlocks.UNLIT_FIBRE_TORCH.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.UNLIT_FIBRE_TORCH)));
+      this.horizontalBlock(GradientBlocks.UNLIT_FIBRE_WALL_TORCH.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.UNLIT_FIBRE_WALL_TORCH)), 90);
+      this.simpleBlock(GradientBlocks.LIT_FIBRE_TORCH.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.LIT_FIBRE_TORCH)));
+      this.horizontalBlock(GradientBlocks.LIT_FIBRE_WALL_TORCH.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.LIT_FIBRE_WALL_TORCH)), 90);
+
       this.horizontalBlock(GradientBlocks.GRINDSTONE.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.GRINDSTONE)));
 
       this.horizontalBlock(GradientBlocks.UNHARDENED_CLAY_FURNACE.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.UNHARDENED_CLAY_FURNACE)));
@@ -710,6 +723,10 @@ public final class GradientDataGenerator {
 
       this.add(GradientItems.FIREPIT.get(), "Firepit");
       this.add(GradientItems.FIREPIT.get().getTranslationKey() + ".heat", "%d °C");
+      this.add(GradientBlocks.UNLIT_FIBRE_TORCH.get(), "Unlit Fibre Torch");
+      this.add(GradientBlocks.UNLIT_FIBRE_TORCH.get().getTranslationKey() + ".tooltip", "Light on a fire pit or with another torch");
+      this.add(GradientBlocks.LIT_FIBRE_TORCH.get(), "Lit Fibre Torch");
+
       this.add(GradientItems.GRINDSTONE.get(), "Grindstone");
 
       this.add(GradientItems.UNHARDENED_CLAY_FURNACE.get(), "Unhardened Clay Furnace");
@@ -767,6 +784,8 @@ public final class GradientDataGenerator {
 
     @Override
     protected void registerTags() {
+      this.getBuilder(GradientTags.Items.FIBRE_TORCH_LIGHTERS).add(GradientItems.LIT_FIBRE_TORCH.get(), Items.TORCH, Items.FLINT_AND_STEEL);
+
       for(final Ore ore : Ores.all()) {
         this.getBuilder(GradientTags.Items.ORE.get(ore)).add(GradientItems.ORE(ore).get());
         this.getBuilder(Tags.Items.ORES).add(GradientTags.Items.ORE.get(ore));
@@ -892,6 +911,16 @@ public final class GradientDataGenerator {
         .key('S', Tags.Items.RODS_WOODEN)
         .addCriterion("has_stick", this.hasItem(Tags.Items.RODS_WOODEN))
         .build(finished, Gradient.loc("age1/" + GradientIds.FIREPIT));
+
+      StagedRecipeBuilder
+        .shapelessRecipe(GradientItems.UNLIT_FIBRE_TORCH.get())
+        .stage(GradientStages.AGE_1)
+        .addIngredient(Tags.Items.STRING)
+        .addIngredient(Tags.Items.STRING)
+        .addIngredient(Tags.Items.STRING)
+        .addIngredient(Tags.Items.RODS_WOODEN)
+        .addCriterion("has_string", this.hasItem(Tags.Items.STRING))
+        .build(finished, Gradient.loc("age1/" + GradientIds.UNLIT_FIBRE_TORCH));
 
       StagedRecipeBuilder
         .shaped(GradientItems.GRINDSTONE.get())
@@ -1333,6 +1362,11 @@ public final class GradientDataGenerator {
         this.registerLootTable(GradientBlocks.SALT_BLOCK.get(), block -> droppingWithSilkTouchOrRandomly(block, GradientItems.SALT.get(), ConstantRange.of(4)));
 
         this.registerLootTable(GradientBlocks.FIREPIT.get(), droppingRandomly(Items.STICK, RandomValueRange.of(2, 5)));
+        this.registerDropSelfLootTable(GradientBlocks.UNLIT_FIBRE_TORCH.get());
+        this.registerDropping(GradientBlocks.UNLIT_FIBRE_WALL_TORCH.get(), GradientBlocks.UNLIT_FIBRE_TORCH.get());
+        this.registerDropSelfLootTable(GradientBlocks.LIT_FIBRE_TORCH.get());
+        this.registerDropping(GradientBlocks.LIT_FIBRE_WALL_TORCH.get(), GradientBlocks.LIT_FIBRE_TORCH.get());
+
         this.registerDropSelfLootTable(GradientBlocks.GRINDSTONE.get());
 
         this.registerDropSelfLootTable(GradientBlocks.UNHARDENED_CLAY_FURNACE.get());

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "gradient:block/unlit_fibre_torch"
+    }
+  }
+}

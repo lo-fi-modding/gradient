@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "gradient:lit_fibre_torch",
+    "minecraft:torch",
+    "minecraft:flint_and_steel"
+  ]
+}

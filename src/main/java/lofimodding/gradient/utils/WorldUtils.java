@@ -1,7 +1,10 @@
 package lofimodding.gradient.utils;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.IProperty;
+import net.minecraft.state.IStateHolder;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
@@ -11,6 +14,8 @@ import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
+import java.util.Map;
+import java.util.Optional;
 
 public final class WorldUtils {
   private WorldUtils() { }
@@ -42,5 +47,30 @@ public final class WorldUtils {
 
   public static void dropInventory(final World world, final BlockPos pos) {
     dropInventory(world, pos, 0);
+  }
+
+  public static BlockState copyStateProperties(final BlockState copyFrom, final BlockState copyTo) {
+    BlockState newState = copyTo;
+
+    for(final Map.Entry<IProperty<?>, Comparable<?>> entry : copyFrom.getValues().entrySet()) {
+      final IProperty<?> property = entry.getKey();
+
+      if(newState.has(property)) {
+        newState = setValueHelper(newState, property, getName(property, entry.getValue()));
+      }
+    }
+
+    return newState;
+  }
+
+  // Avoids generics issues
+  private static <S extends IStateHolder<S>, T extends Comparable<T>> S setValueHelper(final S state, final IProperty<T> property, final String value) {
+    final Optional<T> optional = property.parseValue(value);
+    return optional.map(t -> state.with(property, t)).orElse(state);
+  }
+
+  // Avoids generics issues
+  private static <T extends Comparable<T>> String getName(final IProperty<T> property, final Comparable<?> value) {
+    return property.getName((T)value);
   }
 }

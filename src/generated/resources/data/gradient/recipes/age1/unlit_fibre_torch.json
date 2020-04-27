@@ -1,0 +1,23 @@
+{
+  "type": "progression:shapeless_staged",
+  "stages": [
+    "gradient:age_1"
+  ],
+  "ingredients": [
+    {
+      "tag": "forge:string"
+    },
+    {
+      "tag": "forge:string"
+    },
+    {
+      "tag": "forge:string"
+    },
+    {
+      "tag": "forge:rods/wooden"
+    }
+  ],
+  "result": {
+    "item": "gradient:unlit_fibre_torch"
+  }
+}
