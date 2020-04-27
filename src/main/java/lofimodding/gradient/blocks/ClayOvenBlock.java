@@ -72,7 +72,7 @@ public class ClayOvenBlock extends HeatSinkerBlock {
       }
 
       // Remove input
-      if(player.isShiftKeyDown()) {
+      if(player.isSneaking()) {
         if(oven.hasInput()) {
           final ItemStack input = oven.takeInput();
           ItemHandlerHelper.giveItemToPlayer(player, input);

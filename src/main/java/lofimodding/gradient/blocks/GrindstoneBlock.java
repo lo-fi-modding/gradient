@@ -60,7 +60,7 @@ public class GrindstoneBlock extends Block {
       }
 
       // Remove input
-      if(player.isShiftKeyDown()) {
+      if(player.isSneaking()) {
         if(grindstone.hasInput()) {
           final ItemStack stack = grindstone.takeInput();
           ItemHandlerHelper.giveItemToPlayer(player, stack);

@@ -46,7 +46,7 @@ public class UnlitFibreTorchBlock extends TorchBlock {
   @Override
   @Deprecated
   public ActionResultType onBlockActivated(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
-    if(!world.isRemote || !player.isShiftKeyDown()) {
+    if(!world.isRemote || !player.isSneaking()) {
       if(GradientTags.Items.FIBRE_TORCH_LIGHTERS.contains(player.getHeldItemMainhand().getItem()) || GradientTags.Items.FIBRE_TORCH_LIGHTERS.contains(player.getHeldItemOffhand().getItem())) {
         world.playSound(null, pos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.NEUTRAL, 0.15f, world.rand.nextFloat() * 0.1f + 0.9f);
         world.setBlockState(pos, WorldUtils.copyStateProperties(state, this.lit.get().getDefaultState()));

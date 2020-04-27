@@ -91,7 +91,7 @@ public class FirepitBlock extends HeatSinkerBlock {
 
       final ItemStack held = player.getHeldItem(hand);
 
-      if(!player.isShiftKeyDown()) {
+      if(!player.isSneaking()) {
         if(held.getItem() == GradientItems.FIRE_STARTER.get()) {
           if(!firepit.isBurning()) {
             if(!player.isCreative()) {
@@ -132,7 +132,7 @@ public class FirepitBlock extends HeatSinkerBlock {
       }
 
       // Remove input
-      if(player.isShiftKeyDown()) {
+      if(player.isSneaking()) {
         if(firepit.hasInput()) {
           final ItemStack input = firepit.takeInput();
           ItemHandlerHelper.giveItemToPlayer(player, input);

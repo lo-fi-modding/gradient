@@ -33,7 +33,7 @@ public class AppendLootTable extends LootModifier {
     }
 
     this.reentryPrevention = true;
-    final LootTable lootTable = context.func_227502_a_(this.lootTable);
+    final LootTable lootTable = context.getLootTable(this.lootTable);
     final List<ItemStack> extras = lootTable.generate(context);
     generatedLoot.addAll(extras);
     this.reentryPrevention = false;

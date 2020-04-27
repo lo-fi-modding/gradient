@@ -83,7 +83,7 @@ public class MixingBasinBlock extends Block {
       }
 
       // Remove input
-      if(player.isShiftKeyDown()) {
+      if(player.isSneaking()) {
         for(int slot = 0; slot < MixingBasinTile.INPUT_SIZE; slot++) {
           if(basin.hasInput(slot)) {
             final ItemStack stack = basin.takeInput(slot, player);
