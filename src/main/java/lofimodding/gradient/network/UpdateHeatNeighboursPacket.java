@@ -33,7 +33,7 @@ public class UpdateHeatNeighboursPacket {
     return new UpdateHeatNeighboursPacket(buffer.readBlockPos(), buffer.readBlockPos());
   }
 
-  public static void handle(final UpdateHeatNeighboursPacket packet, final Supplier<NetworkEvent.Context> ctx) {
+  public static boolean handle(final UpdateHeatNeighboursPacket packet, final Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
       final HeatSinkerTile te = WorldUtils.getTileEntity(Minecraft.getInstance().world, packet.sinkerPos, HeatSinkerTile.class);
 
@@ -41,5 +41,7 @@ public class UpdateHeatNeighboursPacket {
         te.updateSink(packet.neighbourPos);
       }
     });
+
+    return true;
   }
 }

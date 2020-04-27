@@ -20,7 +20,7 @@ public final class Packets {
 
   public static void register() {
     Gradient.LOGGER.info("Registering packets...");
-    CHANNEL.registerMessage(id++, SwitchCastPacket.class, SwitchCastPacket::encode, SwitchCastPacket::decode, SwitchCastPacket::handle);
-    CHANNEL.registerMessage(id++, UpdateHeatNeighboursPacket.class, UpdateHeatNeighboursPacket::encode, UpdateHeatNeighboursPacket::decode, UpdateHeatNeighboursPacket::handle);
+    CHANNEL.messageBuilder(SwitchCastPacket.class, id++).encoder(SwitchCastPacket::encode).decoder(SwitchCastPacket::decode).consumer(SwitchCastPacket::handle).add();
+    CHANNEL.messageBuilder(UpdateHeatNeighboursPacket.class, id++).encoder(UpdateHeatNeighboursPacket::encode).decoder(UpdateHeatNeighboursPacket::decode).consumer(UpdateHeatNeighboursPacket::handle).add();
   }
 }

@@ -36,7 +36,7 @@ public class SwitchCastPacket {
     return new SwitchCastPacket(GradientCasts.values()[cast]);
   }
 
-  public static void handle(final SwitchCastPacket packet, final Supplier<NetworkEvent.Context> ctx) {
+  public static boolean handle(final SwitchCastPacket packet, final Supplier<NetworkEvent.Context> ctx) {
     ctx.get().enqueueWork(() -> {
       final ServerPlayerEntity player = ctx.get().getSender();
 
@@ -46,5 +46,7 @@ public class SwitchCastPacket {
 
       player.setHeldItem(Hand.MAIN_HAND, new ItemStack(GradientItems.UNHARDENED_CLAY_CAST(packet.cast).get(), player.getHeldItemMainhand().getCount()));
     });
+
+    return true;
   }
 }
