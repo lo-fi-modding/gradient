@@ -7,6 +7,7 @@ import lofimodding.gradient.GradientEntities;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientTileEntities;
 import lofimodding.gradient.blocks.MetalBlock;
+import lofimodding.gradient.client.tesr.ClayOvenRenderer;
 import lofimodding.gradient.client.tesr.FirepitRenderer;
 import lofimodding.gradient.client.tesr.GrindstoneRenderer;
 import lofimodding.gradient.items.MetalItem;
@@ -80,6 +81,7 @@ public final class GradientClient {
 
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.FIREPIT.get(), FirepitRenderer::new);
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.GRINDSTONE.get(), GrindstoneRenderer::new);
+    ClientRegistry.bindTileEntityRenderer(GradientTileEntities.CLAY_OVEN.get(), ClayOvenRenderer::new);
   }
 
   @SubscribeEvent

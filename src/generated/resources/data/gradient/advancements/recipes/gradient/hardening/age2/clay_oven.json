@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "gradient:hardening/age2/clay_oven"
+    ]
+  },
+  "criteria": {
+    "has_unhardened_clay_oven": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "gradient:unhardened_clay_oven"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "gradient:hardening/age2/clay_oven"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_unhardened_clay_oven",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -45,7 +45,7 @@ import javax.annotation.Nullable;
 import java.util.Set;
 
 @Mod.EventBusSubscriber(modid = Gradient.MOD_ID)
-public class FirepitBlock extends Block {
+public class FirepitBlock extends HeatSinkerBlock {
   public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
   public static final BooleanProperty HAS_FURNACE = BooleanProperty.create("has_furnace");
 
@@ -69,7 +69,7 @@ public class FirepitBlock extends Block {
 
   @Override
   public int getLightValue(final BlockState state, final IBlockReader world, final BlockPos pos) {
-    final FirepitTile te = (FirepitTile)world.getTileEntity(pos);
+    final FirepitTile te = WorldUtils.getTileEntity(world, pos, FirepitTile.class);
 
     if(te != null) {
       return te.getLightLevel(state);
@@ -83,7 +83,7 @@ public class FirepitBlock extends Block {
   @Deprecated
   public ActionResultType onBlockActivated(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult trace) {
     if(!world.isRemote) {
-      final FirepitTile firepit = (FirepitTile)world.getTileEntity(pos);
+      final FirepitTile firepit = WorldUtils.getTileEntity(world, pos, FirepitTile.class);
 
       if(firepit == null) {
         return ActionResultType.PASS;
@@ -213,7 +213,7 @@ public class FirepitBlock extends Block {
   }
 
   private static void updateFirePit(final IWorld world, final BlockPos firePitPos, final BlockPos placedPos, final Set<Stage> stages) {
-    final FirepitTile te = (FirepitTile)world.getTileEntity(firePitPos);
+    final FirepitTile te = WorldUtils.getTileEntity(world, firePitPos, FirepitTile.class);
 
     if(te != null) {
       te.updateHardenable(placedPos, stages);
@@ -222,7 +222,7 @@ public class FirepitBlock extends Block {
 
   @Override
   public void onBlockPlacedBy(final World world, final BlockPos pos, final BlockState state, @Nullable final LivingEntity placer, final ItemStack stack) {
-    final FirepitTile te = (FirepitTile)world.getTileEntity(pos);
+    final FirepitTile te = WorldUtils.getTileEntity(world, pos, FirepitTile.class);
 
     if(te != null) {
       te.updateSurroundingHardenables(Progress.get(placer).getStages());

@@ -53,7 +53,7 @@ public class GrindstoneBlock extends Block {
   @Override
   public ActionResultType onBlockActivated(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
     if(!world.isRemote) {
-      final GrindstoneTile grindstone = (GrindstoneTile)world.getTileEntity(pos);
+      final GrindstoneTile grindstone = WorldUtils.getTileEntity(world, pos, GrindstoneTile.class);
 
       if(grindstone == null) {
         return ActionResultType.SUCCESS;

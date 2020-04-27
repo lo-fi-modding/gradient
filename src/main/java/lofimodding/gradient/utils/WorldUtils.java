@@ -4,13 +4,22 @@ import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.items.IItemHandler;
 
+import javax.annotation.Nullable;
+
 public final class WorldUtils {
   private WorldUtils() { }
+
+  @Nullable
+  public static <T> T getTileEntity(final IBlockReader world, final BlockPos pos, final Class<T> cls) {
+    final TileEntity te = world.getTileEntity(pos);
+    return cls.isInstance(te) ? cls.cast(te) : null;
+  }
 
   @CapabilityInject(IItemHandler.class)
   private static Capability<IItemHandler> ITEM_HANDLER_CAPABILITY;

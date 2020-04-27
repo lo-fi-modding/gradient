@@ -137,6 +137,7 @@ public final class GradientItems {
   }
 
   public static final RegistryObject<BlockItem> CLAY_FURNACE = REGISTRY.register(GradientIds.CLAY_FURNACE, () -> new BlockItem(GradientBlocks.CLAY_FURNACE.get(), new Item.Properties().group(GROUP)));
+  public static final RegistryObject<BlockItem> CLAY_OVEN = REGISTRY.register(GradientIds.CLAY_OVEN, () -> new BlockItem(GradientBlocks.CLAY_OVEN.get(), new Item.Properties().group(GROUP)));
 
   static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering items...");

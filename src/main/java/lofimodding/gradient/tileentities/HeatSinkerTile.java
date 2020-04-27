@@ -1,5 +1,6 @@
 package lofimodding.gradient.tileentities;
 
+import lofimodding.gradient.utils.WorldUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
@@ -50,10 +51,10 @@ public abstract class HeatSinkerTile extends TileEntity implements ITickableTile
   }
 
   public void updateSink(final BlockPos pos) {
-    final TileEntity te = this.getWorld().getTileEntity(pos);
+    final HeatSinkerTile te = WorldUtils.getTileEntity(this.world, pos, HeatSinkerTile.class);
 
-    if(te instanceof HeatSinkerTile) {
-      this.sinks.put(pos, (HeatSinkerTile)te);
+    if(te != null) {
+      this.sinks.put(pos, te);
     }
   }
 
@@ -103,15 +104,15 @@ public abstract class HeatSinkerTile extends TileEntity implements ITickableTile
     while(iterator.hasNext()) {
       final Map.Entry<BlockPos, HeatSinkerTile> entry = iterator.next();
 
-      final TileEntity worldEntity = this.getWorld().getTileEntity(entry.getKey());
+      final HeatSinkerTile worldEntity = WorldUtils.getTileEntity(this.world, entry.getKey(), HeatSinkerTile.class);
 
-      if(!(worldEntity instanceof HeatSinkerTile)) {
+      if(worldEntity == null) {
         iterator.remove();
         return;
       }
 
       if(worldEntity != entry.getValue()) {
-        entry.setValue((HeatSinkerTile)worldEntity);
+        entry.setValue(worldEntity);
       }
 
       final HeatSinkerTile sink = entry.getValue();

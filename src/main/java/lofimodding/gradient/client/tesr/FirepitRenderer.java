@@ -45,7 +45,7 @@ public class FirepitRenderer extends TileEntityRenderer<FirepitTile> {
 
         matrixStack.push();
         matrixStack.translate(inputX, -0.4375d, inputZ);
-        matrixStack.rotate(Vector3f .YP.rotationDegrees(-facing.getHorizontalAngle()));
+        matrixStack.rotate(Vector3f.YP.rotationDegrees(-facing.getHorizontalAngle()));
 
         matrixStack.push();
         matrixStack.scale(0.5f, 0.5f, 0.5f);

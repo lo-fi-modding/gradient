@@ -1,5 +1,6 @@
 package lofimodding.gradient;
 
+import lofimodding.gradient.tileentities.ClayOvenTile;
 import lofimodding.gradient.tileentities.FirepitTile;
 import lofimodding.gradient.tileentities.GrindstoneTile;
 import net.minecraft.tileentity.TileEntityType;
@@ -15,6 +16,7 @@ public final class GradientTileEntities {
 
   public static final RegistryObject<TileEntityType<FirepitTile>> FIREPIT = REGISTRY.register(GradientIds.FIREPIT, () -> TileEntityType.Builder.create(FirepitTile::new, GradientBlocks.FIREPIT.get()).build(null));
   public static final RegistryObject<TileEntityType<GrindstoneTile>> GRINDSTONE = REGISTRY.register(GradientIds.GRINDSTONE, () -> TileEntityType.Builder.create(GrindstoneTile::new, GradientBlocks.GRINDSTONE.get()).build(null));
+  public static final RegistryObject<TileEntityType<ClayOvenTile>> CLAY_OVEN = REGISTRY.register(GradientIds.CLAY_OVEN, () -> TileEntityType.Builder.create(ClayOvenTile::new, GradientBlocks.CLAY_OVEN.get()).build(null));
 
   static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering tile entities...");

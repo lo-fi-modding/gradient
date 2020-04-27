@@ -642,7 +642,7 @@ public class FirepitTile extends HeatProducerTile {
 
       final BlockPos pos = NBTUtil.readBlockPos(hardeningNbt.getCompound("pos"));
       Gradient.getRecipeManager().getRecipe(new ResourceLocation(hardeningNbt.getString("recipe"))).ifPresent(recipe -> {
-        final ListNBT recipeStagesNbt = compound.getList("stages", Constants.NBT.TAG_STRING);
+        final ListNBT recipeStagesNbt = hardeningNbt.getList("stages", Constants.NBT.TAG_STRING);
         final Set<Stage> stages = new HashSet<>();
         for(int i = 0; i < recipeStagesNbt.size(); i++) {
           final Stage stage = Stage.REGISTRY.get().getValue(new ResourceLocation(recipeStagesNbt.getString(i)));

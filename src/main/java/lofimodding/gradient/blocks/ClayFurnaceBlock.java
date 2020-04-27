@@ -3,7 +3,6 @@ package lofimodding.gradient.blocks;
 import lofimodding.gradient.GradientMaterials;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
@@ -24,7 +23,7 @@ public class ClayFurnaceBlock extends Block {
   public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
   public ClayFurnaceBlock() {
-    super(Properties.create(GradientMaterials.CLAY_MACHINE).sound(SoundType.GROUND).hardnessAndResistance(1.0f, 5.0f).notSolid());
+    super(Properties.create(GradientMaterials.CLAY_MACHINE).hardnessAndResistance(1.0f, 5.0f).notSolid());
     this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
   }
 

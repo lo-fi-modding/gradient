@@ -395,6 +395,7 @@ public final class GradientDataGenerator {
 
       ModelGenerator.clayFurnace(this, GradientIds.CLAY_FURNACE, this.mcLoc("block/terracotta"), this.mcLoc("block/terracotta"), this.mcLoc("block/terracotta"), this.mcLoc("block/terracotta"), this.mcLoc("block/terracotta"));
       ModelGenerator.clayFurnace(this, GradientIds.CLAY_FURNACE + "_used", this.mcLoc("block/terracotta"), this.modLoc("block/clay_furnace_front"), this.modLoc("block/clay_furnace_top"), this.modLoc("block/clay_seared"), this.mcLoc("block/terracotta"));
+      ModelGenerator.clayOven(this, GradientIds.CLAY_OVEN, this.modLoc("block/clay_oven_inside"), this.modLoc("block/clay_seared"), this.mcLoc("block/terracotta"), this.modLoc("block/clay_oven_inside"));
     }
 
     private BiConsumer<Direction, ModelBuilder<BlockModelBuilder>.ElementBuilder.FaceBuilder> addTexture(final String texture) {
@@ -543,6 +544,7 @@ public final class GradientDataGenerator {
       }
 
       this.getBuilder(GradientIds.CLAY_FURNACE).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.CLAY_FURNACE)));
+      this.getBuilder(GradientIds.CLAY_OVEN).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.CLAY_OVEN)));
     }
 
     @Override
@@ -640,6 +642,7 @@ public final class GradientDataGenerator {
       }
 
       this.horizontalBlock(GradientBlocks.CLAY_FURNACE.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.CLAY_FURNACE)));
+      this.horizontalBlock(GradientBlocks.CLAY_OVEN.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.CLAY_OVEN)));
     }
   }
 
@@ -720,6 +723,11 @@ public final class GradientDataGenerator {
       for(final GradientCasts cast : GradientCasts.values()) {
         this.add(GradientItems.UNHARDENED_CLAY_CAST(cast).get(), "Unhardened Clay Cast (" + StringUtils.capitalize(cast.name().toLowerCase()) + ')');
       }
+
+      this.add(GradientItems.CLAY_FURNACE.get(), "Clay Oven");
+      this.add(GradientItems.CLAY_FURNACE.get().getTranslationKey() + ".tooltip", "Right click on a firepit to attach");
+      this.add(GradientItems.CLAY_OVEN.get(), "Clay Oven");
+      this.add(GradientItems.CLAY_OVEN.get().getTranslationKey() + ".tooltip", "Place on top of a firepit/furnace to use its heat");
     }
   }
 
@@ -1112,6 +1120,14 @@ public final class GradientDataGenerator {
         .addIngredient(GradientBlocks.UNHARDENED_CLAY_FURNACE.get())
         .addCriterion("has_unhardened_clay_furnace", this.hasItem(GradientBlocks.UNHARDENED_CLAY_FURNACE.get()))
         .build(finished, Gradient.loc("hardening/age2/" + GradientIds.CLAY_FURNACE));
+
+      GradientRecipeBuilder
+        .hardening(GradientItems.CLAY_OVEN.get())
+        .stage(GradientStages.AGE_2)
+        .ticks(3600)
+        .addIngredient(GradientBlocks.UNHARDENED_CLAY_OVEN.get())
+        .addCriterion("has_unhardened_clay_oven", this.hasItem(GradientBlocks.UNHARDENED_CLAY_OVEN.get()))
+        .build(finished, Gradient.loc("hardening/age2/" + GradientIds.CLAY_OVEN));
     }
   }
 
@@ -1331,6 +1347,7 @@ public final class GradientDataGenerator {
         }
 
         this.registerDropSelfLootTable(GradientBlocks.CLAY_FURNACE.get());
+        this.registerDropSelfLootTable(GradientBlocks.CLAY_OVEN.get());
       }
 
       private final List<Block> blocks = new ArrayList<>();

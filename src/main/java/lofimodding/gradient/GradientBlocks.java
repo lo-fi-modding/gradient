@@ -1,6 +1,7 @@
 package lofimodding.gradient;
 
 import lofimodding.gradient.blocks.ClayFurnaceBlock;
+import lofimodding.gradient.blocks.ClayOvenBlock;
 import lofimodding.gradient.blocks.FirepitBlock;
 import lofimodding.gradient.blocks.GrindstoneBlock;
 import lofimodding.gradient.blocks.MetalBlock;
@@ -76,6 +77,7 @@ public final class GradientBlocks {
   }
 
   public static final RegistryObject<ClayFurnaceBlock> CLAY_FURNACE = REGISTRY.register(GradientIds.CLAY_FURNACE, ClayFurnaceBlock::new);
+  public static final RegistryObject<ClayOvenBlock> CLAY_OVEN = REGISTRY.register(GradientIds.CLAY_OVEN, ClayOvenBlock::new);
 
   static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering blocks...");
