@@ -75,6 +75,7 @@ public final class GradientIds {
   public static final String LIT_FIBRE_WALL_TORCH = "lit_fibre_wall_torch";
 
   public static final String GRINDSTONE = "grindstone";
+  public static final String MIXING_BASIN = "mixing_basin";
 
   public static final String UNHARDENED_CLAY_FURNACE = "unhardened_clay_furnace";
   public static final String UNHARDENED_CLAY_CRUCIBLE = "unhardened_clay_crucible";

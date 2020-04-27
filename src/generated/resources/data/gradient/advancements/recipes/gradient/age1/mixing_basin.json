@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "gradient:age1/mixing_basin"
+    ]
+  },
+  "criteria": {
+    "has_clay": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:clay_ball"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "gradient:age1/mixing_basin"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_clay",
+      "has_the_recipe"
+    ]
+  ]
+}

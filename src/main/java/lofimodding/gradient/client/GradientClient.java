@@ -10,6 +10,7 @@ import lofimodding.gradient.blocks.MetalBlock;
 import lofimodding.gradient.client.tesr.ClayOvenRenderer;
 import lofimodding.gradient.client.tesr.FirepitRenderer;
 import lofimodding.gradient.client.tesr.GrindstoneRenderer;
+import lofimodding.gradient.client.tesr.MixingBasinRenderer;
 import lofimodding.gradient.items.MetalItem;
 import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.science.Metals;
@@ -27,6 +28,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ILightReader;
+import net.minecraft.world.biome.BiomeColors;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -62,6 +64,10 @@ public final class GradientClient {
     RenderTypeLookup.setRenderLayer(GradientBlocks.LIT_FIBRE_TORCH.get(), cutoutMipped);
     RenderTypeLookup.setRenderLayer(GradientBlocks.LIT_FIBRE_WALL_TORCH.get(), cutoutMipped);
 
+    final RenderType translucent = RenderType.getTranslucent();
+
+    RenderTypeLookup.setRenderLayer(GradientBlocks.MIXING_BASIN.get(), translucent);
+
     final Minecraft mc = event.getMinecraftSupplier().get();
     final BlockColors blockColors = mc.getBlockColors();
     final ItemColors itemColors = mc.getItemColors();
@@ -82,10 +88,13 @@ public final class GradientClient {
       itemColors.register(GradientClient::metalBlockColour, GradientItems.METAL_BLOCK(metal).get());
     }
 
+    blockColors.register(GradientClient::waterColour, GradientBlocks.MIXING_BASIN.get());
+
     RenderingRegistry.registerEntityRenderingHandler(GradientEntities.PEBBLE.get(), manager -> new SpriteRenderer<>(manager, Minecraft.getInstance().getItemRenderer()));
 
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.FIREPIT.get(), FirepitRenderer::new);
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.GRINDSTONE.get(), GrindstoneRenderer::new);
+    ClientRegistry.bindTileEntityRenderer(GradientTileEntities.MIXING_BASIN.get(), MixingBasinRenderer::new);
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.CLAY_OVEN.get(), ClayOvenRenderer::new);
   }
 
@@ -129,5 +138,9 @@ public final class GradientClient {
     }
 
     return 0xffffffff;
+  }
+
+  private static int waterColour(final BlockState state, final ILightReader world, final BlockPos pos, final int tintIndex) {
+    return BiomeColors.getWaterColor(world, pos);
   }
 }

@@ -7,6 +7,7 @@ import lofimodding.gradient.blocks.GrindstoneBlock;
 import lofimodding.gradient.blocks.LitFibreTorchBlock;
 import lofimodding.gradient.blocks.LitFibreWallTorchBlock;
 import lofimodding.gradient.blocks.MetalBlock;
+import lofimodding.gradient.blocks.MixingBasinBlock;
 import lofimodding.gradient.blocks.PebbleBlock;
 import lofimodding.gradient.blocks.UnhardenedClayBlock;
 import lofimodding.gradient.blocks.UnlitFibreTorchBlock;
@@ -72,6 +73,7 @@ public final class GradientBlocks {
   public static final RegistryObject<LitFibreWallTorchBlock> LIT_FIBRE_WALL_TORCH = REGISTRY.register(GradientIds.LIT_FIBRE_WALL_TORCH, () -> new LitFibreWallTorchBlock(UNLIT_FIBRE_WALL_TORCH::get, Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.0f).lightValue(10).sound(SoundType.WOOD)));
 
   public static final RegistryObject<GrindstoneBlock> GRINDSTONE = REGISTRY.register(GradientIds.GRINDSTONE, GrindstoneBlock::new);
+  public static final RegistryObject<MixingBasinBlock> MIXING_BASIN = REGISTRY.register(GradientIds.MIXING_BASIN, MixingBasinBlock::new);
 
   public static final RegistryObject<UnhardenedClayBlock> UNHARDENED_CLAY_FURNACE = REGISTRY.register(GradientIds.UNHARDENED_CLAY_FURNACE, () -> new UnhardenedClayBlock(VoxelShapes.fullCube()));
   public static final RegistryObject<UnhardenedClayBlock> UNHARDENED_CLAY_CRUCIBLE = REGISTRY.register(GradientIds.UNHARDENED_CLAY_CRUCIBLE, () -> new UnhardenedClayBlock(Block.makeCuboidShape(1.0d, 0.0d, 1.0d, 15.0d, 12.0d, 15.0d)));

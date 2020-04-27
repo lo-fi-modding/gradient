@@ -1,0 +1,47 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "facing": "north"
+      },
+      "apply": {
+        "model": "gradient:block/mixing_basin"
+      }
+    },
+    {
+      "when": {
+        "facing": "east"
+      },
+      "apply": {
+        "model": "gradient:block/mixing_basin",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south"
+      },
+      "apply": {
+        "model": "gradient:block/mixing_basin",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west"
+      },
+      "apply": {
+        "model": "gradient:block/mixing_basin",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "has_water": "true"
+      },
+      "apply": {
+        "model": "gradient:block/mixing_basin_water"
+      }
+    }
+  ]
+}

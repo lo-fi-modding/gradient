@@ -125,6 +125,7 @@ public final class GradientItems {
   public static final RegistryObject<WallOrFloorItem> LIT_FIBRE_TORCH = REGISTRY.register(GradientIds.LIT_FIBRE_TORCH, () -> new WallOrFloorItem(GradientBlocks.LIT_FIBRE_TORCH.get(), GradientBlocks.LIT_FIBRE_WALL_TORCH.get(), new Item.Properties().group(GROUP)));
 
   public static final RegistryObject<BlockItem> GRINDSTONE = REGISTRY.register(GradientIds.GRINDSTONE, () -> new BlockItem(GradientBlocks.GRINDSTONE.get(), new Item.Properties().group(GROUP)));
+  public static final RegistryObject<BlockItem> MIXING_BASIN = REGISTRY.register(GradientIds.MIXING_BASIN, () -> new BlockItem(GradientBlocks.MIXING_BASIN.get(), new Item.Properties().group(GROUP)));
 
   public static final RegistryObject<BlockItem> UNHARDENED_CLAY_FURNACE = REGISTRY.register(GradientIds.UNHARDENED_CLAY_FURNACE, () -> new BlockItem(GradientBlocks.UNHARDENED_CLAY_FURNACE.get(), new Item.Properties().group(GROUP)));
   public static final RegistryObject<BlockItem> UNHARDENED_CLAY_CRUCIBLE = REGISTRY.register(GradientIds.UNHARDENED_CLAY_CRUCIBLE, () -> new BlockItem(GradientBlocks.UNHARDENED_CLAY_CRUCIBLE.get(), new Item.Properties().group(GROUP)));
