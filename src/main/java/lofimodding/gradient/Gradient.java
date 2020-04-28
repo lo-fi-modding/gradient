@@ -1,5 +1,6 @@
 package lofimodding.gradient;
 
+import lofimodding.gradient.advancements.criterion.GradientCriteriaTriggers;
 import lofimodding.gradient.client.GradientClient;
 import lofimodding.gradient.network.Packets;
 import net.minecraft.item.crafting.RecipeManager;
@@ -45,6 +46,9 @@ public class Gradient {
 
   private void setup(final FMLCommonSetupEvent event) {
     Packets.register();
+
+    // Trigger loading
+    Gradient.LOGGER.debug(GradientCriteriaTriggers.ADVANCEMENT_UNLOCKED);
   }
 
   private void clientSetup(final FMLClientSetupEvent event) {

@@ -91,6 +91,7 @@ public final class GradientDataGenerator {
       gen.addProvider(new ItemModels(gen, event.getExistingFileHelper()));
       gen.addProvider(new BlockStates(gen, event.getExistingFileHelper()));
       gen.addProvider(new EnglishLang(gen));
+      gen.addProvider(new AdvancementsProvider.EnglishLang(gen));
     }
 
     if(event.includeServer()) {
@@ -98,6 +99,7 @@ public final class GradientDataGenerator {
       gen.addProvider(new ItemTagProvider(gen));
       gen.addProvider(new Recipes(gen));
       gen.addProvider(new Loot(gen));
+      gen.addProvider(new AdvancementsProvider(gen));
     }
   }
 

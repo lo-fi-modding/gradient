@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "item": "gradient:pebble"
+    },
+    "title": {
+      "translate": "advancements.gradient.age1.root.title"
+    },
+    "description": {
+      "translate": "advancements.gradient.age1.root.description"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false,
+    "background": "minecraft:textures/gui/advancements/backgrounds/adventure.png"
+  },
+  "criteria": {
+    "always": {
+      "trigger": "minecraft:location"
+    }
+  },
+  "requirements": [
+    [
+      "always"
+    ]
+  ]
+}

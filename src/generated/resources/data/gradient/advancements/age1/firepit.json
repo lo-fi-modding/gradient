@@ -1,0 +1,44 @@
+{
+  "parent": "gradient:age1/basic_materials",
+  "display": {
+    "icon": {
+      "item": "gradient:firepit"
+    },
+    "title": {
+      "translate": "advancements.gradient.age1.firepit.title"
+    },
+    "description": {
+      "translate": "advancements.gradient.age1.firepit.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_parent_0": {
+      "trigger": "gradient:advancement_unlocked",
+      "conditions": {
+        "id": "gradient:age1/basic_materials"
+      }
+    },
+    "has_firepit": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "gradient:firepit"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_parent_0"
+    ],
+    [
+      "has_firepit"
+    ]
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "parent": "gradient:age1/root",
+  "display": {
+    "icon": {
+      "item": "minecraft:stick"
+    },
+    "title": {
+      "translate": "advancements.gradient.age1.basic_materials.title"
+    },
+    "description": {
+      "translate": "advancements.gradient.age1.basic_materials.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_parent_0": {
+      "trigger": "gradient:advancement_unlocked",
+      "conditions": {
+        "id": "gradient:age1/root"
+      }
+    },
+    "has_sticks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:rods/wooden"
+          }
+        ]
+      }
+    },
+    "has_fibre": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "gradient:fibre"
+          }
+        ]
+      }
+    },
+    "has_pebble": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "gradient:pebble"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_parent_0"
+    ],
+    [
+      "has_sticks"
+    ],
+    [
+      "has_fibre"
+    ],
+    [
+      "has_pebble"
+    ]
+  ]
+}

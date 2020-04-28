@@ -50,7 +50,7 @@ dccc3a018ecf212e5d43d811cd942d57ea4133b0 assets\gradient\blockstates\unhardened_
 8c9ea90afdb74672dc643fb70026ecb2c5c64cd6 assets\gradient\blockstates\unlit_fibre_torch.json
 330b640372ea555412786edb807d0e3e053b7813 assets\gradient\blockstates\unlit_fibre_wall_torch.json
 659fa450fe62cdecc69d9276f01c713a1e62a205 assets\gradient\blockstates\zinc_block.json
-4a2541d43c83865caba54adfc7faa18f1051a4a8 assets\gradient\lang\en_us.json
+8610feccb9c55c919fc4fe0721c3da80992aa00f assets\gradient\lang\en_us.json
 f295f4e7338854665f216e2f0ca3e339b0d284a7 assets\gradient\models\block\azurite_block.json
 910f0617e8b2433ac0f97c48cbbc8251b4f162b3 assets\gradient\models\block\azurite_ore.json
 79a72e81ecb79d9775041b9a2d526a90f646005b assets\gradient\models\block\azurite_pebble.json
@@ -401,6 +401,9 @@ e10ad42779df5ac42485a32650a3232b3286a599 data\forge\tags\items\storage_blocks\he
 afff3e63ae863f1242feb3f25b5edd1087ac6d20 data\forge\tags\items\storage_blocks\tin.json
 2b72987fb6e3fe543e61175ece06b1a54600d470 data\forge\tags\items\storage_blocks\zinc.json
 f024f70bf0b5b9bfeb1cc6097e1a48ae0b4dedd7 data\forge\tags\items\string.json
+19449b7216be8d044ca5960669db665ba17d0a13 data\gradient\advancements\age1\basic_materials.json
+41fd52d5154b02e7d40597967c4c33653af4b38b data\gradient\advancements\age1\firepit.json
+30e018caa1c39302bc741b78244c7d433eb9e492 data\gradient\advancements\age1\root.json
 1c16b3bf7a6be18599f5b8378750b732b29dbe9b data\gradient\advancements\recipes\food\cooking\age1\beef.json
 1f490f3c2b41e9e842d0618db42a2a8a9d488da7 data\gradient\advancements\recipes\food\cooking\age1\chicken.json
 a2abb0adb2458c757974c5ba2272d43f76bc3d5b data\gradient\advancements\recipes\food\cooking\age1\cod.json
