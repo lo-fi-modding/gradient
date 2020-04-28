@@ -50,7 +50,7 @@ dccc3a018ecf212e5d43d811cd942d57ea4133b0 assets\gradient\blockstates\unhardened_
 8c9ea90afdb74672dc643fb70026ecb2c5c64cd6 assets\gradient\blockstates\unlit_fibre_torch.json
 330b640372ea555412786edb807d0e3e053b7813 assets\gradient\blockstates\unlit_fibre_wall_torch.json
 659fa450fe62cdecc69d9276f01c713a1e62a205 assets\gradient\blockstates\zinc_block.json
-108faf945a9f8da3f93ea3bbcbc9a0fb8ccce581 assets\gradient\lang\en_us.json
+f867873b82708c70cb57238d50ac1a233c32bd29 assets\gradient\lang\en_us.json
 f295f4e7338854665f216e2f0ca3e339b0d284a7 assets\gradient\models\block\azurite_block.json
 910f0617e8b2433ac0f97c48cbbc8251b4f162b3 assets\gradient\models\block\azurite_ore.json
 79a72e81ecb79d9775041b9a2d526a90f646005b assets\gradient\models\block\azurite_pebble.json
@@ -210,6 +210,7 @@ e7f570e950da61532bbb52c0a287c53d93361120 assets\gradient\models\item\nugget.json
 1495ebbfb0d7fb8b1c666b5499f7f59a5f6aff2c assets\gradient\models\item\pig_pelt.json
 cd63df15f03bee07b9097771b12aa712217730e5 assets\gradient\models\item\plate.json
 add481486199408fdd1c72f90d749827ab0c9b75 assets\gradient\models\item\polar_bear_pelt.json
+a5a129f791ca41c1e7948fb12cefd349fc0daae7 assets\gradient\models\item\preserved_hide.json
 58f3fdc2c50e8b444f8d68be9c5cf39f41a6d1a2 assets\gradient\models\item\purified.json
 03ad32e23743f3044363c3a34a7d29d6ef52d41c assets\gradient\models\item\pyrite_block.json
 65fd911a0d0991ae744faeb83e40613ba6d290a6 assets\gradient\models\item\pyrite_crushed.json
@@ -432,6 +433,7 @@ cd1cbe0994bd1512c52481e70c8b2012f8a4c512 data\gradient\advancements\recipes\grad
 a212634656b26952c789c5301746e64a50e1bdcb data\gradient\advancements\recipes\gradient\age2\unhardened_clay_furnace.json
 b0dc0cfa6d0c196e55d1cabb84e77f0fd760975d data\gradient\advancements\recipes\gradient\age2\unhardened_clay_mixer.json
 c2b35e3a52b61600856cc5ddf05a6eee83a120b7 data\gradient\advancements\recipes\gradient\age2\unhardened_clay_oven.json
+313978d004d605fdd56be834d4ec0c116a423197 data\gradient\advancements\recipes\gradient\drying\age2\preserved_hide.json
 33b127815851dec920ffcfff6d0f59e810c4745b data\gradient\advancements\recipes\gradient\hardening\age2\clay_furnace.json
 5e1a326656a582a4e79d493204e13e210bc3a4b8 data\gradient\advancements\recipes\gradient\hardening\age2\clay_oven.json
 777ecb05987521aaeedf643c0baf75c7021b5366 data\gradient\advancements\recipes\gradient\mixing\salted_hide.json
@@ -525,6 +527,7 @@ c21e00194e37b6af95893bd23eed0b8ce3a16e91 data\gradient\recipes\cooking\age1\cod.
 f8618926c99bdf18395ef596111a6a08486eebd7 data\gradient\recipes\cooking\age1\potato.json
 6b0e1e58bcc3424b9eac47cedaaa168aeb3f596a data\gradient\recipes\cooking\age1\rabbit.json
 9717f5b09f3d3d106362265f5fcd5e44542c9f94 data\gradient\recipes\cooking\age1\salmon.json
+1fbe7b3f556a31138b221c79736a513f3ce3392f data\gradient\recipes\drying\age2\preserved_hide.json
 d044cd520abb35d7976362092cfdd9f383eaf2ef data\gradient\recipes\fuel\coal.json
 658971b8d5b2914097e32e901f9f5dc2ac74ceaf data\gradient\recipes\fuel\fibre.json
 0b22a1838622ee2306c7a6d36623e9b28bb3156e data\gradient\recipes\fuel\log.json

@@ -648,6 +648,7 @@ public final class GradientDataGenerator {
 
       this.singleTexture(GradientIds.RAW_HIDE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.RAW_HIDE));
       this.singleTexture(GradientIds.SALTED_HIDE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.SALTED_HIDE));
+      this.singleTexture(GradientIds.PRESERVED_HIDE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.PRESERVED_HIDE));
 
       this.singleTexture(GradientIds.FIRE_STARTER, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.FIRE_STARTER));
       this.singleTexture(GradientIds.STONE_HAMMER, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.STONE_HAMMER));
@@ -869,6 +870,7 @@ public final class GradientDataGenerator {
 
       this.add(GradientItems.RAW_HIDE.get(), "Rawhide");
       this.add(GradientItems.SALTED_HIDE.get(), "Salted Hide");
+      this.add(GradientItems.PRESERVED_HIDE.get(), "Preserved Hide");
 
       this.add(GradientItems.FIRE_STARTER.get(), "Fire Starter");
       this.add(GradientItems.STONE_HAMMER.get(), "Stone Hammer");
@@ -996,6 +998,7 @@ public final class GradientDataGenerator {
       this.registerFuelRecipes(finished);
       this.registerCookingRecipes(finished);
       this.registerHardeningRecipes(finished);
+      this.registerDryingRecipes(finished);
 
       ShapedRecipeBuilder
         .shapedRecipe(GradientItems.SALT_BLOCK.get())
@@ -1347,6 +1350,16 @@ public final class GradientDataGenerator {
         .addIngredient(GradientBlocks.UNHARDENED_CLAY_OVEN.get())
         .addCriterion("has_unhardened_clay_oven", this.hasItem(GradientBlocks.UNHARDENED_CLAY_OVEN.get()))
         .build(finished, Gradient.loc("hardening/age2/" + GradientIds.CLAY_OVEN));
+    }
+
+    private void registerDryingRecipes(final Consumer<IFinishedRecipe> finished) {
+      GradientRecipeBuilder
+        .drying(GradientItems.PRESERVED_HIDE.get())
+        .stage(GradientStages.AGE_2)
+        .ticks(1800)
+        .addIngredient(GradientItems.SALTED_HIDE.get())
+        .addCriterion("has_salted_hide", this.hasItem(GradientItems.SALTED_HIDE.get()))
+        .build(finished, Gradient.loc("drying/age2/" + GradientIds.PRESERVED_HIDE));
     }
   }
 
