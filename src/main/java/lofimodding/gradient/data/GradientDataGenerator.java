@@ -11,6 +11,7 @@ import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientLoot;
 import lofimodding.gradient.GradientStages;
 import lofimodding.gradient.GradientTags;
+import lofimodding.gradient.blocks.DryingRackBlock;
 import lofimodding.gradient.blocks.FirepitBlock;
 import lofimodding.gradient.blocks.MetalBlock;
 import lofimodding.gradient.blocks.MixingBasinBlock;
@@ -437,6 +438,38 @@ public final class GradientDataGenerator {
         .face(Direction.UP).texture("water").tintindex(0).cullface(Direction.UP)
         .end();
 
+      this.getBuilder(GradientIds.DRYING_RACK)
+        .parent(this.getExistingFile(this.mcLoc("block/block")))
+        .texture("all", this.mcLoc("block/oak_planks"))
+        .texture("particle", this.mcLoc("block/oak_planks"))
+
+        .element()
+        .from(0.0f, 13.0f, 14.0f)
+        .to(16.0f, 16.0f, 16.0f)
+        .face(Direction.NORTH).uvs(0.0f, 0.0f, 16.0f, 3.0f).texture("all").end()
+        .face(Direction.EAST).uvs(0.0f, 0.0f, 2.0f, 3.0f).texture("all").end()
+        .face(Direction.SOUTH).uvs(0.0f, 0.0f, 16.0f, 3.0f).texture("all").end()
+        .face(Direction.WEST).uvs(0.0f, 0.0f, 2.0f, 3.0f).texture("all").end()
+        .face(Direction.UP).uvs(0.0f, 0.0f, 16.0f, 2.0f).texture("all").end()
+        .face(Direction.DOWN).uvs(0.0f, 0.0f, 16.0f, 2.0f).texture("all").end()
+        .end();
+
+      this.getBuilder(GradientIds.DRYING_RACK + "_roof")
+        .parent(this.getExistingFile(this.mcLoc("block/block")))
+        .texture("all", this.mcLoc("block/oak_planks"))
+        .texture("particle", this.mcLoc("block/oak_planks"))
+
+        .element()
+        .from(0.0f, 13.0f, 7.0f)
+        .to(16.0f, 16.0f, 9.0f)
+        .face(Direction.NORTH).uvs(0.0f, 0.0f, 16.0f, 3.0f).texture("all").end()
+        .face(Direction.EAST).uvs(0.0f, 0.0f, 2.0f, 3.0f).texture("all").end()
+        .face(Direction.SOUTH).uvs(0.0f, 0.0f, 16.0f, 3.0f).texture("all").end()
+        .face(Direction.WEST).uvs(0.0f, 0.0f, 2.0f, 3.0f).texture("all").end()
+        .face(Direction.UP).uvs(0.0f, 0.0f, 16.0f, 2.0f).texture("all").end()
+        .face(Direction.DOWN).uvs(0.0f, 0.0f, 16.0f, 2.0f).texture("all").end()
+        .end();
+
       ModelGenerator.clayFurnace(this, GradientIds.UNHARDENED_CLAY_FURNACE, this.mcLoc("block/clay"), this.mcLoc("block/clay"), this.mcLoc("block/clay"), this.mcLoc("block/clay"), this.mcLoc("block/clay"));
       ModelGenerator.clayCrucible(this, GradientIds.UNHARDENED_CLAY_CRUCIBLE, this.mcLoc("block/clay"), this.mcLoc("block/clay"), this.mcLoc("block/clay"), this.mcLoc("block/clay"), this.mcLoc("block/clay"));
       ModelGenerator.clayOven(this, GradientIds.UNHARDENED_CLAY_OVEN, this.mcLoc("block/clay"), this.mcLoc("block/clay"), this.mcLoc("block/clay"), this.mcLoc("block/clay"));
@@ -626,6 +659,7 @@ public final class GradientDataGenerator {
 
       this.getBuilder(GradientIds.GRINDSTONE).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.GRINDSTONE)));
       this.getBuilder(GradientIds.MIXING_BASIN).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.MIXING_BASIN)));
+      this.getBuilder(GradientIds.DRYING_RACK).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.DRYING_RACK)));
 
       this.getBuilder(GradientIds.UNHARDENED_CLAY_FURNACE).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.UNHARDENED_CLAY_FURNACE)));
       this.getBuilder(GradientIds.UNHARDENED_CLAY_CRUCIBLE).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.UNHARDENED_CLAY_CRUCIBLE)));
@@ -760,6 +794,8 @@ public final class GradientDataGenerator {
         .condition(MixingBasinBlock.HAS_WATER, true)
         .end();
 
+      this.horizontalBlock(GradientBlocks.DRYING_RACK.get(), state -> state.get(DryingRackBlock.ROOF) ? new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.DRYING_RACK)) : new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.DRYING_RACK + "_roof")));
+
       this.horizontalBlock(GradientBlocks.UNHARDENED_CLAY_FURNACE.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.UNHARDENED_CLAY_FURNACE)));
       this.horizontalBlock(GradientBlocks.UNHARDENED_CLAY_CRUCIBLE.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.UNHARDENED_CLAY_CRUCIBLE)));
       this.horizontalBlock(GradientBlocks.UNHARDENED_CLAY_OVEN.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.UNHARDENED_CLAY_OVEN)));
@@ -847,6 +883,7 @@ public final class GradientDataGenerator {
 
       this.add(GradientItems.GRINDSTONE.get(), "Grindstone");
       this.add(GradientItems.MIXING_BASIN.get(), "Mixing Basin");
+      this.add(GradientItems.DRYING_RACK.get(), "Drying Rack");
 
       this.add(GradientItems.UNHARDENED_CLAY_FURNACE.get(), "Unhardened Clay Furnace");
       this.add(GradientItems.UNHARDENED_CLAY_CRUCIBLE.get(), "Unhardened Clay Crucible");
@@ -1078,6 +1115,16 @@ public final class GradientDataGenerator {
         .key('C', Items.CLAY_BALL)
         .addCriterion("has_clay", this.hasItem(Items.CLAY_BALL))
         .build(finished, Gradient.loc("age1/" + GradientIds.MIXING_BASIN));
+
+      StagedRecipeBuilder
+        .shaped(GradientItems.DRYING_RACK.get())
+        .stage(GradientStages.AGE_2)
+        .patternLine("PP")
+        .patternLine("SS")
+        .key('P', ItemTags.PLANKS)
+        .key('S', Tags.Items.STRING)
+        .addCriterion("has_string", this.hasItem(Tags.Items.STRING))
+        .build(finished, Gradient.loc("age2/" + GradientIds.DRYING_RACK));
 
       StagedRecipeBuilder
         .shaped(GradientItems.UNHARDENED_CLAY_FURNACE.get())
@@ -1512,6 +1559,7 @@ public final class GradientDataGenerator {
 
         this.registerDropSelfLootTable(GradientBlocks.GRINDSTONE.get());
         this.registerDropSelfLootTable(GradientBlocks.MIXING_BASIN.get());
+        this.registerDropSelfLootTable(GradientBlocks.DRYING_RACK.get());
 
         this.registerDropSelfLootTable(GradientBlocks.UNHARDENED_CLAY_FURNACE.get());
         this.registerDropSelfLootTable(GradientBlocks.UNHARDENED_CLAY_CRUCIBLE.get());

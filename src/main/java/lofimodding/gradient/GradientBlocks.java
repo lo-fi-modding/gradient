@@ -2,6 +2,7 @@ package lofimodding.gradient;
 
 import lofimodding.gradient.blocks.ClayFurnaceBlock;
 import lofimodding.gradient.blocks.ClayOvenBlock;
+import lofimodding.gradient.blocks.DryingRackBlock;
 import lofimodding.gradient.blocks.FirepitBlock;
 import lofimodding.gradient.blocks.GrindstoneBlock;
 import lofimodding.gradient.blocks.LitFibreTorchBlock;
@@ -74,6 +75,7 @@ public final class GradientBlocks {
 
   public static final RegistryObject<GrindstoneBlock> GRINDSTONE = REGISTRY.register(GradientIds.GRINDSTONE, GrindstoneBlock::new);
   public static final RegistryObject<MixingBasinBlock> MIXING_BASIN = REGISTRY.register(GradientIds.MIXING_BASIN, MixingBasinBlock::new);
+  public static final RegistryObject<DryingRackBlock> DRYING_RACK = REGISTRY.register(GradientIds.DRYING_RACK, DryingRackBlock::new);
 
   public static final RegistryObject<UnhardenedClayBlock> UNHARDENED_CLAY_FURNACE = REGISTRY.register(GradientIds.UNHARDENED_CLAY_FURNACE, () -> new UnhardenedClayBlock(VoxelShapes.fullCube()));
   public static final RegistryObject<UnhardenedClayBlock> UNHARDENED_CLAY_CRUCIBLE = REGISTRY.register(GradientIds.UNHARDENED_CLAY_CRUCIBLE, () -> new UnhardenedClayBlock(Block.makeCuboidShape(1.0d, 0.0d, 1.0d, 15.0d, 12.0d, 15.0d)));
