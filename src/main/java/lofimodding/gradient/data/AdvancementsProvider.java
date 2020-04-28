@@ -49,6 +49,10 @@ public class AdvancementsProvider extends AdvancementProvider {
         .withCriterion("has_hammer", InventoryChangeTrigger.Instance.forItems(GradientItems.STONE_HAMMER.get()))
         .register(finished, loc("age1/stone_hammer"));
 
+      final Advancement stoneHatchet = builder(GradientItems.STONE_HATCHET.get(), "stone_hatchet", 64, 0, FrameType.TASK, basicMaterials)
+        .withCriterion("has_hatchet", InventoryChangeTrigger.Instance.forItems(GradientItems.STONE_HATCHET.get()))
+        .register(finished, loc("age1/stone_hatchet"));
+
       final Advancement firepit = builder(GradientItems.FIREPIT.get(), "firepit", 64, 54, FrameType.TASK, basicMaterials)
         .withCriterion("has_firepit", InventoryChangeTrigger.Instance.forItems(GradientItems.FIREPIT.get()))
         .register(finished, loc("age1/firepit"));
@@ -89,6 +93,7 @@ public class AdvancementsProvider extends AdvancementProvider {
       this.age1("root", "Age 1: Stone Age", "Humankind's first steps");
       this.age1("basic_materials", "Basic Materials", "Gather sticks from leaves, fibre from grass, and pebbles from the ground");
       this.age1("stone_hammer", "Hammer Time!", "Craft a stone hammer");
+      this.age1("stone_hatchet", "Just Jackin' It", "Craft a stone hatchet");
       this.age1("firepit", "Open This Pit Up", "Craft a fire pit");
     }
 

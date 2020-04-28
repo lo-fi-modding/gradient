@@ -50,7 +50,7 @@ dccc3a018ecf212e5d43d811cd942d57ea4133b0 assets\gradient\blockstates\unhardened_
 8c9ea90afdb74672dc643fb70026ecb2c5c64cd6 assets\gradient\blockstates\unlit_fibre_torch.json
 330b640372ea555412786edb807d0e3e053b7813 assets\gradient\blockstates\unlit_fibre_wall_torch.json
 659fa450fe62cdecc69d9276f01c713a1e62a205 assets\gradient\blockstates\zinc_block.json
-8610feccb9c55c919fc4fe0721c3da80992aa00f assets\gradient\lang\en_us.json
+b2e70357ccc7ecbf57785e106ba4ffded8c7a18e assets\gradient\lang\en_us.json
 f295f4e7338854665f216e2f0ca3e339b0d284a7 assets\gradient\models\block\azurite_block.json
 910f0617e8b2433ac0f97c48cbbc8251b4f162b3 assets\gradient\models\block\azurite_ore.json
 79a72e81ecb79d9775041b9a2d526a90f646005b assets\gradient\models\block\azurite_pebble.json
@@ -234,6 +234,7 @@ c028599b8d6b58e50b201992076c965e23e12953 assets\gradient\models\item\sphalerite_
 6dd0847d00c407a2fcf785b05353775236d195b9 assets\gradient\models\item\sphalerite_plate.json
 8cca93b84cab794d001adf994b8b6ed6ea38d8b2 assets\gradient\models\item\sphalerite_purified.json
 eced6ca51beb05edf294fc1886b8c9d4bb087918 assets\gradient\models\item\stone_hammer.json
+661445999e21f463f921eb8a42b7a72ac9f66acb assets\gradient\models\item\stone_hatchet.json
 0934a3a01b108c37a83a391253d878bbde64b17f assets\gradient\models\item\tanned_hide.json
 83df5c4de41df9e9cfb12d6c99ef53845d0e94db assets\gradient\models\item\tin_block.json
 65fd911a0d0991ae744faeb83e40613ba6d290a6 assets\gradient\models\item\tin_crushed.json
@@ -404,6 +405,8 @@ f024f70bf0b5b9bfeb1cc6097e1a48ae0b4dedd7 data\forge\tags\items\string.json
 19449b7216be8d044ca5960669db665ba17d0a13 data\gradient\advancements\age1\basic_materials.json
 41fd52d5154b02e7d40597967c4c33653af4b38b data\gradient\advancements\age1\firepit.json
 30e018caa1c39302bc741b78244c7d433eb9e492 data\gradient\advancements\age1\root.json
+337bdde34f5b5665ff1b409229cdae8206ae8ab8 data\gradient\advancements\age1\stone_hammer.json
+195daf216c3f6f2d2a96fe476c370ae81833f9a7 data\gradient\advancements\age1\stone_hatchet.json
 1c16b3bf7a6be18599f5b8378750b732b29dbe9b data\gradient\advancements\recipes\food\cooking\age1\beef.json
 1f490f3c2b41e9e842d0618db42a2a8a9d488da7 data\gradient\advancements\recipes\food\cooking\age1\chicken.json
 a2abb0adb2458c757974c5ba2272d43f76bc3d5b data\gradient\advancements\recipes\food\cooking\age1\cod.json
@@ -426,6 +429,7 @@ f95a70f169c1d0541b1e07a6f7389fccbcf1d173 data\gradient\advancements\recipes\grad
 1c4c2227ce1ff8d0a31fc391b3eb0ef48fd67d00 data\gradient\advancements\recipes\gradient\age1\mixing_basin.json
 b8091a4679dcf280ae8b266fc073b9b145536cae data\gradient\advancements\recipes\gradient\age1\salt_block.json
 365d207ac2b0a55049b6b802da37517d3c66a287 data\gradient\advancements\recipes\gradient\age1\stone_hammer.json
+b68b223e97ff1bc71b13ca8a272073fe68fc877f data\gradient\advancements\recipes\gradient\age1\stone_hatchet.json
 e51223a55de3eaf8dc2c3d68ef8085f025e02758 data\gradient\advancements\recipes\gradient\age1\twine.json
 bcb35351a1f354c16cd808d539467d135aee8a71 data\gradient\advancements\recipes\gradient\age1\unlit_fibre_torch.json
 255459d9492352791347cc1ac09feab664a0dce9 data\gradient\advancements\recipes\gradient\age2\drying_rack.json
@@ -514,6 +518,7 @@ bba4857c81c6d8ddbbe7c1bb57c64238e82272cd data\gradient\recipes\age1\grindstone.j
 06d24dcad3678a417210e293a8dc0f37a50df84e data\gradient\recipes\age1\mixing_basin.json
 1f7c12f36d4c3be44f5daec85e5bbc555c1d2fee data\gradient\recipes\age1\salt_block.json
 896ff256e02f31e47eed231feb839b5487eeef14 data\gradient\recipes\age1\stone_hammer.json
+326736811b4121bf770fb25dce7b4218fb9b52cd data\gradient\recipes\age1\stone_hatchet.json
 f5456c33ef511f9660d8c3284d9de7fd5be2dbe9 data\gradient\recipes\age1\twine.json
 ddc7add657f591699113f597551219e34fdc0af0 data\gradient\recipes\age1\unlit_fibre_torch.json
 041ded898e7a9a2b4918f71e7c99f8b46edebca8 data\gradient\recipes\age2\drying_rack.json

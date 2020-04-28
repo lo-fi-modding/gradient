@@ -655,6 +655,7 @@ public final class GradientDataGenerator {
 
       this.singleTexture(GradientIds.FIRE_STARTER, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.FIRE_STARTER));
       this.singleTexture(GradientIds.STONE_HAMMER, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.STONE_HAMMER));
+      this.singleTexture(GradientIds.STONE_HATCHET, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.STONE_HATCHET));
       this.singleTexture(GradientIds.FLINT_KNIFE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.FLINT_KNIFE));
 
       this.getBuilder(GradientIds.FIREPIT).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.FIREPIT)));
@@ -879,6 +880,7 @@ public final class GradientDataGenerator {
       this.add(GradientItems.FIRE_STARTER.get(), "Fire Starter");
       this.add(GradientItems.STONE_HAMMER.get(), "Stone Hammer");
       this.add(GradientItems.STONE_HAMMER.get().getTranslationKey() + ".tooltip", "Use on ores to get metal nuggets");
+      this.add(GradientItems.STONE_HATCHET.get(), "Stone Hatchet");
       this.add(GradientItems.FLINT_KNIFE.get(), "Flint Knife");
 
       this.add(GradientItems.FIREPIT.get(), "Firepit");
@@ -1075,6 +1077,17 @@ public final class GradientDataGenerator {
         .key('S', Tags.Items.RODS_WOODEN)
         .addCriterion("has_pebble", this.hasItem(GradientItems.PEBBLE.get()))
         .build(finished, Gradient.loc("age1/" + GradientIds.STONE_HAMMER));
+
+      StagedRecipeBuilder
+        .shaped(GradientItems.STONE_HATCHET.get())
+        .stage(GradientStages.AGE_1)
+        .patternLine("PF")
+        .patternLine(" S")
+        .key('P', GradientItems.PEBBLE.get())
+        .key('F', Tags.Items.STRING)
+        .key('S', Tags.Items.RODS_WOODEN)
+        .addCriterion("has_pebble", this.hasItem(GradientItems.PEBBLE.get()))
+        .build(finished, Gradient.loc("age1/" + GradientIds.STONE_HATCHET));
 
       StagedRecipeBuilder
         .shaped(GradientItems.FLINT_KNIFE.get())

@@ -69,6 +69,7 @@ public final class GradientIds {
 
   public static final String FIRE_STARTER = "fire_starter";
   public static final String STONE_HAMMER = "stone_hammer";
+  public static final String STONE_HATCHET = "stone_hatchet";
   public static final String FLINT_KNIFE = "flint_knife";
 
   public static final String FIREPIT = "firepit";

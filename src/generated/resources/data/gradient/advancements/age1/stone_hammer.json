@@ -1,0 +1,45 @@
+{
+  "parent": "gradient:age1/basic_materials",
+  "display": {
+    "icon": {
+      "item": "gradient:stone_hammer",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "translate": "advancements.gradient.age1.stone_hammer.title"
+    },
+    "description": {
+      "translate": "advancements.gradient.age1.stone_hammer.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_parent_0": {
+      "trigger": "gradient:advancement_unlocked",
+      "conditions": {
+        "id": "gradient:age1/basic_materials"
+      }
+    },
+    "has_hammer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "gradient:stone_hammer"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_parent_0"
+    ],
+    [
+      "has_hammer"
+    ]
+  ]
+}
