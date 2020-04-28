@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "gradient:drying/age2/leather"
+    ]
+  },
+  "criteria": {
+    "has_tanned_hide": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "gradient:tanned_hide"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "gradient:drying/age2/leather"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_tanned_hide",
+      "has_the_recipe"
+    ]
+  ]
+}

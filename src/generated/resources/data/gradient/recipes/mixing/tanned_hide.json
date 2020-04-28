@@ -1,0 +1,30 @@
+{
+  "type": "gradient:mixing",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 60,
+  "passes": 3,
+  "ingredients": [
+    {
+      "item": "gradient:preserved_hide"
+    },
+    {
+      "item": "gradient:preserved_hide"
+    },
+    {
+      "item": "gradient:preserved_hide"
+    },
+    {
+      "item": "gradient:mulch"
+    }
+  ],
+  "fluid": {
+    "fluid": "minecraft:water",
+    "amount": 1000
+  },
+  "result": {
+    "item": "gradient:tanned_hide",
+    "count": 3
+  }
+}

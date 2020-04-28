@@ -1,0 +1,15 @@
+{
+  "type": "gradient:drying",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 1800,
+  "ingredients": [
+    {
+      "item": "gradient:tanned_hide"
+    }
+  ],
+  "result": {
+    "item": "minecraft:leather"
+  }
+}
