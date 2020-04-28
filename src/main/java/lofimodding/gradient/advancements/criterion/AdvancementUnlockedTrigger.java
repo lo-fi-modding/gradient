@@ -7,6 +7,7 @@ import lofimodding.gradient.Gradient;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.criterion.AbstractCriterionTrigger;
 import net.minecraft.advancements.criterion.CriterionInstance;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
@@ -31,7 +32,7 @@ public class AdvancementUnlockedTrigger extends AbstractCriterionTrigger<Advance
   }
 
   public static class Instance extends CriterionInstance {
-    private final ResourceLocation advancement;
+    public final ResourceLocation advancement;
 
     public Instance(final ResourceLocation criterion, final ResourceLocation advancement) {
       super(criterion);

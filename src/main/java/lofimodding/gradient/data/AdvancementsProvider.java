@@ -1,7 +1,9 @@
 package lofimodding.gradient.data;
 
 import lofimodding.gradient.Gradient;
+import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientItems;
+import lofimodding.gradient.GradientTags;
 import lofimodding.gradient.advancements.criterion.AdvancementUnlockedTrigger;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.DisplayInfo;
@@ -10,10 +12,12 @@ import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.advancements.criterion.LocationPredicate;
 import net.minecraft.advancements.criterion.PositionTrigger;
+import net.minecraft.block.Blocks;
 import net.minecraft.data.AdvancementProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -53,9 +57,29 @@ public class AdvancementsProvider extends AdvancementProvider {
         .withCriterion("has_hatchet", InventoryChangeTrigger.Instance.forItems(GradientItems.STONE_HATCHET.get()))
         .register(finished, loc("age1/stone_hatchet"));
 
+      final Advancement wood = builder(Blocks.OAK_LOG, "wood", 96, 27, FrameType.TASK, stoneHammer, stoneHatchet)
+        .withCriterion("has_wood", InventoryChangeTrigger.Instance.forItems(ItemPredicate.Builder.create().tag(ItemTags.LOGS).build()))
+        .register(finished, loc("age1/wood"));
+
+      final Advancement planks = builder(Blocks.OAK_PLANKS, "planks", 127, 27, FrameType.TASK, wood)
+        .withCriterion("has_planks", InventoryChangeTrigger.Instance.forItems(ItemPredicate.Builder.create().tag(ItemTags.PLANKS).build()))
+        .register(finished, loc("age1/planks"));
+
+      final Advancement grindstone = builder(GradientBlocks.GRINDSTONE.get(), "grindstone", 160, 40, FrameType.GOAL, planks)
+        .withCriterion("has_grindstone", InventoryChangeTrigger.Instance.forItems(GradientItems.GRINDSTONE.get()))
+        .register(finished, loc("age1/grindstone"));
+
+      final Advancement mixingBasin = builder(GradientBlocks.MIXING_BASIN.get(), "mixing_basin", 160, 13, FrameType.GOAL, planks)
+        .withCriterion("has_mixing_basin", InventoryChangeTrigger.Instance.forItems(GradientItems.MIXING_BASIN.get()))
+        .register(finished, loc("age1/mixing_basin"));
+
       final Advancement firepit = builder(GradientItems.FIREPIT.get(), "firepit", 64, 54, FrameType.TASK, basicMaterials)
         .withCriterion("has_firepit", InventoryChangeTrigger.Instance.forItems(GradientItems.FIREPIT.get()))
         .register(finished, loc("age1/firepit"));
+
+      final Advancement pelt = builder(GradientItems.COW_PELT.get(), "pelt", 32, 94, FrameType.TASK, root)
+        .withCriterion("has_pelt", InventoryChangeTrigger.Instance.forItems(ItemPredicate.Builder.create().tag(GradientTags.Items.PELTS).build()))
+        .register(finished, loc("age1/pelt"));
     }
 
     private static Advancement.Builder builder(final IItemProvider icon, final String id, final int x, final int y, final FrameType frame, final Advancement... parents) {
@@ -94,7 +118,12 @@ public class AdvancementsProvider extends AdvancementProvider {
       this.age1("basic_materials", "Basic Materials", "Gather sticks from leaves, fibre from grass, and pebbles from the ground");
       this.age1("stone_hammer", "Hammer Time!", "Craft a stone hammer");
       this.age1("stone_hatchet", "Just Jackin' It", "Craft a stone hatchet");
+      this.age1("wood", "Getting Wood", "Use your new hatchet to gather wood");
+      this.age1("planks", "Chop Chop", "Chop some wood into planks");
+      this.age1("grindstone", "Dust to Dust", "Craft a grindstone");
+      this.age1("mixing_basin", "Mix It Up", "Craft a mixing basin");
       this.age1("firepit", "Open This Pit Up", "Craft a fire pit");
+      this.age1("pelt", "Animal Pelt", "Kill an animal and collect its pelt");
     }
 
     private void age1(final String key, final String title, final String description) {

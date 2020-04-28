@@ -1,0 +1,44 @@
+{
+  "parent": "gradient:age1/wood",
+  "display": {
+    "icon": {
+      "item": "minecraft:oak_planks"
+    },
+    "title": {
+      "translate": "advancements.gradient.age1.planks.title"
+    },
+    "description": {
+      "translate": "advancements.gradient.age1.planks.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_parent_0": {
+      "trigger": "gradient:advancement_unlocked",
+      "conditions": {
+        "id": "gradient:age1/wood"
+      }
+    },
+    "has_planks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "minecraft:planks"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_parent_0"
+    ],
+    [
+      "has_planks"
+    ]
+  ]
+}

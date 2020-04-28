@@ -3,10 +3,18 @@
   "advancements.gradient.age1.basic_materials.title": "Basic Materials",
   "advancements.gradient.age1.firepit.description": "Craft a fire pit",
   "advancements.gradient.age1.firepit.title": "Open This Pit Up",
+  "advancements.gradient.age1.grindstone.description": "Craft a grindstone",
+  "advancements.gradient.age1.grindstone.title": "Dust to Dust",
+  "advancements.gradient.age1.mixing_basin.description": "Craft a mixing basin",
+  "advancements.gradient.age1.mixing_basin.title": "Mix It Up",
+  "advancements.gradient.age1.planks.description": "Chop some wood into planks",
+  "advancements.gradient.age1.planks.title": "Chop Chop",
   "advancements.gradient.age1.root.description": "Humankind's first steps",
   "advancements.gradient.age1.root.title": "Age 1: Stone Age",
   "advancements.gradient.age1.stone_hammer.description": "Craft a stone hammer",
   "advancements.gradient.age1.stone_hammer.title": "Hammer Time!",
   "advancements.gradient.age1.stone_hatchet.description": "Craft a stone hatchet",
-  "advancements.gradient.age1.stone_hatchet.title": "Just Jackin' It"
+  "advancements.gradient.age1.stone_hatchet.title": "Just Jackin' It",
+  "advancements.gradient.age1.wood.description": "Use your new hatchet to gather wood",
+  "advancements.gradient.age1.wood.title": "Getting Wood"
 }
