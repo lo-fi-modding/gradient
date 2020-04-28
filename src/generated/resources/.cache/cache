@@ -10,6 +10,7 @@ ff69d804a3eb0b292b539a11676ccd4d8f68c550 assets\gradient\blockstates\cassiterite
 9e6b216ed8c7a5998108e41a5da7f55bd1328f52 assets\gradient\blockstates\copper_block.json
 57ac746c81832fc4c6158fd3634b57a656c1290b assets\gradient\blockstates\copper_ore.json
 396d013cab76ad540d684bf4e20e9bd949959f7d assets\gradient\blockstates\copper_pebble.json
+d4ee58cdc453c0d7f68d31b748e891d59fca913f assets\gradient\blockstates\drying_rack.json
 fbaf1076e8ba2b86561647bbade5f2f9c7e920e2 assets\gradient\blockstates\firepit.json
 a38378ca56563a03ffdf6d0863775504849836b4 assets\gradient\blockstates\gold_block.json
 075504c6855c12fe746d678261ba656125b2d5a7 assets\gradient\blockstates\gold_ore.json
@@ -49,7 +50,7 @@ dccc3a018ecf212e5d43d811cd942d57ea4133b0 assets\gradient\blockstates\unhardened_
 8c9ea90afdb74672dc643fb70026ecb2c5c64cd6 assets\gradient\blockstates\unlit_fibre_torch.json
 330b640372ea555412786edb807d0e3e053b7813 assets\gradient\blockstates\unlit_fibre_wall_torch.json
 659fa450fe62cdecc69d9276f01c713a1e62a205 assets\gradient\blockstates\zinc_block.json
-c1669654f5e1d90f6a97783d05ba4f06ccf0b66c assets\gradient\lang\en_us.json
+108faf945a9f8da3f93ea3bbcbc9a0fb8ccce581 assets\gradient\lang\en_us.json
 f295f4e7338854665f216e2f0ca3e339b0d284a7 assets\gradient\models\block\azurite_block.json
 910f0617e8b2433ac0f97c48cbbc8251b4f162b3 assets\gradient\models\block\azurite_ore.json
 79a72e81ecb79d9775041b9a2d526a90f646005b assets\gradient\models\block\azurite_pebble.json
@@ -63,6 +64,8 @@ db97901fb645169e979e48b0dca9c62efe8300f2 assets\gradient\models\block\clay_furna
 f295f4e7338854665f216e2f0ca3e339b0d284a7 assets\gradient\models\block\copper_block.json
 910f0617e8b2433ac0f97c48cbbc8251b4f162b3 assets\gradient\models\block\copper_ore.json
 79a72e81ecb79d9775041b9a2d526a90f646005b assets\gradient\models\block\copper_pebble.json
+b2b1490e5421bb5a6f0c83f6465ee783e2dd84f7 assets\gradient\models\block\drying_rack.json
+8645c47e88f8c938abfdd29ad9231f44ddf915be assets\gradient\models\block\drying_rack_roof.json
 2ec7a1f8327ac5a8f640f67f76cb584bd6f96b3f assets\gradient\models\block\firepit.json
 f295f4e7338854665f216e2f0ca3e339b0d284a7 assets\gradient\models\block\gold_block.json
 910f0617e8b2433ac0f97c48cbbc8251b4f162b3 assets\gradient\models\block\gold_ore.json
@@ -142,6 +145,7 @@ c028599b8d6b58e50b201992076c965e23e12953 assets\gradient\models\item\copper_nugg
 374d1f195fa63519ef0ff8d8bbc936f18fb3f4aa assets\gradient\models\item\cow_pelt.json
 78238db29e3589fee5244cbb0c4c2d08c021ead2 assets\gradient\models\item\crushed.json
 524c0d990348924cfb67602562c5fc5535ad5fee assets\gradient\models\item\donkey_pelt.json
+9bdc9ca0817f325b0c1bcbd786941290d5fdfc6f assets\gradient\models\item\drying_rack.json
 eba9253717a0cd896b815929b1d0963ebb801421 assets\gradient\models\item\dust.json
 18b9e0d9665332a673dc9ddf17143bd320d597ac assets\gradient\models\item\fibre.json
 faa6bb90df516ddfb16943b50938014120d678d3 assets\gradient\models\item\firepit.json
@@ -419,6 +423,7 @@ b8091a4679dcf280ae8b266fc073b9b145536cae data\gradient\advancements\recipes\grad
 365d207ac2b0a55049b6b802da37517d3c66a287 data\gradient\advancements\recipes\gradient\age1\stone_hammer.json
 e51223a55de3eaf8dc2c3d68ef8085f025e02758 data\gradient\advancements\recipes\gradient\age1\twine.json
 bcb35351a1f354c16cd808d539467d135aee8a71 data\gradient\advancements\recipes\gradient\age1\unlit_fibre_torch.json
+255459d9492352791347cc1ac09feab664a0dce9 data\gradient\advancements\recipes\gradient\age2\drying_rack.json
 9812f690058afd8d77736dcdd495aa27e97232a8 data\gradient\advancements\recipes\gradient\age2\mulch.json
 8a72874b105f0461bc07c85911fe1d2144520338 data\gradient\advancements\recipes\gradient\age2\raw_hide.json
 b350b64c2a57446e210fe820a5d60dc6ec069637 data\gradient\advancements\recipes\gradient\age2\unhardened_clay_bucket.json
@@ -442,6 +447,7 @@ ee83f1cbb87d15e2ce7538c455eae71dd04dddf5 data\gradient\loot_tables\blocks\clay_f
 881d67a252e21796b5a83c1c1df7e7bbfac46db3 data\gradient\loot_tables\blocks\copper_block.json
 4e397d850d4be445338582e61f3f7fa521b849be data\gradient\loot_tables\blocks\copper_ore.json
 54fccb20c371b35dcf130ae0f87718d4912fefa6 data\gradient\loot_tables\blocks\copper_pebble.json
+2f6e905500a86089f86d127a0f6f3c9a3c625de0 data\gradient\loot_tables\blocks\drying_rack.json
 db042ec9288076769d0b557be29166f538eae08e data\gradient\loot_tables\blocks\fibre_additions.json
 2fa0cea0daaf956cb971bcdfe0080ee9098ca451 data\gradient\loot_tables\blocks\firepit.json
 2c983f490c7e7ff57e7fdf4d4c980c6247a6efdc data\gradient\loot_tables\blocks\gold_block.json
@@ -502,6 +508,7 @@ bba4857c81c6d8ddbbe7c1bb57c64238e82272cd data\gradient\recipes\age1\grindstone.j
 896ff256e02f31e47eed231feb839b5487eeef14 data\gradient\recipes\age1\stone_hammer.json
 f5456c33ef511f9660d8c3284d9de7fd5be2dbe9 data\gradient\recipes\age1\twine.json
 ddc7add657f591699113f597551219e34fdc0af0 data\gradient\recipes\age1\unlit_fibre_torch.json
+041ded898e7a9a2b4918f71e7c99f8b46edebca8 data\gradient\recipes\age2\drying_rack.json
 d233253e0a8b095237f1f890fd45c75decc7f4f8 data\gradient\recipes\age2\mulch.json
 21696c03c7fdecfe7883afa70e979d15ef397d7a data\gradient\recipes\age2\raw_hide.json
 22f72cc1b07542b10d2dcf3f4573255cfcdf8e53 data\gradient\recipes\age2\unhardened_clay_bucket.json

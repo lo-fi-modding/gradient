@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=north,roof=false": {
+      "model": "gradient:block/drying_rack"
+    },
+    "facing=south,roof=false": {
+      "model": "gradient:block/drying_rack",
+      "y": 180
+    },
+    "facing=west,roof=false": {
+      "model": "gradient:block/drying_rack",
+      "y": 270
+    },
+    "facing=east,roof=false": {
+      "model": "gradient:block/drying_rack",
+      "y": 90
+    },
+    "facing=north,roof=true": {
+      "model": "gradient:block/drying_rack_roof"
+    },
+    "facing=south,roof=true": {
+      "model": "gradient:block/drying_rack_roof",
+      "y": 180
+    },
+    "facing=west,roof=true": {
+      "model": "gradient:block/drying_rack_roof",
+      "y": 270
+    },
+    "facing=east,roof=true": {
+      "model": "gradient:block/drying_rack_roof",
+      "y": 90
+    }
+  }
+}

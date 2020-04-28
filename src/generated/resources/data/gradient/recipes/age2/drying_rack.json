@@ -1,0 +1,21 @@
+{
+  "type": "progression:shaped_staged",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "pattern": [
+    "PP",
+    "SS"
+  ],
+  "key": {
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "S": {
+      "tag": "forge:string"
+    }
+  },
+  "result": {
+    "item": "gradient:drying_rack"
+  }
+}

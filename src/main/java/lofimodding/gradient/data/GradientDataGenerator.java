@@ -444,8 +444,8 @@ public final class GradientDataGenerator {
         .texture("particle", this.mcLoc("block/oak_planks"))
 
         .element()
-        .from(0.0f, 13.0f, 14.0f)
-        .to(16.0f, 16.0f, 16.0f)
+        .from(0.0f, 13.0f, 0.0f)
+        .to(16.0f, 16.0f, 2.0f)
         .face(Direction.NORTH).uvs(0.0f, 0.0f, 16.0f, 3.0f).texture("all").end()
         .face(Direction.EAST).uvs(0.0f, 0.0f, 2.0f, 3.0f).texture("all").end()
         .face(Direction.SOUTH).uvs(0.0f, 0.0f, 16.0f, 3.0f).texture("all").end()
@@ -794,7 +794,7 @@ public final class GradientDataGenerator {
         .condition(MixingBasinBlock.HAS_WATER, true)
         .end();
 
-      this.horizontalBlock(GradientBlocks.DRYING_RACK.get(), state -> state.get(DryingRackBlock.ROOF) ? new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.DRYING_RACK)) : new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.DRYING_RACK + "_roof")));
+      this.horizontalBlock(GradientBlocks.DRYING_RACK.get(), state -> new ModelFile.UncheckedModelFile(this.modLoc(state.get(DryingRackBlock.ROOF) ? "block/" + GradientIds.DRYING_RACK + "_roof" : "block/" + GradientIds.DRYING_RACK)));
 
       this.horizontalBlock(GradientBlocks.UNHARDENED_CLAY_FURNACE.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.UNHARDENED_CLAY_FURNACE)));
       this.horizontalBlock(GradientBlocks.UNHARDENED_CLAY_CRUCIBLE.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.UNHARDENED_CLAY_CRUCIBLE)));
