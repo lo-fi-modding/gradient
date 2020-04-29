@@ -1,0 +1,47 @@
+{
+  "parent": "gradient:age1/bone_awl",
+  "display": {
+    "icon": {
+      "item": "gradient:empty_waterskin"
+    },
+    "title": {
+      "translate": "advancements.gradient.age1.waterskin.title"
+    },
+    "description": {
+      "translate": "advancements.gradient.age1.waterskin.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_parent_0": {
+      "trigger": "gradient:advancement_unlocked",
+      "conditions": {
+        "id": "gradient:age1/bone_awl"
+      }
+    },
+    "has_waterskin": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "gradient:empty_waterskin"
+          },
+          {
+            "item": "gradient:filled_waterskin"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_parent_0"
+    ],
+    [
+      "has_waterskin"
+    ]
+  ]
+}

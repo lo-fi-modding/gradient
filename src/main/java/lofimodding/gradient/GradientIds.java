@@ -73,6 +73,8 @@ public final class GradientIds {
   public static final String FLINT_KNIFE = "flint_knife";
   public static final String BONE_AWL = "bone_awl";
   public static final String HIDE_BEDDING = "hide_bedding";
+  public static final String EMPTY_WATERSKIN = "empty_waterskin";
+  public static final String FILLED_WATERSKIN = "filled_waterskin";
 
   public static final String FIREPIT = "firepit";
   public static final String UNLIT_FIBRE_TORCH = "unlit_fibre_torch";
