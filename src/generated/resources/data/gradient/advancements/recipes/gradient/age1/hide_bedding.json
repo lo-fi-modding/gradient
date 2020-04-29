@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "gradient:age1/hide_bedding"
+    ]
+  },
+  "criteria": {
+    "has_pelt": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "gradient:pelts"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "gradient:age1/hide_bedding"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_pelt",
+      "has_the_recipe"
+    ]
+  ]
+}

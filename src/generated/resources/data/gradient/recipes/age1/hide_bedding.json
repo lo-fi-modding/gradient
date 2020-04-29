@@ -1,0 +1,22 @@
+{
+  "type": "progression:shaped_staged",
+  "stages": [
+    "gradient:age_1"
+  ],
+  "damage_tools": true,
+  "pattern": [
+    "PPP",
+    "FFF"
+  ],
+  "key": {
+    "P": {
+      "tag": "gradient:pelts"
+    },
+    "F": {
+      "item": "gradient:fibre"
+    }
+  },
+  "result": {
+    "item": "gradient:hide_bedding"
+  }
+}

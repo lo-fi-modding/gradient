@@ -93,6 +93,10 @@ public class AdvancementsProvider extends AdvancementProvider {
       final Advancement boneAwl = builder(GradientItems.BONE_AWL.get(), "bone_awl", 64, 122, FrameType.TASK, pelt)
         .withCriterion("has_bone_awl", InventoryChangeTrigger.Instance.forItems(GradientItems.BONE_AWL.get()))
         .register(finished, loc("age1/bone_awl"));
+
+      final Advancement hideBedding = builder(GradientItems.HIDE_BEDDING.get(), "hide_bedding", 64, 94, FrameType.GOAL, pelt)
+        .withCriterion("has_hide_bedding", InventoryChangeTrigger.Instance.forItems(GradientItems.HIDE_BEDDING.get()))
+        .register(finished, loc("age1/hide_bedding"));
     }
 
     private static Advancement.Builder builder(final IItemProvider icon, final String id, final int x, final int y, final FrameType frame, final Advancement... parents) {

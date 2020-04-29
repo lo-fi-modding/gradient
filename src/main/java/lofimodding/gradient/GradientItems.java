@@ -1,6 +1,7 @@
 package lofimodding.gradient;
 
 import lofimodding.gradient.items.FlintKnifeItem;
+import lofimodding.gradient.items.HideBeddingItem;
 import lofimodding.gradient.items.MetalItem;
 import lofimodding.gradient.items.MulchItem;
 import lofimodding.gradient.items.PebbleItem;
@@ -125,6 +126,7 @@ public final class GradientItems {
   public static final RegistryObject<ToolItem> STONE_HATCHET = REGISTRY.register(GradientIds.STONE_HATCHET, StoneHammerItem::new);
   public static final RegistryObject<FlintKnifeItem> FLINT_KNIFE = REGISTRY.register(GradientIds.FLINT_KNIFE, FlintKnifeItem::new);
   public static final RegistryObject<Item> BONE_AWL = REGISTRY.register(GradientIds.BONE_AWL, () -> new Item(new Item.Properties().group(GROUP).maxDamage(20)));
+  public static final RegistryObject<HideBeddingItem> HIDE_BEDDING = REGISTRY.register(GradientIds.HIDE_BEDDING, HideBeddingItem::new);
 
   public static final RegistryObject<BlockItem> FIREPIT = REGISTRY.register(GradientIds.FIREPIT, () -> new BlockItem(GradientBlocks.FIREPIT.get(), new Item.Properties().group(GROUP)));
   public static final RegistryObject<WallOrFloorItem> UNLIT_FIBRE_TORCH = REGISTRY.register(GradientIds.UNLIT_FIBRE_TORCH, () -> new WallOrFloorItem(GradientBlocks.UNLIT_FIBRE_TORCH.get(), GradientBlocks.UNLIT_FIBRE_WALL_TORCH.get(), new Item.Properties().group(GROUP)));

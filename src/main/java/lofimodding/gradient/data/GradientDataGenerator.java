@@ -657,6 +657,7 @@ public final class GradientDataGenerator {
       this.singleTexture(GradientIds.STONE_HATCHET, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.STONE_HATCHET));
       this.singleTexture(GradientIds.FLINT_KNIFE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.FLINT_KNIFE));
       this.singleTexture(GradientIds.BONE_AWL, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.BONE_AWL));
+      this.singleTexture(GradientIds.HIDE_BEDDING, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.HIDE_BEDDING));
 
       this.getBuilder(GradientIds.FIREPIT).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.FIREPIT)));
       this.singleTexture(GradientIds.UNLIT_FIBRE_TORCH, this.mcLoc("item/generated"), "layer0", this.modLoc("block/" + GradientIds.UNLIT_FIBRE_TORCH));
@@ -883,6 +884,7 @@ public final class GradientDataGenerator {
       this.add(GradientItems.STONE_HATCHET.get(), "Stone Hatchet");
       this.add(GradientItems.FLINT_KNIFE.get(), "Flint Knife");
       this.add(GradientItems.BONE_AWL.get(), "Bone Awl");
+      this.add(GradientItems.HIDE_BEDDING.get(), "Hide Bedding");
 
       this.add(GradientItems.FIREPIT.get(), "Firepit");
       this.add(GradientItems.FIREPIT.get().getTranslationKey() + ".heat", "%d °C");
@@ -920,9 +922,10 @@ public final class GradientDataGenerator {
       this.age1("grindstone", "Dust to Dust", "Craft a grindstone");
       this.age1("mixing_basin", "Mix It Up", "Craft a mixing basin");
       this.age1("firepit", "Open This Pit Up", "Craft a fire pit");
-      this.age1("pelt", "Animal Pelt", "Kill an animal and collect its pelt");
-      this.age1("bone_awl", "Awl Be Back", "Craft an awl for working with animal hide");
       this.age1("fire_starter", "Fire", "Craft a fire starter and use it to light your fire pit");
+      this.age1("pelt", "Animal Pelt", "Kill an animal and collect its pelt");
+      this.age1("bone_awl", "Awl Be Back", "Craft an awl for working with animal pelts");
+      this.age1("hide_bedding", "Dirt Nap", "Craft some bedding for sleeping on the go");
     }
 
     private void age1(final String key, final String title, final String description) {
@@ -1127,6 +1130,16 @@ public final class GradientDataGenerator {
         .addIngredient(GradientItems.STONE_HAMMER.get())
         .addCriterion("has_bone", this.hasItem(Tags.Items.BONES))
         .build(finished, Gradient.loc("age1/" + GradientIds.BONE_AWL));
+
+      StagedRecipeBuilder
+        .shaped(GradientItems.HIDE_BEDDING.get())
+        .stage(GradientStages.AGE_1)
+        .patternLine("PPP")
+        .patternLine("FFF")
+        .key('P', GradientTags.Items.PELTS)
+        .key('F', GradientItems.FIBRE.get())
+        .addCriterion("has_pelt", this.hasItem(GradientTags.Items.PELTS))
+        .build(finished, Gradient.loc("age1/" + GradientIds.HIDE_BEDDING));
 
       StagedRecipeBuilder
         .shaped(GradientItems.FIREPIT.get())
