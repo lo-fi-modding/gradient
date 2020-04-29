@@ -922,6 +922,7 @@ public final class GradientDataGenerator {
       this.age1("firepit", "Open This Pit Up", "Craft a fire pit");
       this.age1("pelt", "Animal Pelt", "Kill an animal and collect its pelt");
       this.age1("bone_awl", "Awl Be Back", "Craft an awl for working with animal hide");
+      this.age1("fire_starter", "Fire", "Craft a fire starter and use it to light your fire pit");
     }
 
     private void age1(final String key, final String title, final String description) {

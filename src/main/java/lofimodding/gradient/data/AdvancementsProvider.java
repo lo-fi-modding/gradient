@@ -76,6 +76,16 @@ public class AdvancementsProvider extends AdvancementProvider {
         .withCriterion("has_firepit", InventoryChangeTrigger.Instance.forItems(GradientItems.FIREPIT.get()))
         .register(finished, loc("age1/firepit"));
 
+      //TODO: fire starter should also require actually lighting the fire
+      final Advancement fireStarter = builder(GradientItems.FIRE_STARTER.get(), "fire_starter", 96, 54, FrameType.GOAL, firepit)
+        .withCriterion("has_fire_starter", InventoryChangeTrigger.Instance.forItems(GradientItems.FIRE_STARTER.get()))
+        .register(finished, loc("age1/fire_starter"));
+
+      final Advancement fibreTorch = builder(GradientItems.LIT_FIBRE_TORCH.get(), "fibre_torch", 127, 54, FrameType.GOAL, fireStarter)
+        .withCriterion("has_unlit", InventoryChangeTrigger.Instance.forItems(GradientItems.UNLIT_FIBRE_TORCH.get()))
+        .withCriterion("has_lit", InventoryChangeTrigger.Instance.forItems(GradientItems.LIT_FIBRE_TORCH.get()))
+        .register(finished, loc("age1/fibre_torch"));
+
       final Advancement pelt = builder(GradientItems.COW_PELT.get(), "pelt", 32, 94, FrameType.TASK, root)
         .withCriterion("has_pelt", InventoryChangeTrigger.Instance.forItems(ItemPredicate.Builder.create().tag(GradientTags.Items.PELTS).build()))
         .register(finished, loc("age1/pelt"));

@@ -1,0 +1,45 @@
+{
+  "parent": "gradient:age1/firepit",
+  "display": {
+    "icon": {
+      "item": "gradient:fire_starter",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "translate": "advancements.gradient.age1.fire_starter.title"
+    },
+    "description": {
+      "translate": "advancements.gradient.age1.fire_starter.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_parent_0": {
+      "trigger": "gradient:advancement_unlocked",
+      "conditions": {
+        "id": "gradient:age1/firepit"
+      }
+    },
+    "has_fire_starter": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "gradient:fire_starter"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_parent_0"
+    ],
+    [
+      "has_fire_starter"
+    ]
+  ]
+}
