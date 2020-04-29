@@ -91,7 +91,6 @@ public final class GradientDataGenerator {
       gen.addProvider(new ItemModels(gen, event.getExistingFileHelper()));
       gen.addProvider(new BlockStates(gen, event.getExistingFileHelper()));
       gen.addProvider(new EnglishLang(gen));
-      gen.addProvider(new AdvancementsProvider.EnglishLang(gen));
     }
 
     if(event.includeServer()) {
@@ -657,6 +656,7 @@ public final class GradientDataGenerator {
       this.singleTexture(GradientIds.STONE_HAMMER, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.STONE_HAMMER));
       this.singleTexture(GradientIds.STONE_HATCHET, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.STONE_HATCHET));
       this.singleTexture(GradientIds.FLINT_KNIFE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.FLINT_KNIFE));
+      this.singleTexture(GradientIds.BONE_AWL, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.BONE_AWL));
 
       this.getBuilder(GradientIds.FIREPIT).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.FIREPIT)));
       this.singleTexture(GradientIds.UNLIT_FIBRE_TORCH, this.mcLoc("item/generated"), "layer0", this.modLoc("block/" + GradientIds.UNLIT_FIBRE_TORCH));
@@ -882,6 +882,7 @@ public final class GradientDataGenerator {
       this.add(GradientItems.STONE_HAMMER.get().getTranslationKey() + ".tooltip", "Use on ores to get metal nuggets");
       this.add(GradientItems.STONE_HATCHET.get(), "Stone Hatchet");
       this.add(GradientItems.FLINT_KNIFE.get(), "Flint Knife");
+      this.add(GradientItems.BONE_AWL.get(), "Bone Awl");
 
       this.add(GradientItems.FIREPIT.get(), "Firepit");
       this.add(GradientItems.FIREPIT.get().getTranslationKey() + ".heat", "%d °C");
@@ -909,6 +910,23 @@ public final class GradientDataGenerator {
       this.add(GradientItems.CLAY_FURNACE.get().getTranslationKey() + ".tooltip", "Right click on a firepit to attach");
       this.add(GradientItems.CLAY_OVEN.get(), "Clay Oven");
       this.add(GradientItems.CLAY_OVEN.get().getTranslationKey() + ".tooltip", "Place on top of a firepit/furnace to use its heat");
+
+      this.age1("root", "Age 1: Stone Age", "Humankind's first steps");
+      this.age1("basic_materials", "Basic Materials", "Gather sticks from leaves, fibre from grass, and pebbles from the ground");
+      this.age1("stone_hammer", "Hammer Time!", "Craft a stone hammer");
+      this.age1("stone_hatchet", "Just Jackin' It", "Craft a stone hatchet");
+      this.age1("wood", "Getting Wood", "Use your new hatchet to gather wood");
+      this.age1("planks", "Chop Chop", "Chop some wood into planks");
+      this.age1("grindstone", "Dust to Dust", "Craft a grindstone");
+      this.age1("mixing_basin", "Mix It Up", "Craft a mixing basin");
+      this.age1("firepit", "Open This Pit Up", "Craft a fire pit");
+      this.age1("pelt", "Animal Pelt", "Kill an animal and collect its pelt");
+      this.age1("bone_awl", "Awl Be Back", "Craft an awl for working with animal hide");
+    }
+
+    private void age1(final String key, final String title, final String description) {
+      this.add("advancements.gradient.age1." + key + ".title", title);
+      this.add("advancements.gradient.age1." + key + ".description", description);
     }
   }
 
@@ -1100,6 +1118,14 @@ public final class GradientDataGenerator {
         .key('W', Tags.Items.RODS_WOODEN)
         .addCriterion("has_flint", this.hasItem(Items.FLINT))
         .build(finished, Gradient.loc("age1/" + GradientIds.FLINT_KNIFE));
+
+      StagedRecipeBuilder
+        .shapelessRecipe(GradientItems.BONE_AWL.get())
+        .stage(GradientStages.AGE_1)
+        .addIngredient(Tags.Items.BONES)
+        .addIngredient(GradientItems.STONE_HAMMER.get())
+        .addCriterion("has_bone", this.hasItem(Tags.Items.BONES))
+        .build(finished, Gradient.loc("age1/" + GradientIds.BONE_AWL));
 
       StagedRecipeBuilder
         .shaped(GradientItems.FIREPIT.get())

@@ -3,6 +3,7 @@
   "stages": [
     "gradient:age_2"
   ],
+  "damage_tools": true,
   "ingredients": [
     {
       "item": "minecraft:clay_ball"

@@ -1,6 +1,7 @@
 {
   "type": "progression:shapeless_staged",
   "stages": [],
+  "damage_tools": true,
   "ingredients": [
     {
       "tag": "forge:rods/wooden"

@@ -3,6 +3,7 @@
   "stages": [
     "gradient:age_1"
   ],
+  "damage_tools": true,
   "pattern": [
     "P",
     "F",

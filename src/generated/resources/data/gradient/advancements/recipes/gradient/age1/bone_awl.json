@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "gradient:age1/bone_awl"
+    ]
+  },
+  "criteria": {
+    "has_bone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:bones"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "gradient:age1/bone_awl"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_bone",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -124,6 +124,7 @@ public final class GradientItems {
   public static final RegistryObject<StoneHammerItem> STONE_HAMMER = REGISTRY.register(GradientIds.STONE_HAMMER, StoneHammerItem::new);
   public static final RegistryObject<ToolItem> STONE_HATCHET = REGISTRY.register(GradientIds.STONE_HATCHET, StoneHammerItem::new);
   public static final RegistryObject<FlintKnifeItem> FLINT_KNIFE = REGISTRY.register(GradientIds.FLINT_KNIFE, FlintKnifeItem::new);
+  public static final RegistryObject<Item> BONE_AWL = REGISTRY.register(GradientIds.BONE_AWL, () -> new Item(new Item.Properties().group(GROUP).maxDamage(20)));
 
   public static final RegistryObject<BlockItem> FIREPIT = REGISTRY.register(GradientIds.FIREPIT, () -> new BlockItem(GradientBlocks.FIREPIT.get(), new Item.Properties().group(GROUP)));
   public static final RegistryObject<WallOrFloorItem> UNLIT_FIBRE_TORCH = REGISTRY.register(GradientIds.UNLIT_FIBRE_TORCH, () -> new WallOrFloorItem(GradientBlocks.UNLIT_FIBRE_TORCH.get(), GradientBlocks.UNLIT_FIBRE_WALL_TORCH.get(), new Item.Properties().group(GROUP)));

@@ -22,7 +22,6 @@ import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.data.LanguageProvider;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
@@ -80,6 +79,10 @@ public class AdvancementsProvider extends AdvancementProvider {
       final Advancement pelt = builder(GradientItems.COW_PELT.get(), "pelt", 32, 94, FrameType.TASK, root)
         .withCriterion("has_pelt", InventoryChangeTrigger.Instance.forItems(ItemPredicate.Builder.create().tag(GradientTags.Items.PELTS).build()))
         .register(finished, loc("age1/pelt"));
+
+      final Advancement boneAwl = builder(GradientItems.BONE_AWL.get(), "bone_awl", 64, 122, FrameType.TASK, pelt)
+        .withCriterion("has_bone_awl", InventoryChangeTrigger.Instance.forItems(GradientItems.BONE_AWL.get()))
+        .register(finished, loc("age1/bone_awl"));
     }
 
     private static Advancement.Builder builder(final IItemProvider icon, final String id, final int x, final int y, final FrameType frame, final Advancement... parents) {
@@ -105,30 +108,5 @@ public class AdvancementsProvider extends AdvancementProvider {
 
   private static String loc(final String path) {
     return Gradient.loc(path).toString();
-  }
-
-  public static class EnglishLang extends LanguageProvider {
-    public EnglishLang(final DataGenerator gen) {
-      super(gen, Gradient.MOD_ID, "en_us");
-    }
-
-    @Override
-    protected void addTranslations() {
-      this.age1("root", "Age 1: Stone Age", "Humankind's first steps");
-      this.age1("basic_materials", "Basic Materials", "Gather sticks from leaves, fibre from grass, and pebbles from the ground");
-      this.age1("stone_hammer", "Hammer Time!", "Craft a stone hammer");
-      this.age1("stone_hatchet", "Just Jackin' It", "Craft a stone hatchet");
-      this.age1("wood", "Getting Wood", "Use your new hatchet to gather wood");
-      this.age1("planks", "Chop Chop", "Chop some wood into planks");
-      this.age1("grindstone", "Dust to Dust", "Craft a grindstone");
-      this.age1("mixing_basin", "Mix It Up", "Craft a mixing basin");
-      this.age1("firepit", "Open This Pit Up", "Craft a fire pit");
-      this.age1("pelt", "Animal Pelt", "Kill an animal and collect its pelt");
-    }
-
-    private void age1(final String key, final String title, final String description) {
-      this.add("advancements.gradient.age1." + key + ".title", title);
-      this.add("advancements.gradient.age1." + key + ".description", description);
-    }
   }
 }

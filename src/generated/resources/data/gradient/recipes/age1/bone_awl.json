@@ -1,18 +1,18 @@
 {
   "type": "progression:shapeless_staged",
   "stages": [
-    "gradient:age_2"
+    "gradient:age_1"
   ],
   "damage_tools": true,
   "ingredients": [
     {
-      "tag": "gradient:pelts"
+      "tag": "forge:bones"
     },
     {
-      "item": "gradient:flint_knife"
+      "item": "gradient:stone_hammer"
     }
   ],
   "result": {
-    "item": "gradient:raw_hide"
+    "item": "gradient:bone_awl"
   }
 }
