@@ -13,6 +13,8 @@ import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.science.Metals;
 import lofimodding.gradient.science.Ore;
 import lofimodding.gradient.science.Ores;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -131,6 +133,11 @@ public final class GradientItems {
   public static final RegistryObject<HideBeddingItem> HIDE_BEDDING = REGISTRY.register(GradientIds.HIDE_BEDDING, HideBeddingItem::new);
   public static final RegistryObject<EmptyWaterskinItem> EMPTY_WATERSKIN = REGISTRY.register(GradientIds.EMPTY_WATERSKIN, EmptyWaterskinItem::new);
   public static final RegistryObject<FilledWaterskinItem> FILLED_WATERSKIN = REGISTRY.register(GradientIds.FILLED_WATERSKIN, FilledWaterskinItem::new);
+
+  public static final RegistryObject<ArmorItem> HIDE_HAT = REGISTRY.register(GradientIds.HIDE_HAT, () -> new ArmorItem(GradientMaterials.Armour.HIDE, EquipmentSlotType.HEAD, new Item.Properties().group(GROUP)));
+  public static final RegistryObject<ArmorItem> HIDE_SHIRT = REGISTRY.register(GradientIds.HIDE_SHIRT, () -> new ArmorItem(GradientMaterials.Armour.HIDE, EquipmentSlotType.CHEST, new Item.Properties().group(GROUP)));
+  public static final RegistryObject<ArmorItem> HIDE_PANTS = REGISTRY.register(GradientIds.HIDE_PANTS, () -> new ArmorItem(GradientMaterials.Armour.HIDE, EquipmentSlotType.LEGS, new Item.Properties().group(GROUP)));
+  public static final RegistryObject<ArmorItem> HIDE_BOOTS = REGISTRY.register(GradientIds.HIDE_BOOTS, () -> new ArmorItem(GradientMaterials.Armour.HIDE, EquipmentSlotType.FEET, new Item.Properties().group(GROUP)));
 
   public static final RegistryObject<BlockItem> FIREPIT = REGISTRY.register(GradientIds.FIREPIT, () -> new BlockItem(GradientBlocks.FIREPIT.get(), new Item.Properties().group(GROUP)));
   public static final RegistryObject<WallOrFloorItem> UNLIT_FIBRE_TORCH = REGISTRY.register(GradientIds.UNLIT_FIBRE_TORCH, () -> new WallOrFloorItem(GradientBlocks.UNLIT_FIBRE_TORCH.get(), GradientBlocks.UNLIT_FIBRE_WALL_TORCH.get(), new Item.Properties().group(GROUP)));

@@ -661,6 +661,11 @@ public final class GradientDataGenerator {
       this.singleTexture(GradientIds.EMPTY_WATERSKIN, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.EMPTY_WATERSKIN));
       this.singleTexture(GradientIds.FILLED_WATERSKIN, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.FILLED_WATERSKIN));
 
+      this.singleTexture(GradientIds.HIDE_HAT, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.HIDE_HAT));
+      this.singleTexture(GradientIds.HIDE_SHIRT, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.HIDE_SHIRT));
+      this.singleTexture(GradientIds.HIDE_PANTS, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.HIDE_PANTS));
+      this.singleTexture(GradientIds.HIDE_BOOTS, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.HIDE_BOOTS));
+
       this.getBuilder(GradientIds.FIREPIT).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.FIREPIT)));
       this.singleTexture(GradientIds.UNLIT_FIBRE_TORCH, this.mcLoc("item/generated"), "layer0", this.modLoc("block/" + GradientIds.UNLIT_FIBRE_TORCH));
       this.singleTexture(GradientIds.LIT_FIBRE_TORCH, this.mcLoc("item/generated"), "layer0", this.modLoc("block/" + GradientIds.LIT_FIBRE_TORCH));
@@ -890,6 +895,11 @@ public final class GradientDataGenerator {
       this.add(GradientItems.EMPTY_WATERSKIN.get(), "Empty Waterskin");
       this.add(GradientItems.FILLED_WATERSKIN.get(), "Filled Waterskin");
 
+      this.add(GradientItems.HIDE_HAT.get(), "Hide Hat");
+      this.add(GradientItems.HIDE_SHIRT.get(), "Hide Shirt");
+      this.add(GradientItems.HIDE_PANTS.get(), "Hide Pants");
+      this.add(GradientItems.HIDE_BOOTS.get(), "Hide Boots");
+
       this.add(GradientItems.FIREPIT.get(), "Firepit");
       this.add(GradientItems.FIREPIT.get().getTranslationKey() + ".heat", "%d °C");
       this.add(GradientBlocks.UNLIT_FIBRE_TORCH.get(), "Unlit Fibre Torch");
@@ -931,6 +941,7 @@ public final class GradientDataGenerator {
       this.age1("bone_awl", "Awl Be Back", "Craft an awl for working with animal pelts");
       this.age1("waterskin", "It's Made of What Now?", "Craft a waterskin to transport water");
       this.age1("hide_bedding", "Dirt Nap", "Craft some bedding for sleeping on the go");
+      this.age1("hide_armour", "The Buttflappening", "Craft a full set of hide armour. You'll be rewarded with a handful of torches that don't go out!");
     }
 
     private void age1(final String key, final String title, final String description) {
@@ -1468,6 +1479,7 @@ public final class GradientDataGenerator {
     @Override
     protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootParameterSet>> getTables() {
       return ImmutableList.of(
+        Pair.of(HideArmourAdvancementLootTable::new, LootParameterSets.ADVANCEMENT),
         Pair.of(FibreAdditionsLootTable::new, LootParameterSets.BLOCK),
         Pair.of(PebbleAdditionsLootTable::new, LootParameterSets.BLOCK),
         Pair.of(() -> new PeltDropsTable(GradientIds.COW_PELT, GradientItems.COW_PELT.get()), LootParameterSets.ENTITY),
@@ -1487,6 +1499,15 @@ public final class GradientDataGenerator {
     @Override
     protected void validate(final Map<ResourceLocation, LootTable> map, final ValidationTracker validationtracker) {
 
+    }
+
+    public static class HideArmourAdvancementLootTable implements Consumer<BiConsumer<ResourceLocation, LootTable.Builder>> {
+      @Override
+      public void accept(final BiConsumer<ResourceLocation, LootTable.Builder> builder) {
+        builder.accept(GradientLoot.HIDE_ARMOUR_ADVANCEMENT, LootTable.builder().addLootPool(
+          LootPool.builder().addEntry(ItemLootEntry.builder(Items.TORCH)).rolls(ConstantRange.of(4))
+        ));
+      }
     }
 
     public static class FibreAdditionsLootTable implements Consumer<BiConsumer<ResourceLocation, LootTable.Builder>> {

@@ -3,9 +3,11 @@ package lofimodding.gradient.data;
 import lofimodding.gradient.Gradient;
 import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientItems;
+import lofimodding.gradient.GradientLoot;
 import lofimodding.gradient.GradientTags;
 import lofimodding.gradient.advancements.criterion.AdvancementUnlockedTrigger;
 import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;
@@ -13,6 +15,7 @@ import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.advancements.criterion.LocationPredicate;
 import net.minecraft.advancements.criterion.PositionTrigger;
 import net.minecraft.block.Blocks;
+import net.minecraft.command.FunctionObject;
 import net.minecraft.data.AdvancementProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.ItemStack;
@@ -101,6 +104,14 @@ public class AdvancementsProvider extends AdvancementProvider {
       final Advancement hideBedding = builder(GradientItems.HIDE_BEDDING.get(), "hide_bedding", 64, 94, FrameType.GOAL, pelt)
         .withCriterion("has_hide_bedding", InventoryChangeTrigger.Instance.forItems(GradientItems.HIDE_BEDDING.get()))
         .register(finished, loc("age1/hide_bedding"));
+
+      final Advancement hideArmour = builder(GradientItems.HIDE_PANTS.get(), "hide_armour", 96, 137, FrameType.CHALLENGE, boneAwl)
+        .withCriterion("has_hide_hat", InventoryChangeTrigger.Instance.forItems(GradientItems.HIDE_HAT.get()))
+        .withCriterion("has_hide_chest", InventoryChangeTrigger.Instance.forItems(GradientItems.HIDE_SHIRT.get()))
+        .withCriterion("has_hide_pants", InventoryChangeTrigger.Instance.forItems(GradientItems.HIDE_PANTS.get()))
+        .withCriterion("has_hide_boots", InventoryChangeTrigger.Instance.forItems(GradientItems.HIDE_BOOTS.get()))
+        .withRewards(new AdvancementRewards(0, new ResourceLocation[] {GradientLoot.HIDE_ARMOUR_ADVANCEMENT}, new ResourceLocation[0], FunctionObject.CacheableFunction.EMPTY))
+        .register(finished, loc("age1/hide_armour"));
     }
 
     private static Advancement.Builder builder(final IItemProvider icon, final String id, final int x, final int y, final FrameType frame, final Advancement... parents) {

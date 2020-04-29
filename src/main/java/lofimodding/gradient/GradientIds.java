@@ -76,6 +76,11 @@ public final class GradientIds {
   public static final String EMPTY_WATERSKIN = "empty_waterskin";
   public static final String FILLED_WATERSKIN = "filled_waterskin";
 
+  public static final String HIDE_HAT = "hide_hat";
+  public static final String HIDE_SHIRT = "hide_shirt";
+  public static final String HIDE_PANTS = "hide_pants";
+  public static final String HIDE_BOOTS = "hide_boots";
+
   public static final String FIREPIT = "firepit";
   public static final String UNLIT_FIBRE_TORCH = "unlit_fibre_torch";
   public static final String UNLIT_FIBRE_WALL_TORCH = "unlit_fibre_wall_torch";
