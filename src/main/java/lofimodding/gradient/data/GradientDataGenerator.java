@@ -652,6 +652,8 @@ public final class GradientDataGenerator {
       this.singleTexture(GradientIds.PRESERVED_HIDE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.PRESERVED_HIDE));
       this.singleTexture(GradientIds.TANNED_HIDE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.TANNED_HIDE));
 
+      this.singleTexture(GradientIds.LEATHER_STRIP, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.LEATHER_STRIP));
+
       this.singleTexture(GradientIds.FIRE_STARTER, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.FIRE_STARTER));
       this.singleTexture(GradientIds.STONE_HAMMER, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.STONE_HAMMER));
       this.singleTexture(GradientIds.STONE_HATCHET, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.STONE_HATCHET));
@@ -885,6 +887,8 @@ public final class GradientDataGenerator {
       this.add(GradientItems.PRESERVED_HIDE.get(), "Preserved Hide");
       this.add(GradientItems.TANNED_HIDE.get(), "Tanned Hide");
 
+      this.add(GradientItems.LEATHER_STRIP.get(), "Leather Strip");
+
       this.add(GradientItems.FIRE_STARTER.get(), "Fire Starter");
       this.add(GradientItems.STONE_HAMMER.get(), "Stone Hammer");
       this.add(GradientItems.STONE_HAMMER.get().getTranslationKey() + ".tooltip", "Use on ores to get metal nuggets");
@@ -1096,6 +1100,14 @@ public final class GradientDataGenerator {
         .fluid(new FluidStack(Fluids.WATER, 1000))
         .addCriterion("has_preserved_hide", this.hasItem(GradientItems.PRESERVED_HIDE.get()))
         .build(finished, Gradient.loc("mixing/" + GradientIds.TANNED_HIDE));
+
+      StagedRecipeBuilder
+        .shapelessRecipe(GradientItems.LEATHER_STRIP.get(), 3)
+        .stage(GradientStages.AGE_2)
+        .addIngredient(Tags.Items.LEATHER)
+        .addIngredient(GradientItems.FLINT_KNIFE.get())
+        .addCriterion("has_leather", this.hasItem(Tags.Items.LEATHER))
+        .build(finished, Gradient.loc("age2/" + GradientIds.LEATHER_STRIP));
 
       StagedRecipeBuilder
         .shapelessRecipe(GradientItems.FIRE_STARTER.get())

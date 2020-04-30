@@ -67,6 +67,8 @@ public final class GradientIds {
   public static final String PRESERVED_HIDE = "preserved_hide";
   public static final String TANNED_HIDE = "tanned_hide";
 
+  public static final String LEATHER_STRIP = "leather_strip";
+
   public static final String FIRE_STARTER = "fire_starter";
   public static final String STONE_HAMMER = "stone_hammer";
   public static final String STONE_HATCHET = "stone_hatchet";

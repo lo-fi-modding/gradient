@@ -1,0 +1,19 @@
+{
+  "type": "progression:shapeless_staged",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "damage_tools": true,
+  "ingredients": [
+    {
+      "tag": "forge:leather"
+    },
+    {
+      "item": "gradient:flint_knife"
+    }
+  ],
+  "result": {
+    "item": "gradient:leather_strip",
+    "count": 3
+  }
+}
