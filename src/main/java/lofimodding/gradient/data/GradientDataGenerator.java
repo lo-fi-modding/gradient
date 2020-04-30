@@ -942,6 +942,7 @@ public final class GradientDataGenerator {
       this.age1("waterskin", "It's Made of What Now?", "Craft a waterskin to transport water");
       this.age1("hide_bedding", "Dirt Nap", "Craft some bedding for sleeping on the go");
       this.age1("hide_armour", "The Buttflappening", "Craft a full set of hide armour. You'll be rewarded with a handful of torches that don't go out!");
+      this.age1("goal", "Settle Down", "Age 1 complete!");
     }
 
     private void age1(final String key, final String title, final String description) {

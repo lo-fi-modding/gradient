@@ -11,7 +11,7 @@
     "description": {
       "translate": "advancements.gradient.age1.fire_starter.description"
     },
-    "frame": "goal",
+    "frame": "task",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false

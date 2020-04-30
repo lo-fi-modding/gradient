@@ -80,7 +80,7 @@ public class AdvancementsProvider extends AdvancementProvider {
         .register(finished, loc("age1/firepit"));
 
       //TODO: fire starter should also require actually lighting the fire
-      final Advancement fireStarter = builder(GradientItems.FIRE_STARTER.get(), "fire_starter", 96, 54, FrameType.GOAL, firepit)
+      final Advancement fireStarter = builder(GradientItems.FIRE_STARTER.get(), "fire_starter", 96, 54, FrameType.TASK, firepit)
         .withCriterion("has_fire_starter", InventoryChangeTrigger.Instance.forItems(GradientItems.FIRE_STARTER.get()))
         .register(finished, loc("age1/fire_starter"));
 
@@ -112,6 +112,10 @@ public class AdvancementsProvider extends AdvancementProvider {
         .withCriterion("has_hide_boots", InventoryChangeTrigger.Instance.forItems(GradientItems.HIDE_BOOTS.get()))
         .withRewards(new AdvancementRewards(0, new ResourceLocation[] {GradientLoot.HIDE_ARMOUR_ADVANCEMENT}, new ResourceLocation[0], FunctionObject.CacheableFunction.EMPTY))
         .register(finished, loc("age1/hide_armour"));
+
+      final Advancement goal = builder(Items.WHEAT, "goal", 193, 81, FrameType.CHALLENGE, grindstone, mixingBasin, fibreTorch, waterskin, hideBedding)
+        .withRewards(new AdvancementRewards(0, new ResourceLocation[0], new ResourceLocation[0], new FunctionObject.CacheableFunction(Gradient.loc("grant_age_2"))))
+        .register(finished, loc("age1/goal"));
     }
 
     private static Advancement.Builder builder(final IItemProvider icon, final String id, final int x, final int y, final FrameType frame, final Advancement... parents) {

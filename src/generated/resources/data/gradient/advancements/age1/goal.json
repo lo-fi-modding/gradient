@@ -1,0 +1,70 @@
+{
+  "parent": "gradient:age1/hide_bedding",
+  "display": {
+    "icon": {
+      "item": "minecraft:wheat"
+    },
+    "title": {
+      "translate": "advancements.gradient.age1.goal.title"
+    },
+    "description": {
+      "translate": "advancements.gradient.age1.goal.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "function": "gradient:grant_age_2"
+  },
+  "criteria": {
+    "has_parent_0": {
+      "trigger": "gradient:advancement_unlocked",
+      "conditions": {
+        "id": "gradient:age1/grindstone"
+      }
+    },
+    "has_parent_1": {
+      "trigger": "gradient:advancement_unlocked",
+      "conditions": {
+        "id": "gradient:age1/mixing_basin"
+      }
+    },
+    "has_parent_2": {
+      "trigger": "gradient:advancement_unlocked",
+      "conditions": {
+        "id": "gradient:age1/fibre_torch"
+      }
+    },
+    "has_parent_3": {
+      "trigger": "gradient:advancement_unlocked",
+      "conditions": {
+        "id": "gradient:age1/waterskin"
+      }
+    },
+    "has_parent_4": {
+      "trigger": "gradient:advancement_unlocked",
+      "conditions": {
+        "id": "gradient:age1/hide_bedding"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_parent_0"
+    ],
+    [
+      "has_parent_1"
+    ],
+    [
+      "has_parent_2"
+    ],
+    [
+      "has_parent_3"
+    ],
+    [
+      "has_parent_4"
+    ]
+  ]
+}
