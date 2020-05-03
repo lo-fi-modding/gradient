@@ -64,6 +64,8 @@ public final class GradientClient {
     RenderTypeLookup.setRenderLayer(GradientBlocks.UNLIT_FIBRE_WALL_TORCH.get(), cutoutMipped);
     RenderTypeLookup.setRenderLayer(GradientBlocks.LIT_FIBRE_TORCH.get(), cutoutMipped);
     RenderTypeLookup.setRenderLayer(GradientBlocks.LIT_FIBRE_WALL_TORCH.get(), cutoutMipped);
+    RenderTypeLookup.setRenderLayer(GradientBlocks.UNLIT_TORCH_STAND_TORCH.get(), cutoutMipped);
+    RenderTypeLookup.setRenderLayer(GradientBlocks.LIT_TORCH_STAND_TORCH.get(), cutoutMipped);
 
     final RenderType translucent = RenderType.getTranslucent();
 

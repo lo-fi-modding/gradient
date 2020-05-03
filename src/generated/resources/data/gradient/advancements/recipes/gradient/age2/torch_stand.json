@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "gradient:age2/torch_stand"
+    ]
+  },
+  "criteria": {
+    "has_lit_torch": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "gradient:lit_fibre_torch"
+          }
+        ]
+      }
+    },
+    "has_unlit_torch": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "gradient:unlit_fibre_torch"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "gradient:age2/torch_stand"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_lit_torch",
+      "has_unlit_torch",
+      "has_the_recipe"
+    ]
+  ]
+}

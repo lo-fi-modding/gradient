@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "gradient:block/lit_torch_stand_torch"
+    }
+  }
+}

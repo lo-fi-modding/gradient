@@ -88,6 +88,9 @@ public final class GradientIds {
   public static final String UNLIT_FIBRE_WALL_TORCH = "unlit_fibre_wall_torch";
   public static final String LIT_FIBRE_TORCH = "lit_fibre_torch";
   public static final String LIT_FIBRE_WALL_TORCH = "lit_fibre_wall_torch";
+  public static final String TORCH_STAND = "torch_stand";
+  public static final String UNLIT_TORCH_STAND_TORCH = "unlit_torch_stand_torch";
+  public static final String LIT_TORCH_STAND_TORCH = "lit_torch_stand_torch";
 
   public static final String GRINDSTONE = "grindstone";
   public static final String MIXING_BASIN = "mixing_basin";

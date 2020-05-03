@@ -1,0 +1,34 @@
+{
+  "type": "progression:shaped_staged",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "damage_tools": true,
+  "pattern": [
+    " T ",
+    "FSF",
+    " P "
+  ],
+  "key": {
+    "T": [
+      {
+        "item": "gradient:lit_fibre_torch"
+      },
+      {
+        "item": "gradient:unlit_fibre_torch"
+      }
+    ],
+    "F": {
+      "tag": "forge:string"
+    },
+    "S": {
+      "tag": "forge:rods/wooden"
+    },
+    "P": {
+      "tag": "minecraft:wooden_slabs"
+    }
+  },
+  "result": {
+    "item": "gradient:torch_stand"
+  }
+}

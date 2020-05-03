@@ -10,6 +10,7 @@ import lofimodding.gradient.blocks.LitFibreWallTorchBlock;
 import lofimodding.gradient.blocks.MetalBlock;
 import lofimodding.gradient.blocks.MixingBasinBlock;
 import lofimodding.gradient.blocks.PebbleBlock;
+import lofimodding.gradient.blocks.TorchStandBlock;
 import lofimodding.gradient.blocks.UnhardenedClayBlock;
 import lofimodding.gradient.blocks.UnlitFibreTorchBlock;
 import lofimodding.gradient.blocks.UnlitFibreWallTorchBlock;
@@ -72,6 +73,9 @@ public final class GradientBlocks {
   public static final RegistryObject<UnlitFibreWallTorchBlock> UNLIT_FIBRE_WALL_TORCH = REGISTRY.register(GradientIds.UNLIT_FIBRE_WALL_TORCH, () -> new UnlitFibreWallTorchBlock(litFibreWallTorch(), Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.0f).sound(SoundType.WOOD)));
   public static final RegistryObject<LitFibreTorchBlock> LIT_FIBRE_TORCH = REGISTRY.register(GradientIds.LIT_FIBRE_TORCH, () -> new LitFibreTorchBlock(UNLIT_FIBRE_TORCH::get, Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.0f).lightValue(10).sound(SoundType.WOOD)));
   public static final RegistryObject<LitFibreWallTorchBlock> LIT_FIBRE_WALL_TORCH = REGISTRY.register(GradientIds.LIT_FIBRE_WALL_TORCH, () -> new LitFibreWallTorchBlock(UNLIT_FIBRE_WALL_TORCH::get, Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.0f).lightValue(10).sound(SoundType.WOOD)));
+  public static final RegistryObject<TorchStandBlock> TORCH_STAND = REGISTRY.register(GradientIds.TORCH_STAND, TorchStandBlock::new);
+  public static final RegistryObject<UnlitFibreTorchBlock> UNLIT_TORCH_STAND_TORCH = REGISTRY.register(GradientIds.UNLIT_TORCH_STAND_TORCH, () -> new UnlitFibreTorchBlock(litTorchStandTorch(), Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.0f).sound(SoundType.WOOD)));
+  public static final RegistryObject<LitFibreTorchBlock> LIT_TORCH_STAND_TORCH = REGISTRY.register(GradientIds.LIT_TORCH_STAND_TORCH, () -> new LitFibreTorchBlock(UNLIT_TORCH_STAND_TORCH::get, Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.0f).lightValue(14).sound(SoundType.WOOD)));
 
   public static final RegistryObject<GrindstoneBlock> GRINDSTONE = REGISTRY.register(GradientIds.GRINDSTONE, GrindstoneBlock::new);
   public static final RegistryObject<MixingBasinBlock> MIXING_BASIN = REGISTRY.register(GradientIds.MIXING_BASIN, MixingBasinBlock::new);
@@ -105,6 +109,10 @@ public final class GradientBlocks {
 
   private static Supplier<TorchBlock> litFibreWallTorch() {
     return () -> LIT_FIBRE_WALL_TORCH.get();
+  }
+
+  private static Supplier<TorchBlock> litTorchStandTorch() {
+    return () -> LIT_TORCH_STAND_TORCH.get();
   }
 
   public static RegistryObject<PebbleBlock> PEBBLE(final Ore ore) {

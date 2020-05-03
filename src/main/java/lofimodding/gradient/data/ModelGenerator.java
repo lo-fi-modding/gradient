@@ -7,6 +7,91 @@ import net.minecraftforge.client.model.generators.ModelBuilder;
 public final class ModelGenerator {
   private ModelGenerator() { }
 
+  public static void torchStand(final GradientDataGenerator.BlockModels generator, final String id) {
+    generator.getBuilder(id)
+      .parent(generator.getExistingFile(generator.mcLoc("block/block")))
+      .texture("rod", generator.mcLoc("block/oak_planks"))
+      .texture("holder", generator.mcLoc("block/farmland"))
+      .texture("particle", generator.mcLoc("block/oak_planks"))
+
+      .element() // Centre
+      .from(7.0f, 3.0f, 7.0f)
+      .to(9.0f, 14.0f, 9.0f)
+      .face(Direction.NORTH).uvs(8.0f, 1.0f, 10.0f, 12.0f).texture("rod").end()
+      .face(Direction.EAST).uvs(10.0f, 1.0f, 12.0f, 12.0f).texture("rod").end()
+      .face(Direction.SOUTH).uvs(4.0f, 1.0f, 6.0f, 12.0f).texture("rod").end()
+      .face(Direction.WEST).uvs(6.0f, 1.0f, 8.0f, 12.0f).texture("rod").end()
+      .face(Direction.UP).uvs(0.0f, 0.0f, 2.0f, 16.0f).texture("rod").end()
+      .face(Direction.DOWN).uvs(0.0f, 0.0f, 2.0f, 16.0f).texture("rod").end()
+      .end()
+
+      .element() // Wrap
+      .from(6.375f, 14.0f, 6.375f)
+      .to(9.625f, 16.0f, 9.625f)
+      .face(Direction.NORTH).uvs(9.0f, 6.0f, 11.0f, 9.0f).texture("holder").end()
+      .face(Direction.EAST).uvs(9.0f, 9.0f, 11.0f, 12.0f).texture("holder").end()
+      .face(Direction.SOUTH).uvs(9.0f, 0.0f, 11.0f, 3.0f).texture("holder").end()
+      .face(Direction.WEST).uvs(9.0f, 3.0f, 11.0f, 6.0f).texture("holder").end()
+      .face(Direction.UP).uvs(10.0f, 3.0f, 13.0f, 6.0f).texture("holder").end()
+      .face(Direction.DOWN).uvs(10.0f, 3.0f, 13.0f, 6.0f).texture("holder").end()
+      .end()
+
+      .element() // Base
+      .from(6.0f, 0.0f, 6.0f)
+      .to(10.0f, 3.0f, 10.0f)
+      .face(Direction.NORTH).uvs(7.0f, 13.0f, 11.0f, 16.0f).texture("rod").end()
+      .face(Direction.EAST).uvs(9.0f, 13.0f, 13.0f, 16.0f).texture("rod").end()
+      .face(Direction.SOUTH).uvs(3.0f, 13.0f, 7.0f, 16.0f).texture("rod").end()
+      .face(Direction.WEST).uvs(5.0f, 13.0f, 9.0f, 16.0f).texture("rod").end()
+      .face(Direction.UP).uvs(0.0f, 0.0f, 4.0f, 4.0f).texture("rod").end()
+      .face(Direction.DOWN).uvs(2.0f, 12.0f, 6.0f, 16.0f).texture("rod").end()
+      .end()
+
+      .element()
+      .from(6.5f, 15.0f, 6.0f)
+      .to(9.5f, 18.0f, 6.5f)
+      .face(Direction.NORTH).uvs(4.5f, 0.0f, 7.5f, 3.0f).texture("rod").end()
+      .face(Direction.EAST).uvs(0.0f, 0.0f, 0.5f, 3.0f).texture("rod").end()
+      .face(Direction.SOUTH).uvs(0.0f, 0.0f, 3.0f, 3.0f).texture("rod").end()
+      .face(Direction.WEST).uvs(0.0f, 0.0f, 0.5f, 3.0f).texture("rod").end()
+      .face(Direction.UP).uvs(0.0f, 0.0f, 3.0f, 0.5f).texture("rod").end()
+      .face(Direction.DOWN).uvs(4.5f, 3.0f, 7.5f, 3.5f).texture("rod").end()
+      .end()
+
+      .element()
+      .from(6.0f, 15.0f, 6.0f)
+      .to(6.5f, 18.0f, 10.0f)
+      .face(Direction.NORTH).uvs(7.5f, 0.0f, 8.0f, 3.0f).texture("rod").end()
+      .face(Direction.EAST).uvs(8.5f, 0.0f, 12.5f, 3.0f).texture("rod").end()
+      .face(Direction.SOUTH).uvs(12.0f, 0.0f, 12.5f, 3.0f).texture("rod").end()
+      .face(Direction.WEST).uvs(8.0f, 0.0f, 12.0f, 3.0f).texture("rod").end()
+      .face(Direction.UP).uvs(8.5f, 0.0f, 12.5f, 1.0f).texture("rod").rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).end()
+      .face(Direction.DOWN).uvs(8.0f, 3.0f, 12.0f, 3.5f).texture("rod").rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).end()
+      .end()
+
+      .element()
+      .from(6.5f, 15.0f, 9.5f)
+      .to(9.5f, 18.0f, 10.0f)
+      .face(Direction.NORTH).uvs(6.0f, 0.0f, 9.0f, 3.0f).texture("rod").end()
+      .face(Direction.EAST).uvs(0.0f, 0.0f, 0.5f, 3.0f).texture("rod").end()
+      .face(Direction.SOUTH).uvs(12.5f, 0.0f, 15.5f, 3.0f).texture("rod").end()
+      .face(Direction.WEST).uvs(0.0f, 0.0f, 0.5f, 3.0f).texture("rod").end()
+      .face(Direction.UP).uvs(6.0f, 0.0f, 9.0f, 0.5f).texture("rod").rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN).end()
+      .face(Direction.DOWN).uvs(12.5f, 3.0f, 15.5f, 3.5f).texture("rod").rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN).end()
+      .end()
+
+      .element()
+      .from(9.5f, 15.0f, 6.0f)
+      .to(10.0f, 18.0f, 10.0f)
+      .face(Direction.NORTH).uvs(4.0f, 0.0f, 4.5f, 3.0f).texture("rod").end()
+      .face(Direction.EAST).uvs(0.0f, 0.0f, 4.0f, 3.0f).texture("rod").end()
+      .face(Direction.SOUTH).uvs(15.5f, 0.0f, 16.0f, 3.0f).texture("rod").end()
+      .face(Direction.WEST).uvs(2.5f, 0.0f, 6.5f, 3.0f).texture("rod").end()
+      .face(Direction.UP).uvs(2.5f, 0.0f, 6.5f, 1.0f).texture("rod").rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).end()
+      .face(Direction.DOWN).uvs(0.0f, 3.0f, 4.0f, 3.5f).texture("rod").rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).end()
+      .end();
+  }
+
   public static void clayFurnace(final GradientDataGenerator.BlockModels generator, final String id, final ResourceLocation side, final ResourceLocation front, final ResourceLocation top, final ResourceLocation inside, final ResourceLocation particle) {
     generator.getBuilder(id)
       .parent(generator.getExistingFile(generator.mcLoc("block/block")))
