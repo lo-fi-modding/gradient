@@ -36,6 +36,7 @@ public class Gradient {
 
     GradientBlocks.init(bus);
     GradientFluids.init(bus);
+    lofimodding.gradient.fluids.GradientFluids.init(bus);
     GradientItems.init(bus);
     GradientEntities.init(bus);
     GradientLoot.init(bus);

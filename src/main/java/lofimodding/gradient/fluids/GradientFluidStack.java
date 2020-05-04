@@ -13,7 +13,7 @@ import sun.plugin.dom.exception.InvalidStateException;
 import javax.annotation.Nonnull;
 
 public class GradientFluidStack {
-  public static final GradientFluidStack EMPTY = new GradientFluidStack(GradientFluids.EMPTY, 0.0f, Float.NaN) {
+  public static final GradientFluidStack EMPTY = new GradientFluidStack(GradientFluids.EMPTY.get(), 0.0f, Float.NaN) {
     @Override
     public void setAmount(final float amount) {
       throw new InvalidStateException("Can't modify EMPTY");
@@ -35,7 +35,7 @@ public class GradientFluidStack {
     final GradientFluid fluid = GradientFluid.REGISTRY.get().getValue(new ResourceLocation(id));
     final float amount = nbt.getFloat("amount");
     final float temperature = nbt.getFloat("temperature");
-    return new GradientFluidStack(fluid != null ? fluid : GradientFluids.EMPTY, amount, temperature);
+    return new GradientFluidStack(fluid != null ? fluid : GradientFluids.EMPTY.get(), amount, temperature);
   }
 
   public static GradientFluidStack read(final JsonObject json) {
@@ -56,7 +56,7 @@ public class GradientFluidStack {
     final GradientFluid fluid = GradientFluid.REGISTRY.get().getValue(new ResourceLocation(id));
     final float amount = buffer.readFloat();
     final float temperature = buffer.readFloat();
-    return new GradientFluidStack(fluid != null ? fluid : GradientFluids.EMPTY, amount, temperature);
+    return new GradientFluidStack(fluid != null ? fluid : GradientFluids.EMPTY.get(), amount, temperature);
   }
 
   public GradientFluidStack(final GradientFluid fluid, final float amount, final float temperature) {
@@ -140,7 +140,7 @@ public class GradientFluidStack {
   }
 
   protected void updateEmpty() {
-    this.isEmpty = this.getRawFluid() == GradientFluids.EMPTY || this.amount <= 0;
+    this.isEmpty = this.getRawFluid() == GradientFluids.EMPTY.get() || this.amount <= 0;
   }
 
   public GradientFluidStack copy() {

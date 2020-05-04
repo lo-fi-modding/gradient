@@ -1,17 +1,17 @@
 package lofimodding.gradient.blocks;
 
+import lofimodding.gradient.Gradient;
 import lofimodding.gradient.GradientCasts;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientMaterials;
-import lofimodding.gradient.items.UnhardenedClayCastItem;
 import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.science.Metals;
 import lofimodding.gradient.tileentities.ClayCrucibleTile;
 import lofimodding.gradient.utils.WorldUtils;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
@@ -25,8 +25,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nullable;
@@ -87,8 +85,9 @@ public class ClayCrucibleBlock extends HeatSinkerBlock {
       final ItemStack stack = player.getHeldItem(hand);
 
       // Cast item
-      if(stack.getItem() instanceof BlockItem && !(stack.getItem() instanceof UnhardenedClayCastItem) && ((BlockItem)stack.getItem()).getBlock() instanceof BlockClayCast) {
-        final GradientCasts.Cast cast = ((BlockClayCast)((BlockItem)stack.getItem()).getBlock()).cast;
+      final Block heldBlock = Block.getBlockFromItem(stack.getItem());
+      if(heldBlock instanceof BlockClayCast) {
+        final GradientCasts.Cast cast = ((BlockClayCast)heldBlock).cast;
 
         if(te.getMoltenMetal() == null) {
           player.sendMessage(new TranslationTextComponent(this.getTranslationKey() + ".no_metal").applyTextStyle(TextFormatting.RED));
@@ -118,23 +117,7 @@ public class ClayCrucibleBlock extends HeatSinkerBlock {
         return ActionResultType.SUCCESS;
       }
 
-      if(FluidUtil.getFluidHandler(player.getHeldItem(hand)) != null) {
-        final FluidStack fluid = FluidUtil.getFluidContained(player.getHeldItem(hand));
-
-        // Make sure the fluid handler is either empty, or contains metal
-        if(fluid != null) {
-          final Metal metal = Metals.get(fluid.getFluid());
-
-          if(metal == Metals.INVALID_METAL) {
-            return ActionResultType.SUCCESS;
-          }
-        }
-
-        FluidUtil.interactWithFluidHandler(player, hand, world, pos, side);
-        return ActionResultType.SUCCESS;
-      }
-
-      player.openGui(GradientMod.instance, GradientGuiHandler.CLAY_CRUCIBLE, world, pos.getX(), pos.getY(), pos.getZ());
+      player.openGui(Gradient.instance, GradientGuiHandler.CLAY_CRUCIBLE, world, pos.getX(), pos.getY(), pos.getZ());
     }
 
     return ActionResultType.SUCCESS;

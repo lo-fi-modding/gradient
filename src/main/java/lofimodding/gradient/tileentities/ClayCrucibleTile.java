@@ -5,6 +5,7 @@ import lofimodding.gradient.GradientTileEntities;
 import lofimodding.gradient.fluids.GradientFluidStack;
 import lofimodding.gradient.fluids.GradientFluidTank;
 import lofimodding.gradient.fluids.IGradientFluidHandler;
+import lofimodding.gradient.fluids.MetalFluid;
 import lofimodding.gradient.recipes.MeltingRecipe;
 import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.science.Metals;
@@ -21,6 +22,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -55,16 +57,6 @@ public class ClayCrucibleTile extends HeatSinkerTile {
 
     @Nonnull
     @Override
-    public ItemStack insertItem(final int slot, @Nonnull final ItemStack stack, final boolean simulate) {
-      if(!this.isItemValid(slot, stack)) {
-        return stack;
-      }
-
-      return super.insertItem(slot, stack, simulate);
-    }
-
-    @Nonnull
-    @Override
     public ItemStack extractItem(final int slot, final int amount, final boolean simulate) {
       if(ClayCrucibleTile.this.isMelting(slot)) {
         return ItemStack.EMPTY;
@@ -87,7 +79,7 @@ public class ClayCrucibleTile extends HeatSinkerTile {
     }
   };
 
-  public final GradientFluidTank tank = new GradientFluidTank(FLUID_CAPACITY, stack -> GradientFluids.METALS.containsValue(stack.getFluid())) {
+  public final GradientFluidTank tank = new GradientFluidTank(FLUID_CAPACITY, stack -> stack.getFluid() instanceof MetalFluid) {
     @Override
     protected void onContentsChanged() {
       super.onContentsChanged();
@@ -155,7 +147,7 @@ public class ClayCrucibleTile extends HeatSinkerTile {
         final MeltingRecipe meltable = RecipeUtils.getRecipe(MeltingRecipe.class, r -> r.matches(this.getMetalSlot(slot2)));
 
         if(this.canMelt(meltable)) {
-          this.melting[slot] = new MeltingMetal(meltable, Metals.get(meltable.getOutput().getFluid()));
+          this.melting[slot] = new MeltingMetal(meltable, meltable.getFluidOutput());
           update = true;
         }
       }
@@ -179,7 +171,7 @@ public class ClayCrucibleTile extends HeatSinkerTile {
 
             if(this.hasRoom(fluid)) {
               this.setMetalSlot(slot, ItemStack.EMPTY);
-              this.tank.fill(fluid.copy(), true);
+              this.tank.fill(fluid.copy(), IGradientFluidHandler.FluidAction.EXECUTE);
             }
           }
         }
@@ -200,7 +192,7 @@ public class ClayCrucibleTile extends HeatSinkerTile {
   }
 
   private boolean canMelt(final MeltingRecipe meltable) {
-    return (this.tank.getFluidStack().isEmpty() || this.tank.getFluidStack().isFluidEqual(meltable.getFluidOutput())) && this.getHeat() >= meltable.getMeltTemp();
+    return (this.tank.getFluidStack().isEmpty() || this.tank.getFluidStack().isFluidEqual(meltable.getFluidOutput())) && this.getHeat() >= meltable.getTemperature();
   }
 
   @Override
@@ -215,9 +207,7 @@ public class ClayCrucibleTile extends HeatSinkerTile {
 
   private void updateLight() {
     if(this.lastLight != this.getLightLevel()) {
-      this.getWorld().markBlockRangeForRenderUpdate(this.pos, this.pos);
-      this.getWorld().checkLight(this.pos);
-
+      this.world.getLightManager().checkBlock(this.pos);
       this.lastLight = this.getLightLevel();
     }
   }
@@ -266,7 +256,7 @@ public class ClayCrucibleTile extends HeatSinkerTile {
 
       if(slot < METAL_SLOTS_COUNT) {
         final MeltingRecipe meltable = RecipeUtils.getRecipe(MeltingRecipe.class, r -> r.matches(this.getMetalSlot(slot)));
-        this.melting[slot] = MeltingMetal.fromNbt(meltable, Metals.get(meltable.getFluidOutput().getFluid()), tag);
+        this.melting[slot] = MeltingMetal.fromNbt(meltable, meltable.getFluidOutput(), tag);
       }
     }
 
@@ -305,8 +295,16 @@ public class ClayCrucibleTile extends HeatSinkerTile {
       return melting;
     }
 
+    public static MeltingMetal fromNbt(final MeltingRecipe meltable, final GradientFluidStack stack, final CompoundNBT tag) {
+      return fromNbt(meltable, ((MetalFluid)stack.getFluid()).metal, tag);
+    }
+
     private MeltingMetal(final MeltingRecipe meltable, final Metal metal) {
       this(meltable, metal, meltable.getTicks());
+    }
+
+    private MeltingMetal(final MeltingRecipe meltable, final GradientFluidStack stack) {
+      this(meltable, ((MetalFluid)stack.getFluid()).metal);
     }
 
     private MeltingMetal(final MeltingRecipe meltable, final Metal metal, final int meltTicksTotal) {
