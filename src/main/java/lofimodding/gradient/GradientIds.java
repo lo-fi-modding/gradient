@@ -109,4 +109,5 @@ public final class GradientIds {
 
   public static final String CLAY_FURNACE = "clay_furnace";
   public static final String CLAY_OVEN = "clay_oven";
+  public static final String CLAY_CRUCIBLE = "clay_crucible";
 }
