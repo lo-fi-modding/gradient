@@ -89,6 +89,10 @@ public final class GradientClient {
       itemColors.register(GradientClient::metalItemColour, GradientItems.PLATE(metal).get());
       blockColors.register(GradientClient::metalBlockColour, GradientBlocks.METAL_BLOCK(metal).get());
       itemColors.register(GradientClient::metalBlockColour, GradientItems.METAL_BLOCK(metal).get());
+
+      for(final GradientCasts cast : GradientCasts.values()) {
+        itemColors.register(GradientClient::metalItemColour, GradientItems.CASTED(cast, metal).get());
+      }
     }
 
     blockColors.register(GradientClient::waterColour, GradientBlocks.MIXING_BASIN.get());

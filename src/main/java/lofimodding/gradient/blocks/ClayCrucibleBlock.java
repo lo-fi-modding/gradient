@@ -1,17 +1,17 @@
 package lofimodding.gradient.blocks;
 
-import lofimodding.gradient.Gradient;
 import lofimodding.gradient.GradientCasts;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientMaterials;
+import lofimodding.gradient.fluids.MetalFluid;
 import lofimodding.gradient.science.Metal;
-import lofimodding.gradient.science.Metals;
 import lofimodding.gradient.tileentities.ClayCrucibleTile;
 import lofimodding.gradient.utils.WorldUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
@@ -25,6 +25,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import javax.annotation.Nullable;
@@ -86,38 +87,39 @@ public class ClayCrucibleBlock extends HeatSinkerBlock {
 
       // Cast item
       final Block heldBlock = Block.getBlockFromItem(stack.getItem());
-      if(heldBlock instanceof BlockClayCast) {
-        final GradientCasts.Cast cast = ((BlockClayCast)heldBlock).cast;
+      if(heldBlock instanceof ClayCastBlock) {
+        final GradientCasts cast = ((ClayCastBlock)heldBlock).cast;
 
         if(te.getMoltenMetal() == null) {
           player.sendMessage(new TranslationTextComponent(this.getTranslationKey() + ".no_metal").applyTextStyle(TextFormatting.RED));
           return ActionResultType.SUCCESS;
         }
 
-        final Metal metal = Metals.get(te.getMoltenMetal().getFluid());
-        final int amount = cast.amountForMetal(metal);
+        final Metal metal = ((MetalFluid)te.getMoltenMetal().getFluid()).metal;
+        //TODO
+//        final int amount = cast.amountForMetal(metal);
+//
+//        if(te.getMoltenMetal().getAmount() < amount) {
+//          player.sendMessage(new TranslationTextComponent(this.getTranslationKey() + ".not_enough_metal", amount).applyTextStyle(TextFormatting.RED));
+//          return ActionResultType.SUCCESS;
+//        }
+//
+//        if(!cast.isValidForMetal(metal)) {
+//          player.sendMessage(new TranslationTextComponent(this.getTranslationKey() + ".metal_cant_make_tools").applyTextStyle(TextFormatting.RED));
+//          return ActionResultType.SUCCESS;
+//        }
+//
+//        if(!player.isCreative()) {
+//          stack.shrink(1);
+//
+//          te.consumeMetal(amount);
+//        }
 
-        if(te.getMoltenMetal().getAmount() < amount) {
-          player.sendMessage(new TranslationTextComponent(this.getTranslationKey() + ".not_enough_metal", amount).applyTextStyle(TextFormatting.RED));
-          return ActionResultType.SUCCESS;
-        }
-
-        if(!cast.isValidForMetal(metal)) {
-          player.sendMessage(new TranslationTextComponent(this.getTranslationKey() + ".metal_cant_make_tools").applyTextStyle(TextFormatting.RED));
-          return ActionResultType.SUCCESS;
-        }
-
-        if(!player.isCreative()) {
-          stack.shrink(1);
-
-          te.consumeMetal(amount);
-        }
-
-        ItemHandlerHelper.giveItemToPlayer(player, GradientItems.castItem(cast, metal, 1));
+        ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(GradientItems.CASTED(cast, metal).get()));
         return ActionResultType.SUCCESS;
       }
 
-      player.openGui(Gradient.instance, GradientGuiHandler.CLAY_CRUCIBLE, world, pos.getX(), pos.getY(), pos.getZ());
+      NetworkHooks.openGui((ServerPlayerEntity)player, te, pos);
     }
 
     return ActionResultType.SUCCESS;

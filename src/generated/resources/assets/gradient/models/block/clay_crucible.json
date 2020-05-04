@@ -1,0 +1,521 @@
+{
+  "parent": "block/block",
+  "textures": {
+    "hardened": "block/terracotta",
+    "seared": "gradient:block/clay_seared",
+    "seared_gradient": "gradient:block/clay_seared_gradient",
+    "seared_gradient_light": "gradient:block/clay_seared_gradient_light",
+    "particle": "block/terracotta"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        12.001,
+        1
+      ],
+      "to": [
+        2,
+        15.001,
+        15
+      ],
+      "faces": {
+        "down": {
+          "texture": "seared_gradient_light",
+          "uv": [
+            1.0,
+            0.0,
+            15.0,
+            2.0
+          ],
+          "rotation": 270
+        },
+        "up": {
+          "texture": "hardened",
+          "uv": [
+            14.0,
+            1.0,
+            16.0,
+            15.0
+          ]
+        },
+        "north": {
+          "texture": "seared_gradient_light",
+          "uv": [
+            14.0,
+            1.0,
+            16.0,
+            4.0
+          ]
+        },
+        "south": {
+          "texture": "seared_gradient_light",
+          "uv": [
+            0.0,
+            1.0,
+            2.0,
+            4.0
+          ]
+        },
+        "west": {
+          "texture": "seared_gradient_light",
+          "uv": [
+            1.0,
+            1.0,
+            15.0,
+            4.0
+          ]
+        },
+        "east": {
+          "texture": "seared_gradient",
+          "uv": [
+            1.0,
+            1.0,
+            15.0,
+            4.0
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        1,
+        12,
+        14
+      ],
+      "to": [
+        15,
+        15,
+        16
+      ],
+      "faces": {
+        "down": {
+          "texture": "seared_gradient_light"
+        },
+        "up": {
+          "texture": "hardened",
+          "uv": [
+            14.0,
+            1.0,
+            16.0,
+            15.0
+          ],
+          "rotation": 270
+        },
+        "north": {
+          "texture": "seared_gradient"
+        },
+        "south": {
+          "texture": "seared_gradient_light"
+        },
+        "west": {
+          "texture": "seared_gradient_light"
+        },
+        "east": {
+          "texture": "seared_gradient_light"
+        }
+      }
+    },
+    {
+      "from": [
+        14,
+        12.001,
+        1
+      ],
+      "to": [
+        16,
+        15.001,
+        15
+      ],
+      "faces": {
+        "down": {
+          "texture": "seared_gradient_light",
+          "uv": [
+            1.0,
+            0.0,
+            15.0,
+            2.0
+          ],
+          "rotation": 90
+        },
+        "up": {
+          "texture": "hardened",
+          "rotation": 180
+        },
+        "north": {
+          "texture": "seared_gradient_light",
+          "uv": [
+            0.0,
+            1.0,
+            2.0,
+            4.0
+          ]
+        },
+        "south": {
+          "texture": "seared_gradient_light",
+          "uv": [
+            14.0,
+            1.0,
+            16.0,
+            4.0
+          ]
+        },
+        "west": {
+          "texture": "seared_gradient",
+          "uv": [
+            1.0,
+            1.0,
+            15.0,
+            4.0
+          ]
+        },
+        "east": {
+          "texture": "seared_gradient_light",
+          "uv": [
+            1.0,
+            1.0,
+            15.0,
+            4.0
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        1,
+        12,
+        0
+      ],
+      "to": [
+        15,
+        15,
+        2
+      ],
+      "faces": {
+        "down": {
+          "texture": "seared_gradient_light",
+          "uv": [
+            1.0,
+            0.0,
+            15.0,
+            2.0
+          ]
+        },
+        "up": {
+          "texture": "hardened",
+          "uv": [
+            14.0,
+            1.0,
+            16.0,
+            15.0
+          ],
+          "rotation": 90
+        },
+        "north": {
+          "texture": "seared_gradient_light"
+        },
+        "south": {
+          "texture": "seared_gradient_light"
+        },
+        "west": {
+          "texture": "seared_gradient",
+          "uv": [
+            0.0,
+            1.0,
+            15.0,
+            4.0
+          ]
+        },
+        "east": {
+          "texture": "seared_gradient_light"
+        }
+      }
+    },
+    {
+      "from": [
+        1,
+        0.001,
+        2
+      ],
+      "to": [
+        3,
+        13.001,
+        14
+      ],
+      "faces": {
+        "down": {
+          "texture": "hardened",
+          "uv": [
+            13.0,
+            2.0,
+            15.0,
+            14.0
+          ]
+        },
+        "up": {
+          "texture": "seared_gradient",
+          "uv": [
+            2.0,
+            2.0,
+            14.0,
+            4.0
+          ],
+          "rotation": 90
+        },
+        "north": {
+          "texture": "seared_gradient_light",
+          "uv": [
+            13.0,
+            3.0,
+            15.0,
+            16.0
+          ]
+        },
+        "south": {
+          "texture": "seared_gradient_light",
+          "uv": [
+            1.0,
+            3.0,
+            3.0,
+            16.0
+          ]
+        },
+        "west": {
+          "texture": "seared_gradient_light",
+          "uv": [
+            2.0,
+            3.0,
+            14.0,
+            16.0
+          ]
+        },
+        "east": {
+          "texture": "seared_gradient",
+          "uv": [
+            2.0,
+            3.0,
+            14.0,
+            16.0
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        0,
+        13
+      ],
+      "to": [
+        14,
+        13,
+        15
+      ],
+      "faces": {
+        "down": {
+          "texture": "hardened",
+          "uv": [
+            1.0,
+            2.0,
+            3.0,
+            14.0
+          ],
+          "rotation": 90
+        },
+        "up": {
+          "texture": "seared_gradient",
+          "uv": [
+            2.0,
+            2.0,
+            13.0,
+            4.0
+          ]
+        },
+        "north": {
+          "texture": "seared_gradient"
+        },
+        "south": {
+          "texture": "seared_gradient_light"
+        },
+        "west": {
+          "texture": "seared_gradient_light"
+        },
+        "east": {
+          "texture": "seared_gradient_light"
+        }
+      }
+    },
+    {
+      "from": [
+        13,
+        0.001,
+        2
+      ],
+      "to": [
+        15,
+        13.001,
+        14
+      ],
+      "faces": {
+        "down": {
+          "texture": "hardened",
+          "uv": [
+            1.0,
+            2.0,
+            3.0,
+            14.0
+          ],
+          "rotation": 180
+        },
+        "up": {
+          "texture": "seared_gradient",
+          "uv": [
+            2.0,
+            2.0,
+            14.0,
+            4.0
+          ],
+          "rotation": 90
+        },
+        "north": {
+          "texture": "seared_gradient_light",
+          "uv": [
+            1.0,
+            3.0,
+            3.0,
+            16.0
+          ]
+        },
+        "south": {
+          "texture": "seared_gradient_light",
+          "uv": [
+            13.0,
+            3.0,
+            15.0,
+            16.0
+          ]
+        },
+        "west": {
+          "texture": "seared_gradient",
+          "uv": [
+            2.0,
+            3.0,
+            14.0,
+            16.0
+          ]
+        },
+        "east": {
+          "texture": "seared_gradient_light",
+          "uv": [
+            2.0,
+            3.0,
+            14.0,
+            16.0
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        0,
+        1
+      ],
+      "to": [
+        14,
+        13,
+        3
+      ],
+      "faces": {
+        "down": {
+          "texture": "hardened",
+          "uv": [
+            1.0,
+            2.0,
+            3.0,
+            14.0
+          ],
+          "rotation": 270
+        },
+        "up": {
+          "texture": "seared_gradient",
+          "uv": [
+            2.0,
+            2.0,
+            14.0,
+            4.0
+          ],
+          "rotation": 180
+        },
+        "north": {
+          "texture": "seared_gradient_light"
+        },
+        "south": {
+          "texture": "seared_gradient"
+        },
+        "west": {
+          "texture": "seared_gradient_light"
+        },
+        "east": {
+          "texture": "seared_gradient_light"
+        }
+      }
+    },
+    {
+      "from": [
+        3,
+        0,
+        3
+      ],
+      "to": [
+        13,
+        1,
+        13
+      ],
+      "faces": {
+        "down": {
+          "texture": "hardened"
+        },
+        "up": {
+          "texture": "seared"
+        },
+        "north": {
+          "texture": "hardened",
+          "uv": [
+            0.0,
+            0.0,
+            10.0,
+            1.0
+          ]
+        },
+        "south": {
+          "texture": "hardened",
+          "uv": [
+            0.0,
+            0.0,
+            10.0,
+            1.0
+          ]
+        },
+        "west": {
+          "texture": "hardened",
+          "uv": [
+            0.0,
+            0.0,
+            10.0,
+            1.0
+          ]
+        },
+        "east": {
+          "texture": "hardened",
+          "uv": [
+            0.0,
+            0.0,
+            10.0,
+            1.0
+          ]
+        }
+      }
+    }
+  ]
+}

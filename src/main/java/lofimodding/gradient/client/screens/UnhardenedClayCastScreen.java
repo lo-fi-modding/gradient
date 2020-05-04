@@ -9,7 +9,6 @@ import lofimodding.gradient.network.SwitchCastPacket;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -47,7 +46,7 @@ public class UnhardenedClayCastScreen extends Screen {
     int x = this.left + 12;
     final int y = this.top + 33;
     for(final GradientCasts cast : GradientCasts.values()) {
-      final ItemButton button = new ItemButton(this, x, y, 20, 20, new ItemStack(GradientItems.UNHARDENED_CLAY_CAST(cast).get()), I18n.format("screens.gradient.unhardened_clay_cast." + cast.name().toLowerCase()), b -> {
+      final ItemButton button = new ItemButton(this, x, y, 20, 20, new ItemStack(GradientItems.UNHARDENED_CLAY_CAST(cast).get()), cast.getUnlocalizedName().getFormattedText(), b -> {
         if(this.selected != null) {
           this.castButtons.get(this.selected).active = true;
         }

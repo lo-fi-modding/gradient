@@ -2,7 +2,9 @@ package lofimodding.gradient;
 
 import lofimodding.gradient.advancements.criterion.GradientCriteriaTriggers;
 import lofimodding.gradient.client.GradientClient;
+import lofimodding.gradient.client.screens.ClayCrucibleScreen;
 import lofimodding.gradient.network.Packets;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -35,6 +37,7 @@ public class Gradient {
     bus.addListener(this::serverSetup);
 
     GradientBlocks.init(bus);
+    GradientContainers.init(bus);
     GradientFluids.init(bus);
     lofimodding.gradient.fluids.GradientFluids.init(bus);
     GradientItems.init(bus);
@@ -56,6 +59,8 @@ public class Gradient {
     LOGGER.info("Loading client-only features...");
     MinecraftForge.EVENT_BUS.addListener(this::onWorldLoad);
     GradientClient.clientSetup(event);
+
+    ScreenManager.registerFactory(GradientContainers.CLAY_CRUCIBLE.get(), ClayCrucibleScreen::new);
   }
 
   private void enqueueIMC(final InterModEnqueueEvent event) {
@@ -70,8 +75,8 @@ public class Gradient {
     RECIPE_MANAGER = ((World)event.getWorld()).getRecipeManager();
   }
 
-  // Set the recipe manager for servers
   private void serverSetup(final FMLDedicatedServerSetupEvent event) {
+    // Set the recipe manager for servers
     RECIPE_MANAGER = event.getServerSupplier().get().getRecipeManager();
   }
 

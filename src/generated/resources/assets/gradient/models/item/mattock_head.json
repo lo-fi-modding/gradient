@@ -1,0 +1,13 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "gradient:item/mattock_head/background",
+    "layer1": "gradient:item/mattock_head/diffuse",
+    "layer2": "gradient:item/mattock_head/specular",
+    "layer3": "gradient:item/mattock_head/shadow_1",
+    "layer4": "gradient:item/mattock_head/shadow_2",
+    "layer5": "gradient:item/mattock_head/edge_1",
+    "layer6": "gradient:item/mattock_head/edge_2",
+    "layer7": "gradient:item/mattock_head/edge_3"
+  }
+}

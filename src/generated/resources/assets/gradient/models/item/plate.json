@@ -1,13 +1,13 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "gradient:item/plate_background",
-    "layer1": "gradient:item/plate_diffuse",
-    "layer2": "gradient:item/plate_specular",
-    "layer3": "gradient:item/plate_shadow_1",
-    "layer4": "gradient:item/plate_shadow_2",
-    "layer5": "gradient:item/plate_edge_1",
-    "layer6": "gradient:item/plate_edge_2",
-    "layer7": "gradient:item/plate_edge_3"
+    "layer0": "gradient:item/plate/background",
+    "layer1": "gradient:item/plate/diffuse",
+    "layer2": "gradient:item/plate/specular",
+    "layer3": "gradient:item/plate/shadow_1",
+    "layer4": "gradient:item/plate/shadow_2",
+    "layer5": "gradient:item/plate/edge_1",
+    "layer6": "gradient:item/plate/edge_2",
+    "layer7": "gradient:item/plate/edge_3"
   }
 }

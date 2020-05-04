@@ -3,7 +3,6 @@ package lofimodding.gradient.utils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
@@ -39,8 +38,8 @@ import java.util.function.Supplier;
 public class DeferredRegister2<T extends IForgeRegistryEntry<T>> {
   private final Supplier<IForgeRegistry<T>> type;
   private final String modid;
-  private final Map<RegistryObject<T>, Supplier<? extends T>> entries = new LinkedHashMap<>();
-  private final Set<RegistryObject<T>> entriesView = Collections.unmodifiableSet(this.entries.keySet());
+  private final Map<RegistryObject2<T>, Supplier<? extends T>> entries = new LinkedHashMap<>();
+  private final Set<RegistryObject2<T>> entriesView = Collections.unmodifiableSet(this.entries.keySet());
 
   public DeferredRegister2(final Supplier<IForgeRegistry<T>> reg, final String modid) {
     this.type = reg;
@@ -55,12 +54,12 @@ public class DeferredRegister2<T extends IForgeRegistryEntry<T>> {
    * @return A RegistryObject that will be updated with when the entries in the registry change.
    */
   @SuppressWarnings("unchecked")
-  public <I extends T> RegistryObject<I> register(final String name, final Supplier<? extends I> sup) {
+  public <I extends T> RegistryObject2<I> register(final String name, final Supplier<? extends I> sup) {
     Objects.requireNonNull(name);
     Objects.requireNonNull(sup);
     final ResourceLocation key = new ResourceLocation(this.modid, name);
-    final RegistryObject<I> ret = RegistryObject.of(key, this.type.get());
-    if(this.entries.putIfAbsent((RegistryObject<T>)ret, () -> sup.get().setRegistryName(key)) != null) {
+    final RegistryObject2<I> ret = RegistryObject2.of(key, this.type);
+    if(this.entries.putIfAbsent((RegistryObject2<T>)ret, () -> sup.get().setRegistryName(key)) != null) {
       throw new IllegalArgumentException("Duplicate registration " + name);
     }
     return ret;
@@ -79,14 +78,14 @@ public class DeferredRegister2<T extends IForgeRegistryEntry<T>> {
   /**
    * @return The unmodifiable view of registered entries. Useful for bulk operations on all values.
    */
-  public Collection<RegistryObject<T>> getEntries() {
+  public Collection<RegistryObject2<T>> getEntries() {
     return this.entriesView;
   }
 
   private void addEntries(final RegistryEvent.Register<?> event) {
     if(event.getGenericType() == this.type.get().getRegistrySuperType()) {
       @SuppressWarnings("unchecked") final IForgeRegistry<T> reg = (IForgeRegistry<T>)event.getRegistry();
-      for(final Map.Entry<RegistryObject<T>, Supplier<? extends T>> e : this.entries.entrySet()) {
+      for(final Map.Entry<RegistryObject2<T>, Supplier<? extends T>> e : this.entries.entrySet()) {
         reg.register(e.getValue().get());
         e.getKey().updateReference(reg);
       }

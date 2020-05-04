@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Set;
 
 public class MeltingRecipe implements IRecipe<IInventory> {
-  public static final IRecipeType<MixingRecipe> TYPE = IRecipeType.register("melting");
+  public static final IRecipeType<MeltingRecipe> TYPE = IRecipeType.register("melting");
 
   private static final RecipeItemHelper RECIPE_ITEM_HELPER = new RecipeItemHelper();
   private static final List<ItemStack> INPUT_STACKS = new ArrayList<>();

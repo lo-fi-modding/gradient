@@ -37,7 +37,7 @@ public class UnhardenedClayBlock extends Block {
   @Override
   public void addInformation(final ItemStack stack, @Nullable final IBlockReader world, final List<ITextComponent> tooltip, final ITooltipFlag flag) {
     super.addInformation(stack, world, tooltip, flag);
-    tooltip.add(new TranslationTextComponent("unhardened_clay.tooltip"));
+    tooltip.add(new TranslationTextComponent(this.getTranslationKey() + ".tooltip"));
   }
 
   @SuppressWarnings("deprecation")

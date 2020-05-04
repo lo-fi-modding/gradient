@@ -260,8 +260,6 @@ public class ClayOvenTile extends HeatSinkerTile {
     inv.remove("Size");
     this.inventory.deserializeNBT(inv);
 
-    final int age = compound.getInt("player_age");
-
     final ListNBT stagesNbt = compound.getList("stages", Constants.NBT.TAG_STRING);
     this.stages.clear();
     for(int i = 0; i < stagesNbt.size(); i++) {

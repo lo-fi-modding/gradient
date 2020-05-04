@@ -30,7 +30,7 @@ public class SwitchCastPacket {
     final int cast = buffer.readVarInt();
 
     if(cast < 0 || cast >= GradientCasts.values().length) {
-      return new SwitchCastPacket(GradientCasts.MATTOCK);
+      return new SwitchCastPacket(GradientCasts.MATTOCK_HEAD);
     }
 
     return new SwitchCastPacket(GradientCasts.values()[cast]);

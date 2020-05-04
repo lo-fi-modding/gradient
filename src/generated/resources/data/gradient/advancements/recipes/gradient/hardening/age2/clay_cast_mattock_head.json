@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "gradient:hardening/age2/clay_cast_mattock_head"
+    ]
+  },
+  "criteria": {
+    "has_unhardened_clay_cast": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "gradient:unhardened_clay_cast_mattock_head"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "gradient:hardening/age2/clay_cast_mattock_head"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_unhardened_clay_cast",
+      "has_the_recipe"
+    ]
+  ]
+}

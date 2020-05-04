@@ -1,36 +1,47 @@
 package lofimodding.gradient.tileentities;
 
-import lofimodding.gradient.GradientFluids;
 import lofimodding.gradient.GradientTileEntities;
+import lofimodding.gradient.containers.ClayCrucibleContainer;
 import lofimodding.gradient.fluids.GradientFluidStack;
 import lofimodding.gradient.fluids.GradientFluidTank;
 import lofimodding.gradient.fluids.IGradientFluidHandler;
 import lofimodding.gradient.fluids.MetalFluid;
 import lofimodding.gradient.recipes.MeltingRecipe;
 import lofimodding.gradient.science.Metal;
-import lofimodding.gradient.science.Metals;
 import lofimodding.gradient.utils.MathHelper;
 import lofimodding.gradient.utils.RecipeUtils;
+import lofimodding.progression.Stage;
+import lofimodding.progression.capabilities.Progress;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraft.nbt.StringNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
-public class ClayCrucibleTile extends HeatSinkerTile {
+public class ClayCrucibleTile extends HeatSinkerTile implements INamedContainerProvider {
   @CapabilityInject(IItemHandler.class)
   private static Capability<IItemHandler> ITEM_HANDLER_CAPABILITY;
 
@@ -39,12 +50,13 @@ public class ClayCrucibleTile extends HeatSinkerTile {
 
   public static final int FLUID_CAPACITY = 8;
 
+  public static final int FIRST_METAL_SLOT = 0;
   public static final int METAL_SLOTS_COUNT = 1;
   public static final int TOTAL_SLOTS_COUNT = METAL_SLOTS_COUNT;
 
-  public static final int FIRST_METAL_SLOT = 0;
-
   private final ItemStackHandler inventory = new ItemStackHandler(TOTAL_SLOTS_COUNT) {
+    private final ItemStackHandler inputTemp = new ItemStackHandler(1);
+
     @Override
     public int getSlotLimit(final int slot) {
       return 1;
@@ -52,7 +64,8 @@ public class ClayCrucibleTile extends HeatSinkerTile {
 
     @Override
     public boolean isItemValid(final int slot, @Nonnull final ItemStack stack) {
-      return super.isItemValid(slot, stack) && RecipeUtils.getRecipe(MeltingRecipe.class, r -> r.matches(stack)).isPresent();
+      this.inputTemp.setStackInSlot(0, stack);
+      return super.isItemValid(slot, stack) && RecipeUtils.getRecipe(MeltingRecipe.TYPE, r -> r.matches(this.inputTemp, 0, 0, ClayCrucibleTile.this.tank)).isPresent();
     }
 
     @Nonnull
@@ -90,6 +103,7 @@ public class ClayCrucibleTile extends HeatSinkerTile {
   private final LazyOptional<IItemHandler> lazyInv = LazyOptional.of(() -> this.inventory);
   private final LazyOptional<IGradientFluidHandler> lazyTank = LazyOptional.of(() -> this.tank);
 
+  private final Set<Stage> stages = new HashSet<>();
   private final MeltingMetal[] melting = new MeltingMetal[METAL_SLOTS_COUNT];
 
   private int lastLight;
@@ -109,6 +123,11 @@ public class ClayCrucibleTile extends HeatSinkerTile {
   @Nullable
   public GradientFluidStack getMoltenMetal() {
     return this.tank.getFluidStack();
+  }
+
+  public void updateStages(final LivingEntity player) {
+    this.stages.clear();
+    this.stages.addAll(Progress.get(player).getStages());
   }
 
   //TODO
@@ -144,12 +163,14 @@ public class ClayCrucibleTile extends HeatSinkerTile {
     for(int slot = 0; slot < METAL_SLOTS_COUNT; slot++) {
       if(!this.isMelting(slot) && !this.getMetalSlot(slot).isEmpty()) {
         final int slot2 = slot;
-        final MeltingRecipe meltable = RecipeUtils.getRecipe(MeltingRecipe.class, r -> r.matches(this.getMetalSlot(slot2)));
+        update = RecipeUtils.getRecipe(MeltingRecipe.TYPE, r -> r.matches(this.inventory, this.stages, slot2, slot2, this.tank)).map(meltable -> {
+          if(this.canMelt(meltable)) {
+            this.melting[slot2] = new MeltingMetal(meltable, meltable.getFluidOutput());
+            return true;
+          }
 
-        if(this.canMelt(meltable)) {
-          this.melting[slot] = new MeltingMetal(meltable, meltable.getFluidOutput());
-          update = true;
-        }
+          return false;
+        }).orElse(false);
       }
     }
 
@@ -217,6 +238,13 @@ public class ClayCrucibleTile extends HeatSinkerTile {
     compound.put("inventory", this.inventory.serializeNBT());
     this.tank.write(compound);
 
+    final ListNBT stagesNbt = new ListNBT();
+    for(final Stage stage : this.stages) {
+      stagesNbt.add(StringNBT.valueOf(stage.getRegistryName().toString()));
+    }
+
+    compound.put("stages", stagesNbt);
+
     final ListNBT meltings = new ListNBT();
 
     for(int i = 0; i < METAL_SLOTS_COUNT; i++) {
@@ -247,6 +275,16 @@ public class ClayCrucibleTile extends HeatSinkerTile {
 
     this.tank.read(compound);
 
+    final ListNBT stagesNbt = compound.getList("stages", Constants.NBT.TAG_STRING);
+    this.stages.clear();
+    for(int i = 0; i < stagesNbt.size(); i++) {
+      final Stage stage = Stage.REGISTRY.get().getValue(new ResourceLocation(stagesNbt.getString(i)));
+
+      if(stage != null) {
+        this.stages.add(stage);
+      }
+    }
+
     final ListNBT meltings = compound.getList("melting", Constants.NBT.TAG_COMPOUND);
 
     for(int i = 0; i < meltings.size(); i++) {
@@ -255,8 +293,9 @@ public class ClayCrucibleTile extends HeatSinkerTile {
       final int slot = tag.getInt("slot");
 
       if(slot < METAL_SLOTS_COUNT) {
-        final MeltingRecipe meltable = RecipeUtils.getRecipe(MeltingRecipe.class, r -> r.matches(this.getMetalSlot(slot)));
-        this.melting[slot] = MeltingMetal.fromNbt(meltable, meltable.getFluidOutput(), tag);
+        RecipeUtils.getRecipe(MeltingRecipe.TYPE, r -> r.matches(this.inventory, this.stages, slot, slot, this.tank)).ifPresent(meltable -> {
+          this.melting[slot] = MeltingMetal.fromNbt(meltable, meltable.getFluidOutput(), tag);
+        });
       }
     }
 
@@ -281,6 +320,17 @@ public class ClayCrucibleTile extends HeatSinkerTile {
     }
 
     return super.getCapability(capability, facing);
+  }
+
+  @Override
+  public ITextComponent getDisplayName() {
+    return new TranslationTextComponent("container.gradient.clay_crucible");
+  }
+
+  @Nullable
+  @Override
+  public Container createMenu(final int id, final PlayerInventory playerInv, final PlayerEntity player) {
+    return new ClayCrucibleContainer(id, playerInv, this);
   }
 
   public static final class MeltingMetal {

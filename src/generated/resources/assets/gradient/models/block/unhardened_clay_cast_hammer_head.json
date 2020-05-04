@@ -1,0 +1,84 @@
+{
+  "parent": "block/block",
+  "textures": {
+    "particle": "block/clay",
+    "clay": "block/clay",
+    "cast": "gradient:block/unhardened_clay_cast_hammer_head"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        2,
+        16
+      ],
+      "faces": {
+        "down": {
+          "texture": "clay"
+        },
+        "up": {
+          "texture": "clay"
+        },
+        "north": {
+          "texture": "clay",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            2.0
+          ]
+        },
+        "south": {
+          "texture": "clay",
+          "uv": [
+            0.0,
+            2.0,
+            16.0,
+            4.0
+          ]
+        },
+        "west": {
+          "texture": "clay",
+          "uv": [
+            0.0,
+            4.0,
+            16.0,
+            6.0
+          ]
+        },
+        "east": {
+          "texture": "clay",
+          "uv": [
+            0.0,
+            6.0,
+            16.0,
+            8.0
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        2.001,
+        0
+      ],
+      "to": [
+        16,
+        2.002,
+        16
+      ],
+      "faces": {
+        "up": {
+          "texture": "cast",
+          "rotation": 180
+        }
+      }
+    }
+  ]
+}

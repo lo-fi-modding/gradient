@@ -104,10 +104,18 @@ public final class GradientIds {
   public static final String UNHARDENED_CLAY_CAST_BLANK = "unhardened_clay_cast";
 
   public static String UNHARDENED_CLAY_CAST(final GradientCasts cast) {
-    return "unhardened_clay_cast_" + cast.name().toLowerCase();
+    return "unhardened_clay_cast_" + cast.name;
   }
 
   public static final String CLAY_FURNACE = "clay_furnace";
   public static final String CLAY_OVEN = "clay_oven";
   public static final String CLAY_CRUCIBLE = "clay_crucible";
+
+  public static String CLAY_CAST(final GradientCasts cast) {
+    return "clay_cast_" + cast.name;
+  }
+
+  public static String CASTED(final GradientCasts cast, final Metal metal) {
+    return metal.name + '_' + cast.name;
+  }
 }

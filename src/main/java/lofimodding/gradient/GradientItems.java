@@ -1,5 +1,6 @@
 package lofimodding.gradient;
 
+import lofimodding.gradient.items.CastedItem;
 import lofimodding.gradient.items.EmptyWaterskinItem;
 import lofimodding.gradient.items.FilledWaterskinItem;
 import lofimodding.gradient.items.FlintKnifeItem;
@@ -166,6 +167,25 @@ public final class GradientItems {
 
   public static final RegistryObject<BlockItem> CLAY_FURNACE = REGISTRY.register(GradientIds.CLAY_FURNACE, () -> new BlockItem(GradientBlocks.CLAY_FURNACE.get(), new Item.Properties().group(GROUP)));
   public static final RegistryObject<BlockItem> CLAY_OVEN = REGISTRY.register(GradientIds.CLAY_OVEN, () -> new BlockItem(GradientBlocks.CLAY_OVEN.get(), new Item.Properties().group(GROUP)));
+  public static final RegistryObject<BlockItem> CLAY_CRUCIBLE = REGISTRY.register(GradientIds.CLAY_CRUCIBLE, () -> new BlockItem(GradientBlocks.CLAY_CRUCIBLE.get(), new Item.Properties().group(GROUP)));
+
+  private static final Map<GradientCasts, RegistryObject<BlockItem>> CLAY_CASTS = new EnumMap<>(GradientCasts.class);
+
+  static {
+    for(final GradientCasts cast : GradientCasts.values()) {
+      CLAY_CASTS.put(cast, REGISTRY.register(GradientIds.CLAY_CAST(cast), () -> new UnhardenedClayCastItem(GradientBlocks.CLAY_CAST(cast).get(), cast, new Item.Properties().group(GROUP))));
+    }
+  }
+
+  private static final Map<GradientCasts, Map<Metal, RegistryObject<CastedItem>>> CASTED = new EnumMap<>(GradientCasts.class);
+
+  static {
+    for(final GradientCasts cast : GradientCasts.values()) {
+      for(final Metal metal : Metals.all()) {
+        CASTED.computeIfAbsent(cast, key -> new HashMap<>()).put(metal, REGISTRY.register(GradientIds.CASTED(cast, metal), () -> new CastedItem(cast, metal)));
+      }
+    }
+  }
 
   static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering items...");
@@ -206,6 +226,14 @@ public final class GradientItems {
 
   public static RegistryObject<BlockItem> UNHARDENED_CLAY_CAST(final GradientCasts cast) {
     return UNHARDENED_CLAY_CASTS.get(cast);
+  }
+
+  public static RegistryObject<BlockItem> CLAY_CAST(final GradientCasts cast) {
+    return CLAY_CASTS.get(cast);
+  }
+
+  public static RegistryObject<CastedItem> CASTED(final GradientCasts cast, final Metal metal) {
+    return CASTED.get(cast).get(metal);
   }
 
   private static final class GradientItemGroup extends ItemGroup {

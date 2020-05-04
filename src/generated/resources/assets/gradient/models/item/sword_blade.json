@@ -1,0 +1,13 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "gradient:item/sword_blade/background",
+    "layer1": "gradient:item/sword_blade/diffuse",
+    "layer2": "gradient:item/sword_blade/specular",
+    "layer3": "gradient:item/sword_blade/shadow_1",
+    "layer4": "gradient:item/sword_blade/shadow_2",
+    "layer5": "gradient:item/sword_blade/edge_1",
+    "layer6": "gradient:item/sword_blade/edge_2",
+    "layer7": "gradient:item/sword_blade/edge_3"
+  }
+}

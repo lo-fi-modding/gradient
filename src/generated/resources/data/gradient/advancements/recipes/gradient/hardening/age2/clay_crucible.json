@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "gradient:hardening/age2/clay_crucible"
+    ]
+  },
+  "criteria": {
+    "has_unhardened_clay_crucible": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "gradient:unhardened_clay_crucible"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "gradient:hardening/age2/clay_crucible"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_unhardened_clay_crucible",
+      "has_the_recipe"
+    ]
+  ]
+}

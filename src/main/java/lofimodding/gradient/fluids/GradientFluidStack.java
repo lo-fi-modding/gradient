@@ -8,7 +8,6 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.IRegistryDelegate;
-import sun.plugin.dom.exception.InvalidStateException;
 
 import javax.annotation.Nonnull;
 
@@ -16,12 +15,12 @@ public class GradientFluidStack {
   public static final GradientFluidStack EMPTY = new GradientFluidStack(GradientFluids.EMPTY.get(), 0.0f, Float.NaN) {
     @Override
     public void setAmount(final float amount) {
-      throw new InvalidStateException("Can't modify EMPTY");
+      throw new IllegalStateException("Can't modify EMPTY");
     }
 
     @Override
     public void setTemperature(final float temperature) {
-      throw new InvalidStateException("Can't modify EMPTY");
+      throw new IllegalStateException("Can't modify EMPTY");
     }
   };
 

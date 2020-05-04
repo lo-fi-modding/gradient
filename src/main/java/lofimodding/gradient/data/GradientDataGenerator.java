@@ -501,7 +501,7 @@ public final class GradientDataGenerator {
           .parent(this.getExistingFile(this.mcLoc("block/block")))
           .texture("particle", this.mcLoc("block/clay"))
           .texture("clay", this.mcLoc("block/clay"))
-          .texture("cast", this.modLoc("block/unhardened_clay_cast_" + cast.name().toLowerCase()))
+          .texture("cast", this.modLoc("block/unhardened_clay_cast_" + cast.name))
 
           .element()
           .from(0.0f, 0.0f, 0.0f)
@@ -524,6 +524,32 @@ public final class GradientDataGenerator {
       ModelGenerator.clayFurnace(this, GradientIds.CLAY_FURNACE, this.mcLoc("block/terracotta"), this.mcLoc("block/terracotta"), this.mcLoc("block/terracotta"), this.mcLoc("block/terracotta"), this.mcLoc("block/terracotta"));
       ModelGenerator.clayFurnace(this, GradientIds.CLAY_FURNACE + "_used", this.mcLoc("block/terracotta"), this.modLoc("block/clay_furnace_front"), this.modLoc("block/clay_furnace_top"), this.modLoc("block/clay_seared"), this.mcLoc("block/terracotta"));
       ModelGenerator.clayOven(this, GradientIds.CLAY_OVEN, this.modLoc("block/clay_oven_inside"), this.modLoc("block/clay_seared"), this.mcLoc("block/terracotta"), this.modLoc("block/clay_oven_inside"));
+      ModelGenerator.clayCrucible(this, GradientIds.CLAY_CRUCIBLE, this.mcLoc("block/terracotta"), this.modLoc("block/clay_seared"), this.modLoc("block/clay_seared_gradient"), this.modLoc("block/clay_seared_gradient_light"), this.mcLoc("block/terracotta"));
+
+      for(final GradientCasts cast : GradientCasts.values()) {
+        this.getBuilder(GradientIds.CLAY_CAST(cast))
+          .parent(this.getExistingFile(this.mcLoc("block/block")))
+          .texture("particle", this.mcLoc("block/terracotta"))
+          .texture("clay", this.mcLoc("block/terracotta"))
+          .texture("cast", this.modLoc("block/clay_cast_" + cast.name))
+
+          .element()
+          .from(0.0f, 0.0f, 0.0f)
+          .to(16.0f, 2.0f, 16.0f)
+          .face(Direction.NORTH).uvs(0.0f, 0.0f, 16.0f, 2.0f).texture("clay").end()
+          .face(Direction.EAST).uvs(0.0f, 6.0f, 16.0f, 8.0f).texture("clay").end()
+          .face(Direction.SOUTH).uvs(0.0f, 2.0f, 16.0f, 4.0f).texture("clay").end()
+          .face(Direction.WEST).uvs(0.0f, 4.0f, 16.0f, 6.0f).texture("clay").end()
+          .face(Direction.UP).uvs(0.0f, 0.0f, 16.0f, 16.0f).texture("clay").end()
+          .face(Direction.DOWN).uvs(0.0f, 0.0f, 16.0f, 16.0f).texture("clay").end()
+          .end()
+
+          .element()
+          .from(0.0f, 2.001f, 0.0f)
+          .to(16.0f, 2.002f, 16.0f)
+          .face(Direction.UP).uvs(0.0f, 0.0f, 16.0f, 16.0f).texture("cast").rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN).end()
+          .end();
+      }
     }
 
     private BiConsumer<Direction, ModelBuilder<BlockModelBuilder>.ElementBuilder.FaceBuilder> addTexture(final String texture) {
@@ -551,75 +577,93 @@ public final class GradientDataGenerator {
 
       this.getBuilder("crushed")
         .parent(new ModelFile.ExistingModelFile(this.mcLoc("item/generated"), this.existingFileHelper))
-        .texture("layer0", this.modLoc("item/crushed_background"))
-        .texture("layer1", this.modLoc("item/crushed_diffuse"))
-        .texture("layer2", this.modLoc("item/crushed_specular"))
-        .texture("layer3", this.modLoc("item/crushed_shadow_1"))
-        .texture("layer4", this.modLoc("item/crushed_shadow_2"))
-        .texture("layer5", this.modLoc("item/crushed_edge_1"))
-        .texture("layer6", this.modLoc("item/crushed_edge_2"))
-        .texture("layer7", this.modLoc("item/crushed_edge_3"))
+        .texture("layer0", this.modLoc("item/crushed/background"))
+        .texture("layer1", this.modLoc("item/crushed/diffuse"))
+        .texture("layer2", this.modLoc("item/crushed/specular"))
+        .texture("layer3", this.modLoc("item/crushed/shadow_1"))
+        .texture("layer4", this.modLoc("item/crushed/shadow_2"))
+        .texture("layer5", this.modLoc("item/crushed/edge_1"))
+        .texture("layer6", this.modLoc("item/crushed/edge_2"))
+        .texture("layer7", this.modLoc("item/crushed/edge_3"))
       ;
 
       this.getBuilder("purified")
         .parent(new ModelFile.ExistingModelFile(this.mcLoc("item/generated"), this.existingFileHelper))
-        .texture("layer0", this.modLoc("item/purified_background"))
-        .texture("layer1", this.modLoc("item/purified_diffuse"))
-        .texture("layer2", this.modLoc("item/purified_specular"))
-        .texture("layer3", this.modLoc("item/purified_shadow_1"))
-        .texture("layer4", this.modLoc("item/purified_shadow_2"))
-        .texture("layer5", this.modLoc("item/purified_edge_1"))
-        .texture("layer6", this.modLoc("item/purified_edge_2"))
-        .texture("layer7", this.modLoc("item/purified_edge_3"))
+        .texture("layer0", this.modLoc("item/purified/background"))
+        .texture("layer1", this.modLoc("item/purified/diffuse"))
+        .texture("layer2", this.modLoc("item/purified/specular"))
+        .texture("layer3", this.modLoc("item/purified/shadow_1"))
+        .texture("layer4", this.modLoc("item/purified/shadow_2"))
+        .texture("layer5", this.modLoc("item/purified/edge_1"))
+        .texture("layer6", this.modLoc("item/purified/edge_2"))
+        .texture("layer7", this.modLoc("item/purified/edge_3"))
       ;
 
       this.getBuilder("dust")
         .parent(new ModelFile.ExistingModelFile(this.mcLoc("item/generated"), this.existingFileHelper))
-        .texture("layer0", this.modLoc("item/dust_background"))
-        .texture("layer1", this.modLoc("item/dust_diffuse"))
-        .texture("layer2", this.modLoc("item/dust_specular"))
-        .texture("layer3", this.modLoc("item/dust_shadow_1"))
-        .texture("layer4", this.modLoc("item/dust_shadow_2"))
-        .texture("layer5", this.modLoc("item/dust_edge_1"))
-        .texture("layer6", this.modLoc("item/dust_edge_2"))
-        .texture("layer7", this.modLoc("item/dust_edge_3"))
+        .texture("layer0", this.modLoc("item/dust/background"))
+        .texture("layer1", this.modLoc("item/dust/diffuse"))
+        .texture("layer2", this.modLoc("item/dust/specular"))
+        .texture("layer3", this.modLoc("item/dust/shadow_1"))
+        .texture("layer4", this.modLoc("item/dust/shadow_2"))
+        .texture("layer5", this.modLoc("item/dust/edge_1"))
+        .texture("layer6", this.modLoc("item/dust/edge_2"))
+        .texture("layer7", this.modLoc("item/dust/edge_3"))
       ;
 
       this.getBuilder("ingot")
         .parent(new ModelFile.ExistingModelFile(this.mcLoc("item/generated"), this.existingFileHelper))
-        .texture("layer0", this.modLoc("item/ingot_background"))
-        .texture("layer1", this.modLoc("item/ingot_diffuse"))
-        .texture("layer2", this.modLoc("item/ingot_specular"))
-        .texture("layer3", this.modLoc("item/ingot_shadow_1"))
-        .texture("layer4", this.modLoc("item/ingot_shadow_2"))
-        .texture("layer5", this.modLoc("item/ingot_edge_1"))
-        .texture("layer6", this.modLoc("item/ingot_edge_2"))
-        .texture("layer7", this.modLoc("item/ingot_edge_3"))
+        .texture("layer0", this.modLoc("item/ingot/background"))
+        .texture("layer1", this.modLoc("item/ingot/diffuse"))
+        .texture("layer2", this.modLoc("item/ingot/specular"))
+        .texture("layer3", this.modLoc("item/ingot/shadow_1"))
+        .texture("layer4", this.modLoc("item/ingot/shadow_2"))
+        .texture("layer5", this.modLoc("item/ingot/edge_1"))
+        .texture("layer6", this.modLoc("item/ingot/edge_2"))
+        .texture("layer7", this.modLoc("item/ingot/edge_3"))
       ;
 
       this.getBuilder("nugget")
         .parent(new ModelFile.ExistingModelFile(this.mcLoc("item/generated"), this.existingFileHelper))
-        .texture("layer0", this.modLoc("item/nugget_background"))
-        .texture("layer1", this.modLoc("item/nugget_diffuse"))
-        .texture("layer2", this.modLoc("item/nugget_specular"))
-        .texture("layer3", this.modLoc("item/nugget_shadow_1"))
-        .texture("layer4", this.modLoc("item/nugget_shadow_2"))
-        .texture("layer5", this.modLoc("item/nugget_edge_1"))
-        .texture("layer6", this.modLoc("item/nugget_edge_2"))
-        .texture("layer7", this.modLoc("item/nugget_edge_3"))
+        .texture("layer0", this.modLoc("item/nugget/background"))
+        .texture("layer1", this.modLoc("item/nugget/diffuse"))
+        .texture("layer2", this.modLoc("item/nugget/specular"))
+        .texture("layer3", this.modLoc("item/nugget/shadow_1"))
+        .texture("layer4", this.modLoc("item/nugget/shadow_2"))
+        .texture("layer5", this.modLoc("item/nugget/edge_1"))
+        .texture("layer6", this.modLoc("item/nugget/edge_2"))
+        .texture("layer7", this.modLoc("item/nugget/edge_3"))
       ;
 
       this.getBuilder("plate")
         .parent(new ModelFile.ExistingModelFile(this.mcLoc("item/generated"), this.existingFileHelper))
-        .texture("layer0", this.modLoc("item/plate_background"))
-        .texture("layer1", this.modLoc("item/plate_diffuse"))
-        .texture("layer2", this.modLoc("item/plate_specular"))
-        .texture("layer3", this.modLoc("item/plate_shadow_1"))
-        .texture("layer4", this.modLoc("item/plate_shadow_2"))
-        .texture("layer5", this.modLoc("item/plate_edge_1"))
-        .texture("layer6", this.modLoc("item/plate_edge_2"))
-        .texture("layer7", this.modLoc("item/plate_edge_3"))
+        .texture("layer0", this.modLoc("item/plate/background"))
+        .texture("layer1", this.modLoc("item/plate/diffuse"))
+        .texture("layer2", this.modLoc("item/plate/specular"))
+        .texture("layer3", this.modLoc("item/plate/shadow_1"))
+        .texture("layer4", this.modLoc("item/plate/shadow_2"))
+        .texture("layer5", this.modLoc("item/plate/edge_1"))
+        .texture("layer6", this.modLoc("item/plate/edge_2"))
+        .texture("layer7", this.modLoc("item/plate/edge_3"))
       ;
+
+      for(final GradientCasts cast : GradientCasts.values()) {
+        this.getBuilder(cast.name)
+          .parent(new ModelFile.ExistingModelFile(this.mcLoc("item/generated"), this.existingFileHelper))
+          .texture("layer0", this.modLoc("item/" + cast.name + "/background"))
+          .texture("layer1", this.modLoc("item/" + cast.name + "/diffuse"))
+          .texture("layer2", this.modLoc("item/" + cast.name + "/specular"))
+          .texture("layer3", this.modLoc("item/" + cast.name + "/shadow_1"))
+          .texture("layer4", this.modLoc("item/" + cast.name + "/shadow_2"))
+          .texture("layer5", this.modLoc("item/" + cast.name + "/edge_1"))
+          .texture("layer6", this.modLoc("item/" + cast.name + "/edge_2"))
+          .texture("layer7", this.modLoc("item/" + cast.name + "/edge_3"))
+        ;
+
+        for(final Metal metal : Metals.all()) {
+          this.getBuilder(GradientIds.CASTED(cast, metal)).parent(this.getExistingFile(this.modLoc("item/" + cast.name)));
+        }
+      }
 
       for(final Metal metal : Metals.all()) {
         this.getBuilder(GradientIds.CRUSHED(metal)).parent(this.getExistingFile(this.modLoc("item/crushed")));
@@ -628,9 +672,7 @@ public final class GradientDataGenerator {
         this.getBuilder(GradientIds.INGOT(metal)).parent(this.getExistingFile(this.modLoc("item/ingot")));
         this.getBuilder(GradientIds.NUGGET(metal)).parent(this.getExistingFile(this.modLoc("item/nugget")));
         this.getBuilder(GradientIds.PLATE(metal)).parent(this.getExistingFile(this.modLoc("item/plate")));
-      }
 
-      for(final Metal metal : Metals.all()) {
         this.getBuilder(GradientIds.METAL_BLOCK(metal)).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.METAL_BLOCK(metal))));
       }
 
@@ -694,6 +736,11 @@ public final class GradientDataGenerator {
 
       this.getBuilder(GradientIds.CLAY_FURNACE).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.CLAY_FURNACE)));
       this.getBuilder(GradientIds.CLAY_OVEN).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.CLAY_OVEN)));
+      this.getBuilder(GradientIds.CLAY_CRUCIBLE).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.CLAY_CRUCIBLE)));
+
+      for(final GradientCasts cast : GradientCasts.values()) {
+        this.getBuilder(GradientIds.CLAY_CAST(cast)).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.CLAY_CAST(cast))));
+      }
     }
 
     @Override
@@ -832,6 +879,11 @@ public final class GradientDataGenerator {
 
       this.horizontalBlock(GradientBlocks.CLAY_FURNACE.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.CLAY_FURNACE)));
       this.horizontalBlock(GradientBlocks.CLAY_OVEN.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.CLAY_OVEN)));
+      this.simpleBlock(GradientBlocks.CLAY_CRUCIBLE.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.CLAY_CRUCIBLE)));
+
+      for(final GradientCasts cast : GradientCasts.values()) {
+        this.horizontalBlock(GradientBlocks.CLAY_CAST(cast).get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.CLAY_CAST(cast))));
+      }
     }
   }
 
@@ -845,13 +897,7 @@ public final class GradientDataGenerator {
       this.add("stage.gradient.age_1", "Age 1 (Nomadic)");
       this.add("stage.gradient.age_2", "Age 2 (Agricultural)");
 
-      this.add("unhardened_clay.tooltip", "Place next to a fire pit to harden");
-
       this.add("screens.gradient.unhardened_clay_cast", "Cast Selection");
-
-      for(final GradientCasts cast : GradientCasts.values()) {
-        this.add("screens.gradient.unhardened_clay_cast." + cast.name().toLowerCase(), StringUtils.capitalize(cast.name().toLowerCase()));
-      }
 
       this.add("fluids.gradient.air", "Air");
 
@@ -864,13 +910,15 @@ public final class GradientDataGenerator {
       }
 
       for(final Metal metal : Metals.all()) {
-        this.add(GradientItems.CRUSHED(metal).get(), "Crushed " + StringUtils.capitalize(metal.name) + " Ore");
-        this.add(GradientItems.PURIFIED(metal).get(), "Purified " + StringUtils.capitalize(metal.name) + " Ore");
-        this.add(GradientItems.DUST(metal).get(), StringUtils.capitalize(metal.name) + " Dust");
-        this.add(GradientItems.INGOT(metal).get(), StringUtils.capitalize(metal.name) + " Ingot");
-        this.add(GradientItems.NUGGET(metal).get(), StringUtils.capitalize(metal.name) + " Nugget");
-        this.add(GradientItems.PLATE(metal).get(), StringUtils.capitalize(metal.name) + " Plate");
-        this.add(GradientItems.METAL_BLOCK(metal).get(), "Block of " + StringUtils.capitalize(metal.name));
+        final String metalName = StringUtils.capitalize(metal.name);
+
+        this.add(GradientItems.CRUSHED(metal).get(), "Crushed " + metalName + " Ore");
+        this.add(GradientItems.PURIFIED(metal).get(), "Purified " + metalName + " Ore");
+        this.add(GradientItems.DUST(metal).get(), metalName + " Dust");
+        this.add(GradientItems.INGOT(metal).get(), metalName + " Ingot");
+        this.add(GradientItems.NUGGET(metal).get(), metalName + " Nugget");
+        this.add(GradientItems.PLATE(metal).get(), metalName + " Plate");
+        this.add(GradientItems.METAL_BLOCK(metal).get(), "Block of " + metalName);
       }
 
       this.add(GradientItems.SALT_BLOCK.get(), "Block of Salt");
@@ -926,21 +974,45 @@ public final class GradientDataGenerator {
       this.add(GradientItems.DRYING_RACK.get(), "Drying Rack");
 
       this.add(GradientItems.UNHARDENED_CLAY_FURNACE.get(), "Unhardened Clay Furnace");
+      this.add(GradientItems.UNHARDENED_CLAY_FURNACE.get().getTranslationKey() + ".tooltip", "Place next to a fire pit to harden");
       this.add(GradientItems.UNHARDENED_CLAY_CRUCIBLE.get(), "Unhardened Clay Crucible");
+      this.add(GradientItems.UNHARDENED_CLAY_CRUCIBLE.get().getTranslationKey() + ".tooltip", "Place next to a fire pit to harden");
       this.add(GradientItems.UNHARDENED_CLAY_OVEN.get(), "Unhardened Clay Oven");
+      this.add(GradientItems.UNHARDENED_CLAY_OVEN.get().getTranslationKey() + ".tooltip", "Place next to a fire pit to harden");
       this.add(GradientItems.UNHARDENED_CLAY_MIXER.get(), "Unhardened Clay Mixer");
+      this.add(GradientItems.UNHARDENED_CLAY_MIXER.get().getTranslationKey() + ".tooltip", "Place next to a fire pit to harden");
       this.add(GradientItems.UNHARDENED_CLAY_BUCKET.get(), "Unhardened Clay Bucket");
+      this.add(GradientItems.UNHARDENED_CLAY_BUCKET.get().getTranslationKey() + ".tooltip", "Place next to a fire pit to harden");
       this.add(GradientItems.UNHARDENED_CLAY_CAST_BLANK.get(), "Unhardened Clay Cast (Blank)");
-      this.add(GradientItems.UNHARDENED_CLAY_CAST_BLANK.get().getTranslationKey() + ".tooltip", "Right click to switch cast");
+      this.add(GradientItems.UNHARDENED_CLAY_CAST_BLANK.get().getTranslationKey() + ".tooltip", "Place next to a fire pit to harden, right click to switch cast");
 
       for(final GradientCasts cast : GradientCasts.values()) {
-        this.add(GradientItems.UNHARDENED_CLAY_CAST(cast).get(), "Unhardened Clay Cast (" + StringUtils.capitalize(cast.name().toLowerCase()) + ')');
+        final String[] words = StringUtils.split(cast.name, '_');
+
+        for(int i = 0; i < words.length; i++) {
+          words[i] = StringUtils.capitalize(words[i]);
+        }
+
+        final String text = StringUtils.join(words, ' ');
+
+        this.add(cast.getTranslationKey(), text);
+        this.add(GradientItems.UNHARDENED_CLAY_CAST(cast).get(), "Unhardened Clay Cast (" + text + ')');
+        this.add(GradientItems.UNHARDENED_CLAY_CAST(cast).get().getTranslationKey() + ".tooltip", "Place next to a fire pit to harden, right click to switch cast");
+        this.add(GradientItems.CLAY_CAST(cast).get(), "Clay Cast (" + text + ')');
+        this.add(GradientItems.CLAY_CAST(cast).get().getTranslationKey() + ".tooltip", "Right click on a crucible to cast");
+
+        for(final Metal metal : Metals.all()) {
+          final String metalName = StringUtils.capitalize(metal.name);
+          this.add(GradientItems.CASTED(cast, metal).get(), metalName + ' ' + text);
+        }
       }
 
       this.add(GradientItems.CLAY_FURNACE.get(), "Clay Oven");
       this.add(GradientItems.CLAY_FURNACE.get().getTranslationKey() + ".tooltip", "Right click on a firepit to attach");
       this.add(GradientItems.CLAY_OVEN.get(), "Clay Oven");
       this.add(GradientItems.CLAY_OVEN.get().getTranslationKey() + ".tooltip", "Place on top of a firepit/furnace to use its heat");
+      this.add(GradientItems.CLAY_CRUCIBLE.get(), "Clay Crucible");
+      this.add(GradientItems.CLAY_CRUCIBLE.get().getTranslationKey() + ".tooltip", "Place on top of a firepit/furnace to use its heat");
 
       this.age1("root", "Age 1: Stone Age", "Humankind's first steps");
       this.age1("basic_materials", "Basic Materials", "Gather sticks from leaves, fibre from grass, and pebbles from the ground");
@@ -1484,6 +1556,24 @@ public final class GradientDataGenerator {
         .addIngredient(GradientBlocks.UNHARDENED_CLAY_OVEN.get())
         .addCriterion("has_unhardened_clay_oven", this.hasItem(GradientBlocks.UNHARDENED_CLAY_OVEN.get()))
         .build(finished, Gradient.loc("hardening/age2/" + GradientIds.CLAY_OVEN));
+
+      GradientRecipeBuilder
+        .hardening(GradientItems.CLAY_CRUCIBLE.get())
+        .stage(GradientStages.AGE_2)
+        .ticks(3600)
+        .addIngredient(GradientBlocks.UNHARDENED_CLAY_CRUCIBLE.get())
+        .addCriterion("has_unhardened_clay_crucible", this.hasItem(GradientBlocks.UNHARDENED_CLAY_CRUCIBLE.get()))
+        .build(finished, Gradient.loc("hardening/age2/" + GradientIds.CLAY_CRUCIBLE));
+
+      for(final GradientCasts cast : GradientCasts.values()) {
+        GradientRecipeBuilder
+          .hardening(GradientItems.CLAY_CAST(cast).get())
+          .stage(GradientStages.AGE_2)
+          .ticks(1200)
+          .addIngredient(GradientBlocks.UNHARDENED_CLAY_CAST(cast).get())
+          .addCriterion("has_unhardened_clay_cast", this.hasItem(GradientBlocks.UNHARDENED_CLAY_CAST(cast).get()))
+          .build(finished, Gradient.loc("hardening/age2/" + GradientIds.CLAY_CAST(cast)));
+      }
     }
 
     private void registerDryingRecipes(final Consumer<IFinishedRecipe> finished) {
@@ -1742,6 +1832,11 @@ public final class GradientDataGenerator {
 
         this.registerDropSelfLootTable(GradientBlocks.CLAY_FURNACE.get());
         this.registerDropSelfLootTable(GradientBlocks.CLAY_OVEN.get());
+        this.registerDropSelfLootTable(GradientBlocks.CLAY_CRUCIBLE.get());
+
+        for(final GradientCasts cast : GradientCasts.values()) {
+          this.registerDropSelfLootTable(GradientBlocks.CLAY_CAST(cast).get());
+        }
       }
 
       private final List<Block> blocks = new ArrayList<>();
