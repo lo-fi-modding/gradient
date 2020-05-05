@@ -1067,7 +1067,7 @@ public final class GradientRecipeBuilder {
     private final Set<Stage> stages = new HashSet<>();
     private int ticks;
     private float temperature;
-    private final List<Ingredient> ingredients = Lists.newArrayList();
+    private Ingredient ingredient;
     private GradientFluidStack fluid = GradientFluidStack.EMPTY;
     private final Advancement.Builder advancementBuilder = Advancement.Builder.builder();
     private String group;
@@ -1087,31 +1087,17 @@ public final class GradientRecipeBuilder {
       return this;
     }
 
-    public Melting addIngredient(final Tag<Item> tag) {
-      return this.addIngredient(Ingredient.fromTag(tag));
+    public Melting ingredient(final Tag<Item> tag) {
+      return this.ingredient(Ingredient.fromTag(tag));
     }
 
-    public Melting addIngredient(final IItemProvider item) {
-      return this.addIngredient(item, 1);
-    }
-
-    public Melting addIngredient(final IItemProvider item, final int amount) {
-      for(int i = 0; i < amount; ++i) {
-        this.addIngredient(Ingredient.fromItems(item));
-      }
-
+    public Melting ingredient(final IItemProvider item) {
+      this.ingredient(Ingredient.fromItems(item));
       return this;
     }
 
-    public Melting addIngredient(final Ingredient ingredient) {
-      return this.addIngredient(ingredient, 1);
-    }
-
-    public Melting addIngredient(final Ingredient ingredient, final int amount) {
-      for(int i = 0; i < amount; ++i) {
-        this.ingredients.add(ingredient);
-      }
-
+    public Melting ingredient(final Ingredient ingredient) {
+      this.ingredient = ingredient;
       return this;
     }
 
@@ -1137,7 +1123,7 @@ public final class GradientRecipeBuilder {
     public void build(final Consumer<IFinishedRecipe> finished, final ResourceLocation save) {
       this.validate(save);
       this.advancementBuilder.withParentId(new ResourceLocation("recipes/root")).withCriterion("has_the_recipe", new RecipeUnlockedTrigger.Instance(save)).withRewards(AdvancementRewards.Builder.recipe(save)).withRequirementsStrategy(IRequirementsStrategy.OR);
-      finished.accept(new Result(save, this.stages, this.ticks, this.temperature, this.group == null ? "" : this.group, this.ingredients, this.fluid, this.advancementBuilder, new ResourceLocation(save.getNamespace(), "recipes/" + save.getPath())));
+      finished.accept(new Result(save, this.stages, this.ticks, this.temperature, this.group == null ? "" : this.group, this.ingredient, this.fluid, this.advancementBuilder, new ResourceLocation(save.getNamespace(), "recipes/" + save.getPath())));
     }
 
     private void validate(final ResourceLocation name) {
@@ -1152,18 +1138,18 @@ public final class GradientRecipeBuilder {
       private final int ticks;
       private final float temperature;
       private final String group;
-      private final List<Ingredient> ingredients;
+      private final Ingredient ingredient;
       private final GradientFluidStack output;
       private final Advancement.Builder advancementBuilder;
       private final ResourceLocation advancementId;
 
-      protected Result(final ResourceLocation id, final Set<Stage> stages, final int ticks, final float temperature, final String group, final List<Ingredient> ingredients, final GradientFluidStack output, final Advancement.Builder advancementBuilder, final ResourceLocation advancementId) {
+      protected Result(final ResourceLocation id, final Set<Stage> stages, final int ticks, final float temperature, final String group, final Ingredient ingredient, final GradientFluidStack output, final Advancement.Builder advancementBuilder, final ResourceLocation advancementId) {
         this.id = id;
         this.stages = stages;
         this.ticks = ticks;
         this.temperature = temperature;
         this.group = group;
-        this.ingredients = ingredients;
+        this.ingredient = ingredient;
         this.output = output;
         this.advancementBuilder = advancementBuilder;
         this.advancementId = advancementId;
@@ -1183,13 +1169,7 @@ public final class GradientRecipeBuilder {
 
         json.addProperty("ticks", this.ticks);
         json.addProperty("temperature", this.temperature);
-
-        final JsonArray array = new JsonArray();
-        for(final Ingredient ingredient : this.ingredients) {
-          array.add(ingredient.serialize());
-        }
-
-        json.add("ingredients", array);
+        json.add("ingredient", this.ingredient.serialize());
         json.add("fluid", this.output.write(new JsonObject()));
       }
 

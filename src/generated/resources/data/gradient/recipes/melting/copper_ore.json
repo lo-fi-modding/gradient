@@ -5,11 +5,9 @@
   ],
   "ticks": 23,
   "temperature": 1085.0,
-  "ingredients": [
-    {
-      "tag": "forge:ores/copper"
-    }
-  ],
+  "ingredient": {
+    "tag": "forge:ores/copper"
+  },
   "fluid": {
     "fluid": "gradient:copper",
     "amount": 1.0,

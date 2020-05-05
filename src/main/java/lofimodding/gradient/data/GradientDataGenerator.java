@@ -15,6 +15,7 @@ import lofimodding.gradient.blocks.DryingRackBlock;
 import lofimodding.gradient.blocks.FirepitBlock;
 import lofimodding.gradient.blocks.MetalBlock;
 import lofimodding.gradient.blocks.MixingBasinBlock;
+import lofimodding.gradient.fluids.GradientFluid;
 import lofimodding.gradient.fluids.GradientFluidStack;
 import lofimodding.gradient.fluids.GradientFluids;
 import lofimodding.gradient.items.PebbleItem;
@@ -903,6 +904,16 @@ public final class GradientDataGenerator {
 
       this.add("fluids.gradient.air", "Air");
 
+      for(final Metal metal : Metals.all()) {
+        final String metalName = StringUtils.capitalize(metal.name);
+        this.add(GradientFluids.METAL(metal).get(), "Molten " + metalName);
+      }
+
+      this.add("meltable.melt_temp", "Melting Point: %f °C");
+      this.add("meltable.melt_time", "Melting Time: %d ticks");
+      this.add("meltable.amount", "Amount: %d B");
+      this.add("meltable.fluid", "Fluid: %s");
+
       this.add(GradientBlocks.PEBBLE.get(), "Pebble");
       this.add(GradientItems.PEBBLE.get(), "Pebble");
 
@@ -1037,6 +1048,10 @@ public final class GradientDataGenerator {
     private void age1(final String key, final String title, final String description) {
       this.add("advancements.gradient.age1." + key + ".title", title);
       this.add("advancements.gradient.age1." + key + ".description", description);
+    }
+
+    private void add(final GradientFluid fluid, final String translation) {
+      this.add(fluid.getTranslationKey(), translation);
     }
   }
 
@@ -1605,7 +1620,7 @@ public final class GradientDataGenerator {
           .ticks(ore.metal.meltTime)
           .temperature(ore.metal.meltTemp)
           .fluid(new GradientFluidStack(GradientFluids.METAL(ore.metal).get(), 1.0f, ore.metal.meltTemp))
-          .addIngredient(GradientTags.Items.ORE.get(ore))
+          .ingredient(GradientTags.Items.ORE.get(ore))
           .addCriterion("has_ore", this.hasItem(GradientTags.Items.ORE.get(ore)))
           .build(finished, Gradient.loc("melting/" + ore.name + "_ore"));
       }

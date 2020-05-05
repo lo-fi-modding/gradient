@@ -3,7 +3,6 @@ package lofimodding.gradient.recipes;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientRecipeSerializers;
 import lofimodding.gradient.fluids.GradientFluidStack;
@@ -14,43 +13,35 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.crafting.RecipeItemHelper;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.RecipeMatcher;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 public class MeltingRecipe implements IRecipe<IInventory> {
   public static final IRecipeType<MeltingRecipe> TYPE = IRecipeType.register("melting");
-
-  private static final RecipeItemHelper RECIPE_ITEM_HELPER = new RecipeItemHelper();
-  private static final List<ItemStack> INPUT_STACKS = new ArrayList<>();
 
   private final ResourceLocation id;
   private final String group;
   private final NonNullList<Stage> stages;
   private final int ticks;
   private final float temperature;
+  private final Ingredient ingredient;
   private final NonNullList<Ingredient> ingredients;
   private final GradientFluidStack output;
-  private final boolean simple;
 
-  public MeltingRecipe(final ResourceLocation id, final String group, final NonNullList<Stage> stages, final int ticks, final float temperature, final NonNullList<Ingredient> ingredients, final GradientFluidStack output) {
+  public MeltingRecipe(final ResourceLocation id, final String group, final NonNullList<Stage> stages, final int ticks, final float temperature, final Ingredient ingredient, final GradientFluidStack output) {
     this.id = id;
     this.group = group;
     this.stages = stages;
     this.ticks = ticks;
     this.temperature = temperature;
-    this.ingredients = ingredients;
-    this.simple = ingredients.stream().allMatch(Ingredient::isSimple);
+    this.ingredient = ingredient;
+    this.ingredients = NonNullList.withSize(1, ingredient);
     this.output = output;
   }
 
@@ -96,44 +87,18 @@ public class MeltingRecipe implements IRecipe<IInventory> {
     return false;
   }
 
-  public boolean matches(final IItemHandler inv, final Set<Stage> stages, final int firstSlot, final int lastSlot) {
+  public boolean matches(final ItemStack input, final Set<Stage> stages) {
     for(final Stage stage : this.stages) {
       if(!stages.contains(stage)) {
         return false;
       }
     }
 
-    return this.matches(inv, firstSlot, lastSlot);
+    return this.matches(input);
   }
 
-  public boolean matches(final IItemHandler inv, final int firstSlot, final int lastSlot) {
-    RECIPE_ITEM_HELPER.clear();
-    INPUT_STACKS.clear();
-
-    int ingredientCount = 0;
-    for(int slot = firstSlot; slot <= lastSlot; ++slot) {
-      final ItemStack itemstack = inv.getStackInSlot(slot);
-
-      if(!itemstack.isEmpty()) {
-        ++ingredientCount;
-
-        if(this.simple) {
-          RECIPE_ITEM_HELPER.accountStack(itemstack);
-        } else {
-          INPUT_STACKS.add(itemstack);
-        }
-      }
-    }
-
-    if(ingredientCount != this.ingredients.size()) {
-      return false;
-    }
-
-    if(this.simple) {
-      return RECIPE_ITEM_HELPER.canCraft(this, null);
-    }
-
-    return RecipeMatcher.findMatches(INPUT_STACKS, this.ingredients) != null;
+  public boolean matches(final ItemStack input) {
+    return this.ingredient.test(input);
   }
 
   @Override
@@ -174,27 +139,9 @@ public class MeltingRecipe implements IRecipe<IInventory> {
       final int ticks = JSONUtils.getInt(json, "ticks");
       final float temperature = JSONUtils.getFloat(json, "temperature");
 
-      final NonNullList<Ingredient> ingredients = readIngredients(JSONUtils.getJsonArray(json, "ingredients"));
-      if(ingredients.isEmpty()) {
-        throw new JsonParseException("No ingredients for melting recipe");
-      }
-
+      final Ingredient ingredient = Ingredient.deserialize(JSONUtils.getJsonObject(json, "ingredient"));
       final GradientFluidStack fluid = GradientFluidStack.read(JSONUtils.getJsonObject(json, "fluid"));
-      return new MeltingRecipe(id, group, stages, ticks, temperature, ingredients, fluid);
-    }
-
-    private static NonNullList<Ingredient> readIngredients(final JsonArray json) {
-      final NonNullList<Ingredient> ingredients = NonNullList.create();
-
-      for(int i = 0; i < json.size(); ++i) {
-        final Ingredient ingredient = Ingredient.deserialize(json.get(i));
-
-        if(!ingredient.hasNoMatchingItems()) {
-          ingredients.add(ingredient);
-        }
-      }
-
-      return ingredients;
+      return new MeltingRecipe(id, group, stages, ticks, temperature, ingredient, fluid);
     }
 
     @Override
@@ -210,16 +157,10 @@ public class MeltingRecipe implements IRecipe<IInventory> {
 
       final int ticks = buffer.readVarInt();
       final float temperature = buffer.readFloat();
-
-      final int ingredientCount = buffer.readVarInt();
-      final NonNullList<Ingredient> ingredients = NonNullList.withSize(ingredientCount, Ingredient.EMPTY);
-      for(int i = 0; i < ingredients.size(); ++i) {
-        ingredients.set(i, Ingredient.read(buffer));
-      }
-
+      final Ingredient ingredient = Ingredient.read(buffer);
       final GradientFluidStack fluid = GradientFluidStack.read(buffer);
 
-      return new MeltingRecipe(id, group, stages, ticks, temperature, ingredients, fluid);
+      return new MeltingRecipe(id, group, stages, ticks, temperature, ingredient, fluid);
     }
 
     @Override
@@ -233,12 +174,7 @@ public class MeltingRecipe implements IRecipe<IInventory> {
 
       buffer.writeVarInt(recipe.ticks);
       buffer.writeFloat(recipe.temperature);
-
-      buffer.writeVarInt(recipe.ingredients.size());
-      for(final Ingredient ingredient : recipe.ingredients) {
-        ingredient.write(buffer);
-      }
-
+      recipe.ingredient.write(buffer);
       recipe.output.write(buffer);
     }
   }

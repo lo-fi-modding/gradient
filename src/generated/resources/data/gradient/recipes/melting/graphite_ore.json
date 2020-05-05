@@ -5,11 +5,9 @@
   ],
   "ticks": 11,
   "temperature": 3730.0,
-  "ingredients": [
-    {
-      "tag": "forge:ores/graphite"
-    }
-  ],
+  "ingredient": {
+    "tag": "forge:ores/graphite"
+  },
   "fluid": {
     "fluid": "gradient:graphite",
     "amount": 1.0,

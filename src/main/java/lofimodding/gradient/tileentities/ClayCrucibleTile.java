@@ -55,8 +55,6 @@ public class ClayCrucibleTile extends HeatSinkerTile implements INamedContainerP
   public static final int TOTAL_SLOTS_COUNT = METAL_SLOTS_COUNT;
 
   private final ItemStackHandler inventory = new ItemStackHandler(TOTAL_SLOTS_COUNT) {
-    private final ItemStackHandler inputTemp = new ItemStackHandler(1);
-
     @Override
     public int getSlotLimit(final int slot) {
       return 1;
@@ -64,8 +62,7 @@ public class ClayCrucibleTile extends HeatSinkerTile implements INamedContainerP
 
     @Override
     public boolean isItemValid(final int slot, @Nonnull final ItemStack stack) {
-      this.inputTemp.setStackInSlot(0, stack);
-      return super.isItemValid(slot, stack) && RecipeUtils.getRecipe(MeltingRecipe.TYPE, r -> r.matches(this.inputTemp, 0, 0)).isPresent();
+      return super.isItemValid(slot, stack) && RecipeUtils.getRecipe(MeltingRecipe.TYPE, r -> r.matches(stack)).isPresent();
     }
 
     @Nonnull
@@ -163,7 +160,7 @@ public class ClayCrucibleTile extends HeatSinkerTile implements INamedContainerP
     for(int slot = 0; slot < METAL_SLOTS_COUNT; slot++) {
       if(!this.isMelting(slot) && !this.getMetalSlot(slot).isEmpty()) {
         final int slot2 = slot;
-        update = RecipeUtils.getRecipe(MeltingRecipe.TYPE, r -> r.matches(this.inventory, this.stages, slot2, slot2)).map(meltable -> {
+        update = RecipeUtils.getRecipe(MeltingRecipe.TYPE, r -> r.matches(this.getMetalSlot(slot2), this.stages)).map(meltable -> {
           if(this.canMelt(meltable)) {
             this.melting[slot2] = new MeltingMetal(meltable, meltable.getFluidOutput());
             return true;
@@ -293,7 +290,7 @@ public class ClayCrucibleTile extends HeatSinkerTile implements INamedContainerP
       final int slot = tag.getInt("slot");
 
       if(slot < METAL_SLOTS_COUNT) {
-        RecipeUtils.getRecipe(MeltingRecipe.TYPE, r -> r.matches(this.inventory, this.stages, slot, slot)).ifPresent(meltable -> {
+        RecipeUtils.getRecipe(MeltingRecipe.TYPE, r -> r.matches(this.getMetalSlot(slot), this.stages)).ifPresent(meltable -> {
           this.melting[slot] = MeltingMetal.fromNbt(meltable, meltable.getFluidOutput(), tag);
         });
       }

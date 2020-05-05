@@ -1,6 +1,9 @@
 package lofimodding.gradient.fluids;
 
 import lofimodding.gradient.Gradient;
+import net.minecraft.util.Util;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -29,5 +32,19 @@ public class GradientFluid extends ForgeRegistryEntry<GradientFluid> {
       .setName(Gradient.loc("fluid"))
       .setType(GradientFluid.class)
       .create();
+  }
+
+  private String translationKey;
+
+  public String getTranslationKey() {
+    if(this.translationKey == null) {
+      this.translationKey = Util.makeTranslationKey("fluid", this.getRegistryName());
+    }
+
+    return this.translationKey;
+  }
+
+  public ITextComponent getName(final GradientFluidStack stack) {
+    return new TranslationTextComponent(this.getTranslationKey());
   }
 }

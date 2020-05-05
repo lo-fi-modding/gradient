@@ -5,11 +5,9 @@
   ],
   "ticks": 45,
   "temperature": 1188.0,
-  "ingredients": [
-    {
-      "tag": "forge:ores/pyrite"
-    }
-  ],
+  "ingredient": {
+    "tag": "forge:ores/pyrite"
+  },
   "fluid": {
     "fluid": "gradient:pyrite",
     "amount": 1.0,

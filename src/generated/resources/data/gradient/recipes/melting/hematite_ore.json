@@ -5,11 +5,9 @@
   ],
   "ticks": 30,
   "temperature": 1548.0,
-  "ingredients": [
-    {
-      "tag": "forge:ores/hematite"
-    }
-  ],
+  "ingredient": {
+    "tag": "forge:ores/hematite"
+  },
   "fluid": {
     "fluid": "gradient:hematite",
     "amount": 1.0,

@@ -7,6 +7,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.registries.IRegistryDelegate;
 
 import javax.annotation.Nonnull;
@@ -63,6 +64,10 @@ public class GradientFluidStack {
     this.amount = amount;
     this.temperature = temperature;
     this.updateEmpty();
+  }
+
+  public ITextComponent getName() {
+    return this.getFluid().getName(this);
   }
 
   public GradientFluid getFluid() {

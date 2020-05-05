@@ -5,11 +5,9 @@
   ],
   "ticks": 49,
   "temperature": 1127.0,
-  "ingredients": [
-    {
-      "tag": "forge:ores/cassiterite"
-    }
-  ],
+  "ingredient": {
+    "tag": "forge:ores/cassiterite"
+  },
   "fluid": {
     "fluid": "gradient:cassiterite",
     "amount": 1.0,
