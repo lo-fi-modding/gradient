@@ -3,7 +3,7 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 30,
+  "ticks": 600,
   "temperature": 1548.0,
   "ingredient": {
     "tag": "forge:plates/hematite"

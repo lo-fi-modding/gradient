@@ -3,7 +3,7 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 441,
+  "ticks": 8775,
   "temperature": 1127.0,
   "ingredient": {
     "tag": "forge:storage_blocks/cassiterite"

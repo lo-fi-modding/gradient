@@ -3,7 +3,7 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 171,
+  "ticks": 3375,
   "temperature": 419.53,
   "ingredient": {
     "tag": "forge:storage_blocks/zinc"

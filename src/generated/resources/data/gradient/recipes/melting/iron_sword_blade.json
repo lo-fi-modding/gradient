@@ -3,7 +3,7 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 30,
+  "ticks": 600,
   "temperature": 1538.0,
   "ingredient": {
     "item": "gradient:iron_sword_blade"

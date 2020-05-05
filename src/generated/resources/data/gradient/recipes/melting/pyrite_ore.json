@@ -3,7 +3,7 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 54,
+  "ticks": 1080,
   "temperature": 1188.0,
   "ingredient": {
     "tag": "forge:ores/pyrite"

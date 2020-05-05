@@ -1,6 +1,5 @@
 package lofimodding.gradient;
 
-import com.sun.swing.internal.plaf.metal.resources.metal;
 import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.science.Ore;
 
@@ -119,4 +118,6 @@ public final class GradientIds {
   public static String CASTED(final GradientCasts cast, final Metal metal) {
     return metal.name + '_' + cast.name;
   }
+
+  public static final String INFINICOAL = "infinicoal";
 }

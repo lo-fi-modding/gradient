@@ -3,7 +3,7 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 26,
+  "ticks": 525,
   "temperature": 1830.0,
   "ingredient": {
     "item": "gradient:sphalerite_pickaxe_head"

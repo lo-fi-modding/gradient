@@ -3,7 +3,7 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 58,
+  "ticks": 1170,
   "temperature": 1127.0,
   "ingredient": {
     "tag": "forge:ores/cassiterite"

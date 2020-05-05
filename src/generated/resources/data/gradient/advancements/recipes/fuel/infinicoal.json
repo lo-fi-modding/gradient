@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "gradient:fuel/infinicoal"
+    ]
+  },
+  "criteria": {
+    "has_infinicoal": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "gradient:infinicoal"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "gradient:fuel/infinicoal"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_infinicoal",
+      "has_the_recipe"
+    ]
+  ]
+}

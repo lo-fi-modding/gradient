@@ -3,7 +3,7 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 26,
+  "ticks": 525,
   "temperature": 1165.0,
   "ingredient": {
     "item": "gradient:azurite_sword_blade"

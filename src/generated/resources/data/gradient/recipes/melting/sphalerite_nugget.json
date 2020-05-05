@@ -3,7 +3,7 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 2,
+  "ticks": 58,
   "temperature": 1830.0,
   "ingredient": {
     "tag": "forge:nuggets/sphalerite"

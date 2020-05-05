@@ -3,7 +3,7 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 36,
+  "ticks": 720,
   "temperature": 1548.0,
   "ingredient": {
     "tag": "forge:ores/hematite"

@@ -3,7 +3,7 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 405,
+  "ticks": 8100,
   "temperature": 1188.0,
   "ingredient": {
     "tag": "forge:storage_blocks/pyrite"

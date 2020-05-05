@@ -3,7 +3,7 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 13,
+  "ticks": 270,
   "temperature": 3730.0,
   "ingredient": {
     "tag": "forge:ores/graphite"

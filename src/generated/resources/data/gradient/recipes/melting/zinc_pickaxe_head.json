@@ -3,7 +3,7 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 19,
+  "ticks": 375,
   "temperature": 419.53,
   "ingredient": {
     "item": "gradient:zinc_pickaxe_head"

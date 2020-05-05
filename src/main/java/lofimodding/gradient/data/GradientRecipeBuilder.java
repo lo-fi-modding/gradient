@@ -243,7 +243,7 @@ public final class GradientRecipeBuilder {
   }
 
   public static class Fuel {
-    private int duration;
+    private int ticks;
     private float ignitionTemp;
     private float burnTemp;
     private float heatPerSecond;
@@ -253,8 +253,8 @@ public final class GradientRecipeBuilder {
 
     protected Fuel() { }
 
-    public Fuel duration(final int duration) {
-      this.duration = duration;
+    public Fuel ticks(final int ticks) {
+      this.ticks = ticks;
       return this;
     }
 
@@ -303,7 +303,7 @@ public final class GradientRecipeBuilder {
     public void build(final Consumer<IFinishedRecipe> finished, final ResourceLocation save) {
       this.validate(save);
       this.advancementBuilder.withParentId(new ResourceLocation("recipes/root")).withCriterion("has_the_recipe", new RecipeUnlockedTrigger.Instance(save)).withRewards(AdvancementRewards.Builder.recipe(save)).withRequirementsStrategy(IRequirementsStrategy.OR);
-      finished.accept(new Result(save, this.duration, this.ignitionTemp, this.burnTemp, this.heatPerSecond, this.group == null ? "" : this.group, this.ingredient, this.advancementBuilder, new ResourceLocation(save.getNamespace(), "recipes/" + save.getPath())));
+      finished.accept(new Result(save, this.ticks, this.ignitionTemp, this.burnTemp, this.heatPerSecond, this.group == null ? "" : this.group, this.ingredient, this.advancementBuilder, new ResourceLocation(save.getNamespace(), "recipes/" + save.getPath())));
     }
 
     private void validate(final ResourceLocation name) {
@@ -314,7 +314,7 @@ public final class GradientRecipeBuilder {
 
     private static class Result implements IFinishedRecipe {
       private final ResourceLocation id;
-      private final int duration;
+      private final int ticks;
       private final float ignitionTemp;
       private final float burnTemp;
       private final float heatPerSec;
@@ -323,9 +323,9 @@ public final class GradientRecipeBuilder {
       private final Advancement.Builder advancementBuilder;
       private final ResourceLocation advancementId;
 
-      public Result(final ResourceLocation id, final int duration, final float ignitionTemp, final float burnTemp, final float heatPerSec, final String group, final Ingredient ingredient, final Advancement.Builder advancementBuilder, final ResourceLocation advancementId) {
+      public Result(final ResourceLocation id, final int ticks, final float ignitionTemp, final float burnTemp, final float heatPerSec, final String group, final Ingredient ingredient, final Advancement.Builder advancementBuilder, final ResourceLocation advancementId) {
         this.id = id;
-        this.duration = duration;
+        this.ticks = ticks;
         this.ignitionTemp = ignitionTemp;
         this.burnTemp = burnTemp;
         this.heatPerSec = heatPerSec;
@@ -341,7 +341,7 @@ public final class GradientRecipeBuilder {
           json.addProperty("group", this.group);
         }
 
-        json.addProperty("duration", this.duration);
+        json.addProperty("ticks", this.ticks);
         json.addProperty("ignition_temp", this.ignitionTemp);
         json.addProperty("burn_temp", this.burnTemp);
         json.addProperty("heat_per_sec", this.heatPerSec);

@@ -1,10 +1,10 @@
 {
   "type": "gradient:fuel",
-  "ticks": 24000,
-  "ignition_temp": 700.0,
+  "ticks": 2147483647,
+  "ignition_temp": 0.0,
   "burn_temp": 2700.0,
   "heat_per_sec": 1.5,
   "ingredient": {
-    "tag": "minecraft:coals"
+    "item": "gradient:infinicoal"
   }
 }

@@ -744,6 +744,8 @@ public final class GradientDataGenerator {
       for(final GradientCasts cast : GradientCasts.values()) {
         this.getBuilder(GradientIds.CLAY_CAST(cast)).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.CLAY_CAST(cast))));
       }
+
+      this.singleTexture(GradientIds.INFINICOAL, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.INFINICOAL));
     }
 
     @Override
@@ -1028,6 +1030,8 @@ public final class GradientDataGenerator {
       this.add(GradientItems.CLAY_OVEN.get().getTranslationKey() + ".tooltip", "Place on top of a firepit/furnace to use its heat");
       this.add(GradientItems.CLAY_CRUCIBLE.get(), "Clay Crucible");
       this.add(GradientItems.CLAY_CRUCIBLE.get().getTranslationKey() + ".tooltip", "Place on top of a firepit/furnace to use its heat");
+
+      this.add(GradientItems.INFINICOAL.get(), "Infinicoal (Debug Item)");
 
       this.age1("root", "Age 1: Stone Age", "Humankind's first steps");
       this.age1("basic_materials", "Basic Materials", "Gather sticks from leaves, fibre from grass, and pebbles from the ground");
@@ -1417,7 +1421,7 @@ public final class GradientDataGenerator {
     private void registerFuelRecipes(final Consumer<IFinishedRecipe> finished) {
       GradientRecipeBuilder
         .fuel()
-        .duration(1200)
+        .ticks(24000)
         .ignitionTemp(700.0f)
         .burnTemp(2700.0f)
         .heatPerSecond(1.5f)
@@ -1427,7 +1431,7 @@ public final class GradientDataGenerator {
 
       GradientRecipeBuilder
         .fuel()
-        .duration(5)
+        .ticks(100)
         .ignitionTemp(50.0f)
         .burnTemp(125.0f)
         .heatPerSecond(18.0f)
@@ -1437,7 +1441,7 @@ public final class GradientDataGenerator {
 
       GradientRecipeBuilder
         .fuel()
-        .duration(900)
+        .ticks(18000)
         .ignitionTemp(300.0f)
         .burnTemp(750.0f)
         .heatPerSecond(0.76f)
@@ -1447,7 +1451,7 @@ public final class GradientDataGenerator {
 
       GradientRecipeBuilder
         .fuel()
-        .duration(600)
+        .ticks(12000)
         .ignitionTemp(230.0f)
         .burnTemp(750.0f)
         .heatPerSecond(1.04f)
@@ -1457,7 +1461,7 @@ public final class GradientDataGenerator {
 
       GradientRecipeBuilder
         .fuel()
-        .duration(60)
+        .ticks(1200)
         .ignitionTemp(150.0f)
         .burnTemp(350.0f)
         .heatPerSecond(1.38f)
@@ -1467,7 +1471,7 @@ public final class GradientDataGenerator {
 
       GradientRecipeBuilder
         .fuel()
-        .duration(30)
+        .ticks(600)
         .ignitionTemp(100.0f)
         .burnTemp(350.0f)
         .heatPerSecond(2.16f)
@@ -1477,13 +1481,23 @@ public final class GradientDataGenerator {
 
       GradientRecipeBuilder
         .fuel()
-        .duration(20)
+        .ticks(400)
         .ignitionTemp(50.0f)
         .burnTemp(125.0f)
         .heatPerSecond(18.0f)
         .ingredient(Tags.Items.STRING)
         .addCriterion("has_string", this.hasItem(Tags.Items.STRING))
         .build(finished, Gradient.loc("fuel/string"));
+
+      GradientRecipeBuilder
+        .fuel()
+        .ticks(Integer.MAX_VALUE)
+        .ignitionTemp(0.0f)
+        .burnTemp(2700.0f)
+        .heatPerSecond(1.5f)
+        .ingredient(GradientItems.INFINICOAL.get())
+        .addCriterion("has_infinicoal", this.hasItem(GradientItems.INFINICOAL.get()))
+        .build(finished, Gradient.loc("fuel/infinicoal"));
     }
 
     private void registerCookingRecipes(final Consumer<IFinishedRecipe> finished) {

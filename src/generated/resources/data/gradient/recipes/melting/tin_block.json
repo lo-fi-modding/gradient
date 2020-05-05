@@ -3,7 +3,7 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 99,
+  "ticks": 2025,
   "temperature": 231.93,
   "ingredient": {
     "tag": "forge:storage_blocks/tin"

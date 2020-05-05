@@ -1,6 +1,6 @@
 {
   "type": "gradient:fuel",
-  "duration": 60,
+  "ticks": 1200,
   "ignition_temp": 150.0,
   "burn_temp": 350.0,
   "heat_per_sec": 1.38,

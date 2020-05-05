@@ -21,17 +21,17 @@ public class FuelRecipe implements IRecipe<IInventory> {
 
   private final ResourceLocation id;
   private final String group;
-  public final int duration;
+  public final int ticks;
   public final float ignitionTemp;
   public final float burnTemp;
   public final float heatPerSec;
   private final Ingredient ingredient;
   private final NonNullList<Ingredient> ingredients;
 
-  public FuelRecipe(final ResourceLocation id, final String group, final int duration, final float ignitionTemp, final float burnTemp, final float heatPerSec, final Ingredient ingredient) {
+  public FuelRecipe(final ResourceLocation id, final String group, final int ticks, final float ignitionTemp, final float burnTemp, final float heatPerSec, final Ingredient ingredient) {
     this.id = id;
     this.group = group;
-    this.duration = duration;
+    this.ticks = ticks;
     this.ignitionTemp = ignitionTemp;
     this.burnTemp = burnTemp;
     this.heatPerSec = heatPerSec;
@@ -98,29 +98,29 @@ public class FuelRecipe implements IRecipe<IInventory> {
     @Override
     public FuelRecipe read(final ResourceLocation id, final JsonObject json) {
       final String group = JSONUtils.getString(json, "group", "");
-      final int duration = JSONUtils.getInt(json, "duration");
+      final int ticks = JSONUtils.getInt(json, "ticks");
       final float ignitionTemp = JSONUtils.getFloat(json, "ignition_temp");
       final float burnTemp = JSONUtils.getFloat(json, "burn_temp");
       final float heatPerSecond = JSONUtils.getFloat(json, "heat_per_sec");
       final Ingredient ingredient = Ingredient.deserialize(json.get("ingredient"));
-      return new FuelRecipe(id, group, duration, ignitionTemp, burnTemp, heatPerSecond, ingredient);
+      return new FuelRecipe(id, group, ticks, ignitionTemp, burnTemp, heatPerSecond, ingredient);
     }
 
     @Override
     public FuelRecipe read(final ResourceLocation id, final PacketBuffer buffer) {
       final String group = buffer.readString(32767);
-      final int duration = buffer.readVarInt();
+      final int ticks = buffer.readVarInt();
       final float ignitionTemp = buffer.readFloat();
       final float burnTemp = buffer.readFloat();
       final float heatPerSecond = buffer.readFloat();
       final Ingredient ingredient = Ingredient.read(buffer);
-      return new FuelRecipe(id, group, duration, ignitionTemp, burnTemp, heatPerSecond, ingredient);
+      return new FuelRecipe(id, group, ticks, ignitionTemp, burnTemp, heatPerSecond, ingredient);
     }
 
     @Override
     public void write(final PacketBuffer buffer, final FuelRecipe recipe) {
       buffer.writeString(recipe.group);
-      buffer.writeVarInt(recipe.duration);
+      buffer.writeVarInt(recipe.ticks);
       buffer.writeFloat(recipe.ignitionTemp);
       buffer.writeFloat(recipe.burnTemp);
       buffer.writeFloat(recipe.heatPerSec);

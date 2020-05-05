@@ -3,7 +3,7 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 31,
+  "ticks": 630,
   "temperature": 1830.0,
   "ingredient": {
     "tag": "forge:ores/sphalerite"

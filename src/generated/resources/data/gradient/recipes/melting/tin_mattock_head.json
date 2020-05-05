@@ -3,7 +3,7 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 11,
+  "ticks": 225,
   "temperature": 231.93,
   "ingredient": {
     "item": "gradient:tin_mattock_head"

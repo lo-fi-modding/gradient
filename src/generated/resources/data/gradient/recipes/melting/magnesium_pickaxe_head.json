@@ -3,7 +3,7 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 19,
+  "ticks": 375,
   "temperature": 650.0,
   "ingredient": {
     "item": "gradient:magnesium_pickaxe_head"

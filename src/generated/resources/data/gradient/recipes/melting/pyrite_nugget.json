@@ -3,7 +3,7 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 5,
+  "ticks": 100,
   "temperature": 1188.0,
   "ingredient": {
     "tag": "forge:nuggets/pyrite"

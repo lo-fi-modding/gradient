@@ -3,7 +3,7 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 1,
+  "ticks": 25,
   "temperature": 327.5,
   "ingredient": {
     "tag": "forge:nuggets/lead"

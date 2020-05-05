@@ -3,7 +3,7 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 11,
+  "ticks": 225,
   "temperature": 3730.0,
   "ingredient": {
     "item": "gradient:graphite_sword_blade"

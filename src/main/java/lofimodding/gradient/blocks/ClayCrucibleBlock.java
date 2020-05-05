@@ -59,7 +59,7 @@ public class ClayCrucibleBlock extends HeatSinkerBlock {
       return te.getLightLevel();
     }
 
-    return state.getLightValue(world, pos);
+    return super.getLightValue(state, world, pos);
   }
 
   @Nullable

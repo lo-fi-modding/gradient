@@ -3,7 +3,7 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 18,
+  "ticks": 360,
   "temperature": 1064.0,
   "ingredient": {
     "tag": "forge:ores/gold"

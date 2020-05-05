@@ -3,7 +3,7 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 23,
+  "ticks": 450,
   "temperature": 1085.0,
   "ingredient": {
     "tag": "forge:ingots/copper"

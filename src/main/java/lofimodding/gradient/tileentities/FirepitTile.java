@@ -687,7 +687,7 @@ public class FirepitTile extends HeatProducerTile {
 
     private Fuel(final FuelRecipe recipe) {
       this.recipe = recipe;
-      this.burnTicksTotal = this.recipe.duration * 20;
+      this.burnTicksTotal = this.recipe.ticks;
     }
 
     private void tick() {

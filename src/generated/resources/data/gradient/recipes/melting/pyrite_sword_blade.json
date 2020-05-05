@@ -3,7 +3,7 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 45,
+  "ticks": 900,
   "temperature": 1188.0,
   "ingredient": {
     "item": "gradient:pyrite_sword_blade"

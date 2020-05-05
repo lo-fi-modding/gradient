@@ -3,7 +3,7 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 234,
+  "ticks": 4725,
   "temperature": 1830.0,
   "ingredient": {
     "tag": "forge:storage_blocks/sphalerite"

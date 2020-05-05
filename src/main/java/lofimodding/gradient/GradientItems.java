@@ -187,6 +187,8 @@ public final class GradientItems {
     }
   }
 
+  public static final RegistryObject<Item> INFINICOAL = REGISTRY.register(GradientIds.INFINICOAL, () -> new Item(new Item.Properties().group(GROUP)));
+
   static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering items...");
     REGISTRY.register(bus);
