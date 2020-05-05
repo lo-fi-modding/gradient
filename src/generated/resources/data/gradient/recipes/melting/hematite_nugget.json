@@ -1,0 +1,16 @@
+{
+  "type": "gradient:melting",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 3,
+  "temperature": 1548.0,
+  "ingredient": {
+    "tag": "forge:nuggets/hematite"
+  },
+  "fluid": {
+    "fluid": "gradient:hematite",
+    "amount": 0.11111111,
+    "temperature": 1548.0
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "gradient:melting",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 11,
+  "temperature": 231.93,
+  "ingredient": {
+    "tag": "forge:ingots/tin"
+  },
+  "fluid": {
+    "fluid": "gradient:tin",
+    "amount": 1.0,
+    "temperature": 231.93
+  }
+}

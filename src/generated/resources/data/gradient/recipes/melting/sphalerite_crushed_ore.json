@@ -1,0 +1,16 @@
+{
+  "type": "gradient:melting",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 26,
+  "temperature": 1830.0,
+  "ingredient": {
+    "tag": "forge:crushed_ores/sphalerite"
+  },
+  "fluid": {
+    "fluid": "gradient:zinc",
+    "amount": 0.75,
+    "temperature": 1830.0
+  }
+}

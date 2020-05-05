@@ -1,16 +1,16 @@
 {
   "type": "gradient:melting",
   "stages": [
-    "gradient:age_1"
+    "gradient:age_2"
   ],
-  "ticks": 26,
+  "ticks": 31,
   "temperature": 1165.0,
   "ingredient": {
     "tag": "forge:ores/azurite"
   },
   "fluid": {
-    "fluid": "gradient:azurite",
-    "amount": 1.0,
+    "fluid": "gradient:copper",
+    "amount": 0.5,
     "temperature": 1165.0
   }
 }

@@ -1,0 +1,16 @@
+{
+  "type": "gradient:melting",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 30,
+  "temperature": 1548.0,
+  "ingredient": {
+    "tag": "forge:crushed_ores/hematite"
+  },
+  "fluid": {
+    "fluid": "gradient:iron",
+    "amount": 0.75,
+    "temperature": 1548.0
+  }
+}

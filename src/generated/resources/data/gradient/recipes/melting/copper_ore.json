@@ -1,16 +1,16 @@
 {
   "type": "gradient:melting",
   "stages": [
-    "gradient:age_1"
+    "gradient:age_2"
   ],
-  "ticks": 23,
+  "ticks": 27,
   "temperature": 1085.0,
   "ingredient": {
     "tag": "forge:ores/copper"
   },
   "fluid": {
     "fluid": "gradient:copper",
-    "amount": 1.0,
+    "amount": 0.5,
     "temperature": 1085.0
   }
 }

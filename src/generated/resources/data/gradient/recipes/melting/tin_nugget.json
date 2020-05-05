@@ -1,0 +1,16 @@
+{
+  "type": "gradient:melting",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 1,
+  "temperature": 231.93,
+  "ingredient": {
+    "tag": "forge:nuggets/tin"
+  },
+  "fluid": {
+    "fluid": "gradient:tin",
+    "amount": 0.11111111,
+    "temperature": 231.93
+  }
+}

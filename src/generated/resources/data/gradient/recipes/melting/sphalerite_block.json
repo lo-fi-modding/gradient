@@ -1,0 +1,16 @@
+{
+  "type": "gradient:melting",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 234,
+  "temperature": 1830.0,
+  "ingredient": {
+    "tag": "forge:storage_blocks/sphalerite"
+  },
+  "fluid": {
+    "fluid": "gradient:sphalerite",
+    "amount": 9.0,
+    "temperature": 1830.0
+  }
+}

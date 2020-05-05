@@ -1,0 +1,16 @@
+{
+  "type": "gradient:melting",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 405,
+  "temperature": 1188.0,
+  "ingredient": {
+    "tag": "forge:storage_blocks/pyrite"
+  },
+  "fluid": {
+    "fluid": "gradient:pyrite",
+    "amount": 9.0,
+    "temperature": 1188.0
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "gradient:melting",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 234,
+  "temperature": 1165.0,
+  "ingredient": {
+    "tag": "forge:storage_blocks/azurite"
+  },
+  "fluid": {
+    "fluid": "gradient:azurite",
+    "amount": 9.0,
+    "temperature": 1165.0
+  }
+}

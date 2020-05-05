@@ -1,0 +1,16 @@
+{
+  "type": "gradient:melting",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 45,
+  "temperature": 1188.0,
+  "ingredient": {
+    "item": "gradient:pyrite_hammer_head"
+  },
+  "fluid": {
+    "fluid": "gradient:pyrite",
+    "amount": 1.0,
+    "temperature": 1188.0
+  }
+}

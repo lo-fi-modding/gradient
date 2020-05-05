@@ -1,0 +1,16 @@
+{
+  "type": "gradient:melting",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 11,
+  "temperature": 327.5,
+  "ingredient": {
+    "item": "gradient:lead_hammer_head"
+  },
+  "fluid": {
+    "fluid": "gradient:lead",
+    "amount": 1.0,
+    "temperature": 327.5
+  }
+}

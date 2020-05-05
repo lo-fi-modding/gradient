@@ -1618,13 +1618,97 @@ public final class GradientDataGenerator {
       for(final Ore ore : Ores.all()) {
         GradientRecipeBuilder
           .melting()
-          .stage(GradientStages.AGE_1)
-          .ticks(ore.metal.meltTime)
+          .stage(GradientStages.AGE_2)
+          .ticks((int)(ore.metal.meltTime * 1.2f))
           .temperature(ore.metal.meltTemp)
-          .fluid(new GradientFluidStack(GradientFluids.METAL(ore.metal).get(), 1.0f, ore.metal.meltTemp))
+          .fluid(new GradientFluidStack(GradientFluids.METAL(ore.simple).get(), 0.5f, ore.metal.meltTemp))
           .ingredient(GradientTags.Items.ORE.get(ore))
           .addCriterion("has_ore", this.hasItem(GradientTags.Items.ORE.get(ore)))
           .build(finished, Gradient.loc("melting/" + ore.name + "_ore"));
+
+        GradientRecipeBuilder
+          .melting()
+          .stage(GradientStages.AGE_2)
+          .ticks(ore.metal.meltTime)
+          .temperature(ore.metal.meltTemp)
+          .fluid(new GradientFluidStack(GradientFluids.METAL(ore.simple).get(), 0.75f, ore.metal.meltTemp))
+          .ingredient(GradientTags.Items.CRUSHED_ORE.get(ore))
+          .addCriterion("has_crushed_ore", this.hasItem(GradientTags.Items.CRUSHED_ORE.get(ore)))
+          .build(finished, Gradient.loc("melting/" + ore.name + "_crushed_ore"));
+
+        GradientRecipeBuilder
+          .melting()
+          .stage(GradientStages.AGE_2)
+          .ticks(ore.metal.meltTime)
+          .temperature(ore.metal.meltTemp)
+          .fluid(new GradientFluidStack(GradientFluids.METAL(ore.simple).get(), 1.0f, ore.metal.meltTemp))
+          .ingredient(GradientTags.Items.PURIFIED_ORE.get(ore))
+          .addCriterion("has_purified_ore", this.hasItem(GradientTags.Items.PURIFIED_ORE.get(ore)))
+          .build(finished, Gradient.loc("melting/" + ore.name + "_purified_ore"));
+      }
+
+      for(final Metal metal : Metals.all()) {
+        GradientRecipeBuilder
+          .melting()
+          .stage(GradientStages.AGE_2)
+          .ticks(metal.meltTime)
+          .temperature(metal.meltTemp)
+          .fluid(new GradientFluidStack(GradientFluids.METAL(metal).get(), 1.0f, metal.meltTemp))
+          .ingredient(GradientTags.Items.DUST.get(metal))
+          .addCriterion("has_dust", this.hasItem(GradientTags.Items.DUST.get(metal)))
+          .build(finished, Gradient.loc("melting/" + metal.name + "_dust"));
+
+        GradientRecipeBuilder
+          .melting()
+          .stage(GradientStages.AGE_2)
+          .ticks(metal.meltTime)
+          .temperature(metal.meltTemp)
+          .fluid(new GradientFluidStack(GradientFluids.METAL(metal).get(), 1.0f, metal.meltTemp))
+          .ingredient(GradientTags.Items.INGOT.get(metal))
+          .addCriterion("has_ingot", this.hasItem(GradientTags.Items.INGOT.get(metal)))
+          .build(finished, Gradient.loc("melting/" + metal.name + "_ingot"));
+
+        GradientRecipeBuilder
+          .melting()
+          .stage(GradientStages.AGE_2)
+          .ticks((int)(metal.meltTime / 9.0f))
+          .temperature(metal.meltTemp)
+          .fluid(new GradientFluidStack(GradientFluids.METAL(metal).get(), 1.0f / 9.0f, metal.meltTemp))
+          .ingredient(GradientTags.Items.NUGGET.get(metal))
+          .addCriterion("has_nugget", this.hasItem(GradientTags.Items.NUGGET.get(metal)))
+          .build(finished, Gradient.loc("melting/" + metal.name + "_nugget"));
+
+        GradientRecipeBuilder
+          .melting()
+          .stage(GradientStages.AGE_2)
+          .ticks(metal.meltTime)
+          .temperature(metal.meltTemp)
+          .fluid(new GradientFluidStack(GradientFluids.METAL(metal).get(), 1.0f, metal.meltTemp))
+          .ingredient(GradientTags.Items.PLATE.get(metal))
+          .addCriterion("has_plate", this.hasItem(GradientTags.Items.PLATE.get(metal)))
+          .build(finished, Gradient.loc("melting/" + metal.name + "_plate"));
+
+        GradientRecipeBuilder
+          .melting()
+          .stage(GradientStages.AGE_2)
+          .ticks(metal.meltTime * 9)
+          .temperature(metal.meltTemp)
+          .fluid(new GradientFluidStack(GradientFluids.METAL(metal).get(), 9.0f, metal.meltTemp))
+          .ingredient(GradientTags.Items.STORAGE_BLOCK.get(metal))
+          .addCriterion("has_block", this.hasItem(GradientTags.Items.STORAGE_BLOCK.get(metal)))
+          .build(finished, Gradient.loc("melting/" + metal.name + "_block"));
+
+        for(final GradientCasts cast : GradientCasts.values()) {
+          GradientRecipeBuilder
+            .melting()
+            .stage(GradientStages.AGE_2)
+            .ticks((int)(metal.meltTime * cast.metalAmount))
+            .temperature(metal.meltTemp)
+            .fluid(new GradientFluidStack(GradientFluids.METAL(metal).get(), cast.metalAmount, metal.meltTemp))
+            .ingredient(GradientItems.CASTED(cast, metal).get())
+            .addCriterion("has_casted", this.hasItem(GradientItems.CASTED(cast, metal).get()))
+            .build(finished, Gradient.loc("melting/" + metal.name + '_' + cast.name));
+        }
       }
     }
   }

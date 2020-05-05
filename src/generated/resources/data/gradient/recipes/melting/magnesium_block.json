@@ -1,0 +1,16 @@
+{
+  "type": "gradient:melting",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 171,
+  "temperature": 650.0,
+  "ingredient": {
+    "tag": "forge:storage_blocks/magnesium"
+  },
+  "fluid": {
+    "fluid": "gradient:magnesium",
+    "amount": 9.0,
+    "temperature": 650.0
+  }
+}

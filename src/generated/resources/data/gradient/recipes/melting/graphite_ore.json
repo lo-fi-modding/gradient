@@ -1,16 +1,16 @@
 {
   "type": "gradient:melting",
   "stages": [
-    "gradient:age_1"
+    "gradient:age_2"
   ],
-  "ticks": 11,
+  "ticks": 13,
   "temperature": 3730.0,
   "ingredient": {
     "tag": "forge:ores/graphite"
   },
   "fluid": {
     "fluid": "gradient:graphite",
-    "amount": 1.0,
+    "amount": 0.5,
     "temperature": 3730.0
   }
 }

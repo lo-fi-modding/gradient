@@ -1,0 +1,16 @@
+{
+  "type": "gradient:melting",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 19,
+  "temperature": 650.0,
+  "ingredient": {
+    "item": "gradient:magnesium_mattock_head"
+  },
+  "fluid": {
+    "fluid": "gradient:magnesium",
+    "amount": 1.0,
+    "temperature": 650.0
+  }
+}

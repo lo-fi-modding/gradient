@@ -1,0 +1,16 @@
+{
+  "type": "gradient:melting",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 26,
+  "temperature": 1165.0,
+  "ingredient": {
+    "tag": "forge:ingots/azurite"
+  },
+  "fluid": {
+    "fluid": "gradient:azurite",
+    "amount": 1.0,
+    "temperature": 1165.0
+  }
+}

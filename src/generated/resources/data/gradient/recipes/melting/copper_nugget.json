@@ -1,0 +1,16 @@
+{
+  "type": "gradient:melting",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 2,
+  "temperature": 1085.0,
+  "ingredient": {
+    "tag": "forge:nuggets/copper"
+  },
+  "fluid": {
+    "fluid": "gradient:copper",
+    "amount": 0.11111111,
+    "temperature": 1085.0
+  }
+}

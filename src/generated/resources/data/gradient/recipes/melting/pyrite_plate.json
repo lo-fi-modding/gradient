@@ -1,0 +1,16 @@
+{
+  "type": "gradient:melting",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 45,
+  "temperature": 1188.0,
+  "ingredient": {
+    "tag": "forge:plates/pyrite"
+  },
+  "fluid": {
+    "fluid": "gradient:pyrite",
+    "amount": 1.0,
+    "temperature": 1188.0
+  }
+}

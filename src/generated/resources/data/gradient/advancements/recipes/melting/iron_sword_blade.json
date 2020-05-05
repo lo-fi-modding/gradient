@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "gradient:melting/iron_sword_blade"
+    ]
+  },
+  "criteria": {
+    "has_casted": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "gradient:iron_sword_blade"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "gradient:melting/iron_sword_blade"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_casted",
+      "has_the_recipe"
+    ]
+  ]
+}

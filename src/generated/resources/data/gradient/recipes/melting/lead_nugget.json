@@ -1,0 +1,16 @@
+{
+  "type": "gradient:melting",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 1,
+  "temperature": 327.5,
+  "ingredient": {
+    "tag": "forge:nuggets/lead"
+  },
+  "fluid": {
+    "fluid": "gradient:lead",
+    "amount": 0.11111111,
+    "temperature": 327.5
+  }
+}

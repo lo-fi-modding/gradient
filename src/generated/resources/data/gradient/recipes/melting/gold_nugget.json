@@ -1,0 +1,16 @@
+{
+  "type": "gradient:melting",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 1,
+  "temperature": 1064.0,
+  "ingredient": {
+    "tag": "forge:nuggets/gold"
+  },
+  "fluid": {
+    "fluid": "gradient:gold",
+    "amount": 0.11111111,
+    "temperature": 1064.0
+  }
+}

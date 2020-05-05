@@ -1,0 +1,16 @@
+{
+  "type": "gradient:melting",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 49,
+  "temperature": 1127.0,
+  "ingredient": {
+    "tag": "forge:crushed_ores/cassiterite"
+  },
+  "fluid": {
+    "fluid": "gradient:tin",
+    "amount": 0.75,
+    "temperature": 1127.0
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "gradient:melting",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 19,
+  "temperature": 419.53,
+  "ingredient": {
+    "tag": "forge:dusts/zinc"
+  },
+  "fluid": {
+    "fluid": "gradient:zinc",
+    "amount": 1.0,
+    "temperature": 419.53
+  }
+}
