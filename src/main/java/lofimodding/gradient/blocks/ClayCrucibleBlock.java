@@ -91,29 +91,20 @@ public class ClayCrucibleBlock extends HeatSinkerBlock {
         final GradientCasts cast = ((ClayCastBlock)heldBlock).cast;
 
         if(te.getMoltenMetal() == null) {
-          player.sendMessage(new TranslationTextComponent(this.getTranslationKey() + ".no_metal").applyTextStyle(TextFormatting.RED));
+          player.sendMessage(new TranslationTextComponent(this.getTranslationKey() + ".not_enough_metal", cast.metalAmount).applyTextStyle(TextFormatting.RED));
           return ActionResultType.SUCCESS;
         }
 
         final Metal metal = ((MetalFluid)te.getMoltenMetal().getFluid()).metal;
-        //TODO
-//        final int amount = cast.amountForMetal(metal);
-//
-//        if(te.getMoltenMetal().getAmount() < amount) {
-//          player.sendMessage(new TranslationTextComponent(this.getTranslationKey() + ".not_enough_metal", amount).applyTextStyle(TextFormatting.RED));
-//          return ActionResultType.SUCCESS;
-//        }
-//
-//        if(!cast.isValidForMetal(metal)) {
-//          player.sendMessage(new TranslationTextComponent(this.getTranslationKey() + ".metal_cant_make_tools").applyTextStyle(TextFormatting.RED));
-//          return ActionResultType.SUCCESS;
-//        }
-//
-//        if(!player.isCreative()) {
-//          stack.shrink(1);
-//
-//          te.consumeMetal(amount);
-//        }
+        if(te.getMoltenMetal().getAmount() < cast.metalAmount) {
+          player.sendMessage(new TranslationTextComponent(this.getTranslationKey() + ".not_enough_metal", cast.metalAmount).applyTextStyle(TextFormatting.RED));
+          return ActionResultType.SUCCESS;
+        }
+
+        if(!player.isCreative()) {
+          stack.shrink(1);
+          te.consumeMetal(cast.metalAmount);
+        }
 
         ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(GradientItems.CASTED(cast, metal).get()));
         return ActionResultType.SUCCESS;

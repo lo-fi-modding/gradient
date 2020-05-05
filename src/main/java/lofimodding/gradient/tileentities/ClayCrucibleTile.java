@@ -136,7 +136,7 @@ public class ClayCrucibleTile extends HeatSinkerTile implements INamedContainerP
     return Math.min((int)(this.getHeat() / 800 * 11) + 4, 15);
   }
 
-  public void consumeMetal(final int amount) {
+  public void consumeMetal(final float amount) {
     this.tank.drain(amount, IGradientFluidHandler.FluidAction.EXECUTE);
   }
 

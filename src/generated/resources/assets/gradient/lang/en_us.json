@@ -47,6 +47,7 @@
   "block.gradient.clay_cast_sword_blade": "Clay Cast (Sword Blade)",
   "block.gradient.clay_cast_sword_blade.tooltip": "Right click on a crucible to cast",
   "block.gradient.clay_crucible": "Clay Crucible",
+  "block.gradient.clay_crucible.not_enough_metal": "This cast requires %d B",
   "block.gradient.clay_crucible.tooltip": "Place on top of a firepit/furnace to use its heat",
   "block.gradient.clay_furnace": "Clay Oven",
   "block.gradient.clay_furnace.tooltip": "Right click on a firepit to attach",

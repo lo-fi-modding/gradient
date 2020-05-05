@@ -1030,6 +1030,7 @@ public final class GradientDataGenerator {
       this.add(GradientItems.CLAY_OVEN.get().getTranslationKey() + ".tooltip", "Place on top of a firepit/furnace to use its heat");
       this.add(GradientItems.CLAY_CRUCIBLE.get(), "Clay Crucible");
       this.add(GradientItems.CLAY_CRUCIBLE.get().getTranslationKey() + ".tooltip", "Place on top of a firepit/furnace to use its heat");
+      this.add(GradientItems.CLAY_CRUCIBLE.get().getTranslationKey() + ".not_enough_metal", "This cast requires %d B");
 
       this.add(GradientItems.INFINICOAL.get(), "Infinicoal (Debug Item)");
 
