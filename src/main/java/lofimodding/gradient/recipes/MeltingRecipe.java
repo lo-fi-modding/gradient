@@ -7,7 +7,6 @@ import com.google.gson.JsonParseException;
 import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientRecipeSerializers;
 import lofimodding.gradient.fluids.GradientFluidStack;
-import lofimodding.gradient.fluids.IGradientFluidHandler;
 import lofimodding.progression.Stage;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -97,21 +96,17 @@ public class MeltingRecipe implements IRecipe<IInventory> {
     return false;
   }
 
-  public boolean matches(final IItemHandler inv, final Set<Stage> stages, final int firstSlot, final int lastSlot, final IGradientFluidHandler fluidHandler) {
+  public boolean matches(final IItemHandler inv, final Set<Stage> stages, final int firstSlot, final int lastSlot) {
     for(final Stage stage : this.stages) {
       if(!stages.contains(stage)) {
         return false;
       }
     }
 
-    return this.matches(inv, firstSlot, lastSlot, fluidHandler);
+    return this.matches(inv, firstSlot, lastSlot);
   }
 
-  public boolean matches(final IItemHandler inv, final int firstSlot, final int lastSlot, final IGradientFluidHandler fluidHandler) {
-    if(fluidHandler.drain(this.output, IGradientFluidHandler.FluidAction.SIMULATE).getAmount() < this.output.getAmount()) {
-      return false;
-    }
-
+  public boolean matches(final IItemHandler inv, final int firstSlot, final int lastSlot) {
     RECIPE_ITEM_HELPER.clear();
     INPUT_STACKS.clear();
 
