@@ -44,7 +44,7 @@ public final class GradientItems {
 
   static {
     for(final Ore ore : Ores.all()) {
-      ORES.put(ore, REGISTRY.register(GradientIds.ORE(ore), () -> new BlockItem(GradientBlocks.ORE(ore).get(), new Item.Properties().group(GROUP))));
+      ORES.put(ore, REGISTRY.register(GradientIds.ORE(ore), () -> new BlockItem(GradientBlocks.ORE(ore).get(), new Item.Properties().group(GROUP).maxStackSize(16))));
     }
   }
 
