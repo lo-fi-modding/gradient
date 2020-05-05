@@ -1,6 +1,7 @@
 package lofimodding.gradient.fluids;
 
 import lofimodding.gradient.Gradient;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -35,6 +36,7 @@ public class GradientFluid extends ForgeRegistryEntry<GradientFluid> {
   }
 
   private String translationKey;
+  private ResourceLocation stillTexture;
 
   public String getTranslationKey() {
     if(this.translationKey == null) {
@@ -44,7 +46,27 @@ public class GradientFluid extends ForgeRegistryEntry<GradientFluid> {
     return this.translationKey;
   }
 
+  protected void setTranslationKey(final String translationKey) {
+    this.translationKey = translationKey;
+  }
+
   public ITextComponent getName(final GradientFluidStack stack) {
     return new TranslationTextComponent(this.getTranslationKey());
+  }
+
+  public ResourceLocation getStillTexture(final GradientFluidStack stack) {
+    if(this.stillTexture == null) {
+      this.stillTexture = new ResourceLocation(this.getRegistryName().getNamespace(), "fluid/" + this.getRegistryName().getPath() + "_still");
+    }
+
+    return this.stillTexture;
+  }
+
+  protected void setStillTexture(final ResourceLocation texture) {
+    this.stillTexture = texture;
+  }
+
+  public int getColour(final GradientFluidStack stack) {
+    return 0xffffffff;
   }
 }

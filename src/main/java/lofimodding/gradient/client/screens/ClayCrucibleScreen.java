@@ -3,10 +3,12 @@ package lofimodding.gradient.client.screens;
 import com.mojang.blaze3d.systems.RenderSystem;
 import lofimodding.gradient.Gradient;
 import lofimodding.gradient.GradientBlocks;
+import lofimodding.gradient.client.screens.widgets.GradientFluidWidget;
 import lofimodding.gradient.containers.ClayCrucibleContainer;
 import lofimodding.gradient.containers.GradientContainer;
 import lofimodding.gradient.tileentities.ClayCrucibleTile;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
@@ -17,14 +19,20 @@ public class ClayCrucibleScreen extends ContainerScreen<ClayCrucibleContainer> {
 
   private final ClayCrucibleTile te;
   private final PlayerInventory playerInv;
-  //TODO all commented code
-//  private final FluidRenderer metalRenderer;
 
   public ClayCrucibleScreen(final ClayCrucibleContainer container, final PlayerInventory playerInv, final ITextComponent text) {
     super(container, playerInv, text);
     this.te = container.crucible;
     this.playerInv = playerInv;
-//    this.metalRenderer = new FluidRenderer(this.te.tank, 148, 19, 12, 47);
+  }
+
+  @Override
+  protected void init() {
+    super.init();
+
+    final int x = (this.width  - this.xSize) / 2;
+    final int y = (this.height - this.ySize) / 2;
+    this.addButton(new GradientFluidWidget(this, this.te.tank, x + 148, y + 19, 12, 47));
   }
 
   @Override
@@ -41,11 +49,6 @@ public class ClayCrucibleScreen extends ContainerScreen<ClayCrucibleContainer> {
     final int x = (this.width  - this.xSize) / 2;
     final int y = (this.height - this.ySize) / 2;
     this.blit(x, y, 0, 0, this.xSize, this.ySize);
-
-//    this.metalRenderer.draw();
-
-    this.minecraft.getTextureManager().bindTexture(BG_TEXTURE);
-//    this.blit(x + this.metalRenderer.x, y + this.metalRenderer.y, 177, 0, this.metalRenderer.w, this.metalRenderer.h);
   }
 
   @Override
@@ -73,8 +76,10 @@ public class ClayCrucibleScreen extends ContainerScreen<ClayCrucibleContainer> {
   protected void renderHoveredToolTip(final int mouseX, final int mouseY) {
     super.renderHoveredToolTip(mouseX, mouseY);
 
-//    if(this.metalRenderer.isMouseOver(mouseX, mouseY)) {
-//      this.renderFluidTankToolTip(this.te.tank, mouseX, mouseY);
-//    }
+    for(final Widget widget : this.buttons) {
+      if(widget.isMouseOver(mouseX, mouseY)) {
+        widget.renderToolTip(mouseX, mouseY);
+      }
+    }
   }
 }

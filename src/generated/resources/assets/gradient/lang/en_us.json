@@ -293,6 +293,7 @@
   "item.gradient.zinc_sword_blade": "Zinc Sword Blade",
   "meltable.amount": "Amount: %d B",
   "meltable.fluid": "Fluid: %s",
+  "meltable.fraction": "%d/%d B",
   "meltable.melt_temp": "Melting Point: %f \u00B0C",
   "meltable.melt_time": "Melting Time: %d ticks",
   "screens.gradient.unhardened_clay_cast": "Cast Selection",

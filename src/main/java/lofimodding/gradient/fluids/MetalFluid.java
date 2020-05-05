@@ -1,5 +1,6 @@
 package lofimodding.gradient.fluids;
 
+import lofimodding.gradient.Gradient;
 import lofimodding.gradient.science.Metal;
 
 public class MetalFluid extends GradientFluid {
@@ -7,5 +8,11 @@ public class MetalFluid extends GradientFluid {
 
   public MetalFluid(final Metal metal) {
     this.metal = metal;
+    this.setStillTexture(Gradient.loc("fluid/metal_still"));
+  }
+
+  @Override
+  public int getColour(final GradientFluidStack stack) {
+    return this.metal.colourDiffuse;
   }
 }

@@ -70,6 +70,14 @@ public class GradientFluidStack {
     return this.getFluid().getName(this);
   }
 
+  public ResourceLocation getStill() {
+    return this.getFluid().getStillTexture(this);
+  }
+
+  public int getColour() {
+    return this.getFluid().getColour(this);
+  }
+
   public GradientFluid getFluid() {
     return this.fluidDelegate.get();
   }

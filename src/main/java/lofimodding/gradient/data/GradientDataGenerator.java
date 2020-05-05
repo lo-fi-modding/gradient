@@ -915,6 +915,7 @@ public final class GradientDataGenerator {
       this.add("meltable.melt_time", "Melting Time: %d ticks");
       this.add("meltable.amount", "Amount: %d B");
       this.add("meltable.fluid", "Fluid: %s");
+      this.add("meltable.fraction", "%d/%d B");
 
       this.add(GradientBlocks.PEBBLE.get(), "Pebble");
       this.add(GradientItems.PEBBLE.get(), "Pebble");
