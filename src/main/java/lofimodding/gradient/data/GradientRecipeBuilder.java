@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lofimodding.gradient.GradientRecipeSerializers;
+import lofimodding.gradient.fluids.GradientFluidStack;
 import lofimodding.progression.Stage;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRewards;
@@ -70,6 +71,10 @@ public final class GradientRecipeBuilder {
 
   public static Drying drying(final IItemProvider item, final int amount) {
     return new Drying(item, amount);
+  }
+
+  public static Melting melting() {
+    return new Melting();
   }
 
   public static class Grinding {
@@ -1037,6 +1042,160 @@ public final class GradientRecipeBuilder {
       @Override
       public IRecipeSerializer<?> getSerializer() {
         return GradientRecipeSerializers.DRYING.get();
+      }
+
+      @Override
+      public ResourceLocation getID() {
+        return this.id;
+      }
+
+      @Override
+      @Nullable
+      public JsonObject getAdvancementJson() {
+        return this.advancementBuilder.serialize();
+      }
+
+      @Override
+      @Nullable
+      public ResourceLocation getAdvancementID() {
+        return this.advancementId;
+      }
+    }
+  }
+
+  public static class Melting {
+    private final Set<Stage> stages = new HashSet<>();
+    private int ticks;
+    private float temperature;
+    private final List<Ingredient> ingredients = Lists.newArrayList();
+    private GradientFluidStack fluid = GradientFluidStack.EMPTY;
+    private final Advancement.Builder advancementBuilder = Advancement.Builder.builder();
+    private String group;
+
+    public Melting stage(final Stage stage) {
+      this.stages.add(stage);
+      return this;
+    }
+
+    public Melting ticks(final int ticks) {
+      this.ticks = ticks;
+      return this;
+    }
+
+    public Melting temperature(final float temperature) {
+      this.temperature = temperature;
+      return this;
+    }
+
+    public Melting addIngredient(final Tag<Item> tag) {
+      return this.addIngredient(Ingredient.fromTag(tag));
+    }
+
+    public Melting addIngredient(final IItemProvider item) {
+      return this.addIngredient(item, 1);
+    }
+
+    public Melting addIngredient(final IItemProvider item, final int amount) {
+      for(int i = 0; i < amount; ++i) {
+        this.addIngredient(Ingredient.fromItems(item));
+      }
+
+      return this;
+    }
+
+    public Melting addIngredient(final Ingredient ingredient) {
+      return this.addIngredient(ingredient, 1);
+    }
+
+    public Melting addIngredient(final Ingredient ingredient, final int amount) {
+      for(int i = 0; i < amount; ++i) {
+        this.ingredients.add(ingredient);
+      }
+
+      return this;
+    }
+
+    public Melting fluid(final GradientFluidStack fluid) {
+      this.fluid = fluid;
+      return this;
+    }
+
+    public Melting addCriterion(final String key, final ICriterionInstance criterion) {
+      this.advancementBuilder.withCriterion(key, criterion);
+      return this;
+    }
+
+    public Melting setGroup(final String group) {
+      this.group = group;
+      return this;
+    }
+
+    public void build(final Consumer<IFinishedRecipe> finished, final String save) {
+      this.build(finished, new ResourceLocation(save));
+    }
+
+    public void build(final Consumer<IFinishedRecipe> finished, final ResourceLocation save) {
+      this.validate(save);
+      this.advancementBuilder.withParentId(new ResourceLocation("recipes/root")).withCriterion("has_the_recipe", new RecipeUnlockedTrigger.Instance(save)).withRewards(AdvancementRewards.Builder.recipe(save)).withRequirementsStrategy(IRequirementsStrategy.OR);
+      finished.accept(new Result(save, this.stages, this.ticks, this.temperature, this.group == null ? "" : this.group, this.ingredients, this.fluid, this.advancementBuilder, new ResourceLocation(save.getNamespace(), "recipes/" + save.getPath())));
+    }
+
+    private void validate(final ResourceLocation name) {
+      if(this.advancementBuilder.getCriteria().isEmpty()) {
+        throw new IllegalStateException("No way of obtaining recipe " + name);
+      }
+    }
+
+    public static class Result implements IFinishedRecipe {
+      private final ResourceLocation id;
+      private final Set<Stage> stages;
+      private final int ticks;
+      private final float temperature;
+      private final String group;
+      private final List<Ingredient> ingredients;
+      private final GradientFluidStack output;
+      private final Advancement.Builder advancementBuilder;
+      private final ResourceLocation advancementId;
+
+      protected Result(final ResourceLocation id, final Set<Stage> stages, final int ticks, final float temperature, final String group, final List<Ingredient> ingredients, final GradientFluidStack output, final Advancement.Builder advancementBuilder, final ResourceLocation advancementId) {
+        this.id = id;
+        this.stages = stages;
+        this.ticks = ticks;
+        this.temperature = temperature;
+        this.group = group;
+        this.ingredients = ingredients;
+        this.output = output;
+        this.advancementBuilder = advancementBuilder;
+        this.advancementId = advancementId;
+      }
+
+      @Override
+      public void serialize(final JsonObject json) {
+        if(!this.group.isEmpty()) {
+          json.addProperty("group", this.group);
+        }
+
+        final JsonArray stages = new JsonArray();
+        for(final Stage stage : this.stages) {
+          stages.add(stage.getRegistryName().toString());
+        }
+        json.add("stages", stages);
+
+        json.addProperty("ticks", this.ticks);
+        json.addProperty("temperature", this.temperature);
+
+        final JsonArray array = new JsonArray();
+        for(final Ingredient ingredient : this.ingredients) {
+          array.add(ingredient.serialize());
+        }
+
+        json.add("ingredients", array);
+        json.add("fluid", this.output.write(new JsonObject()));
+      }
+
+      @Override
+      public IRecipeSerializer<?> getSerializer() {
+        return GradientRecipeSerializers.MELTING.get();
       }
 
       @Override

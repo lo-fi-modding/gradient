@@ -1,0 +1,18 @@
+{
+  "type": "gradient:melting",
+  "stages": [
+    "gradient:age_1"
+  ],
+  "ticks": 15,
+  "temperature": 1064.0,
+  "ingredients": [
+    {
+      "tag": "forge:ores/gold"
+    }
+  ],
+  "fluid": {
+    "fluid": "gradient:gold",
+    "amount": 1.0,
+    "temperature": 1064.0
+  }
+}

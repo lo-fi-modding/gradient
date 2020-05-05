@@ -2,6 +2,7 @@ package lofimodding.gradient.science;
 
 public class Metal {
   public final String name;
+  public final int meltTime;
   public final float meltTemp;
   public final float hardness;
   public final float weight;
@@ -18,6 +19,7 @@ public class Metal {
 
   public Metal(final String name, final float meltTemp, final float hardness, final float weight, final int harvestLevel, final int colourDiffuse, final int colourSpecular, final int colourShadow1, final int colourShadow2, final int colourEdge1, final int colourEdge2, final int colourEdge3) {
     this.name = name;
+    this.meltTime = Math.round(hardness * 7.5f);
     this.meltTemp = meltTemp;
     this.hardness = hardness;
     this.weight = weight;

@@ -16,7 +16,6 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.RecipeItemHelper;
-import net.minecraft.item.crafting.ShapedRecipe;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
@@ -41,18 +40,16 @@ public class MeltingRecipe implements IRecipe<IInventory> {
   private final NonNullList<Stage> stages;
   private final int ticks;
   private final float temperature;
-  private final ItemStack result;
   private final NonNullList<Ingredient> ingredients;
   private final GradientFluidStack output;
   private final boolean simple;
 
-  public MeltingRecipe(final ResourceLocation id, final String group, final NonNullList<Stage> stages, final int ticks, final float temperature, final ItemStack result, final NonNullList<Ingredient> ingredients, final GradientFluidStack output) {
+  public MeltingRecipe(final ResourceLocation id, final String group, final NonNullList<Stage> stages, final int ticks, final float temperature, final NonNullList<Ingredient> ingredients, final GradientFluidStack output) {
     this.id = id;
     this.group = group;
     this.stages = stages;
     this.ticks = ticks;
     this.temperature = temperature;
-    this.result = result;
     this.ingredients = ingredients;
     this.simple = ingredients.stream().allMatch(Ingredient::isSimple);
     this.output = output;
@@ -82,7 +79,7 @@ public class MeltingRecipe implements IRecipe<IInventory> {
 
   @Override
   public ItemStack getRecipeOutput() {
-    return this.result;
+    return ItemStack.EMPTY;
   }
 
   @Override
@@ -146,7 +143,7 @@ public class MeltingRecipe implements IRecipe<IInventory> {
 
   @Override
   public ItemStack getCraftingResult(final IInventory inv) {
-    return this.result.copy();
+    return ItemStack.EMPTY;
   }
 
   @Override
@@ -188,8 +185,7 @@ public class MeltingRecipe implements IRecipe<IInventory> {
       }
 
       final GradientFluidStack fluid = GradientFluidStack.read(JSONUtils.getJsonObject(json, "fluid"));
-      final ItemStack result = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
-      return new MeltingRecipe(id, group, stages, ticks, temperature, result, ingredients, fluid);
+      return new MeltingRecipe(id, group, stages, ticks, temperature, ingredients, fluid);
     }
 
     private static NonNullList<Ingredient> readIngredients(final JsonArray json) {
@@ -227,9 +223,8 @@ public class MeltingRecipe implements IRecipe<IInventory> {
       }
 
       final GradientFluidStack fluid = GradientFluidStack.read(buffer);
-      final ItemStack result = buffer.readItemStack();
 
-      return new MeltingRecipe(id, group, stages, ticks, temperature, result, ingredients, fluid);
+      return new MeltingRecipe(id, group, stages, ticks, temperature, ingredients, fluid);
     }
 
     @Override
@@ -250,7 +245,6 @@ public class MeltingRecipe implements IRecipe<IInventory> {
       }
 
       recipe.output.write(buffer);
-      buffer.writeItemStack(recipe.result);
     }
   }
 }

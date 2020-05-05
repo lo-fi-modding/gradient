@@ -15,6 +15,8 @@ import lofimodding.gradient.blocks.DryingRackBlock;
 import lofimodding.gradient.blocks.FirepitBlock;
 import lofimodding.gradient.blocks.MetalBlock;
 import lofimodding.gradient.blocks.MixingBasinBlock;
+import lofimodding.gradient.fluids.GradientFluidStack;
+import lofimodding.gradient.fluids.GradientFluids;
 import lofimodding.gradient.items.PebbleItem;
 import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.science.Metals;
@@ -1131,6 +1133,7 @@ public final class GradientDataGenerator {
       this.registerCookingRecipes(finished);
       this.registerHardeningRecipes(finished);
       this.registerDryingRecipes(finished);
+      this.registerMeltingRecipes(finished);
 
       ShapedRecipeBuilder
         .shapedRecipe(GradientItems.SALT_BLOCK.get())
@@ -1592,6 +1595,20 @@ public final class GradientDataGenerator {
         .addIngredient(GradientItems.TANNED_HIDE.get())
         .addCriterion("has_tanned_hide", this.hasItem(GradientItems.TANNED_HIDE.get()))
         .build(finished, Gradient.loc("drying/age2/leather"));
+    }
+
+    private void registerMeltingRecipes(final Consumer<IFinishedRecipe> finished) {
+      for(final Ore ore : Ores.all()) {
+        GradientRecipeBuilder
+          .melting()
+          .stage(GradientStages.AGE_1)
+          .ticks(ore.metal.meltTime)
+          .temperature(ore.metal.meltTemp)
+          .fluid(new GradientFluidStack(GradientFluids.METAL(ore.metal).get(), 1.0f, ore.metal.meltTemp))
+          .addIngredient(GradientTags.Items.ORE.get(ore))
+          .addCriterion("has_ore", this.hasItem(GradientTags.Items.ORE.get(ore)))
+          .build(finished, Gradient.loc("melting/" + ore.name + "_ore"));
+      }
     }
   }
 

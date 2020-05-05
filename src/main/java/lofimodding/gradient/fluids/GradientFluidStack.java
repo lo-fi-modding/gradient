@@ -175,15 +175,23 @@ public class GradientFluidStack {
     return this.isFluidEqual((GradientFluidStack)o);
   }
 
-  public void write(final CompoundNBT nbt) {
+  public CompoundNBT write(final CompoundNBT nbt) {
     nbt.putString("fluid", this.getFluid().getRegistryName().toString());
     nbt.putFloat("amount", this.amount);
     nbt.putFloat("temperature", this.temperature);
+    return nbt;
   }
 
   public void write(final PacketBuffer buffer) {
     buffer.writeString(this.getFluid().getRegistryName().toString(), 100);
     buffer.writeFloat(this.amount);
     buffer.writeFloat(this.temperature);
+  }
+
+  public JsonObject write(final JsonObject json) {
+    json.addProperty("fluid", this.getFluid().getRegistryName().toString());
+    json.addProperty("amount", this.amount);
+    json.addProperty("temperature", this.temperature);
+    return json;
   }
 }
