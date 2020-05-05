@@ -48,19 +48,19 @@ public final class GradientItems {
     }
   }
 
-  private static final Map<Metal, RegistryObject<MetalItem>> CRUSHED = new HashMap<>();
+  private static final Map<Ore, RegistryObject<MetalItem>> CRUSHED = new HashMap<>();
 
   static {
-    for(final Metal metal : Metals.all()) {
-      CRUSHED.put(metal, REGISTRY.register(GradientIds.CRUSHED(metal), () -> new MetalItem(metal, new Item.Properties().group(GROUP))));
+    for(final Ore ore : Ores.all()) {
+      CRUSHED.put(ore, REGISTRY.register(GradientIds.CRUSHED(ore), () -> new MetalItem(ore.metal, new Item.Properties().group(GROUP))));
     }
   }
 
-  private static final Map<Metal, RegistryObject<MetalItem>> PURIFIED = new HashMap<>();
+  private static final Map<Ore, RegistryObject<MetalItem>> PURIFIED = new HashMap<>();
 
   static {
-    for(final Metal metal : Metals.all()) {
-      PURIFIED.put(metal, REGISTRY.register(GradientIds.PURIFIED(metal), () -> new MetalItem(metal, new Item.Properties().group(GROUP))));
+    for(final Ore ore : Ores.all()) {
+      PURIFIED.put(ore, REGISTRY.register(GradientIds.PURIFIED(ore), () -> new MetalItem(ore.metal, new Item.Properties().group(GROUP))));
     }
   }
 
@@ -196,12 +196,12 @@ public final class GradientItems {
     return ORES.get(ore);
   }
 
-  public static RegistryObject<MetalItem> CRUSHED(final Metal metal) {
-    return CRUSHED.get(metal);
+  public static RegistryObject<MetalItem> CRUSHED(final Ore ore) {
+    return CRUSHED.get(ore);
   }
 
-  public static RegistryObject<MetalItem> PURIFIED(final Metal metal) {
-    return PURIFIED.get(metal);
+  public static RegistryObject<MetalItem> PURIFIED(final Ore ore) {
+    return PURIFIED.get(ore);
   }
 
   public static RegistryObject<MetalItem> DUST(final Metal metal) {

@@ -62,16 +62,16 @@ public final class GradientTags {
     }));
 
     public static final Tag<Item> CRUSHED_ORES = forgeTag("crushed_ores");
-    public static final Map<Metal, Tag<Item>> CRUSHED_ORE = Collections.unmodifiableMap(Util.make(new LinkedHashMap<>(), tags -> {
-      for(final Metal metal : Metals.all()) {
-        tags.put(metal, forgeTag("crushed_ores/" + metal.name));
+    public static final Map<Ore, Tag<Item>> CRUSHED_ORE = Collections.unmodifiableMap(Util.make(new LinkedHashMap<>(), tags -> {
+      for(final Ore ore : Ores.all()) {
+        tags.put(ore, forgeTag("crushed_ores/" + ore.name));
       }
     }));
 
     public static final Tag<Item> PURIFIED_ORES = forgeTag("purified_ores");
-    public static final Map<Metal, Tag<Item>> PURIFIED_ORE = Collections.unmodifiableMap(Util.make(new LinkedHashMap<>(), tags -> {
-      for(final Metal metal : Metals.all()) {
-        tags.put(metal, forgeTag("purified_ores/" + metal.name));
+    public static final Map<Ore, Tag<Item>> PURIFIED_ORE = Collections.unmodifiableMap(Util.make(new LinkedHashMap<>(), tags -> {
+      for(final Ore ore : Ores.all()) {
+        tags.put(ore, forgeTag("purified_ores/" + ore.name));
       }
     }));
 

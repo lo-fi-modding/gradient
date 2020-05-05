@@ -78,11 +78,11 @@ public final class GradientClient {
     for(final Ore ore : Ores.all()) {
       blockColors.register(GradientClient::metalBlockColour, GradientBlocks.ORE(ore).get());
       itemColors.register(GradientClient::metalBlockColour, GradientItems.ORE(ore).get());
+      itemColors.register(GradientClient::metalItemColour, GradientItems.CRUSHED(ore).get());
+      itemColors.register(GradientClient::metalItemColour, GradientItems.PURIFIED(ore).get());
     }
 
     for(final Metal metal : Metals.all()) {
-      itemColors.register(GradientClient::metalItemColour, GradientItems.CRUSHED(metal).get());
-      itemColors.register(GradientClient::metalItemColour, GradientItems.PURIFIED(metal).get());
       itemColors.register(GradientClient::metalItemColour, GradientItems.INGOT(metal).get());
       itemColors.register(GradientClient::metalItemColour, GradientItems.DUST(metal).get());
       itemColors.register(GradientClient::metalItemColour, GradientItems.NUGGET(metal).get());

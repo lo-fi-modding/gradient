@@ -1,5 +1,6 @@
 package lofimodding.gradient;
 
+import com.sun.swing.internal.plaf.metal.resources.metal;
 import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.science.Ore;
 
@@ -16,12 +17,12 @@ public final class GradientIds {
     return ore.metal.name + "_ore";
   }
 
-  public static String CRUSHED(final Metal metal) {
-    return metal.name + "_crushed";
+  public static String CRUSHED(final Ore ore) {
+    return ore.metal.name + "_crushed";
   }
 
-  public static String PURIFIED(final Metal metal) {
-    return metal.name + "_purified";
+  public static String PURIFIED(final Ore ore) {
+    return ore.metal.name + "_purified";
   }
 
   public static String DUST(final Metal metal) {

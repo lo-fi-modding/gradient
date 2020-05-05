@@ -574,10 +574,6 @@ public final class GradientDataGenerator {
     protected void registerModels() {
       this.singleTexture(GradientIds.PEBBLE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.PEBBLE));
 
-      for(final Ore ore : Ores.all()) {
-        this.getBuilder(GradientIds.ORE(ore)).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.ORE(ore))));
-      }
-
       this.getBuilder("crushed")
         .parent(new ModelFile.ExistingModelFile(this.mcLoc("item/generated"), this.existingFileHelper))
         .texture("layer0", this.modLoc("item/crushed/background"))
@@ -650,6 +646,21 @@ public final class GradientDataGenerator {
         .texture("layer7", this.modLoc("item/plate/edge_3"))
       ;
 
+      for(final Ore ore : Ores.all()) {
+        this.getBuilder(GradientIds.ORE(ore)).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.ORE(ore))));
+        this.getBuilder(GradientIds.CRUSHED(ore)).parent(this.getExistingFile(this.modLoc("item/crushed")));
+        this.getBuilder(GradientIds.PURIFIED(ore)).parent(this.getExistingFile(this.modLoc("item/purified")));
+      }
+
+      for(final Metal metal : Metals.all()) {
+        this.getBuilder(GradientIds.DUST(metal)).parent(this.getExistingFile(this.modLoc("item/dust")));
+        this.getBuilder(GradientIds.INGOT(metal)).parent(this.getExistingFile(this.modLoc("item/ingot")));
+        this.getBuilder(GradientIds.NUGGET(metal)).parent(this.getExistingFile(this.modLoc("item/nugget")));
+        this.getBuilder(GradientIds.PLATE(metal)).parent(this.getExistingFile(this.modLoc("item/plate")));
+
+        this.getBuilder(GradientIds.METAL_BLOCK(metal)).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.METAL_BLOCK(metal))));
+      }
+
       for(final GradientCasts cast : GradientCasts.values()) {
         this.getBuilder(cast.name)
           .parent(new ModelFile.ExistingModelFile(this.mcLoc("item/generated"), this.existingFileHelper))
@@ -666,17 +677,6 @@ public final class GradientDataGenerator {
         for(final Metal metal : Metals.all()) {
           this.getBuilder(GradientIds.CASTED(cast, metal)).parent(this.getExistingFile(this.modLoc("item/" + cast.name)));
         }
-      }
-
-      for(final Metal metal : Metals.all()) {
-        this.getBuilder(GradientIds.CRUSHED(metal)).parent(this.getExistingFile(this.modLoc("item/crushed")));
-        this.getBuilder(GradientIds.PURIFIED(metal)).parent(this.getExistingFile(this.modLoc("item/purified")));
-        this.getBuilder(GradientIds.DUST(metal)).parent(this.getExistingFile(this.modLoc("item/dust")));
-        this.getBuilder(GradientIds.INGOT(metal)).parent(this.getExistingFile(this.modLoc("item/ingot")));
-        this.getBuilder(GradientIds.NUGGET(metal)).parent(this.getExistingFile(this.modLoc("item/nugget")));
-        this.getBuilder(GradientIds.PLATE(metal)).parent(this.getExistingFile(this.modLoc("item/plate")));
-
-        this.getBuilder(GradientIds.METAL_BLOCK(metal)).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.METAL_BLOCK(metal))));
       }
 
       this.getBuilder(GradientIds.SALT_BLOCK).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.SALT_BLOCK)));
@@ -918,15 +918,17 @@ public final class GradientDataGenerator {
       this.add(GradientItems.PEBBLE.get(), "Pebble");
 
       for(final Ore ore : Ores.all()) {
-        this.add(GradientBlocks.PEBBLE(ore).get(), StringUtils.capitalize(ore.name) + " Pebble");
-        this.add(GradientBlocks.ORE(ore).get(), StringUtils.capitalize(ore.name) + " Ore");
+        final String oreName = StringUtils.capitalize(ore.name);
+
+        this.add(GradientBlocks.PEBBLE(ore).get(), oreName + " Pebble");
+        this.add(GradientBlocks.ORE(ore).get(), oreName + " Ore");
+        this.add(GradientItems.CRUSHED(ore).get(), "Crushed " + oreName + " Ore");
+        this.add(GradientItems.PURIFIED(ore).get(), "Purified " + oreName + " Ore");
       }
 
       for(final Metal metal : Metals.all()) {
         final String metalName = StringUtils.capitalize(metal.name);
 
-        this.add(GradientItems.CRUSHED(metal).get(), "Crushed " + metalName + " Ore");
-        this.add(GradientItems.PURIFIED(metal).get(), "Purified " + metalName + " Ore");
         this.add(GradientItems.DUST(metal).get(), metalName + " Dust");
         this.add(GradientItems.INGOT(metal).get(), metalName + " Ingot");
         this.add(GradientItems.NUGGET(metal).get(), metalName + " Nugget");
@@ -1096,15 +1098,15 @@ public final class GradientDataGenerator {
       for(final Ore ore : Ores.all()) {
         this.getBuilder(GradientTags.Items.ORE.get(ore)).add(GradientItems.ORE(ore).get());
         this.getBuilder(Tags.Items.ORES).add(GradientTags.Items.ORE.get(ore));
+
+        this.getBuilder(GradientTags.Items.CRUSHED_ORE.get(ore)).add(GradientItems.CRUSHED(ore).get());
+        this.getBuilder(GradientTags.Items.CRUSHED_ORES).add(GradientTags.Items.CRUSHED_ORE.get(ore));
+
+        this.getBuilder(GradientTags.Items.PURIFIED_ORE.get(ore)).add(GradientItems.PURIFIED(ore).get());
+        this.getBuilder(GradientTags.Items.PURIFIED_ORES).add(GradientTags.Items.PURIFIED_ORE.get(ore));
       }
 
       for(final Metal metal : Metals.all()) {
-        this.getBuilder(GradientTags.Items.CRUSHED_ORE.get(metal)).add(GradientItems.CRUSHED(metal).get());
-        this.getBuilder(GradientTags.Items.CRUSHED_ORES).add(GradientTags.Items.CRUSHED_ORE.get(metal));
-
-        this.getBuilder(GradientTags.Items.PURIFIED_ORE.get(metal)).add(GradientItems.PURIFIED(metal).get());
-        this.getBuilder(GradientTags.Items.PURIFIED_ORES).add(GradientTags.Items.PURIFIED_ORE.get(metal));
-
         this.getBuilder(GradientTags.Items.DUST.get(metal)).add(GradientItems.DUST(metal).get());
         this.getBuilder(Tags.Items.DUSTS).add(GradientTags.Items.DUST.get(metal));
 
