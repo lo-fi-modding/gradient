@@ -37,27 +37,25 @@ public class GradientFluidWidget extends Widget {
 
   @Override
   public void renderButton(final int mouseX, final int mouseY, final float partialTicks) {
-    final GradientFluidStack stack = this.tank.getFluidStack();
-
-    if(stack.isEmpty()) {
-      return;
-    }
-
     final Minecraft mc = Minecraft.getInstance();
 
-    final GradientFluid fluid = stack.getFluid();
-    final ResourceLocation textureLoc = fluid.getStillTexture(stack);
-    final TextureAtlasSprite sprite = mc.getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(textureLoc);
-    final float renderHeight = this.height * MathHelper.clamp(this.tank.getFluidAmount() / this.tank.getCapacity(), 0.0f, 1.0f);
-    final int color = fluid.getColour(stack);
+    final GradientFluidStack stack = this.tank.getFluidStack();
 
-    mc.textureManager.bindTexture(new ResourceLocation(textureLoc.getNamespace(), "textures/" + textureLoc.getPath() + ".png"));
-    final BufferBuilder buffer = Tessellator.getInstance().getBuffer();
-    buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
-    RenderUtils.renderTexture(this.x, (this.y + this.height) - renderHeight, this.getBlitOffset(), this.width, renderHeight, sprite, color, 1.0f, buffer);
-    buffer.finishDrawing();
-    RenderSystem.enableAlphaTest();
-    WorldVertexBufferUploader.draw(buffer);
+    if(!stack.isEmpty()) {
+      final GradientFluid fluid = stack.getFluid();
+      final ResourceLocation textureLoc = fluid.getStillTexture(stack);
+      final TextureAtlasSprite sprite = mc.getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(textureLoc);
+      final float renderHeight = this.height * MathHelper.clamp(this.tank.getFluidAmount() / this.tank.getCapacity(), 0.0f, 1.0f);
+      final int color = fluid.getColour(stack);
+
+      mc.textureManager.bindTexture(new ResourceLocation(textureLoc.getNamespace(), "textures/" + textureLoc.getPath() + ".png"));
+      final BufferBuilder buffer = Tessellator.getInstance().getBuffer();
+      buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
+      RenderUtils.renderTexture(this.x, (this.y + this.height) - renderHeight, this.getBlitOffset(), this.width, renderHeight, sprite, color, 1.0f, buffer);
+      buffer.finishDrawing();
+      RenderSystem.enableAlphaTest();
+      WorldVertexBufferUploader.draw(buffer);
+    }
 
     mc.getTextureManager().bindTexture(WIDGETS);
     this.blit(this.x, this.y, 32, 0, 12, 47);
