@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "gradient:unhardened_clay_mixer"
+          "name": "gradient:clay_metal_mixer"
         }
       ],
       "conditions": [

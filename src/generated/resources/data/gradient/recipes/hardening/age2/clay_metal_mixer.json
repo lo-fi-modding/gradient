@@ -1,0 +1,15 @@
+{
+  "type": "gradient:hardening",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 3600,
+  "ingredients": [
+    {
+      "item": "gradient:unhardened_clay_metal_mixer"
+    }
+  ],
+  "result": {
+    "item": "gradient:clay_metal_mixer"
+  }
+}

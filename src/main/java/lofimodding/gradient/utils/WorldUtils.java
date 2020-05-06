@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.state.IProperty;
 import net.minecraft.state.IStateHolder;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -20,14 +21,21 @@ import java.util.Optional;
 public final class WorldUtils {
   private WorldUtils() { }
 
+  @CapabilityInject(IItemHandler.class)
+  private static Capability<IItemHandler> ITEM_HANDLER_CAPABILITY;
+
   @Nullable
   public static <T> T getTileEntity(final IBlockReader world, final BlockPos pos, final Class<T> cls) {
     final TileEntity te = world.getTileEntity(pos);
     return cls.isInstance(te) ? cls.cast(te) : null;
   }
 
-  @CapabilityInject(IItemHandler.class)
-  private static Capability<IItemHandler> ITEM_HANDLER_CAPABILITY;
+  /**
+   * Gets the facing of <tt>origin</tt> that points towards <tt>other</tt>
+   */
+  public static Direction getFacingTowards(final BlockPos origin, final BlockPos other) {
+    return Direction.getFacingFromVector(other.getX() - origin.getX(), other.getY() - origin.getY(), other.getZ() - origin.getZ());
+  }
 
   public static void dropInventory(final World world, final BlockPos pos, final int firstSlot) {
     final TileEntity te = world.getTileEntity(pos);

@@ -8,18 +8,18 @@ import java.util.function.Predicate;
 public class GradientFluidTank implements IGradientFluidHandler, IGradientFluidTank {
   protected Predicate<GradientFluidStack> validator;
   protected GradientFluidStack stack = GradientFluidStack.EMPTY;
-  protected int capacity;
+  protected float capacity;
 
-  public GradientFluidTank(final int capacity) {
+  public GradientFluidTank(final float capacity) {
     this(capacity, e -> true);
   }
 
-  public GradientFluidTank(final int capacity, final Predicate<GradientFluidStack> validator) {
+  public GradientFluidTank(final float capacity, final Predicate<GradientFluidStack> validator) {
     this.capacity = capacity;
     this.validator = validator;
   }
 
-  public GradientFluidTank setCapacity(final int capacity) {
+  public GradientFluidTank setCapacity(final float capacity) {
     this.capacity = capacity;
     return this;
   }
@@ -64,7 +64,7 @@ public class GradientFluidTank implements IGradientFluidHandler, IGradientFluidT
   @Override
   public float fill(final GradientFluidStack resource, final IGradientFluidHandler.FluidAction action) {
     if(resource.isEmpty() || !this.isFluidValid(resource)) {
-      return 0;
+      return 0.0f;
     }
 
     if(action.simulate()) {
@@ -147,6 +147,6 @@ public class GradientFluidTank implements IGradientFluidHandler, IGradientFluidT
   }
 
   public float getSpace() {
-    return Math.max(0, this.capacity - this.stack.getAmount());
+    return Math.max(0.0f, this.capacity - this.stack.getAmount());
   }
 }

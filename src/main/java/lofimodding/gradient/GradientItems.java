@@ -154,7 +154,7 @@ public final class GradientItems {
   public static final RegistryObject<BlockItem> UNHARDENED_CLAY_FURNACE = REGISTRY.register(GradientIds.UNHARDENED_CLAY_FURNACE, () -> new BlockItem(GradientBlocks.UNHARDENED_CLAY_FURNACE.get(), new Item.Properties().group(GROUP)));
   public static final RegistryObject<BlockItem> UNHARDENED_CLAY_CRUCIBLE = REGISTRY.register(GradientIds.UNHARDENED_CLAY_CRUCIBLE, () -> new BlockItem(GradientBlocks.UNHARDENED_CLAY_CRUCIBLE.get(), new Item.Properties().group(GROUP)));
   public static final RegistryObject<BlockItem> UNHARDENED_CLAY_OVEN = REGISTRY.register(GradientIds.UNHARDENED_CLAY_OVEN, () -> new BlockItem(GradientBlocks.UNHARDENED_CLAY_OVEN.get(), new Item.Properties().group(GROUP)));
-  public static final RegistryObject<BlockItem> UNHARDENED_CLAY_MIXER = REGISTRY.register(GradientIds.UNHARDENED_CLAY_MIXER, () -> new BlockItem(GradientBlocks.UNHARDENED_CLAY_MIXER.get(), new Item.Properties().group(GROUP)));
+  public static final RegistryObject<BlockItem> UNHARDENED_CLAY_METAL_MIXER = REGISTRY.register(GradientIds.UNHARDENED_CLAY_METAL_MIXER, () -> new BlockItem(GradientBlocks.UNHARDENED_CLAY_METAL_MIXER.get(), new Item.Properties().group(GROUP)));
   public static final RegistryObject<BlockItem> UNHARDENED_CLAY_BUCKET = REGISTRY.register(GradientIds.UNHARDENED_CLAY_BUCKET, () -> new BlockItem(GradientBlocks.UNHARDENED_CLAY_BUCKET.get(), new Item.Properties().group(GROUP)));
   public static final RegistryObject<BlockItem> UNHARDENED_CLAY_CAST_BLANK = REGISTRY.register(GradientIds.UNHARDENED_CLAY_CAST_BLANK, () -> new UnhardenedClayCastItem(GradientBlocks.UNHARDENED_CLAY_CAST_BLANK.get(), new Item.Properties().group(GROUP)));
   private static final Map<GradientCasts, RegistryObject<BlockItem>> UNHARDENED_CLAY_CASTS = new EnumMap<>(GradientCasts.class);
@@ -168,6 +168,7 @@ public final class GradientItems {
   public static final RegistryObject<BlockItem> CLAY_FURNACE = REGISTRY.register(GradientIds.CLAY_FURNACE, () -> new BlockItem(GradientBlocks.CLAY_FURNACE.get(), new Item.Properties().group(GROUP)));
   public static final RegistryObject<BlockItem> CLAY_OVEN = REGISTRY.register(GradientIds.CLAY_OVEN, () -> new BlockItem(GradientBlocks.CLAY_OVEN.get(), new Item.Properties().group(GROUP)));
   public static final RegistryObject<BlockItem> CLAY_CRUCIBLE = REGISTRY.register(GradientIds.CLAY_CRUCIBLE, () -> new BlockItem(GradientBlocks.CLAY_CRUCIBLE.get(), new Item.Properties().group(GROUP)));
+  public static final RegistryObject<BlockItem> CLAY_METAL_MIXER = REGISTRY.register(GradientIds.CLAY_METAL_MIXER, () -> new BlockItem(GradientBlocks.CLAY_METAL_MIXER.get(), new Item.Properties().group(GROUP)));
 
   private static final Map<GradientCasts, RegistryObject<BlockItem>> CLAY_CASTS = new EnumMap<>(GradientCasts.class);
 

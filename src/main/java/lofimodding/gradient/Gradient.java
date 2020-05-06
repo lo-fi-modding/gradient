@@ -3,6 +3,7 @@ package lofimodding.gradient;
 import lofimodding.gradient.advancements.criterion.GradientCriteriaTriggers;
 import lofimodding.gradient.client.GradientClient;
 import lofimodding.gradient.client.screens.ClayCrucibleScreen;
+import lofimodding.gradient.fluids.GradientFluidHandlerCapability;
 import lofimodding.gradient.network.Packets;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.item.crafting.RecipeManager;
@@ -50,6 +51,8 @@ public class Gradient {
 
   private void setup(final FMLCommonSetupEvent event) {
     Packets.register();
+
+    GradientFluidHandlerCapability.register();
 
     // Trigger loading
     Gradient.LOGGER.debug(GradientCriteriaTriggers.ADVANCEMENT_UNLOCKED);

@@ -3,6 +3,7 @@ package lofimodding.gradient;
 import lofimodding.gradient.blocks.ClayCastBlock;
 import lofimodding.gradient.blocks.ClayCrucibleBlock;
 import lofimodding.gradient.blocks.ClayFurnaceBlock;
+import lofimodding.gradient.blocks.ClayMetalMixerBlock;
 import lofimodding.gradient.blocks.ClayOvenBlock;
 import lofimodding.gradient.blocks.DryingRackBlock;
 import lofimodding.gradient.blocks.FirepitBlock;
@@ -86,7 +87,7 @@ public final class GradientBlocks {
   public static final RegistryObject<UnhardenedClayBlock> UNHARDENED_CLAY_FURNACE = REGISTRY.register(GradientIds.UNHARDENED_CLAY_FURNACE, () -> new UnhardenedClayBlock(VoxelShapes.fullCube()));
   public static final RegistryObject<UnhardenedClayBlock> UNHARDENED_CLAY_CRUCIBLE = REGISTRY.register(GradientIds.UNHARDENED_CLAY_CRUCIBLE, () -> new UnhardenedClayBlock(Block.makeCuboidShape(1.0d, 0.0d, 1.0d, 15.0d, 12.0d, 15.0d)));
   public static final RegistryObject<UnhardenedClayBlock> UNHARDENED_CLAY_OVEN = REGISTRY.register(GradientIds.UNHARDENED_CLAY_OVEN, () -> new UnhardenedClayBlock(Block.makeCuboidShape(2.0d, 0.0d, 2.0d, 14.0d, 6.0d, 14.0d)));
-  public static final RegistryObject<UnhardenedClayBlock> UNHARDENED_CLAY_MIXER = REGISTRY.register(GradientIds.UNHARDENED_CLAY_MIXER, () -> new UnhardenedClayBlock(Block.makeCuboidShape(0.0d, 0.0d, 0.0d, 16.0d, 2.0d, 16.0d)));
+  public static final RegistryObject<UnhardenedClayBlock> UNHARDENED_CLAY_METAL_MIXER = REGISTRY.register(GradientIds.UNHARDENED_CLAY_METAL_MIXER, () -> new UnhardenedClayBlock(Block.makeCuboidShape(0.0d, 0.0d, 0.0d, 16.0d, 2.0d, 16.0d)));
   public static final RegistryObject<UnhardenedClayBlock> UNHARDENED_CLAY_BUCKET = REGISTRY.register(GradientIds.UNHARDENED_CLAY_BUCKET, () -> new UnhardenedClayBlock(Block.makeCuboidShape(3.0d, 0.0d, 3.0d, 13.0d, 8.0d, 13.0d)));
   public static final RegistryObject<UnhardenedClayBlock> UNHARDENED_CLAY_CAST_BLANK = REGISTRY.register(GradientIds.UNHARDENED_CLAY_CAST_BLANK, () -> new UnhardenedClayBlock(Block.makeCuboidShape(0.0d, 0.0d, 0.0d, 16.0d, 2.0d, 16.0d)));
   private static final Map<GradientCasts, RegistryObject<UnhardenedClayBlock>> UNHARDENED_CLAY_CASTS = new EnumMap<>(GradientCasts.class);
@@ -100,6 +101,7 @@ public final class GradientBlocks {
   public static final RegistryObject<ClayFurnaceBlock> CLAY_FURNACE = REGISTRY.register(GradientIds.CLAY_FURNACE, ClayFurnaceBlock::new);
   public static final RegistryObject<ClayOvenBlock> CLAY_OVEN = REGISTRY.register(GradientIds.CLAY_OVEN, ClayOvenBlock::new);
   public static final RegistryObject<ClayCrucibleBlock> CLAY_CRUCIBLE = REGISTRY.register(GradientIds.CLAY_CRUCIBLE, ClayCrucibleBlock::new);
+  public static final RegistryObject<ClayMetalMixerBlock> CLAY_METAL_MIXER = REGISTRY.register(GradientIds.CLAY_METAL_MIXER, ClayMetalMixerBlock::new);
   private static final Map<GradientCasts, RegistryObject<ClayCastBlock>> CLAY_CASTS = new EnumMap<>(GradientCasts.class);
 
   static {

@@ -646,4 +646,43 @@ public final class ModelGenerator {
       .face(Direction.DOWN).uvs(0.0f, 0.0f, 4.0f, 4.0f).texture("side").end()
       .end();
   }
+
+  public static void clayMixerPipe(final GradientDataGenerator.BlockModels generator, final String id, final ResourceLocation side) {
+    generator.getBuilder(id)
+      .parent(generator.getExistingFile(generator.mcLoc("block/block")))
+      .texture("side", side)
+
+      .element() // Cap
+      .from(5.75f, -0.25f, -1.0f)
+      .to(10.25f, 3.25f, 1.0f)
+      .face(Direction.NORTH).uvs(5.75f, 5.25f, 10.25f, 8.75f).texture("side").end()
+      .face(Direction.EAST).uvs(4.0f, 6.0f, 6.0f, 9.5f).texture("side").end()
+      .face(Direction.SOUTH).uvs(5.75f, 5.25f, 10.25f, 8.75f).texture("side").end()
+      .face(Direction.WEST).uvs(10.0f, 6.0f, 12.0f, 9.5f).texture("side").end()
+      .face(Direction.UP).uvs(5.75f, 4.0f, 10.25f, 6.0f).texture("side").end()
+      .face(Direction.DOWN).uvs(5.75f, 0.0f, 10.25f, 2.0f).texture("side").end()
+      .end()
+
+      .element() // Pipe 1
+      .from(6.0f, 0.0f, 1.0f)
+      .to(10.0f, 3.0f, 3.0f)
+      .face(Direction.NORTH).uvs(0.0f, 0.0f, 4.0f, 3.0f).texture("side").end()
+      .face(Direction.EAST).uvs(2.0f, 6.0f, 4.0f, 9.0f).texture("side").end()
+      .face(Direction.SOUTH).uvs(0.0f, 0.0f, 4.0f, 3.0f).texture("side").end()
+      .face(Direction.WEST).uvs(12.0f, 6.0f, 14.0f, 9.0f).texture("side").end()
+      .face(Direction.UP).uvs(6.0f, 2.0f, 10.0f, 4.0f).texture("side").end()
+      .face(Direction.DOWN).uvs(6.0f, 2.0f, 10.0f, 4.0f).texture("side").end()
+      .end()
+
+      .element() // Pipe 2
+      .from(6.0f, -1.0f, 2.0f)
+      .to(10.0f, 2.0f, 4.0f)
+      .face(Direction.NORTH).uvs(6.0f, 1.0f, 10.0f, 4.0f).texture("side").end()
+      .face(Direction.EAST).uvs(1.0f, 7.0f, 3.0f, 10.0f).texture("side").end()
+      .face(Direction.SOUTH).uvs(6.0f, 7.0f, 10.0f, 10.0f).texture("side").end()
+      .face(Direction.WEST).uvs(13.0f, 7.0f, 15.0f, 10.0f).texture("side").end()
+      .face(Direction.UP).uvs(6.0f, 1.0f, 10.0f, 3.0f).texture("side").end()
+      .face(Direction.DOWN).uvs(6.0f, 4.0f, 10.0f, 6.0f).texture("side").end()
+      .end();
+  }
 }

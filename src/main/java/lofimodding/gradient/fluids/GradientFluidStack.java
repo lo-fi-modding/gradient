@@ -66,6 +66,10 @@ public class GradientFluidStack {
     this.updateEmpty();
   }
 
+  public GradientFluidStack(final GradientFluid fluid, final float amount) {
+    this(fluid, amount, Float.NaN);
+  }
+
   public ITextComponent getName() {
     return this.getFluid().getName(this);
   }
@@ -116,7 +120,15 @@ public class GradientFluidStack {
    */
   public void grow(final float amount, final float temperature) {
     final float newAmount = this.getAmount() + amount;
-    final float newTemperature = (this.getTemperature() * this.getAmount() + temperature * amount) / newAmount;
+    final float newTemperature;
+
+    if(Float.isNaN(this.temperature)) {
+      newTemperature = temperature;
+    } else if(Float.isNaN(temperature)) {
+      newTemperature = this.temperature;
+    } else {
+      newTemperature = (this.getTemperature() * this.getAmount() + temperature * amount) / newAmount;
+    }
 
     this.setAmount(newAmount);
     this.setTemperature(newTemperature);

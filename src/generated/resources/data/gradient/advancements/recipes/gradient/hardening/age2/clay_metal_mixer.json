@@ -2,16 +2,16 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "gradient:age2/unhardened_clay_mixer"
+      "gradient:hardening/age2/clay_metal_mixer"
     ]
   },
   "criteria": {
-    "has_clay_ball": {
+    "has_unhardened_clay_metal_mixer": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:clay_ball"
+            "item": "gradient:unhardened_clay_metal_mixer"
           }
         ]
       }
@@ -19,13 +19,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "gradient:age2/unhardened_clay_mixer"
+        "recipe": "gradient:hardening/age2/clay_metal_mixer"
       }
     }
   },
   "requirements": [
     [
-      "has_clay_ball",
+      "has_unhardened_clay_metal_mixer",
       "has_the_recipe"
     ]
   ]

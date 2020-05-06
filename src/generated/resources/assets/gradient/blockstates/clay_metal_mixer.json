@@ -1,0 +1,44 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "gradient:block/clay_metal_mixer"
+      }
+    },
+    {
+      "when": {
+        "connected_north": "true"
+      },
+      "apply": {
+        "model": "gradient:block/clay_metal_mixer_pipe"
+      }
+    },
+    {
+      "when": {
+        "connected_south": "true"
+      },
+      "apply": {
+        "model": "gradient:block/clay_metal_mixer_pipe",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "connected_west": "true"
+      },
+      "apply": {
+        "model": "gradient:block/clay_metal_mixer_pipe",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "connected_east": "true"
+      },
+      "apply": {
+        "model": "gradient:block/clay_metal_mixer_pipe",
+        "y": 90
+      }
+    }
+  ]
+}

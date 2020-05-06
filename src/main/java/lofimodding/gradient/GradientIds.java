@@ -99,7 +99,7 @@ public final class GradientIds {
   public static final String UNHARDENED_CLAY_FURNACE = "unhardened_clay_furnace";
   public static final String UNHARDENED_CLAY_CRUCIBLE = "unhardened_clay_crucible";
   public static final String UNHARDENED_CLAY_OVEN = "unhardened_clay_oven";
-  public static final String UNHARDENED_CLAY_MIXER = "unhardened_clay_mixer";
+  public static final String UNHARDENED_CLAY_METAL_MIXER = "unhardened_clay_metal_mixer";
   public static final String UNHARDENED_CLAY_BUCKET = "unhardened_clay_bucket";
   public static final String UNHARDENED_CLAY_CAST_BLANK = "unhardened_clay_cast";
 
@@ -110,6 +110,7 @@ public final class GradientIds {
   public static final String CLAY_FURNACE = "clay_furnace";
   public static final String CLAY_OVEN = "clay_oven";
   public static final String CLAY_CRUCIBLE = "clay_crucible";
+  public static final String CLAY_METAL_MIXER = "clay_metal_mixer";
 
   public static String CLAY_CAST(final GradientCasts cast) {
     return "clay_cast_" + cast.name;

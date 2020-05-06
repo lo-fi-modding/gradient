@@ -48,7 +48,7 @@ public class ClayCrucibleTile extends HeatSinkerTile implements INamedContainerP
   @CapabilityInject(IGradientFluidHandler.class)
   private static Capability<IGradientFluidHandler> FLUID_HANDLER_CAPABILITY;
 
-  public static final int FLUID_CAPACITY = 8;
+  public static final float FLUID_CAPACITY = 8.0f;
 
   public static final int FIRST_METAL_SLOT = 0;
   public static final int METAL_SLOTS_COUNT = 1;
