@@ -66,7 +66,7 @@ public class ClayCrucibleScreen extends ContainerScreen<ClayCrucibleContainer> {
     final String name = I18n.format(GradientBlocks.CLAY_CRUCIBLE.get().getTranslationKey());
     final String heat = I18n.format(GradientBlocks.FIREPIT.get().getTranslationKey() + ".heat", (int)this.te.getHeat());
 
-    this.font.drawString(name, this.xSize / 2 - this.font.getStringWidth(name) / 2, 6, 0x404040);
+    this.font.drawString(name, (this.xSize - this.font.getStringWidth(name)) / 2, 6, 0x404040);
     this.font.drawString(this.playerInv.getDisplayName().getUnformattedComponentText(), 8, this.ySize - 94, 0x404040);
 
     this.font.drawString(heat, ClayCrucibleContainer.FUEL_SLOTS_X, 58, 0x404040);

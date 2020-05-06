@@ -20,11 +20,15 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import org.lwjgl.opengl.GL11;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GradientFluidWidget extends Widget {
   private static final ResourceLocation WIDGETS = Gradient.loc("textures/gui/widgets.png");
+
+  private static final DecimalFormat FLUID_FORMAT = new DecimalFormat("#.###");
+  private static final DecimalFormat TEMPERATURE_FORMAT = new DecimalFormat("#.#");
 
   private final Screen screen;
   private final GradientFluidTank tank;
@@ -67,7 +71,7 @@ public class GradientFluidWidget extends Widget {
 
     final List<String> tooltip = new ArrayList<>();
     tooltip.add(this.tank.getFluidStack().getName().getFormattedText());
-    tooltip.add(I18n.format("meltable.fraction", this.tank.getFluidAmount(), this.tank.getCapacity()));
+    tooltip.add(I18n.format("meltable.display", FLUID_FORMAT.format(this.tank.getFluidAmount()), FLUID_FORMAT.format(this.tank.getCapacity()), TEMPERATURE_FORMAT.format(this.tank.getFluidStack().getTemperature())));
 
     this.screen.renderTooltip(tooltip, mouseX, mouseY);
   }
