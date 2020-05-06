@@ -13,12 +13,14 @@ import net.minecraft.world.storage.loot.LootParameters;
 import net.minecraft.world.storage.loot.conditions.ILootCondition;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import javax.annotation.Nullable;
 import java.util.Objects;
 
 public class EntityCondition implements ILootCondition {
+  @Nullable
   final EntityType<?> type;
 
-  public EntityCondition(final EntityType<?> type) {
+  public EntityCondition(@Nullable final EntityType<?> type) {
     this.type = type;
   }
 
@@ -29,7 +31,7 @@ public class EntityCondition implements ILootCondition {
       return false;
     }
 
-    return this.type == entity.getType();
+    return this.type == null || this.type == entity.getType();
   }
 
   public static class Serializer extends ILootCondition.AbstractSerializer<EntityCondition> {
@@ -39,12 +41,20 @@ public class EntityCondition implements ILootCondition {
 
     @Override
     public void serialize(final JsonObject json, final EntityCondition value, final JsonSerializationContext context) {
-      json.addProperty("type", value.type.getRegistryName().toString());
+      if(value.type != null) {
+        json.addProperty("type", value.type.getRegistryName().toString());
+      }
     }
 
     @Override
     public EntityCondition deserialize(final JsonObject json, final JsonDeserializationContext context) {
-      final ResourceLocation type = new ResourceLocation(JSONUtils.getString(json, "type"));
+      final String raw = JSONUtils.getString(json, "type", "");
+
+      if(raw.isEmpty()) {
+        return new EntityCondition(null);
+      }
+
+      final ResourceLocation type = new ResourceLocation(raw);
       return new EntityCondition(Objects.requireNonNull(ForgeRegistries.ENTITIES.getValue(type), "Entity type " + type + " not found"));
     }
   }

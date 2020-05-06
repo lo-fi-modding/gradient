@@ -1,0 +1,11 @@
+{
+  "type": "gradient:remove_loot",
+  "ingredient": {
+    "tag": "forge:leather"
+  },
+  "conditions": [
+    {
+      "condition": "gradient:entity"
+    }
+  ]
+}

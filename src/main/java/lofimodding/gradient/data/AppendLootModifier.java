@@ -15,10 +15,10 @@ import net.minecraftforge.common.loot.LootModifier;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class AppendLootTable extends LootModifier {
+public class AppendLootModifier extends LootModifier {
   private final ResourceLocation lootTable;
 
-  public AppendLootTable(final ILootCondition[] lootConditions, final ResourceLocation lootTable) {
+  public AppendLootModifier(final ILootCondition[] lootConditions, final ResourceLocation lootTable) {
     super(lootConditions);
     this.lootTable = lootTable;
   }
@@ -41,11 +41,11 @@ public class AppendLootTable extends LootModifier {
     return generatedLoot;
   }
 
-  public static class Serializer extends GlobalLootModifierSerializer<AppendLootTable> {
+  public static class Serializer extends GlobalLootModifierSerializer<AppendLootModifier> {
     @Override
-    public AppendLootTable read(final ResourceLocation location, final JsonObject object, final ILootCondition[] conditions) {
+    public AppendLootModifier read(final ResourceLocation location, final JsonObject object, final ILootCondition[] conditions) {
       final ResourceLocation lootTable = new ResourceLocation(JSONUtils.getString(object, "add_loot"));
-      return new AppendLootTable(conditions, lootTable);
+      return new AppendLootModifier(conditions, lootTable);
     }
   }
 }

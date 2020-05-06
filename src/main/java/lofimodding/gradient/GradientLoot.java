@@ -1,8 +1,9 @@
 package lofimodding.gradient;
 
-import lofimodding.gradient.data.AppendLootTable;
+import lofimodding.gradient.data.AppendLootModifier;
 import lofimodding.gradient.data.BlockTagCondition;
 import lofimodding.gradient.data.EntityCondition;
+import lofimodding.gradient.data.RemoveLootModifier;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
@@ -16,7 +17,8 @@ public final class GradientLoot {
 
   private static final DeferredRegister<GlobalLootModifierSerializer<?>> REGISTRY = new DeferredRegister<>(ForgeRegistries.LOOT_MODIFIER_SERIALIZERS, Gradient.MOD_ID);
 
-  public static final RegistryObject<GlobalLootModifierSerializer<AppendLootTable>> APPEND_LOOT = REGISTRY.register("append_loot", AppendLootTable.Serializer::new);
+  public static final RegistryObject<GlobalLootModifierSerializer<AppendLootModifier>> APPEND_LOOT = REGISTRY.register("append_loot", AppendLootModifier.Serializer::new);
+  public static final RegistryObject<GlobalLootModifierSerializer<RemoveLootModifier>> REMOVE_LOOT = REGISTRY.register("remove_loot", RemoveLootModifier.Serializer::new);
 
   public static final ResourceLocation HIDE_ARMOUR_ADVANCEMENT = Gradient.loc("advancements/hide_armour");
   public static final ResourceLocation FIBRE_ADDITIONS = Gradient.loc("blocks/fibre_additions");

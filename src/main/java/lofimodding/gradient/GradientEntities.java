@@ -15,7 +15,7 @@ public final class GradientEntities {
 
   public static final RegistryObject<EntityType<PebbleEntity>> PEBBLE = REGISTRY.register(GradientIds.PEBBLE, () -> EntityType.Builder.<PebbleEntity>create(PebbleEntity::new, EntityClassification.MISC).size(0.25F, 0.25F).build(GradientIds.PEBBLE));
 
-  static final void init(final IEventBus bus) {
+  static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering entities...");
     REGISTRY.register(bus);
   }
