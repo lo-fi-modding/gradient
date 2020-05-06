@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+//TODO: how are fluid temperatures being handled?
+
 public class ClayMetalMixerTile extends HeatSinkerTile {
   @CapabilityInject(IGradientFluidHandler.class)
   private static Capability<IGradientFluidHandler> FLUID_HANDLER_CAPABILITY;
@@ -62,8 +64,7 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
   public void outputUpdated() {
     if(this.world.isRemote) {
       if(this.output != null) {
-        //TODO fluid amount
-        final GradientFluidStack fluidStack = this.output.drain(1, IGradientFluidHandler.FluidAction.SIMULATE);
+        final GradientFluidStack fluidStack = this.output.drain(0.001f, IGradientFluidHandler.FluidAction.SIMULATE);
 
         if(!fluidStack.isEmpty()) {
           //TODO this.asm.transition("spinning");
@@ -130,6 +131,7 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
   @Override
   public void onLoad() {
     super.onLoad();
+    //TODO: this is causing a world-loading deadlock
     this.updateAllSides();
     this.outputUpdated();
 

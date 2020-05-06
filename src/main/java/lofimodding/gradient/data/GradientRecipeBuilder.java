@@ -17,6 +17,7 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.IItemProvider;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -75,6 +76,10 @@ public final class GradientRecipeBuilder {
 
   public static Melting melting() {
     return new Melting();
+  }
+
+  public static Alloy alloy(final GradientFluidStack stack) {
+    return new Alloy(stack);
   }
 
   public static class Grinding {
@@ -1176,6 +1181,103 @@ public final class GradientRecipeBuilder {
       @Override
       public IRecipeSerializer<?> getSerializer() {
         return GradientRecipeSerializers.MELTING.get();
+      }
+
+      @Override
+      public ResourceLocation getID() {
+        return this.id;
+      }
+
+      @Override
+      @Nullable
+      public JsonObject getAdvancementJson() {
+        return this.advancementBuilder.serialize();
+      }
+
+      @Override
+      @Nullable
+      public ResourceLocation getAdvancementID() {
+        return this.advancementId;
+      }
+    }
+  }
+
+  public static class Alloy {
+    private final GradientFluidStack output;
+    private final NonNullList<GradientFluidStack> inputs = NonNullList.create();
+    private final Advancement.Builder advancementBuilder = Advancement.Builder.builder();
+    private String group;
+
+    public Alloy(final GradientFluidStack output) {
+      this.output = output;
+    }
+
+    public Alloy addInput(final GradientFluidStack stack) {
+      this.inputs.add(stack);
+      return this;
+    }
+
+    public Alloy addCriterion(final String key, final ICriterionInstance criterion) {
+      this.advancementBuilder.withCriterion(key, criterion);
+      return this;
+    }
+
+    public Alloy setGroup(final String group) {
+      this.group = group;
+      return this;
+    }
+
+    public void build(final Consumer<IFinishedRecipe> finished, final String save) {
+      this.build(finished, new ResourceLocation(save));
+    }
+
+    public void build(final Consumer<IFinishedRecipe> finished, final ResourceLocation save) {
+      this.validate(save);
+      this.advancementBuilder.withParentId(new ResourceLocation("recipes/root")).withCriterion("has_the_recipe", new RecipeUnlockedTrigger.Instance(save)).withRewards(AdvancementRewards.Builder.recipe(save)).withRequirementsStrategy(IRequirementsStrategy.OR);
+      finished.accept(new Result(save, this.group == null ? "" : this.group, this.output, this.inputs, this.advancementBuilder, new ResourceLocation(save.getNamespace(), "recipes/" + save.getPath())));
+    }
+
+    private void validate(final ResourceLocation name) {
+      if(this.advancementBuilder.getCriteria().isEmpty()) {
+        throw new IllegalStateException("No way of obtaining recipe " + name);
+      }
+    }
+
+    public static class Result implements IFinishedRecipe {
+      private final ResourceLocation id;
+      private final String group;
+      private final GradientFluidStack output;
+      private final NonNullList<GradientFluidStack> inputs;
+      private final Advancement.Builder advancementBuilder;
+      private final ResourceLocation advancementId;
+
+      protected Result(final ResourceLocation id, final String group, final GradientFluidStack output, final NonNullList<GradientFluidStack> inputs, final Advancement.Builder advancementBuilder, final ResourceLocation advancementId) {
+        this.id = id;
+        this.group = group;
+        this.output = output;
+        this.inputs = inputs;
+        this.advancementBuilder = advancementBuilder;
+        this.advancementId = advancementId;
+      }
+
+      @Override
+      public void serialize(final JsonObject json) {
+        if(!this.group.isEmpty()) {
+          json.addProperty("group", this.group);
+        }
+
+        json.add("output", this.output.write(new JsonObject()));
+
+        final JsonArray inputs = new JsonArray();
+        for(final GradientFluidStack input : this.inputs) {
+          inputs.add(input.write(new JsonObject()));
+        }
+        json.add("inputs", inputs);
+      }
+
+      @Override
+      public IRecipeSerializer<?> getSerializer() {
+        return GradientRecipeSerializers.ALLOY.get();
       }
 
       @Override

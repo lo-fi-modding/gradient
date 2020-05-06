@@ -25,6 +25,7 @@ import lofimodding.gradient.science.Metals;
 import lofimodding.gradient.science.Ore;
 import lofimodding.gradient.science.Ores;
 import lofimodding.progression.recipes.StagedRecipeBuilder;
+import net.minecraft.advancements.criterion.ImpossibleTrigger;
 import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -1191,6 +1192,7 @@ public final class GradientDataGenerator {
       this.registerHardeningRecipes(finished);
       this.registerDryingRecipes(finished);
       this.registerMeltingRecipes(finished);
+      this.registerAlloyRecipes(finished);
 
       ShapedRecipeBuilder
         .shapedRecipe(GradientItems.SALT_BLOCK.get())
@@ -1768,6 +1770,15 @@ public final class GradientDataGenerator {
             .build(finished, Gradient.loc("melting/" + metal.name + '_' + cast.name));
         }
       }
+    }
+
+    private void registerAlloyRecipes(final Consumer<IFinishedRecipe> finished) {
+      GradientRecipeBuilder
+        .alloy(new GradientFluidStack(GradientFluids.METAL(Metals.BRONZE).get(), 0.004f))
+        .addInput(new GradientFluidStack(GradientFluids.METAL(Metals.COPPER).get(), 0.003f))
+        .addInput(new GradientFluidStack(GradientFluids.METAL(Metals.TIN).get(), 0.001f))
+        .addCriterion("impossible", new ImpossibleTrigger.Instance())
+        .build(finished, Gradient.loc("alloy/bronze_from_copper_and_tin"));
     }
   }
 

@@ -491,6 +491,7 @@ bb1ea5ed30025dbd7cd940b1533b4ef80a9f5ba1 data\gradient\advancements\age1\planks.
 195daf216c3f6f2d2a96fe476c370ae81833f9a7 data\gradient\advancements\age1\stone_hatchet.json
 c0a949a7873ab26c01f18ae9a7ec6846b5ca2e80 data\gradient\advancements\age1\waterskin.json
 20ef6013a4772c7a52e4c444104b52a457176d4a data\gradient\advancements\age1\wood.json
+fae9328a744b663542dea60bd570f5bc2d818b56 data\gradient\advancements\recipes\alloy\bronze_from_copper_and_tin.json
 1c16b3bf7a6be18599f5b8378750b732b29dbe9b data\gradient\advancements\recipes\food\cooking\age1\beef.json
 1f490f3c2b41e9e842d0618db42a2a8a9d488da7 data\gradient\advancements\recipes\food\cooking\age1\chicken.json
 a2abb0adb2458c757974c5ba2272d43f76bc3d5b data\gradient\advancements\recipes\food\cooking\age1\cod.json
@@ -791,6 +792,7 @@ b3ff76e5a5a9edfc420a0352a0046d0ff5d96ea4 data\gradient\recipes\age2\unhardened_c
 cadbb137b3d6fa3bb134b614661026c2d8e41fd0 data\gradient\recipes\age2\unhardened_clay_furnace.json
 c8b4856710a19dc31267c1cccad57efe872e181e data\gradient\recipes\age2\unhardened_clay_metal_mixer.json
 2e3aace5d7a94f7c0d824ab0d02ce85daa26f411 data\gradient\recipes\age2\unhardened_clay_oven.json
+26f12d12feac2458d10c40693ae3e4710dc6d018 data\gradient\recipes\alloy\bronze_from_copper_and_tin.json
 747068b4b669397a646ce5d364cae0b4aad994d1 data\gradient\recipes\cooking\age1\beef.json
 850a80af7931a0429696dc1bdce1d0c3dadacb5a data\gradient\recipes\cooking\age1\chicken.json
 c21e00194e37b6af95893bd23eed0b8ce3a16e91 data\gradient\recipes\cooking\age1\cod.json

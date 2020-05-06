@@ -34,7 +34,7 @@ public class GradientFluidStack {
     final String id = nbt.getString("fluid");
     final GradientFluid fluid = GradientFluid.REGISTRY.get().getValue(new ResourceLocation(id));
     final float amount = nbt.getFloat("amount");
-    final float temperature = nbt.getFloat("temperature");
+    final float temperature = nbt.contains("temperature") ? nbt.getFloat("temperature") : Float.NaN;
     return new GradientFluidStack(fluid != null ? fluid : GradientFluids.EMPTY.get(), amount, temperature);
   }
 
@@ -203,7 +203,11 @@ public class GradientFluidStack {
   public CompoundNBT write(final CompoundNBT nbt) {
     nbt.putString("fluid", this.getFluid().getRegistryName().toString());
     nbt.putFloat("amount", this.amount);
-    nbt.putFloat("temperature", this.temperature);
+
+    if(!Float.isNaN(this.temperature)) {
+      nbt.putFloat("temperature", this.temperature);
+    }
+
     return nbt;
   }
 
@@ -216,7 +220,11 @@ public class GradientFluidStack {
   public JsonObject write(final JsonObject json) {
     json.addProperty("fluid", this.getFluid().getRegistryName().toString());
     json.addProperty("amount", this.amount);
-    json.addProperty("temperature", this.temperature);
+
+    if(!Float.isNaN(this.temperature)) {
+      json.addProperty("temperature", this.temperature);
+    }
+
     return json;
   }
 }

@@ -156,7 +156,6 @@ public class AlloyRecipe implements IRecipe<IInventory> {
         inputs.add(GradientFluidStack.read(buffer));
       }
 
-
       return new AlloyRecipe(id, group, output, inputs);
     }
 
