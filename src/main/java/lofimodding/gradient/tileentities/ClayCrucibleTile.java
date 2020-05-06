@@ -147,6 +147,7 @@ public class ClayCrucibleTile extends HeatSinkerTile implements INamedContainerP
     }
 
     this.checkForMoltenMetal();
+    this.tank.getFluidStack().setTemperature(this.getHeat());
   }
 
   @Override

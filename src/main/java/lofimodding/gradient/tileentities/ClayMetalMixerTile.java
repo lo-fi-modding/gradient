@@ -24,8 +24,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-//TODO: how are fluid temperatures being handled?
-
 public class ClayMetalMixerTile extends HeatSinkerTile {
   @CapabilityInject(IGradientFluidHandler.class)
   private static Capability<IGradientFluidHandler> FLUID_HANDLER_CAPABILITY;
@@ -165,6 +163,8 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
 
         // Copy ref to recipe - it can be updated inside of the for loop by block updates
         final AlloyRecipe recipe = this.recipe;
+        float temperature = 0.0f;
+        float total = 0.0f;
 
         for(final GradientFluidStack recipeFluid : recipe.getFluidInputs()) {
           float remaining = recipeFluid.getAmount();
@@ -180,6 +180,8 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
             final GradientFluidStack drained = fluidHandler.drain(Math.min(0.001f, remaining), IGradientFluidHandler.FluidAction.EXECUTE);
 
             if(!drained.isEmpty()) {
+              temperature += drained.getTemperature() * drained.getAmount();
+              total += drained.getAmount();
               remaining -= drained.getAmount();
             } else {
               failed++;
@@ -187,7 +189,8 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
           }
         }
 
-        this.output.fill(recipe.getFluidOutput(), IGradientFluidHandler.FluidAction.EXECUTE);
+        final GradientFluidStack output = new GradientFluidStack(recipe.getFluidOutput().getFluid(), recipe.getFluidOutput().getAmount(), temperature / total);
+        this.output.fill(output, IGradientFluidHandler.FluidAction.EXECUTE);
 
         this.recipeTicks = this.getTicksForRecipe(recipe);
       } else {
