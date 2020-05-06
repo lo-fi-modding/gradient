@@ -27,8 +27,6 @@ public class Gradient {
   public static final String MOD_ID = "gradient";
   public static final Logger LOGGER = LogManager.getLogger();
 
-  private static RecipeManager RECIPE_MANAGER;
-
   public Gradient() {
     final IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
@@ -73,21 +71,25 @@ public class Gradient {
     });
   }
 
-  private void onWorldLoad(final WorldEvent.Load event) {
-    // Set the recipe manager for clients
-    RECIPE_MANAGER = ((World)event.getWorld()).getRecipeManager();
-  }
-
-  private void serverSetup(final FMLDedicatedServerSetupEvent event) {
-    // Set the recipe manager for servers
-    RECIPE_MANAGER = event.getServerSupplier().get().getRecipeManager();
-  }
-
   public static ResourceLocation loc(final String path) {
     return new ResourceLocation(MOD_ID, path);
   }
 
+  private static final ThreadLocal<RecipeManager> RECIPE_MANAGER = new ThreadLocal<>();
+
+  private void onWorldLoad(final WorldEvent.Load event) {
+    // Set the recipe manager for clients
+    LOGGER.info("Setting recipe manager from client {}", ((World)event.getWorld()).getRecipeManager());
+    RECIPE_MANAGER.set(((World)event.getWorld()).getRecipeManager());
+  }
+
+  private void serverSetup(final FMLDedicatedServerSetupEvent event) {
+    // Set the recipe manager for servers
+    LOGGER.info("Setting recipe manager from server {}", event.getServerSupplier().get().getRecipeManager());
+    RECIPE_MANAGER.set(event.getServerSupplier().get().getRecipeManager());
+  }
+
   public static RecipeManager getRecipeManager() {
-    return RECIPE_MANAGER;
+    return RECIPE_MANAGER.get();
   }
 }

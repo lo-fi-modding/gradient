@@ -184,6 +184,11 @@ public class GradientFluidStack {
   }
 
   @Override
+  public String toString() {
+    return this.amount + " " + this.getFluid() + " (" + this.temperature + " C)";
+  }
+
+  @Override
   public final int hashCode() {
     int code = 1;
     code = 31 * code + this.getFluid().hashCode();

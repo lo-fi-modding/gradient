@@ -172,16 +172,15 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
 
           final List<Direction> sides = this.fluidSideMap.get(recipeFluid.getFluid());
 
-          //TODO: need to rework fluid amounts
           while(remaining > 0.0f || failed >= 10) {
             final int sideIndex = this.rand.nextInt(sides.size());
             final Direction side = sides.get(sideIndex);
 
             final IGradientFluidHandler fluidHandler = this.inputs.get(side);
-            final GradientFluidStack drained = fluidHandler.drain(1, IGradientFluidHandler.FluidAction.EXECUTE);
+            final GradientFluidStack drained = fluidHandler.drain(Math.min(0.001f, remaining), IGradientFluidHandler.FluidAction.EXECUTE);
 
             if(!drained.isEmpty()) {
-              remaining--;
+              remaining -= drained.getAmount();
             } else {
               failed++;
             }
