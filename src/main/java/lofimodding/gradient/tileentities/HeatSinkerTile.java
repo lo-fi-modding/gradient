@@ -87,6 +87,7 @@ public abstract class HeatSinkerTile extends TileEntity implements ITickableTile
     this.tickAfterCooldown(tickScale);
 
     if(this.firstTick) {
+      this.firstTick();
       this.findSurroundingSinks();
       this.firstTick = false;
     }
@@ -124,6 +125,10 @@ public abstract class HeatSinkerTile extends TileEntity implements ITickableTile
         sink.addHeat(heat);
       }
     }
+  }
+
+  protected void firstTick() {
+
   }
 
   protected abstract void tickBeforeCooldown(final float tickScale);

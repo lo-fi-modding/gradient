@@ -129,9 +129,8 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
   }
 
   @Override
-  public void onLoad() {
-    super.onLoad();
-    //TODO: this is causing a world-loading deadlock
+  public void firstTick() {
+    super.firstTick();
     this.updateAllSides();
     this.outputUpdated();
 
