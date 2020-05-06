@@ -7,6 +7,7 @@ import lofimodding.gradient.GradientEntities;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientTileEntities;
 import lofimodding.gradient.blocks.MetalBlock;
+import lofimodding.gradient.client.tesr.ClayCrucibleRenderer;
 import lofimodding.gradient.client.tesr.ClayOvenRenderer;
 import lofimodding.gradient.client.tesr.DryingRackRenderer;
 import lofimodding.gradient.client.tesr.FirepitRenderer;
@@ -104,6 +105,7 @@ public final class GradientClient {
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.MIXING_BASIN.get(), MixingBasinRenderer::new);
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.DRYING_RACK.get(), DryingRackRenderer::new);
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.CLAY_OVEN.get(), ClayOvenRenderer::new);
+    ClientRegistry.bindTileEntityRenderer(GradientTileEntities.CLAY_CRUCIBLE.get(), ClayCrucibleRenderer::new);
   }
 
   @SubscribeEvent
