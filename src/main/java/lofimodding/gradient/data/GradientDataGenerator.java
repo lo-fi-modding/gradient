@@ -1003,13 +1003,13 @@ public final class GradientDataGenerator {
       this.add(GradientItems.SALTED_HIDE.get(), "Salted Hide");
       this.add(GradientItems.PRESERVED_HIDE.get(), "Preserved Hide");
       this.add(GradientItems.TANNED_HIDE.get(), "Tanned Hide");
-
       this.add(GradientItems.LEATHER_STRIP.get(), "Leather Strip");
 
       this.add(GradientItems.FIRE_STARTER.get(), "Fire Starter");
       this.add(GradientItems.STONE_HAMMER.get(), "Stone Hammer");
       this.add(GradientItems.STONE_HAMMER.get().getTranslationKey() + ".tooltip", "Use on ores to get metal nuggets");
       this.add(GradientItems.STONE_HATCHET.get(), "Stone Hatchet");
+      this.add(GradientItems.STONE_HATCHET.get().getTranslationKey() + ".tooltip", "Right click to strip logs");
       this.add(GradientItems.FLINT_KNIFE.get(), "Flint Knife");
       this.add(GradientItems.BONE_AWL.get(), "Bone Awl");
       this.add(GradientItems.HIDE_BEDDING.get(), "Hide Bedding");

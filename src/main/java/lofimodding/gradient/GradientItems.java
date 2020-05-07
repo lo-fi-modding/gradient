@@ -9,6 +9,7 @@ import lofimodding.gradient.items.MetalItem;
 import lofimodding.gradient.items.MulchItem;
 import lofimodding.gradient.items.PebbleItem;
 import lofimodding.gradient.items.StoneHammerItem;
+import lofimodding.gradient.items.StoneHatchetItem;
 import lofimodding.gradient.items.UnhardenedClayCastItem;
 import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.science.Metals;
@@ -20,7 +21,6 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolItem;
 import net.minecraft.item.WallOrFloorItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
@@ -128,12 +128,11 @@ public final class GradientItems {
   public static final RegistryObject<Item> SALTED_HIDE = REGISTRY.register(GradientIds.SALTED_HIDE, () -> new Item(new Item.Properties().group(GROUP)));
   public static final RegistryObject<Item> PRESERVED_HIDE = REGISTRY.register(GradientIds.PRESERVED_HIDE, () -> new Item(new Item.Properties().group(GROUP)));
   public static final RegistryObject<Item> TANNED_HIDE = REGISTRY.register(GradientIds.TANNED_HIDE, () -> new Item(new Item.Properties().group(GROUP)));
-
   public static final RegistryObject<Item> LEATHER_STRIP = REGISTRY.register(GradientIds.LEATHER_STRIP, () -> new Item(new Item.Properties().group(GROUP)));
 
   public static final RegistryObject<Item> FIRE_STARTER = REGISTRY.register(GradientIds.FIRE_STARTER, () -> new Item(new Item.Properties().group(GROUP).maxDamage(4)));
   public static final RegistryObject<StoneHammerItem> STONE_HAMMER = REGISTRY.register(GradientIds.STONE_HAMMER, StoneHammerItem::new);
-  public static final RegistryObject<ToolItem> STONE_HATCHET = REGISTRY.register(GradientIds.STONE_HATCHET, StoneHammerItem::new);
+  public static final RegistryObject<StoneHatchetItem> STONE_HATCHET = REGISTRY.register(GradientIds.STONE_HATCHET, StoneHatchetItem::new);
   public static final RegistryObject<FlintKnifeItem> FLINT_KNIFE = REGISTRY.register(GradientIds.FLINT_KNIFE, FlintKnifeItem::new);
   public static final RegistryObject<Item> BONE_AWL = REGISTRY.register(GradientIds.BONE_AWL, () -> new Item(new Item.Properties().group(GROUP).maxDamage(20)));
   public static final RegistryObject<HideBeddingItem> HIDE_BEDDING = REGISTRY.register(GradientIds.HIDE_BEDDING, HideBeddingItem::new);
