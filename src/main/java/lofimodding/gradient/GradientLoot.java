@@ -1,9 +1,9 @@
 package lofimodding.gradient;
 
-import lofimodding.gradient.data.AppendLootModifier;
-import lofimodding.gradient.data.BlockTagCondition;
-import lofimodding.gradient.data.EntityCondition;
-import lofimodding.gradient.data.RemoveLootModifier;
+import lofimodding.gradient.loot.AppendLootModifier;
+import lofimodding.gradient.loot.BlockTagCondition;
+import lofimodding.gradient.loot.EntityCondition;
+import lofimodding.gradient.loot.RemoveLootModifier;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.conditions.LootConditionManager;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;

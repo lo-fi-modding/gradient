@@ -1,4 +1,4 @@
-package lofimodding.gradient.data;
+package lofimodding.gradient.loot;
 
 import com.google.gson.JsonObject;
 import net.minecraft.item.ItemStack;

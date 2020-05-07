@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "gradient:stone_hatchet"
+    "gradient:stone_hatchet",
+    "gradient:stone_mattock"
   ]
 }

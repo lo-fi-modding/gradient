@@ -10,7 +10,8 @@ import java.util.function.Supplier;
 public final class GradientItemTiers {
   private GradientItemTiers() { }
 
-  public static final IItemTier PEBBLE = new ItemTier(1, 20, 0.5f, 1.0f, 5, () -> Ingredient.fromItems(GradientItems.PEBBLE.get()));
+  public static final IItemTier PEBBLE = new ItemTier(0, 20, 0.5f, 1.0f, 5, () -> Ingredient.fromItems(GradientItems.PEBBLE.get()));
+  public static final IItemTier STONE = new ItemTier(1, 50, 0.5f, 1.0f, 5, () -> Ingredient.fromItems(GradientItems.PEBBLE.get()));
   public static final IItemTier FLINT = new ItemTier(1, 50, 1.0f, 2.0f, 5, () -> Ingredient.fromItems(Items.FLINT));
 
   public static class ItemTier implements IItemTier {

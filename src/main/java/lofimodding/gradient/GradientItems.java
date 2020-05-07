@@ -10,6 +10,7 @@ import lofimodding.gradient.items.MulchItem;
 import lofimodding.gradient.items.PebbleItem;
 import lofimodding.gradient.items.StoneHammerItem;
 import lofimodding.gradient.items.StoneHatchetItem;
+import lofimodding.gradient.items.StoneMattockItem;
 import lofimodding.gradient.items.UnhardenedClayCastItem;
 import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.science.Metals;
@@ -133,6 +134,7 @@ public final class GradientItems {
   public static final RegistryObject<Item> FIRE_STARTER = REGISTRY.register(GradientIds.FIRE_STARTER, () -> new Item(new Item.Properties().group(GROUP).maxDamage(4)));
   public static final RegistryObject<StoneHammerItem> STONE_HAMMER = REGISTRY.register(GradientIds.STONE_HAMMER, StoneHammerItem::new);
   public static final RegistryObject<StoneHatchetItem> STONE_HATCHET = REGISTRY.register(GradientIds.STONE_HATCHET, StoneHatchetItem::new);
+  public static final RegistryObject<StoneMattockItem> STONE_MATTOCK = REGISTRY.register(GradientIds.STONE_MATTOCK, StoneMattockItem::new);
   public static final RegistryObject<FlintKnifeItem> FLINT_KNIFE = REGISTRY.register(GradientIds.FLINT_KNIFE, FlintKnifeItem::new);
   public static final RegistryObject<Item> BONE_AWL = REGISTRY.register(GradientIds.BONE_AWL, () -> new Item(new Item.Properties().group(GROUP).maxDamage(20)));
   public static final RegistryObject<HideBeddingItem> HIDE_BEDDING = REGISTRY.register(GradientIds.HIDE_BEDDING, HideBeddingItem::new);

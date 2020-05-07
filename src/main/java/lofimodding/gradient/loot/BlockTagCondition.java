@@ -1,6 +1,6 @@
 // From https://github.com/gigaherz/Survivalist
 
-package lofimodding.gradient.data;
+package lofimodding.gradient.loot;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;

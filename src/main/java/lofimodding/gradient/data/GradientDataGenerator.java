@@ -715,6 +715,7 @@ public final class GradientDataGenerator {
       this.singleTexture(GradientIds.FIRE_STARTER, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.FIRE_STARTER));
       this.singleTexture(GradientIds.STONE_HAMMER, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.STONE_HAMMER));
       this.singleTexture(GradientIds.STONE_HATCHET, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.STONE_HATCHET));
+      this.singleTexture(GradientIds.STONE_MATTOCK, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.STONE_MATTOCK));
       this.singleTexture(GradientIds.FLINT_KNIFE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.FLINT_KNIFE));
       this.singleTexture(GradientIds.BONE_AWL, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.BONE_AWL));
       this.singleTexture(GradientIds.HIDE_BEDDING, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.HIDE_BEDDING));
@@ -1010,6 +1011,8 @@ public final class GradientDataGenerator {
       this.add(GradientItems.STONE_HAMMER.get().getTranslationKey() + ".tooltip", "Use on ores to get metal nuggets");
       this.add(GradientItems.STONE_HATCHET.get(), "Stone Hatchet");
       this.add(GradientItems.STONE_HATCHET.get().getTranslationKey() + ".tooltip", "Right click to strip logs");
+      this.add(GradientItems.STONE_MATTOCK.get(), "Stone Mattock");
+      this.add(GradientItems.STONE_MATTOCK.get().getTranslationKey() + ".tooltip", "Right click to till soil, strip logs, or shear animals");
       this.add(GradientItems.FLINT_KNIFE.get(), "Flint Knife");
       this.add(GradientItems.BONE_AWL.get(), "Bone Awl");
       this.add(GradientItems.HIDE_BEDDING.get(), "Hide Bedding");
@@ -1147,7 +1150,7 @@ public final class GradientDataGenerator {
 
     @Override
     protected void registerTags() {
-      this.getBuilder(GradientTags.Items.AXES).add(GradientItems.STONE_HATCHET.get());
+      this.getBuilder(GradientTags.Items.AXES).add(GradientItems.STONE_HATCHET.get(), GradientItems.STONE_MATTOCK.get());
       this.getBuilder(GradientTags.Items.HAMMERS).add(GradientItems.STONE_HAMMER.get());
 
       this.getBuilder(GradientTags.Items.FIBRE_TORCH_LIGHTERS).add(GradientItems.LIT_FIBRE_TORCH.get(), Items.TORCH, Items.FLINT_AND_STEEL);
@@ -1319,6 +1322,18 @@ public final class GradientDataGenerator {
         .key('S', Tags.Items.RODS_WOODEN)
         .addCriterion("has_pebble", this.hasItem(GradientItems.PEBBLE.get()))
         .build(finished, Gradient.loc("age1/" + GradientIds.STONE_HATCHET));
+
+      StagedRecipeBuilder
+        .shaped(GradientItems.STONE_MATTOCK.get())
+        .stage(GradientStages.AGE_2)
+        .patternLine("P  ")
+        .patternLine("PLP")
+        .patternLine(" S ")
+        .key('P', GradientItems.PEBBLE.get())
+        .key('L', GradientItems.LEATHER_STRIP.get())
+        .key('S', GradientItems.HARDENED_STICK.get())
+        .addCriterion("has_hardened_stick", this.hasItem(GradientItems.HARDENED_STICK.get()))
+        .build(finished, Gradient.loc("age2/" + GradientIds.STONE_MATTOCK));
 
       StagedRecipeBuilder
         .shaped(GradientItems.FLINT_KNIFE.get())
