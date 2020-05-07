@@ -1,0 +1,26 @@
+{
+  "type": "progression:shaped_staged",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "damage_tools": true,
+  "pattern": [
+    "PPP",
+    " L ",
+    " S "
+  ],
+  "key": {
+    "P": {
+      "item": "gradient:pebble"
+    },
+    "L": {
+      "item": "gradient:leather_strip"
+    },
+    "S": {
+      "item": "gradient:hardened_stick"
+    }
+  },
+  "result": {
+    "item": "gradient:stone_pickaxe"
+  }
+}

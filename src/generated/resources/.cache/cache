@@ -61,7 +61,7 @@ dccc3a018ecf212e5d43d811cd942d57ea4133b0 assets\gradient\blockstates\unhardened_
 330b640372ea555412786edb807d0e3e053b7813 assets\gradient\blockstates\unlit_fibre_wall_torch.json
 a86b34b046287d93361c60c81c2902bbeafb3cb5 assets\gradient\blockstates\unlit_torch_stand_torch.json
 659fa450fe62cdecc69d9276f01c713a1e62a205 assets\gradient\blockstates\zinc_block.json
-9c2543d67773ed99fb58ebf4d4d84656e2dccc0f assets\gradient\lang\en_us.json
+bd4db207af2f7509d06fae28ab40cc888c284b04 assets\gradient\lang\en_us.json
 f295f4e7338854665f216e2f0ca3e339b0d284a7 assets\gradient\models\block\azurite_block.json
 910f0617e8b2433ac0f97c48cbbc8251b4f162b3 assets\gradient\models\block\azurite_ore.json
 79a72e81ecb79d9775041b9a2d526a90f646005b assets\gradient\models\block\azurite_pebble.json
@@ -321,6 +321,7 @@ dc622cf1fe656c010dda0db509b285d0583fc4c0 assets\gradient\models\item\sphalerite_
 eced6ca51beb05edf294fc1886b8c9d4bb087918 assets\gradient\models\item\stone_hammer.json
 661445999e21f463f921eb8a42b7a72ac9f66acb assets\gradient\models\item\stone_hatchet.json
 186a9be7e32ede12a7a0ad3ae14ef914f38392a9 assets\gradient\models\item\stone_mattock.json
+9cc72340ed9990d5dacd21b145e869af873af253 assets\gradient\models\item\stone_pickaxe.json
 4f3a5a4b18ca70bea23d7f25479ee52490de1ecd assets\gradient\models\item\sword_blade.json
 0934a3a01b108c37a83a391253d878bbde64b17f assets\gradient\models\item\tanned_hide.json
 83df5c4de41df9e9cfb12d6c99ef53845d0e94db assets\gradient\models\item\tin_block.json
@@ -536,6 +537,7 @@ d35d1c143d48a9412297dd819dc713219b6ef509 data\gradient\advancements\recipes\grad
 9812f690058afd8d77736dcdd495aa27e97232a8 data\gradient\advancements\recipes\gradient\age2\mulch.json
 8a72874b105f0461bc07c85911fe1d2144520338 data\gradient\advancements\recipes\gradient\age2\raw_hide.json
 5caa1ae43458daf0e8f55acbf48993f1cc2ac948 data\gradient\advancements\recipes\gradient\age2\stone_mattock.json
+5a0598985dd18525076fc5c8c259c1288212e277 data\gradient\advancements\recipes\gradient\age2\stone_pickaxe.json
 17ffcadeb44a79dca29fa35f5162c219cb492186 data\gradient\advancements\recipes\gradient\age2\torch_stand.json
 b350b64c2a57446e210fe820a5d60dc6ec069637 data\gradient\advancements\recipes\gradient\age2\unhardened_clay_bucket.json
 cd1cbe0994bd1512c52481e70c8b2012f8a4c512 data\gradient\advancements\recipes\gradient\age2\unhardened_clay_cast.json
@@ -803,6 +805,7 @@ eb10faf97376f5923f711e8d80670fd74a6aed57 data\gradient\recipes\age2\leather_stri
 d233253e0a8b095237f1f890fd45c75decc7f4f8 data\gradient\recipes\age2\mulch.json
 fe0eede81c571c9de55d2d6ad018a4e70a0d793a data\gradient\recipes\age2\raw_hide.json
 bc4ecade13d7dd81f3b8c0faf6aebecccef92228 data\gradient\recipes\age2\stone_mattock.json
+b3298f52f09efafc15addc0c224ed8e3b0ef337d data\gradient\recipes\age2\stone_pickaxe.json
 1976f5ac8e5ee6371a7c627b975b7a96c653bc16 data\gradient\recipes\age2\torch_stand.json
 ddb914418e454acc837ab1bf6547ca2885451ed6 data\gradient\recipes\age2\unhardened_clay_bucket.json
 84577a004b659dc826a6f7908a0c91ec545a6af7 data\gradient\recipes\age2\unhardened_clay_cast.json
