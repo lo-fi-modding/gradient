@@ -191,6 +191,8 @@ public final class GradientDataGenerator {
       }
 
       this.cubeAll(GradientIds.SALT_BLOCK, this.modLoc("block/salt_block"));
+      this.cubeColumn(GradientIds.HARDENED_LOG, this.modLoc("block/hardened_log"), this.modLoc("block/hardened_log_top"));
+      this.cubeAll(GradientIds.HARDENED_PLANKS, this.modLoc("block/hardened_planks"));
 
       this.getBuilder(GradientIds.FIREPIT)
         .parent(this.getExistingFile(this.mcLoc("block/block")))
@@ -687,6 +689,9 @@ public final class GradientDataGenerator {
       this.singleTexture(GradientIds.SALT, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.SALT));
       this.singleTexture(GradientIds.FIBRE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.FIBRE));
       this.singleTexture(GradientIds.TWINE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.TWINE));
+      this.getBuilder(GradientIds.HARDENED_LOG).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.HARDENED_LOG)));
+      this.getBuilder(GradientIds.HARDENED_PLANKS).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.HARDENED_PLANKS)));
+      this.singleTexture(GradientIds.HARDENED_STICK, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.HARDENED_STICK));
       this.singleTexture(GradientIds.BARK, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.BARK));
       this.singleTexture(GradientIds.MULCH, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.MULCH));
       this.singleTexture(GradientIds.COW_PELT, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.COW_PELT));
@@ -781,6 +786,8 @@ public final class GradientDataGenerator {
       }
 
       this.simpleBlock(GradientBlocks.SALT_BLOCK.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.SALT_BLOCK)));
+      this.logBlock(GradientBlocks.HARDENED_LOG.get());
+      this.simpleBlock(GradientBlocks.HARDENED_PLANKS.get());
 
       this.getMultipartBuilder(GradientBlocks.FIREPIT.get())
         .part()
@@ -974,6 +981,9 @@ public final class GradientDataGenerator {
 
       this.add(GradientItems.SALT_BLOCK.get(), "Block of Salt");
       this.add(GradientItems.SALT.get(), "Salt");
+      this.add(GradientItems.HARDENED_LOG.get(), "Hardened Log");
+      this.add(GradientItems.HARDENED_PLANKS.get(), "Hardened Planks");
+      this.add(GradientItems.HARDENED_STICK.get(), "Hardened Stick");
       this.add(GradientItems.FIBRE.get(), "Fibre");
       this.add(GradientItems.TWINE.get(), "Twine");
       this.add(GradientItems.BARK.get(), "Bark");
@@ -1124,6 +1134,9 @@ public final class GradientDataGenerator {
         this.getBuilder(GradientTags.Blocks.STORAGE_BLOCK.get(metal)).add(GradientBlocks.METAL_BLOCK(metal).get());
         this.getBuilder(Tags.Blocks.STORAGE_BLOCKS).add(GradientTags.Blocks.STORAGE_BLOCK.get(metal));
       }
+
+      this.getBuilder(BlockTags.LOGS).add(GradientBlocks.HARDENED_LOG.get());
+      this.getBuilder(BlockTags.PLANKS).add(GradientBlocks.HARDENED_PLANKS.get());
     }
   }
 
@@ -1134,6 +1147,9 @@ public final class GradientDataGenerator {
 
     @Override
     protected void registerTags() {
+      this.getBuilder(GradientTags.Items.AXES).add(GradientItems.STONE_HATCHET.get());
+      this.getBuilder(GradientTags.Items.HAMMERS).add(GradientItems.STONE_HAMMER.get());
+
       this.getBuilder(GradientTags.Items.FIBRE_TORCH_LIGHTERS).add(GradientItems.LIT_FIBRE_TORCH.get(), Items.TORCH, Items.FLINT_AND_STEEL);
 
       for(final Ore ore : Ores.all()) {
@@ -1163,6 +1179,9 @@ public final class GradientDataGenerator {
         this.getBuilder(GradientTags.Items.STORAGE_BLOCK.get(metal)).add(GradientItems.METAL_BLOCK(metal).get());
         this.getBuilder(Tags.Items.STORAGE_BLOCKS).add(GradientTags.Items.STORAGE_BLOCK.get(metal));
       }
+
+      this.getBuilder(ItemTags.LOGS).add(GradientItems.HARDENED_LOG.get());
+      this.getBuilder(ItemTags.PLANKS).add(GradientItems.HARDENED_PLANKS.get());
 
       this.getBuilder(Tags.Items.STRING).add(GradientItems.TWINE.get());
 
@@ -1207,6 +1226,22 @@ public final class GradientDataGenerator {
         .addIngredient(GradientItems.FIBRE.get(), 4)
         .addCriterion("has_fibre", this.hasItem(GradientItems.FIBRE.get()))
         .build(finished, Gradient.loc("age1/" + GradientIds.TWINE));
+
+      StagedRecipeBuilder
+        .shapelessRecipe(GradientItems.HARDENED_PLANKS.get(), 2)
+        .stage(GradientStages.AGE_2)
+        .addIngredient(GradientItems.HARDENED_LOG.get())
+        .addIngredient(GradientTags.Items.AXES)
+        .addCriterion("has_hardened_log", this.hasItem(GradientItems.HARDENED_LOG.get()))
+        .build(finished, Gradient.loc("age2/" + GradientIds.HARDENED_PLANKS));
+
+      StagedRecipeBuilder
+        .shapelessRecipe(GradientItems.HARDENED_STICK.get(), 2)
+        .stage(GradientStages.AGE_2)
+        .addIngredient(GradientItems.HARDENED_PLANKS.get())
+        .addIngredient(GradientTags.Items.AXES)
+        .addCriterion("has_hardened_planks", this.hasItem(GradientItems.HARDENED_PLANKS.get()))
+        .build(finished, Gradient.loc("age2/" + GradientIds.HARDENED_STICK));
 
       GradientRecipeBuilder
         .grinding(GradientItems.MULCH.get())
@@ -1301,7 +1336,7 @@ public final class GradientDataGenerator {
         .shapelessRecipe(GradientItems.BONE_AWL.get())
         .stage(GradientStages.AGE_1)
         .addIngredient(Tags.Items.BONES)
-        .addIngredient(GradientItems.STONE_HAMMER.get())
+        .addIngredient(GradientTags.Items.HAMMERS)
         .addCriterion("has_bone", this.hasItem(Tags.Items.BONES))
         .build(finished, Gradient.loc("age1/" + GradientIds.BONE_AWL));
 
@@ -1613,6 +1648,22 @@ public final class GradientDataGenerator {
     }
 
     private void registerHardeningRecipes(final Consumer<IFinishedRecipe> finished) {
+      GradientRecipeBuilder
+        .hardening(GradientItems.HARDENED_LOG.get())
+        .stage(GradientStages.AGE_2)
+        .ticks(1200)
+        .addIngredient(ItemTags.LOGS)
+        .addCriterion("has_log", this.hasItem(ItemTags.LOGS))
+        .build(finished, Gradient.loc("hardening/age2/" + GradientIds.HARDENED_LOG));
+
+      GradientRecipeBuilder
+        .hardening(GradientItems.HARDENED_PLANKS.get())
+        .stage(GradientStages.AGE_2)
+        .ticks(1200)
+        .addIngredient(ItemTags.PLANKS)
+        .addCriterion("has_planks", this.hasItem(ItemTags.PLANKS))
+        .build(finished, Gradient.loc("hardening/age2/" + GradientIds.HARDENED_PLANKS));
+
       GradientRecipeBuilder
         .hardening(GradientItems.CLAY_FURNACE.get())
         .stage(GradientStages.AGE_2)
@@ -1992,6 +2043,8 @@ public final class GradientDataGenerator {
         }
 
         this.registerLootTable(GradientBlocks.SALT_BLOCK.get(), block -> droppingWithSilkTouchOrRandomly(block, GradientItems.SALT.get(), ConstantRange.of(4)));
+        this.registerDropSelfLootTable(GradientBlocks.HARDENED_LOG.get());
+        this.registerDropSelfLootTable(GradientBlocks.HARDENED_PLANKS.get());
 
         this.registerLootTable(GradientBlocks.FIREPIT.get(), droppingRandomly(Items.STICK, RandomValueRange.of(2, 5)));
         this.registerDropSelfLootTable(GradientBlocks.UNLIT_FIBRE_TORCH.get());

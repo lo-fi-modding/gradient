@@ -22,6 +22,7 @@ import lofimodding.gradient.science.Metals;
 import lofimodding.gradient.science.Ore;
 import lofimodding.gradient.science.Ores;
 import net.minecraft.block.Block;
+import net.minecraft.block.LogBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.TorchBlock;
 import net.minecraft.block.material.Material;
@@ -70,6 +71,9 @@ public final class GradientBlocks {
   }
 
   public static final RegistryObject<Block> SALT_BLOCK = REGISTRY.register(GradientIds.SALT_BLOCK, () -> new Block(Block.Properties.create(Material.SAND, MaterialColor.QUARTZ).sound(SoundType.SAND).hardnessAndResistance(0.5f)));
+
+  public static final RegistryObject<LogBlock> HARDENED_LOG = REGISTRY.register(GradientIds.HARDENED_LOG, () -> new LogBlock(MaterialColor.WOOD, Block.Properties.create(Material.WOOD).hardnessAndResistance(3.0f).sound(SoundType.WOOD).harvestTool(ToolType.AXE).harvestLevel(1)));
+  public static final RegistryObject<Block> HARDENED_PLANKS = REGISTRY.register(GradientIds.HARDENED_PLANKS, () -> new Block(Block.Properties.create(Material.WOOD).hardnessAndResistance(3.0f).sound(SoundType.WOOD).harvestTool(ToolType.AXE).harvestLevel(1)));
 
   public static final RegistryObject<FirepitBlock> FIREPIT = REGISTRY.register(GradientIds.FIREPIT, FirepitBlock::new);
   public static final RegistryObject<UnlitFibreTorchBlock> UNLIT_FIBRE_TORCH = REGISTRY.register(GradientIds.UNLIT_FIBRE_TORCH, () -> new UnlitFibreTorchBlock(litFibreTorch(), Block.Properties.create(Material.MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.0f).sound(SoundType.WOOD)));

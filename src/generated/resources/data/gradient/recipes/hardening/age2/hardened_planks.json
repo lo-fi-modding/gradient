@@ -1,0 +1,15 @@
+{
+  "type": "gradient:hardening",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 1200,
+  "ingredients": [
+    {
+      "tag": "minecraft:planks"
+    }
+  ],
+  "result": {
+    "item": "gradient:hardened_planks"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "gradient:block/hardened_log",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "gradient:block/hardened_log"
+    },
+    "axis=z": {
+      "model": "gradient:block/hardened_log",
+      "x": 90
+    }
+  }
+}

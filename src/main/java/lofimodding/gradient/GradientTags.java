@@ -53,6 +53,9 @@ public final class GradientTags {
   public static final class Items {
     private Items() { }
 
+    public static final Tag<Item> AXES = tag("axes");
+    public static final Tag<Item> HAMMERS = tag("hammers");
+
     public static final Tag<Item> FIBRE_TORCH_LIGHTERS = tag("fibre_torch_lighters");
 
     public static final Map<Ore, Tag<Item>> ORE = Collections.unmodifiableMap(Util.make(new LinkedHashMap<>(), tags -> {

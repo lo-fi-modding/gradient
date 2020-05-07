@@ -1,0 +1,15 @@
+{
+  "type": "gradient:hardening",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 1200,
+  "ingredients": [
+    {
+      "tag": "minecraft:logs"
+    }
+  ],
+  "result": {
+    "item": "gradient:hardened_log"
+  }
+}

@@ -109,6 +109,9 @@ public final class GradientItems {
   public static final RegistryObject<Item> FIBRE = REGISTRY.register(GradientIds.FIBRE, () -> new Item(new Item.Properties().group(GROUP)));
   public static final RegistryObject<Item> TWINE = REGISTRY.register(GradientIds.TWINE, () -> new Item(new Item.Properties().group(GROUP)));
   public static final RegistryObject<Item> BARK = REGISTRY.register(GradientIds.BARK, () -> new Item(new Item.Properties().group(GROUP)));
+  public static final RegistryObject<BlockItem> HARDENED_LOG = REGISTRY.register(GradientIds.HARDENED_LOG, () -> new BlockItem(GradientBlocks.HARDENED_LOG.get(), new Item.Properties().group(GROUP)));
+  public static final RegistryObject<BlockItem> HARDENED_PLANKS = REGISTRY.register(GradientIds.HARDENED_PLANKS, () -> new BlockItem(GradientBlocks.HARDENED_PLANKS.get(), new Item.Properties().group(GROUP)));
+  public static final RegistryObject<Item> HARDENED_STICK = REGISTRY.register(GradientIds.HARDENED_STICK, () -> new Item(new Item.Properties().group(GROUP)));
   public static final RegistryObject<MulchItem> MULCH = REGISTRY.register(GradientIds.MULCH, () -> new MulchItem(new Item.Properties().group(GROUP)));
   public static final RegistryObject<Item> COW_PELT = REGISTRY.register(GradientIds.COW_PELT, () -> new Item(new Item.Properties().group(GROUP)));
   public static final RegistryObject<Item> DONKEY_PELT = REGISTRY.register(GradientIds.DONKEY_PELT, () -> new Item(new Item.Properties().group(GROUP)));

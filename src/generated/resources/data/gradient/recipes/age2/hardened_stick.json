@@ -1,18 +1,19 @@
 {
   "type": "progression:shapeless_staged",
   "stages": [
-    "gradient:age_1"
+    "gradient:age_2"
   ],
   "damage_tools": true,
   "ingredients": [
     {
-      "tag": "forge:bones"
+      "item": "gradient:hardened_planks"
     },
     {
-      "tag": "gradient:hammers"
+      "tag": "gradient:axes"
     }
   ],
   "result": {
-    "item": "gradient:bone_awl"
+    "item": "gradient:hardened_stick",
+    "count": 2
   }
 }
