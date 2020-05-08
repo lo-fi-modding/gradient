@@ -13,7 +13,9 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.InterModComms;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
@@ -28,6 +30,8 @@ public class Gradient {
   public static final Logger LOGGER = LogManager.getLogger();
 
   public Gradient() {
+    ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.ENET_SPEC);
+
     final IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
     bus.addListener(this::setup);
