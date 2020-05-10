@@ -43,7 +43,7 @@ public class TileEntityWithCapabilities extends TileEntity {
     return new TileEntityWithCapabilities().addCapability(EnergyNetworkSegmentTest.TRANSFER, new TransferNode(), sides);
   }
 
-  private final Map<Direction, Map<Capability, Object>> caps = new EnumMap<>(Direction.class);
+  private final Map<Direction, Map<Capability, LazyOptional<Object>>> caps = new EnumMap<>(Direction.class);
 
   public TileEntityWithCapabilities() {
     super(null);
@@ -53,8 +53,10 @@ public class TileEntityWithCapabilities extends TileEntity {
   }
 
   public <T> TileEntityWithCapabilities addCapability(final Capability<T> capability, final T obj, final Direction... sides) {
+    final LazyOptional<Object> opt = LazyOptional.of(() -> obj);
+
     for(final Direction side : sides) {
-      this.caps.get(side).put(capability, obj);
+      this.caps.get(side).put(capability, opt);
     }
 
     return this;
@@ -66,6 +68,6 @@ public class TileEntityWithCapabilities extends TileEntity {
 
   @Override
   public <T> LazyOptional<T> getCapability(final Capability<T> capability, @Nullable final Direction facing) {
-    return this.caps.get(facing).containsKey(capability) ? LazyOptional.of(() -> (T)this.caps.get(facing).get(capability)) : super.getCapability(capability, facing);
+    return this.caps.get(facing).containsKey(capability) ? (LazyOptional<T>)this.caps.get(facing).get(capability) : super.getCapability(capability, facing);
   }
 }

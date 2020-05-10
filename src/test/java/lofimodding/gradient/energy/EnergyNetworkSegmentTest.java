@@ -397,7 +397,7 @@ class EnergyNetworkSegmentTest {
     final TransferNode transferOrigin = new TransferNode();
     final TransferNode transferEast = new TransferNode();
     final TransferNode transferWest = new TransferNode();
-    final TransferNode transferOrigin2 = new TransferNode();
+    final TransferNode transferNorth = new TransferNode();
     final TransferNode transferEast2 = new TransferNode();
     final TransferNode transferWest2 = new TransferNode();
     final TransferNode transferEast3 = new TransferNode();
@@ -405,10 +405,16 @@ class EnergyNetworkSegmentTest {
     final TransferNode transferWest4 = new TransferNode();
     final StorageNode sink = new StorageNode(10000.0f, 32.0f, 0.0f, 0.0f);
 
+    //    -1 0 1
+    // -3  T C
+    // -2  T   T
+    // -1  T T T
+    //  0  T T T
+    //  1  P   P
     this.net.connect(BlockPos.ZERO, new TileEntityWithCapabilities().addCapability(TRANSFER, transferOrigin));
     this.net.connect(BlockPos.ZERO.east(), new TileEntityWithCapabilities().addCapability(TRANSFER, transferEast));
     this.net.connect(BlockPos.ZERO.west(), new TileEntityWithCapabilities().addCapability(TRANSFER, transferWest));
-    this.net.connect(BlockPos.ZERO.north(), new TileEntityWithCapabilities().addCapability(TRANSFER, transferOrigin2));
+    this.net.connect(BlockPos.ZERO.north(), new TileEntityWithCapabilities().addCapability(TRANSFER, transferNorth));
     this.net.connect(BlockPos.ZERO.north().east(), new TileEntityWithCapabilities().addCapability(TRANSFER, transferEast2));
     this.net.connect(BlockPos.ZERO.north().west(), new TileEntityWithCapabilities().addCapability(TRANSFER, transferWest2));
     this.net.connect(BlockPos.ZERO.north().north().east(), new TileEntityWithCapabilities().addCapability(TRANSFER, transferEast3));
@@ -423,7 +429,7 @@ class EnergyNetworkSegmentTest {
     Assertions.assertEquals(10.0f, transferOrigin.getTransferred(), 0.0001f);
     Assertions.assertEquals(10.0f, transferEast.getTransferred(), 0.0001f);
     Assertions.assertEquals(10.0f, transferWest.getTransferred(), 0.0001f);
-    Assertions.assertEquals(10.0f, transferOrigin2.getTransferred(), 0.0001f);
+    Assertions.assertEquals(10.0f, transferNorth.getTransferred(), 0.0001f);
     Assertions.assertEquals( 0.0f, transferEast2.getTransferred(), 0.0001f);
     Assertions.assertEquals(20.0f, transferWest2.getTransferred(), 0.0001f);
     Assertions.assertEquals( 0.0f, transferEast3.getTransferred(), 0.0001f);
