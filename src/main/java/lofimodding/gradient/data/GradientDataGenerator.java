@@ -757,6 +757,8 @@ public final class GradientDataGenerator {
         this.getBuilder(GradientIds.CLAY_CAST(cast)).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.CLAY_CAST(cast))));
       }
 
+      this.singleTexture(GradientIds.WOODEN_GEAR, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.WOODEN_GEAR));
+
       this.singleTexture(GradientIds.INFINICOAL, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.INFINICOAL));
     }
 
@@ -1082,6 +1084,8 @@ public final class GradientDataGenerator {
       this.add(GradientItems.CLAY_CRUCIBLE.get().getTranslationKey() + ".not_enough_metal", "This cast requires %d B");
       this.add(GradientItems.CLAY_METAL_MIXER.get(), "Clay Metal Mixer");
       this.add(GradientItems.CLAY_METAL_MIXER.get().getTranslationKey() + ".tooltip", "Place between two crucibles, with another crucible underneath");
+
+      this.add(GradientItems.WOODEN_GEAR.get(), "Wooden Gear");
 
       this.add(GradientItems.INFINICOAL.get(), "Infinicoal (Debug Item)");
 
@@ -1518,6 +1522,17 @@ public final class GradientDataGenerator {
         .addIngredient(ItemTags.SAND)
         .addCriterion("has_clay_ball", this.hasItem(Items.CLAY_BALL))
         .build(finished, Gradient.loc("age2/" + GradientIds.UNHARDENED_CLAY_CAST_BLANK));
+
+      StagedRecipeBuilder
+        .shaped(GradientItems.WOODEN_GEAR.get())
+        .stage(GradientStages.AGE_2)
+        .patternLine("FSF")
+        .patternLine("S S")
+        .patternLine("FSF")
+        .key('S', Tags.Items.RODS_WOODEN)
+        .key('F', Items.FLINT)
+        .addCriterion("has_stick", this.hasItem(Tags.Items.RODS_WOODEN))
+        .build(finished, Gradient.loc("age2/" + GradientIds.WOODEN_GEAR));
     }
 
     private void registerFuelRecipes(final Consumer<IFinishedRecipe> finished) {

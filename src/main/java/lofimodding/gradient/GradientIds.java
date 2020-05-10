@@ -126,5 +126,7 @@ public final class GradientIds {
     return metal.name + '_' + cast.name;
   }
 
+  public static String WOODEN_GEAR = "wooden_gear";
+
   public static final String INFINICOAL = "infinicoal";
 }

@@ -1,0 +1,23 @@
+{
+  "type": "progression:shaped_staged",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "damage_tools": true,
+  "pattern": [
+    "FSF",
+    "S S",
+    "FSF"
+  ],
+  "key": {
+    "S": {
+      "tag": "forge:rods/wooden"
+    },
+    "F": {
+      "item": "minecraft:flint"
+    }
+  },
+  "result": {
+    "item": "gradient:wooden_gear"
+  }
+}

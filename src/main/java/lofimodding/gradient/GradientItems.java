@@ -194,6 +194,8 @@ public final class GradientItems {
     }
   }
 
+  public static final RegistryObject<Item> WOODEN_GEAR = REGISTRY.register(GradientIds.WOODEN_GEAR, () -> new Item(new Item.Properties().group(GROUP)));
+
   public static final RegistryObject<Item> INFINICOAL = REGISTRY.register(GradientIds.INFINICOAL, () -> new Item(new Item.Properties().group(GROUP)));
 
   static void init(final IEventBus bus) {
