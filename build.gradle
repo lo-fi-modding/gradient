@@ -118,6 +118,9 @@ dependencies {
 
   compile fg.deobf("lofimodding.terra:terra:1.15.2-1.0.0")
   compile fg.deobf("lofimodding.progression:progression:1.15.2-1.0.0")
+
+  testCompile "org.junit.jupiter:junit-jupiter-api:5.6.2"
+  testRuntime "org.junit.jupiter:junit-jupiter-engine:5.6.2"
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
