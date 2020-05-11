@@ -3,6 +3,11 @@ package lofimodding.gradient;
 import lofimodding.gradient.advancements.criterion.GradientCriteriaTriggers;
 import lofimodding.gradient.client.GradientClient;
 import lofimodding.gradient.client.screens.ClayCrucibleScreen;
+import lofimodding.gradient.energy.EnergyCapability;
+import lofimodding.gradient.energy.kinetic.IKineticEnergyStorage;
+import lofimodding.gradient.energy.kinetic.IKineticEnergyTransfer;
+import lofimodding.gradient.energy.kinetic.KineticEnergyStorage;
+import lofimodding.gradient.energy.kinetic.KineticEnergyTransfer;
 import lofimodding.gradient.fluids.GradientFluidHandlerCapability;
 import lofimodding.gradient.network.Packets;
 import net.minecraft.client.gui.ScreenManager;
@@ -55,6 +60,13 @@ public class Gradient {
     Packets.register();
 
     GradientFluidHandlerCapability.register();
+
+    EnergyCapability.register(
+      IKineticEnergyStorage.class,
+      IKineticEnergyTransfer.class,
+      () -> new KineticEnergyStorage(10000.0f),
+      KineticEnergyTransfer::new
+    );
 
     // Trigger loading
     Gradient.LOGGER.debug(GradientCriteriaTriggers.ADVANCEMENT_UNLOCKED);

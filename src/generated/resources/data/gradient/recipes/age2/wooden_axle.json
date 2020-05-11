@@ -1,0 +1,23 @@
+{
+  "type": "progression:shaped_staged",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "damage_tools": true,
+  "pattern": [
+    " C ",
+    "SSS",
+    " C "
+  ],
+  "key": {
+    "S": {
+      "tag": "forge:rods/wooden"
+    },
+    "C": {
+      "item": "gradient:leather_strip"
+    }
+  },
+  "result": {
+    "item": "gradient:wooden_axle"
+  }
+}

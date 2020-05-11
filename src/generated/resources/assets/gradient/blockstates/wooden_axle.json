@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "gradient:block/wooden_axle",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "gradient:block/wooden_axle"
+    },
+    "axis=z": {
+      "model": "gradient:block/wooden_axle",
+      "x": 90
+    }
+  }
+}

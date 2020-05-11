@@ -127,6 +127,7 @@ public final class GradientIds {
   }
 
   public static String WOODEN_GEAR = "wooden_gear";
+  public static String WOODEN_AXLE = "wooden_axle";
 
   public static final String INFINICOAL = "infinicoal";
 }

@@ -685,4 +685,23 @@ public final class ModelGenerator {
       .face(Direction.DOWN).uvs(6.0f, 4.0f, 10.0f, 6.0f).texture("side").end()
       .end();
   }
+
+  public static void woodenAxle(final GradientDataGenerator.BlockModels generator, final String id, final ResourceLocation side, final ResourceLocation end) {
+    generator.getBuilder(id)
+      .parent(generator.getExistingFile(generator.mcLoc("block/block")))
+      .texture("side", side)
+      .texture("end", end)
+      .texture("particle", side)
+
+      .element()
+      .from(5.0f, 0.0f, 5.0f)
+      .to(11.0f, 16.0f, 11.0f)
+      .face(Direction.NORTH).texture("side").end()
+      .face(Direction.EAST).texture("side").end()
+      .face(Direction.SOUTH).texture("side").end()
+      .face(Direction.WEST).texture("side").end()
+      .face(Direction.UP).texture("end").end()
+      .face(Direction.DOWN).texture("end").end()
+      .end();
+  }
 }

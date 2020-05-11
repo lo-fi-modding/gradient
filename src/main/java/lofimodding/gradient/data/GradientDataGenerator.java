@@ -559,6 +559,8 @@ public final class GradientDataGenerator {
           .face(Direction.UP).uvs(0.0f, 0.0f, 16.0f, 16.0f).texture("cast").rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN).end()
           .end();
       }
+
+      ModelGenerator.woodenAxle(this, GradientIds.WOODEN_AXLE, this.mcLoc("block/oak_planks"), this.mcLoc("block/oak_planks"));
     }
 
     private BiConsumer<Direction, ModelBuilder<BlockModelBuilder>.ElementBuilder.FaceBuilder> addTexture(final String texture) {
@@ -758,6 +760,7 @@ public final class GradientDataGenerator {
       }
 
       this.singleTexture(GradientIds.WOODEN_GEAR, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.WOODEN_GEAR));
+      this.getBuilder(GradientIds.WOODEN_AXLE).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.WOODEN_AXLE)));
 
       this.singleTexture(GradientIds.INFINICOAL, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.INFINICOAL));
     }
@@ -933,6 +936,8 @@ public final class GradientDataGenerator {
       for(final GradientCasts cast : GradientCasts.values()) {
         this.horizontalBlock(GradientBlocks.CLAY_CAST(cast).get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.CLAY_CAST(cast))));
       }
+
+      this.axisBlock(GradientBlocks.WOODEN_AXLE.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.WOODEN_AXLE)));
     }
   }
 
@@ -1086,6 +1091,7 @@ public final class GradientDataGenerator {
       this.add(GradientItems.CLAY_METAL_MIXER.get().getTranslationKey() + ".tooltip", "Place between two crucibles, with another crucible underneath");
 
       this.add(GradientItems.WOODEN_GEAR.get(), "Wooden Gear");
+      this.add(GradientItems.WOODEN_AXLE.get(), "Wooden Axle");
 
       this.add(GradientItems.INFINICOAL.get(), "Infinicoal (Debug Item)");
 
@@ -1533,6 +1539,17 @@ public final class GradientDataGenerator {
         .key('F', Items.FLINT)
         .addCriterion("has_stick", this.hasItem(Tags.Items.RODS_WOODEN))
         .build(finished, Gradient.loc("age2/" + GradientIds.WOODEN_GEAR));
+
+      StagedRecipeBuilder
+        .shaped(GradientItems.WOODEN_AXLE.get())
+        .stage(GradientStages.AGE_2)
+        .patternLine(" C ")
+        .patternLine("SSS")
+        .patternLine(" C ")
+        .key('S', Tags.Items.RODS_WOODEN)
+        .key('C', GradientItems.LEATHER_STRIP.get())
+        .addCriterion("has_stick", this.hasItem(Tags.Items.RODS_WOODEN))
+        .build(finished, Gradient.loc("age2/" + GradientIds.WOODEN_AXLE));
     }
 
     private void registerFuelRecipes(final Consumer<IFinishedRecipe> finished) {
@@ -2122,6 +2139,8 @@ public final class GradientDataGenerator {
         for(final GradientCasts cast : GradientCasts.values()) {
           this.registerDropSelfLootTable(GradientBlocks.CLAY_CAST(cast).get());
         }
+
+        this.registerDropSelfLootTable(GradientBlocks.WOODEN_AXLE.get());
       }
 
       private final List<Block> blocks = new ArrayList<>();
