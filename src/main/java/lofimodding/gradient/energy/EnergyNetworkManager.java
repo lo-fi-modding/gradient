@@ -8,6 +8,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.server.FMLServerStoppedEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,5 +60,10 @@ public final class EnergyNetworkManager {
         }
       }
     }
+  }
+
+  @SubscribeEvent
+  public static void onServerShutdown(final FMLServerStoppedEvent event) {
+    networks.clear();
   }
 }
