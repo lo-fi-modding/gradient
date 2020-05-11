@@ -18,6 +18,7 @@ import lofimodding.gradient.blocks.UnhardenedClayBlock;
 import lofimodding.gradient.blocks.UnlitFibreTorchBlock;
 import lofimodding.gradient.blocks.UnlitFibreWallTorchBlock;
 import lofimodding.gradient.blocks.WoodenAxleBlock;
+import lofimodding.gradient.blocks.WoodenGearboxBlock;
 import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.science.Metals;
 import lofimodding.gradient.science.Ore;
@@ -116,6 +117,7 @@ public final class GradientBlocks {
   }
 
   public static final RegistryObject<WoodenAxleBlock> WOODEN_AXLE = REGISTRY.register(GradientIds.WOODEN_AXLE, WoodenAxleBlock::new);
+  public static final RegistryObject<WoodenGearboxBlock> WOODEN_GEARBOX = REGISTRY.register(GradientIds.WOODEN_GEARBOX, WoodenGearboxBlock::new);
 
   static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering blocks...");
