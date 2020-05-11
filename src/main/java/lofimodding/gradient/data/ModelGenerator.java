@@ -704,4 +704,68 @@ public final class ModelGenerator {
       .face(Direction.DOWN).texture("end").end()
       .end();
   }
+
+  public static void woodenConveyorBelt(final GradientDataGenerator.BlockModels generator, final String id, final ResourceLocation particle, final ResourceLocation belt, final ResourceLocation side) {
+    generator.getBuilder(id)
+      .parent(generator.getExistingFile(generator.mcLoc("block/block")))
+      .texture("particle", particle)
+      .texture("belt", belt)
+      .texture("side", side)
+
+      .element() // west
+      .from(3.0f, 0.0f, 0.0f)
+      .to(4.0f, 4.0f, 16.0f)
+      .face(Direction.NORTH).uvs(12.0f, 12.0f, 13.0f, 16.0f).texture("side").end()
+      .face(Direction.EAST).uvs(0.0f, 4.0f, 16.0f, 8.0f).texture("side").end()
+      .face(Direction.SOUTH).uvs(0.0f, 12.0f, 1.0f, 16.0f).texture("side").end()
+      .face(Direction.WEST).uvs(0.0f, 4.0f, 16.0f, 8.0f).texture("side").end()
+      .face(Direction.UP).uvs(0.0f, 11.0f, 16.0f, 12.0f).texture("side").rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).end()
+      .face(Direction.DOWN).uvs(0.0f, 15.0f, 16.0f, 16.0f).texture("side").rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).end()
+      .end()
+
+      .element() // east
+      .from(12.0f, 0.0f, 0.0f)
+      .to(13.0f, 4.0f, 16.0f)
+      .face(Direction.NORTH).uvs(3.0f, 12.0f, 4.0f, 16.0f).texture("side").end()
+      .face(Direction.EAST).uvs(0.0f, 0.0f, 16.0f, 4.0f).texture("side").end()
+      .face(Direction.SOUTH).uvs(9.0f, 12.0f, 10.0f, 16.0f).texture("side").end()
+      .face(Direction.WEST).uvs(0.0f, 0.0f, 16.0f, 4.0f).texture("side").end()
+      .face(Direction.UP).uvs(0.0f, 15.0f, 16.0f, 16.0f).texture("side").rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).end()
+      .face(Direction.DOWN).uvs(0.0f, 11.0f, 16.0f, 12.0f).texture("side").rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).end()
+      .end()
+
+      .element() // north
+      .from(4.0f, 0.0f, 0.0f)
+      .to(12.0f, 4.0f, 1.0f)
+      .face(Direction.NORTH).uvs(4.0f, 12.0f, 12.0f, 16.0f).texture("side").end()
+      .face(Direction.EAST).uvs(0.0f, 0.0f, 1.0f, 4.0f).texture("side").end()
+      .face(Direction.SOUTH).uvs(4.0f, 12.0f, 12.0f, 16.0f).texture("side").end()
+      .face(Direction.WEST).uvs(0.0f, 0.0f, 1.0f, 4.0f).texture("side").end()
+      .face(Direction.UP).uvs(0.0f, 0.0f, 8.0f, 1.0f).texture("side").end()
+      .face(Direction.DOWN).uvs(8.0f, 0.0f, 16.0f, 1.0f).texture("side").end()
+      .end()
+
+      .element() // south
+      .from(4.0f, 0.0f, 15.0f)
+      .to(12.0f, 4.0f, 16.0f)
+      .face(Direction.NORTH).uvs(1.0f, 12.0f, 9.0f, 16.0f).texture("side").end()
+      .face(Direction.EAST).uvs(0.0f, 0.0f, 1.0f, 4.0f).texture("side").end()
+      .face(Direction.SOUTH).uvs(1.0f, 12.0f, 9.0f, 16.0f).texture("side").end()
+      .face(Direction.WEST).uvs(0.0f, 0.0f, 1.0f, 4.0f).texture("side").end()
+      .face(Direction.UP).uvs(8.0f, 0.0f, 16.0f, 1.0f).texture("side").end()
+      .face(Direction.DOWN).uvs(0.0f, 0.0f, 8.0f, 1.0f).texture("side").end()
+      .end()
+
+      .element() // belt
+      .from(4.1f, 3.0f, 1.1f)
+      .to(11.9f, 4.0f, 14.9f)
+      .face(Direction.NORTH).uvs(4.0f, 0.0f, 12.0f, 1.0f).texture("belt").end()
+      .face(Direction.EAST).uvs(15.0f, 0.0f, 16.0f, 14.0f).texture("belt").rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).end()
+      .face(Direction.SOUTH).uvs(4.0f, 15.0f, 12.0f, 16.0f).texture("belt").end()
+      .face(Direction.WEST).uvs(0.0f, 0.0f, 1.0f, 14.0f).texture("belt").rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).end()
+      .face(Direction.UP).uvs(4.0f, 1.0f, 12.0f, 15.0f).texture("belt").end()
+      .face(Direction.DOWN).uvs(4.0f, 1.0f, 12.0f, 15.0f).texture("belt").rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN).end()
+      .end()
+    ;
+  }
 }

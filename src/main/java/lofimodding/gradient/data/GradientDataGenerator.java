@@ -561,6 +561,8 @@ public final class GradientDataGenerator {
       }
 
       ModelGenerator.woodenAxle(this, GradientIds.WOODEN_AXLE, this.mcLoc("block/oak_planks"), this.mcLoc("block/oak_planks"));
+      ModelGenerator.woodenConveyorBelt(this, GradientIds.WOODEN_CONVEYOR_BELT, this.modLoc("block/wooden_conveyor_belt"), this.modLoc("block/wooden_conveyor_belt"), this.mcLoc("block/oak_planks"));
+      this.cube(GradientIds.WOODEN_CONVEYOR_BELT_DRIVER, this.modLoc("block/wooden_conveyor_belt_driver_side"), this.modLoc("block/wooden_conveyor_belt_driver_side"), this.modLoc("block/wooden_gearbox"), this.modLoc("block/wooden_conveyor_belt_driver_side"), this.modLoc("block/wooden_conveyor_belt_driver_side"), this.modLoc("block/wooden_conveyor_belt_driver_side"));
     }
 
     private BiConsumer<Direction, ModelBuilder<BlockModelBuilder>.ElementBuilder.FaceBuilder> addTexture(final String texture) {
@@ -762,6 +764,8 @@ public final class GradientDataGenerator {
       this.singleTexture(GradientIds.WOODEN_GEAR, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.WOODEN_GEAR));
       this.getBuilder(GradientIds.WOODEN_AXLE).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.WOODEN_AXLE)));
       this.getBuilder(GradientIds.WOODEN_GEARBOX).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.WOODEN_GEARBOX)));
+      this.getBuilder(GradientIds.WOODEN_CONVEYOR_BELT).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.WOODEN_CONVEYOR_BELT)));
+      this.getBuilder(GradientIds.WOODEN_CONVEYOR_BELT_DRIVER).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.WOODEN_CONVEYOR_BELT_DRIVER)));
 
       this.singleTexture(GradientIds.INFINICOAL, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.INFINICOAL));
     }
@@ -940,6 +944,9 @@ public final class GradientDataGenerator {
 
       this.axisBlock(GradientBlocks.WOODEN_AXLE.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.WOODEN_AXLE)));
       this.simpleBlock(GradientBlocks.WOODEN_GEARBOX.get());
+
+      this.horizontalBlock(GradientBlocks.WOODEN_CONVEYOR_BELT.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.WOODEN_CONVEYOR_BELT)));
+      this.directionalBlock(GradientBlocks.WOODEN_CONVEYOR_BELT_DRIVER.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.WOODEN_CONVEYOR_BELT_DRIVER)));
     }
   }
 
@@ -1095,6 +1102,8 @@ public final class GradientDataGenerator {
       this.add(GradientItems.WOODEN_GEAR.get(), "Wooden Gear");
       this.add(GradientItems.WOODEN_AXLE.get(), "Wooden Axle");
       this.add(GradientItems.WOODEN_GEARBOX.get(), "Wooden Gearbox");
+      this.add(GradientItems.WOODEN_CONVEYOR_BELT.get(), "Wooden Conveyor Belt");
+      this.add(GradientItems.WOODEN_CONVEYOR_BELT_DRIVER.get(), "Wooden Conveyor Belt Driver");
 
       this.add(GradientItems.INFINICOAL.get(), "Infinicoal (Debug Item)");
 
@@ -1566,6 +1575,32 @@ public final class GradientDataGenerator {
         .addCriterion("has_wooden_gear", this.hasItem(GradientItems.WOODEN_GEAR.get()))
         .addCriterion("has_wooden_axle", this.hasItem(GradientItems.WOODEN_AXLE.get()))
         .build(finished, Gradient.loc("age2/" + GradientIds.WOODEN_GEARBOX));
+
+      StagedRecipeBuilder
+        .shaped(GradientItems.WOODEN_CONVEYOR_BELT.get())
+        .stage(GradientStages.AGE_2)
+        .patternLine("SSS")
+        .patternLine("AGA")
+        .patternLine("SSS")
+        .key('S', ItemTags.WOODEN_SLABS)
+        .key('G', GradientItems.WOODEN_GEAR.get())
+        .key('A', GradientItems.WOODEN_AXLE.get())
+        .addCriterion("has_wooden_gear", this.hasItem(GradientItems.WOODEN_GEAR.get()))
+        .addCriterion("has_wooden_axle", this.hasItem(GradientItems.WOODEN_AXLE.get()))
+        .build(finished, Gradient.loc("age2/" + GradientIds.WOODEN_CONVEYOR_BELT));
+
+      StagedRecipeBuilder
+        .shaped(GradientItems.WOODEN_CONVEYOR_BELT_DRIVER.get())
+        .stage(GradientStages.AGE_2)
+        .patternLine("PAP")
+        .patternLine("GGG")
+        .patternLine("APA")
+        .key('P', ItemTags.PLANKS)
+        .key('G', GradientItems.WOODEN_GEAR.get())
+        .key('A', GradientItems.WOODEN_AXLE.get())
+        .addCriterion("has_wooden_gear", this.hasItem(GradientItems.WOODEN_GEAR.get()))
+        .addCriterion("has_wooden_axle", this.hasItem(GradientItems.WOODEN_AXLE.get()))
+        .build(finished, Gradient.loc("age2/" + GradientIds.WOODEN_CONVEYOR_BELT_DRIVER));
     }
 
     private void registerFuelRecipes(final Consumer<IFinishedRecipe> finished) {
@@ -2158,6 +2193,8 @@ public final class GradientDataGenerator {
 
         this.registerDropSelfLootTable(GradientBlocks.WOODEN_AXLE.get());
         this.registerDropSelfLootTable(GradientBlocks.WOODEN_GEARBOX.get());
+        this.registerDropSelfLootTable(GradientBlocks.WOODEN_CONVEYOR_BELT.get());
+        this.registerDropSelfLootTable(GradientBlocks.WOODEN_CONVEYOR_BELT_DRIVER.get());
       }
 
       private final List<Block> blocks = new ArrayList<>();

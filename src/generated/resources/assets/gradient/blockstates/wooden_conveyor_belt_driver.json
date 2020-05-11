@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "gradient:block/wooden_conveyor_belt_driver",
+      "x": 180
+    },
+    "facing=up": {
+      "model": "gradient:block/wooden_conveyor_belt_driver"
+    },
+    "facing=north": {
+      "model": "gradient:block/wooden_conveyor_belt_driver",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "gradient:block/wooden_conveyor_belt_driver",
+      "x": 90,
+      "y": 180
+    },
+    "facing=west": {
+      "model": "gradient:block/wooden_conveyor_belt_driver",
+      "x": 90,
+      "y": 270
+    },
+    "facing=east": {
+      "model": "gradient:block/wooden_conveyor_belt_driver",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

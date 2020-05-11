@@ -1,0 +1,26 @@
+{
+  "type": "progression:shaped_staged",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "damage_tools": true,
+  "pattern": [
+    "SSS",
+    "AGA",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "tag": "minecraft:wooden_slabs"
+    },
+    "G": {
+      "item": "gradient:wooden_gear"
+    },
+    "A": {
+      "item": "gradient:wooden_axle"
+    }
+  },
+  "result": {
+    "item": "gradient:wooden_conveyor_belt"
+  }
+}

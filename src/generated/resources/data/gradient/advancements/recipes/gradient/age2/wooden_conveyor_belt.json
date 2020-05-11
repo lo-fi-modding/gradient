@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "gradient:age2/wooden_conveyor_belt"
+    ]
+  },
+  "criteria": {
+    "has_wooden_gear": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "gradient:wooden_gear"
+          }
+        ]
+      }
+    },
+    "has_wooden_axle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "gradient:wooden_axle"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "gradient:age2/wooden_conveyor_belt"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_wooden_gear",
+      "has_wooden_axle",
+      "has_the_recipe"
+    ]
+  ]
+}
