@@ -199,6 +199,7 @@ public final class GradientItems {
   public static final RegistryObject<BlockItem> WOODEN_GEARBOX = REGISTRY.register(GradientIds.WOODEN_GEARBOX, () -> new BlockItem(GradientBlocks.WOODEN_GEARBOX.get(), new Item.Properties().group(GROUP)));
   public static final RegistryObject<BlockItem> WOODEN_CONVEYOR_BELT = REGISTRY.register(GradientIds.WOODEN_CONVEYOR_BELT, () -> new BlockItem(GradientBlocks.WOODEN_CONVEYOR_BELT.get(), new Item.Properties().group(GROUP)));
   public static final RegistryObject<BlockItem> WOODEN_CONVEYOR_BELT_DRIVER = REGISTRY.register(GradientIds.WOODEN_CONVEYOR_BELT_DRIVER, () -> new BlockItem(GradientBlocks.WOODEN_CONVEYOR_BELT_DRIVER.get(), new Item.Properties().group(GROUP)));
+  public static final RegistryObject<BlockItem> WOODEN_CRANK = REGISTRY.register(GradientIds.WOODEN_CRANK, () -> new BlockItem(GradientBlocks.WOODEN_CRANK.get(), new Item.Properties().group(GROUP)));
 
   public static final RegistryObject<Item> INFINICOAL = REGISTRY.register(GradientIds.INFINICOAL, () -> new Item(new Item.Properties().group(GROUP)));
 

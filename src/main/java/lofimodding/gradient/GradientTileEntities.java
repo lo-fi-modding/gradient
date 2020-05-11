@@ -10,6 +10,7 @@ import lofimodding.gradient.tileentities.MixingBasinTile;
 import lofimodding.gradient.tileentities.WoodenAxleTile;
 import lofimodding.gradient.tileentities.WoodenConveyorBeltDriverTile;
 import lofimodding.gradient.tileentities.WoodenConveyorBeltTile;
+import lofimodding.gradient.tileentities.WoodenCrankTile;
 import lofimodding.gradient.tileentities.WoodenGearboxTile;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -33,6 +34,7 @@ public final class GradientTileEntities {
   public static final RegistryObject<TileEntityType<WoodenGearboxTile>> WOODEN_GEARBOX = REGISTRY.register(GradientIds.WOODEN_GEARBOX, () -> TileEntityType.Builder.create(WoodenGearboxTile::new, GradientBlocks.WOODEN_GEARBOX.get()).build(null));
   public static final RegistryObject<TileEntityType<WoodenConveyorBeltTile>> WOODEN_CONVEYOR_BELT = REGISTRY.register(GradientIds.WOODEN_CONVEYOR_BELT, () -> TileEntityType.Builder.create(WoodenConveyorBeltTile::new, GradientBlocks.WOODEN_CONVEYOR_BELT.get()).build(null));
   public static final RegistryObject<TileEntityType<WoodenConveyorBeltDriverTile>> WOODEN_CONVEYOR_BELT_DRIVER = REGISTRY.register(GradientIds.WOODEN_CONVEYOR_BELT_DRIVER, () -> TileEntityType.Builder.create(WoodenConveyorBeltDriverTile::new, GradientBlocks.WOODEN_CONVEYOR_BELT_DRIVER.get()).build(null));
+  public static final RegistryObject<TileEntityType<WoodenCrankTile>> WOODEN_CRANK = REGISTRY.register(GradientIds.WOODEN_CRANK, () -> TileEntityType.Builder.create(WoodenCrankTile::new, GradientBlocks.WOODEN_CRANK.get()).build(null));
 
   static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering tile entities...");
