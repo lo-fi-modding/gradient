@@ -10,6 +10,8 @@ import lofimodding.gradient.energy.kinetic.IKineticEnergyTransfer;
 import lofimodding.gradient.energy.kinetic.KineticEnergyStorage;
 import lofimodding.gradient.utils.WorldUtils;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.goal.PrioritizedGoal;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -29,8 +31,10 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nullable;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -129,6 +133,7 @@ public class WoodenCrankTile extends TileEntity implements ITickableTileEntity {
     for(final WorkerData worker : this.workers) {
       worker.worker.detachHome();
       worker.worker.setLeashHolder(detacher, true);
+      worker.restoreGoals();
     }
 
     this.workers.clear();
@@ -180,6 +185,20 @@ public class WoodenCrankTile extends TileEntity implements ITickableTileEntity {
         }
       }
     }
+  }
+
+  private double getSlowestWorker() {
+    double speed = Float.MAX_VALUE;
+
+    for(final WorkerData worker : this.workers) {
+      final double workerSpeed = worker.getSpeed();
+
+      if(workerSpeed < speed) {
+        speed = workerSpeed;
+      }
+    }
+
+    return speed;
   }
 
   private int lastTicks;
@@ -322,10 +341,22 @@ public class WoodenCrankTile extends TileEntity implements ITickableTileEntity {
 
   private final class WorkerData {
     private final AnimalEntity worker;
+    private final Set<PrioritizedGoal> goals;
     private Vec3d targetPos;
 
     private WorkerData(final AnimalEntity worker) {
       this.worker = worker;
+      this.goals = new HashSet<>(worker.goalSelector.goals);
+      this.worker.goalSelector.goals.clear();
+    }
+
+    private void restoreGoals() {
+      this.worker.goalSelector.goals.clear();
+      this.worker.goalSelector.goals.addAll(this.goals);
+    }
+
+    private double getSpeed() {
+      return this.worker.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getValue();
     }
 
     private double getTargetX(final int workerIndex) {
@@ -349,9 +380,9 @@ public class WoodenCrankTile extends TileEntity implements ITickableTileEntity {
       // Pathfinding seems to have changed since 1.12, and doesn't move exactly to the destination.
       // If we're >= 3.5 blocks away, we pathfind, otherwise we just move directly.
       if(Math.abs(this.worker.getPosX() - (this.targetPos.x + (int)(this.worker.getWidth() + 1) / 2.0d)) < maxDistanceToWaypoint && Math.abs(this.worker.getPosZ() - (this.targetPos.z + (int)(this.worker.getWidth() + 1) / 2.0d)) < maxDistanceToWaypoint && Math.abs(this.worker.getPosY() - this.targetPos.y) < 1.0d) {
-        this.worker.getMoveHelper().setMoveTo(this.targetPos.x, this.targetPos.y, this.targetPos.z, 1.0d);
+        this.worker.getMoveHelper().setMoveTo(this.targetPos.x, this.targetPos.y, this.targetPos.z, WoodenCrankTile.this.getSlowestWorker() / this.getSpeed());
       } else {
-        this.worker.getNavigator().tryMoveToXYZ(this.targetPos.x, this.targetPos.y, this.targetPos.z, 1.0d);
+        this.worker.getNavigator().tryMoveToXYZ(this.targetPos.x, this.targetPos.y, this.targetPos.z, WoodenCrankTile.this.getSlowestWorker() / this.getSpeed());
       }
     }
 
@@ -360,7 +391,7 @@ public class WoodenCrankTile extends TileEntity implements ITickableTileEntity {
         return true;
       }
 
-      final double maxDistanceToWaypoint = (this.worker.getWidth() > 0.75f ? this.worker.getWidth() / 2.0d : 0.75d - this.worker.getWidth() / 2.0d) * 1.5d;
+      final double maxDistanceToWaypoint = (this.worker.getWidth() > 0.75f ? this.worker.getWidth() / 2.0d : 0.75d - this.worker.getWidth() / 2.0d) * 1.75d;
       return Math.abs(this.worker.getPosX() - (this.targetPos.x + (int)(this.worker.getWidth() + 1) / 2.0d)) < maxDistanceToWaypoint && Math.abs(this.worker.getPosZ() - (this.targetPos.z + (int)(this.worker.getWidth() + 1) / 2.0d)) < maxDistanceToWaypoint && Math.abs(this.worker.getPosY() - this.targetPos.y) < 1.0d;
     }
   }
