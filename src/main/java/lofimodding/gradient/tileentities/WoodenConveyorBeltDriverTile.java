@@ -11,14 +11,12 @@ import lofimodding.gradient.energy.kinetic.KineticEnergyStorage;
 import lofimodding.gradient.utils.WorldUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.MoverType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -190,18 +188,8 @@ public class WoodenConveyorBeltDriverTile extends TileEntity implements ITickabl
         final Direction beltFacing = belt.getWorld().getBlockState(belt.getPos()).get(WoodenConveyorBeltBlock.FACING);
 
         for(final Entity entity : this.world.getEntitiesWithinAABB(Entity.class, this.movingBoxes.get(side))) {
-          entity.move(MoverType.PISTON, new Vec3d(beltFacing.getXOffset() * 0.05d * beltSpeedModifier, 0.0d, beltFacing.getZOffset() * 0.05d * beltSpeedModifier));
+          entity.setMotion(entity.getMotion().add(beltFacing.getXOffset() * 0.05d * beltSpeedModifier, 0.0d, beltFacing.getZOffset() * 0.05d * beltSpeedModifier));
           entity.velocityChanged = true;
-
-          if(beltFacing.getXOffset() != 0) {
-//            entity.getMotion().add(beltFacing.getXOffset() * 0.05d * beltSpeedModifier, 0.0d, 0.0d);
-//            entity.velocityChanged = true;
-          }
-
-          if(beltFacing.getZOffset() != 0) {
-//            entity.getMotion().add(0.0d, 0.0d, beltFacing.getZOffset() * 0.05d * beltSpeedModifier);
-//            entity.velocityChanged = true;
-          }
         }
       }
     }
