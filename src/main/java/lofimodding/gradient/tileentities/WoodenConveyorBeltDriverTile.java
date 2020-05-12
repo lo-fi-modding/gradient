@@ -1,6 +1,5 @@
 package lofimodding.gradient.tileentities;
 
-import lofimodding.gradient.Gradient;
 import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientTileEntities;
 import lofimodding.gradient.blocks.WoodenConveyorBeltBlock;
@@ -150,6 +149,7 @@ public class WoodenConveyorBeltDriverTile extends TileEntity implements ITickabl
     if(!beltParts.isEmpty()) {
       this.beltCount += beltParts.size();
       this.movingBoxes.put(side, new AxisAlignedBB(minX, this.pos.getY(), minZ, maxX, this.pos.getY() + 1.0d, maxZ));
+      WorldUtils.notifyUpdate(this.world, this.pos);
     }
   }
 
@@ -216,19 +216,16 @@ public class WoodenConveyorBeltDriverTile extends TileEntity implements ITickabl
 
   @Override
   public SUpdateTileEntityPacket getUpdatePacket() {
-    Gradient.LOGGER.info("Sending packet");
     return new SUpdateTileEntityPacket(this.pos, 0, this.getUpdateTag());
   }
 
   @Override
   public void onDataPacket(final NetworkManager net, final SUpdateTileEntityPacket pkt) {
-    Gradient.LOGGER.info("Receiving packet");
     this.handleUpdateTag(pkt.getNbtCompound());
   }
 
   @Override
   public CompoundNBT getUpdateTag() {
-    Gradient.LOGGER.info("Sending update");
     final CompoundNBT tag = this.write(new CompoundNBT());
     tag.putFloat("BeltSpeed", this.beltSpeed);
     return tag;
@@ -236,9 +233,13 @@ public class WoodenConveyorBeltDriverTile extends TileEntity implements ITickabl
 
   @Override
   public void handleUpdateTag(final CompoundNBT tag) {
-    Gradient.LOGGER.info("Receiving update");
     super.handleUpdateTag(tag);
     this.beltSpeed = tag.getFloat("BeltSpeed");
+
+    for(final Direction direction : Direction.Plane.HORIZONTAL) {
+      this.removeBelt(direction);
+      this.addBelt(direction);
+    }
   }
 
   @Override
