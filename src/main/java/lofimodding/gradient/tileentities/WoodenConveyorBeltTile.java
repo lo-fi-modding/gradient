@@ -22,17 +22,12 @@ public class WoodenConveyorBeltTile extends TileEntity {
   private static Capability<IItemHandler> ITEM_HANDLER_CAPABILITY;
 
   private final Map<WoodenConveyorBeltDriverTile, Direction> drivers = new HashMap<>();
-  private Direction facing;
 
   private final IItemHandler inv = new DummyItemHandler();
   private final LazyOptional<IItemHandler> lazyInv = LazyOptional.of(() -> this.inv);
 
   public WoodenConveyorBeltTile() {
     super(GradientTileEntities.WOODEN_CONVEYOR_BELT.get());
-  }
-
-  public Direction getFacing() {
-    return this.facing;
   }
 
   public void addDriver(final WoodenConveyorBeltDriverTile driver, final Direction side) {
@@ -46,28 +41,6 @@ public class WoodenConveyorBeltTile extends TileEntity {
   public Map<WoodenConveyorBeltDriverTile, Direction> getDrivers() {
     return this.drivers;
   }
-
-  //TODO: why is this needed? Can't the driver find its conveyor belts when it loads?
-//  @Override
-//  public void onLoad() {
-//    super.onLoad();
-//
-//    this.facing = this.world.getBlockState(this.pos).get(WoodenConveyorBeltBlock.FACING);
-//
-//    for(final Direction side : Direction.Plane.HORIZONTAL) {
-//      final WoodenConveyorBeltTile other = WorldUtils.getTileEntity(this.world, this.pos.offset(side), WoodenConveyorBeltTile.class);
-//
-//      if(other != null && this.facing == other.getFacing()) {
-//        for(final Map.Entry<WoodenConveyorBeltDriverTile, Direction> entry : other.drivers.entrySet()) {
-//          final WoodenConveyorBeltDriverTile driver = entry.getKey();
-//          final Direction driverSide = entry.getValue();
-//
-//          driver.removeBelt(driverSide);
-//          driver.addBelt(driverSide);
-//        }
-//      }
-//    }
-//  }
 
   public void onRemove() {
     for(final Map.Entry<WoodenConveyorBeltDriverTile, Direction> entry : this.drivers.entrySet()) {

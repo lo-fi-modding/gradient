@@ -13,6 +13,7 @@ import lofimodding.gradient.client.tesr.DryingRackRenderer;
 import lofimodding.gradient.client.tesr.FirepitRenderer;
 import lofimodding.gradient.client.tesr.GrindstoneRenderer;
 import lofimodding.gradient.client.tesr.MixingBasinRenderer;
+import lofimodding.gradient.client.tesr.WoodenConveyorBeltRenderer;
 import lofimodding.gradient.client.tesr.WoodenCrankRenderer;
 import lofimodding.gradient.items.MetalItem;
 import lofimodding.gradient.science.Metal;
@@ -108,6 +109,7 @@ public final class GradientClient {
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.CLAY_OVEN.get(), ClayOvenRenderer::new);
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.CLAY_CRUCIBLE.get(), ClayCrucibleRenderer::new);
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.WOODEN_CRANK.get(), WoodenCrankRenderer::new);
+    ClientRegistry.bindTileEntityRenderer(GradientTileEntities.WOODEN_CONVEYOR_BELT.get(), WoodenConveyorBeltRenderer::new);
   }
 
   @SubscribeEvent
@@ -153,6 +155,10 @@ public final class GradientClient {
   }
 
   private static int waterColour(final BlockState state, final ILightReader world, final BlockPos pos, final int tintIndex) {
+    if(world == null || pos == null) {
+      return 0xffffffff;
+    }
+
     return BiomeColors.getWaterColor(world, pos);
   }
 }

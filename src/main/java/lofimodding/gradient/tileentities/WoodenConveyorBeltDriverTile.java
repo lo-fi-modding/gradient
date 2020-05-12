@@ -1,5 +1,6 @@
 package lofimodding.gradient.tileentities;
 
+import lofimodding.gradient.Gradient;
 import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientTileEntities;
 import lofimodding.gradient.blocks.WoodenConveyorBeltBlock;
@@ -12,6 +13,8 @@ import lofimodding.gradient.utils.WorldUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -41,11 +44,16 @@ public class WoodenConveyorBeltDriverTile extends TileEntity implements ITickabl
   private final Map<Direction, List<WoodenConveyorBeltTile>> belts = new EnumMap<>(Direction.class);
   private final Map<Direction, AxisAlignedBB> movingBoxes = new EnumMap<>(Direction.class);
   private int beltCount;
+  private float beltSpeed;
 
   private boolean firstTick = true;
 
   public WoodenConveyorBeltDriverTile() {
     super(GradientTileEntities.WOODEN_CONVEYOR_BELT_DRIVER.get());
+  }
+
+  public float getBeltSpeed() {
+    return this.beltSpeed;
   }
 
   @Override
@@ -158,10 +166,6 @@ public class WoodenConveyorBeltDriverTile extends TileEntity implements ITickabl
 
   @Override
   public void tick() {
-    if(this.world.isRemote) {
-      return;
-    }
-
     if(this.firstTick) {
       for(final Direction side : Direction.Plane.HORIZONTAL) {
         if(this.world.getBlockState(this.pos.offset(side)).getBlock() == GradientBlocks.WOODEN_CONVEYOR_BELT.get()) {
@@ -172,13 +176,28 @@ public class WoodenConveyorBeltDriverTile extends TileEntity implements ITickabl
       this.firstTick = false;
     }
 
+    if(this.world.isRemote) {
+      return;
+    }
+
     if(this.beltCount == 0 || this.node.getEnergy() < 0.0001f) {
+      if(this.beltSpeed != 0.0f) {
+        this.beltSpeed = 0.0f;
+        WorldUtils.notifyUpdate(this.world, this.pos);
+      }
+
+      this.beltSpeed = 0.0f;
       return;
     }
 
     final float neededEnergy = 0.005f * this.beltCount;
     final float extractedEnergy = this.node.removeEnergy(neededEnergy, false);
-    final double beltSpeedModifier = extractedEnergy / neededEnergy;
+    final float newBeltSpeed = extractedEnergy / neededEnergy;
+
+    if(newBeltSpeed != this.beltSpeed) {
+      this.beltSpeed = newBeltSpeed;
+      WorldUtils.notifyUpdate(this.world, this.pos);
+    }
 
     for(final Direction side : Direction.Plane.HORIZONTAL) {
       final List<WoodenConveyorBeltTile> belts = this.belts.computeIfAbsent(side, key -> new ArrayList<>());
@@ -188,11 +207,38 @@ public class WoodenConveyorBeltDriverTile extends TileEntity implements ITickabl
         final Direction beltFacing = belt.getWorld().getBlockState(belt.getPos()).get(WoodenConveyorBeltBlock.FACING);
 
         for(final Entity entity : this.world.getEntitiesWithinAABB(Entity.class, this.movingBoxes.get(side))) {
-          entity.setMotion(entity.getMotion().add(beltFacing.getXOffset() * 0.05d * beltSpeedModifier, 0.0d, beltFacing.getZOffset() * 0.05d * beltSpeedModifier));
+          entity.setMotion(entity.getMotion().add(beltFacing.getXOffset() * 0.05d * this.beltSpeed, 0.0d, beltFacing.getZOffset() * 0.05d * this.beltSpeed));
           entity.velocityChanged = true;
         }
       }
     }
+  }
+
+  @Override
+  public SUpdateTileEntityPacket getUpdatePacket() {
+    Gradient.LOGGER.info("Sending packet");
+    return new SUpdateTileEntityPacket(this.pos, 0, this.getUpdateTag());
+  }
+
+  @Override
+  public void onDataPacket(final NetworkManager net, final SUpdateTileEntityPacket pkt) {
+    Gradient.LOGGER.info("Receiving packet");
+    this.handleUpdateTag(pkt.getNbtCompound());
+  }
+
+  @Override
+  public CompoundNBT getUpdateTag() {
+    Gradient.LOGGER.info("Sending update");
+    final CompoundNBT tag = this.write(new CompoundNBT());
+    tag.putFloat("BeltSpeed", this.beltSpeed);
+    return tag;
+  }
+
+  @Override
+  public void handleUpdateTag(final CompoundNBT tag) {
+    Gradient.LOGGER.info("Receiving update");
+    super.handleUpdateTag(tag);
+    this.beltSpeed = tag.getFloat("BeltSpeed");
   }
 
   @Override
