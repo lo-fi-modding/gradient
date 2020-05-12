@@ -10,7 +10,6 @@ import lofimodding.gradient.energy.kinetic.IKineticEnergyTransfer;
 import lofimodding.gradient.energy.kinetic.KineticEnergyStorage;
 import lofimodding.gradient.utils.WorldUtils;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -42,6 +41,8 @@ public class WoodenConveyorBeltDriverTile extends TileEntity implements ITickabl
   private final Map<Direction, AxisAlignedBB> movingBoxes = new EnumMap<>(Direction.class);
   private int beltCount;
 
+  private boolean firstTick = true;
+
   public WoodenConveyorBeltDriverTile() {
     super(GradientTileEntities.WOODEN_CONVEYOR_BELT_DRIVER.get());
   }
@@ -53,12 +54,6 @@ public class WoodenConveyorBeltDriverTile extends TileEntity implements ITickabl
     }
 
     EnergyNetworkManager.getManager(this.world, STORAGE, TRANSFER).queueConnection(this.pos, this);
-
-    for(final Direction side : Direction.Plane.HORIZONTAL) {
-      if(this.world.getBlockState(this.pos.offset(side)).getBlock() == GradientBlocks.WOODEN_CONVEYOR_BELT.get()) {
-        this.addBelt(side);
-      }
-    }
   }
 
   public void onRemove() {
@@ -166,6 +161,16 @@ public class WoodenConveyorBeltDriverTile extends TileEntity implements ITickabl
       return;
     }
 
+    if(this.firstTick) {
+      for(final Direction side : Direction.Plane.HORIZONTAL) {
+        if(this.world.getBlockState(this.pos.offset(side)).getBlock() == GradientBlocks.WOODEN_CONVEYOR_BELT.get()) {
+          this.addBelt(side);
+        }
+      }
+
+      this.firstTick = false;
+    }
+
     if(this.beltCount == 0 || this.node.getEnergy() < 0.0001f) {
       return;
     }
@@ -174,26 +179,27 @@ public class WoodenConveyorBeltDriverTile extends TileEntity implements ITickabl
     final float extractedEnergy = this.node.removeEnergy(neededEnergy, false);
     final double beltSpeedModifier = extractedEnergy / neededEnergy;
 
-    for(final Direction side : Direction.Plane.HORIZONTAL) {
-      final List<WoodenConveyorBeltTile> belts = this.belts.computeIfAbsent(side, key -> new ArrayList<>());
-
-      if(!belts.isEmpty()) {
-        final WoodenConveyorBeltTile belt = belts.get(0);
-        final Direction beltFacing = belt.getFacing();
-
-        for(final Entity entity : this.world.getEntitiesWithinAABB(Entity.class, this.movingBoxes.get(side))) {
-          if(beltFacing.getXOffset() != 0) {
-            entity.getMotion().add(beltFacing.getXOffset() * 0.05d * beltSpeedModifier, 0.0d, 0.0d);
-            entity.velocityChanged = true;
-          }
-
-          if(beltFacing.getZOffset() != 0) {
-            entity.getMotion().add(0.0d, 0.0d, beltFacing.getZOffset() * 0.05d * beltSpeedModifier);
-            entity.velocityChanged = true;
-          }
-        }
-      }
-    }
+    //TODO
+//    for(final Direction side : Direction.Plane.HORIZONTAL) {
+//      final List<WoodenConveyorBeltTile> belts = this.belts.computeIfAbsent(side, key -> new ArrayList<>());
+//
+//      if(!belts.isEmpty()) {
+//        final WoodenConveyorBeltTile belt = belts.get(0);
+//        final Direction beltFacing = belt.getFacing();
+//
+//        for(final Entity entity : this.world.getEntitiesWithinAABB(Entity.class, this.movingBoxes.get(side))) {
+//          if(beltFacing.getXOffset() != 0) {
+//            entity.getMotion().add(beltFacing.getXOffset() * 0.05d * beltSpeedModifier, 0.0d, 0.0d);
+//            entity.velocityChanged = true;
+//          }
+//
+//          if(beltFacing.getZOffset() != 0) {
+//            entity.getMotion().add(0.0d, 0.0d, beltFacing.getZOffset() * 0.05d * beltSpeedModifier);
+//            entity.velocityChanged = true;
+//          }
+//        }
+//      }
+//    }
   }
 
   @Override

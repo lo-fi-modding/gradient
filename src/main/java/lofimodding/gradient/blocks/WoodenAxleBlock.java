@@ -8,6 +8,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.RotatedPillarBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.pathfinding.PathType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -62,5 +63,12 @@ public class WoodenAxleBlock extends RotatedPillarBlock {
     }
 
     return SHAPE_Y;
+  }
+
+  @SuppressWarnings("deprecation")
+  @Override
+  @Deprecated
+  public boolean allowsMovement(final BlockState state, final IBlockReader world, final BlockPos pos, final PathType type) {
+    return false;
   }
 }

@@ -27,7 +27,7 @@ public class WoodenConveyorBeltBlock extends Block {
   public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
   public WoodenConveyorBeltBlock() {
-    super(Properties.create(Material.WOOD).hardnessAndResistance(1.0f, 5.0f).sound(SoundType.WOOD));
+    super(Properties.create(Material.WOOD).hardnessAndResistance(1.0f, 5.0f).sound(SoundType.WOOD).notSolid());
     this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
   }
 

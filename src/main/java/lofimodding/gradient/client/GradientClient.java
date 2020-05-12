@@ -13,6 +13,7 @@ import lofimodding.gradient.client.tesr.DryingRackRenderer;
 import lofimodding.gradient.client.tesr.FirepitRenderer;
 import lofimodding.gradient.client.tesr.GrindstoneRenderer;
 import lofimodding.gradient.client.tesr.MixingBasinRenderer;
+import lofimodding.gradient.client.tesr.WoodenCrankRenderer;
 import lofimodding.gradient.items.MetalItem;
 import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.science.Metals;
@@ -106,6 +107,7 @@ public final class GradientClient {
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.DRYING_RACK.get(), DryingRackRenderer::new);
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.CLAY_OVEN.get(), ClayOvenRenderer::new);
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.CLAY_CRUCIBLE.get(), ClayCrucibleRenderer::new);
+    ClientRegistry.bindTileEntityRenderer(GradientTileEntities.WOODEN_CRANK.get(), WoodenCrankRenderer::new);
   }
 
   @SubscribeEvent

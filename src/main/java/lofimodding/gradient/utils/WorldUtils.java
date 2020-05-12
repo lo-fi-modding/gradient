@@ -31,6 +31,11 @@ public final class WorldUtils {
     return cls.isInstance(te) ? cls.cast(te) : null;
   }
 
+  public static void notifyUpdate(final World world, final BlockPos pos) {
+    final BlockState state = world.getBlockState(pos);
+    world.notifyBlockUpdate(pos, state, state, 3);
+  }
+
   /**
    * Gets the facing of <tt>origin</tt> that points towards <tt>other</tt>
    */

@@ -1,8 +1,6 @@
 package lofimodding.gradient.tileentities;
 
 import lofimodding.gradient.GradientTileEntities;
-import lofimodding.gradient.blocks.WoodenConveyorBeltBlock;
-import lofimodding.gradient.utils.WorldUtils;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -45,26 +43,27 @@ public class WoodenConveyorBeltTile extends TileEntity {
     this.drivers.remove(driver);
   }
 
-  @Override
-  public void onLoad() {
-    super.onLoad();
-
-    this.facing = this.world.getBlockState(this.pos).get(WoodenConveyorBeltBlock.FACING);
-
-    for(final Direction side : Direction.Plane.HORIZONTAL) {
-      final WoodenConveyorBeltTile other = WorldUtils.getTileEntity(this.world, this.pos.offset(side), WoodenConveyorBeltTile.class);
-
-      if(other != null && this.facing == other.getFacing()) {
-        for(final Map.Entry<WoodenConveyorBeltDriverTile, Direction> entry : other.drivers.entrySet()) {
-          final WoodenConveyorBeltDriverTile driver = entry.getKey();
-          final Direction driverSide = entry.getValue();
-
-          driver.removeBelt(driverSide);
-          driver.addBelt(driverSide);
-        }
-      }
-    }
-  }
+  //TODO: why is this needed? Can't the driver find its conveyor belts when it loads?
+//  @Override
+//  public void onLoad() {
+//    super.onLoad();
+//
+//    this.facing = this.world.getBlockState(this.pos).get(WoodenConveyorBeltBlock.FACING);
+//
+//    for(final Direction side : Direction.Plane.HORIZONTAL) {
+//      final WoodenConveyorBeltTile other = WorldUtils.getTileEntity(this.world, this.pos.offset(side), WoodenConveyorBeltTile.class);
+//
+//      if(other != null && this.facing == other.getFacing()) {
+//        for(final Map.Entry<WoodenConveyorBeltDriverTile, Direction> entry : other.drivers.entrySet()) {
+//          final WoodenConveyorBeltDriverTile driver = entry.getKey();
+//          final Direction driverSide = entry.getValue();
+//
+//          driver.removeBelt(driverSide);
+//          driver.addBelt(driverSide);
+//        }
+//      }
+//    }
+//  }
 
   public void onRemove() {
     for(final Map.Entry<WoodenConveyorBeltDriverTile, Direction> entry : this.drivers.entrySet()) {

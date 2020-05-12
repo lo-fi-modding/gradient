@@ -1,0 +1,8 @@
+{
+  "parent": "block/orientable",
+  "textures": {
+    "side": "gradient:block/salt_block",
+    "front": "gradient:block/salt_block",
+    "top": "gradient:block/hardened_planks"
+  }
+}

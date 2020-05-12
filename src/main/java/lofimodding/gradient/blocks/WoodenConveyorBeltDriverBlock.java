@@ -75,7 +75,7 @@ public class WoodenConveyorBeltDriverBlock extends Block {
   @Nullable
   @Override
   public BlockState getStateForPlacement(final BlockItemUseContext context) {
-    return super.getStateForPlacement(context).with(FACING, context.getPlacementHorizontalFacing().getOpposite());
+    return super.getStateForPlacement(context).with(FACING, context.getFace().getOpposite());
   }
 
   @SuppressWarnings("deprecation")
