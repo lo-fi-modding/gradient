@@ -43,6 +43,10 @@ public class WoodenConveyorBeltTile extends TileEntity {
     this.drivers.remove(driver);
   }
 
+  public Map<WoodenConveyorBeltDriverTile, Direction> getDrivers() {
+    return this.drivers;
+  }
+
   //TODO: why is this needed? Can't the driver find its conveyor belts when it loads?
 //  @Override
 //  public void onLoad() {

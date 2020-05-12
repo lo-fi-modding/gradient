@@ -1,5 +1,6 @@
 package lofimodding.gradient.blocks;
 
+import lofimodding.gradient.tileentities.WoodenConveyorBeltDriverTile;
 import lofimodding.gradient.tileentities.WoodenConveyorBeltTile;
 import lofimodding.gradient.utils.WorldUtils;
 import net.minecraft.block.Block;
@@ -21,6 +22,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class WoodenConveyorBeltBlock extends Block {
   private static final VoxelShape SHAPE = makeCuboidShape(0.0d, 0.0d, 0.0d, 16.0d, 4.0d, 16.0d);
@@ -39,6 +42,24 @@ public class WoodenConveyorBeltBlock extends Block {
 
     if(belt != null) {
       belt.onRemove();
+    }
+  }
+
+  @SuppressWarnings("deprecation")
+  @Override
+  @Deprecated
+  public void neighborChanged(final BlockState state, final World world, final BlockPos pos, final Block block, final BlockPos neighbour, final boolean isMoving) {
+    super.neighborChanged(state, world, pos, block, neighbour, isMoving);
+
+    final WoodenConveyorBeltTile belt = WorldUtils.getTileEntity(world, pos, WoodenConveyorBeltTile.class);
+
+    if(belt != null) {
+      final Map<WoodenConveyorBeltDriverTile, Direction> drivers = new HashMap<>(belt.getDrivers());
+
+      for(final Map.Entry<WoodenConveyorBeltDriverTile, Direction> entry : drivers.entrySet()) {
+        entry.getKey().removeBelt(entry.getValue());
+        entry.getKey().addBelt(entry.getValue());
+      }
     }
   }
 

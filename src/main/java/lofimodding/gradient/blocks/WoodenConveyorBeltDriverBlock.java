@@ -53,7 +53,7 @@ public class WoodenConveyorBeltDriverBlock extends Block {
     if(driver != null) {
       final Direction side = WorldUtils.getFacingTowards(pos, neighbour);
       if(side.getAxis().isHorizontal()) {
-        if(world.getBlockState(neighbour).getBlock() == GradientBlocks.WOODEN_CONVEYOR_BELT.get()) {
+        if(block == GradientBlocks.WOODEN_CONVEYOR_BELT.get()) {
           driver.addBelt(side);
         } else {
           driver.removeBelt(side);
