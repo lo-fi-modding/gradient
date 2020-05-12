@@ -207,7 +207,7 @@ public class WoodenConveyorBeltDriverTile extends TileEntity implements ITickabl
         final Direction beltFacing = belt.getWorld().getBlockState(belt.getPos()).get(WoodenConveyorBeltBlock.FACING);
 
         for(final Entity entity : this.world.getEntitiesWithinAABB(Entity.class, this.movingBoxes.get(side))) {
-          entity.setMotion(entity.getMotion().add(beltFacing.getXOffset() * 0.05d * this.beltSpeed, 0.0d, beltFacing.getZOffset() * 0.05d * this.beltSpeed));
+          entity.setMotion(entity.getMotion().add(beltFacing.getXOffset() * 0.025d * this.beltSpeed, 0.0d, beltFacing.getZOffset() * 0.025d * this.beltSpeed));
           entity.velocityChanged = true;
         }
       }
