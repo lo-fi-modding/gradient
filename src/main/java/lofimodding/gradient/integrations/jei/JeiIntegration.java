@@ -34,11 +34,11 @@ public class JeiIntegration implements IModPlugin {
   public void registerCategories(final IRecipeCategoryRegistration registration) {
     final IGuiHelper guiHelper = registration.getJeiHelpers().getGuiHelper();
     registration.addRecipeCategories(new CookingRecipeCategory(guiHelper));
-    registration.addRecipeCategories(new MixingRecipeCategory(guiHelper));
-    registration.addRecipeCategories(new GrindingRecipeCategory(guiHelper));
-    registration.addRecipeCategories(new HardeningRecipeCategory(guiHelper));
     registration.addRecipeCategories(new DryingRecipeCategory(guiHelper));
     registration.addRecipeCategories(new FuelRecipeCategory(guiHelper));
+    registration.addRecipeCategories(new GrindingRecipeCategory(guiHelper));
+    registration.addRecipeCategories(new HardeningRecipeCategory(guiHelper));
+    registration.addRecipeCategories(new MixingRecipeCategory(guiHelper));
   }
 
   @Override

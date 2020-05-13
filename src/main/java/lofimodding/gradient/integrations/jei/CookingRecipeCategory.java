@@ -21,7 +21,7 @@ import net.minecraft.util.ResourceLocation;
 import java.util.List;
 
 public class CookingRecipeCategory implements IRecipeCategory<CookingRecipe> {
-  private static final ResourceLocation BACKGROUND_LOCATION = Gradient.loc("textures/gui/recipe_grinding.png");
+  private static final ResourceLocation BACKGROUND_LOCATION = Gradient.loc("textures/gui/recipe_cooking.png");
   private final IGuiHelper guiHelper;
 
   public CookingRecipeCategory(final IGuiHelper guiHelper) {

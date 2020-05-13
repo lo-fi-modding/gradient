@@ -21,7 +21,7 @@ import net.minecraft.util.ResourceLocation;
 import java.util.List;
 
 public class DryingRecipeCategory implements IRecipeCategory<DryingRecipe> {
-  private static final ResourceLocation BACKGROUND_LOCATION = Gradient.loc("textures/gui/recipe_grinding.png");
+  private static final ResourceLocation BACKGROUND_LOCATION = Gradient.loc("textures/gui/recipe_drying.png");
   private final IGuiHelper guiHelper;
 
   public DryingRecipeCategory(final IGuiHelper guiHelper) {
