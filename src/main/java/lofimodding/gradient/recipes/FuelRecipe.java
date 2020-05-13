@@ -61,7 +61,7 @@ public class FuelRecipe implements IRecipe<IInventory> {
 
   @Override
   public ItemStack getRecipeOutput() {
-    return ItemStack.EMPTY;
+    return new ItemStack(Items.COAL); //TODO: this makes all the recipes show up in JEI as producing coal, but it has to be something
   }
 
   @Override
