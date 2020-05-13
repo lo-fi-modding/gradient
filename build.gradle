@@ -107,12 +107,12 @@ repositories {
 }
 
 dependencies {
-  minecraft 'net.minecraftforge:forge:1.15.2-31.1.79'
+  minecraft 'net.minecraftforge:forge:1.15.2-31.1.87'
 
   // compile against the JEI API but do not include it at runtime
-  compileOnly fg.deobf("mezz.jei:jei-1.15.2:6.0.0.3:api")
+  compileOnly fg.deobf("mezz.jei:jei-1.15.2:6.0.0.4:api")
   // at runtime, use the full JEI jar
-  runtimeOnly fg.deobf("mezz.jei:jei-1.15.2:6.0.0.3")
+  runtimeOnly fg.deobf("mezz.jei:jei-1.15.2:6.0.0.4")
 
   compile fg.deobf("curse.maven:better-advancements:2873783")
 
