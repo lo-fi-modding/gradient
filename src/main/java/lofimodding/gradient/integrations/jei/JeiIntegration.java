@@ -5,6 +5,7 @@ import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientRecipeSerializers;
 import lofimodding.gradient.fluids.GradientFluid;
 import lofimodding.gradient.fluids.GradientFluidStack;
+import lofimodding.gradient.recipes.AlloyRecipe;
 import lofimodding.gradient.recipes.CookingRecipe;
 import lofimodding.gradient.recipes.DryingRecipe;
 import lofimodding.gradient.recipes.FuelRecipe;
@@ -37,6 +38,7 @@ public class JeiIntegration implements IModPlugin {
   @Override
   public void registerCategories(final IRecipeCategoryRegistration registration) {
     final IGuiHelper guiHelper = registration.getJeiHelpers().getGuiHelper();
+    registration.addRecipeCategories(new AlloyRecipeCategory(guiHelper));
     registration.addRecipeCategories(new CookingRecipeCategory(guiHelper));
     registration.addRecipeCategories(new DryingRecipeCategory(guiHelper));
     registration.addRecipeCategories(new FuelRecipeCategory(guiHelper));
@@ -61,6 +63,7 @@ public class JeiIntegration implements IModPlugin {
     }
 */
 
+    registration.addRecipes(filterRecipes(AlloyRecipe.class), GradientRecipeSerializers.ALLOY.getId());
     registration.addRecipes(filterRecipes(CookingRecipe.class), GradientRecipeSerializers.COOKING.getId());
     registration.addRecipes(filterRecipes(DryingRecipe.class), GradientRecipeSerializers.DRYING.getId());
     registration.addRecipes(filterRecipes(FuelRecipe.class), GradientRecipeSerializers.FUEL.getId());
@@ -72,6 +75,7 @@ public class JeiIntegration implements IModPlugin {
 
   @Override
   public void registerRecipeCatalysts(final IRecipeCatalystRegistration registration) {
+    registration.addRecipeCatalyst(new ItemStack(GradientBlocks.CLAY_METAL_MIXER.get()), GradientRecipeSerializers.ALLOY.getId());
     registration.addRecipeCatalyst(new ItemStack(GradientBlocks.FIREPIT.get()), GradientRecipeSerializers.COOKING.getId());
     registration.addRecipeCatalyst(new ItemStack(GradientBlocks.DRYING_RACK.get()), GradientRecipeSerializers.DRYING.getId());
     registration.addRecipeCatalyst(new ItemStack(GradientBlocks.FIREPIT.get()), GradientRecipeSerializers.FUEL.getId());
