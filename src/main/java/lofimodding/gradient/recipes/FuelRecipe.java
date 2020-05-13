@@ -1,6 +1,7 @@
 package lofimodding.gradient.recipes;
 
 import com.google.gson.JsonObject;
+import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientRecipeSerializers;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -61,7 +62,7 @@ public class FuelRecipe implements IRecipe<IInventory> {
 
   @Override
   public ItemStack getRecipeOutput() {
-    return new ItemStack(Items.COAL); //TODO: this makes all the recipes show up in JEI as producing coal, but it has to be something
+    return new ItemStack(GradientItems.FIREPIT.get());
   }
 
   @Override
