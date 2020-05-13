@@ -1141,6 +1141,8 @@ public final class GradientDataGenerator {
 
       this.add("jei.alloy.name", "Alloying");
 
+      this.add("jei.casting.name", "Casting");
+
       this.add("jei.gradient_fluid.amount", "Amount: %d B");
       this.add("jei.gradient_fluid.amount_with_capacity", "Amount: %d/%d B");
 

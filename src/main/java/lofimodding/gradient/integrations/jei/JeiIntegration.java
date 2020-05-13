@@ -2,9 +2,12 @@ package lofimodding.gradient.integrations.jei;
 
 import lofimodding.gradient.Gradient;
 import lofimodding.gradient.GradientBlocks;
+import lofimodding.gradient.GradientCasts;
+import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientRecipeSerializers;
 import lofimodding.gradient.fluids.GradientFluid;
 import lofimodding.gradient.fluids.GradientFluidStack;
+import lofimodding.gradient.fluids.GradientFluids;
 import lofimodding.gradient.recipes.AlloyRecipe;
 import lofimodding.gradient.recipes.CookingRecipe;
 import lofimodding.gradient.recipes.DryingRecipe;
@@ -13,6 +16,8 @@ import lofimodding.gradient.recipes.GrindingRecipe;
 import lofimodding.gradient.recipes.HardeningRecipe;
 import lofimodding.gradient.recipes.MeltingRecipe;
 import lofimodding.gradient.recipes.MixingRecipe;
+import lofimodding.gradient.science.Metal;
+import lofimodding.gradient.science.Metals;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -20,11 +25,19 @@ import mezz.jei.api.registration.IModIngredientRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -46,6 +59,8 @@ public class JeiIntegration implements IModPlugin {
     registration.addRecipeCategories(new HardeningRecipeCategory(guiHelper));
     registration.addRecipeCategories(new MeltingRecipeCategory(guiHelper));
     registration.addRecipeCategories(new MixingRecipeCategory(guiHelper));
+
+    registration.addRecipeCategories(new CastingRecipeCategory(guiHelper));
   }
 
   @Override
@@ -71,6 +86,8 @@ public class JeiIntegration implements IModPlugin {
     registration.addRecipes(filterRecipes(HardeningRecipe.class), GradientRecipeSerializers.HARDENING.getId());
     registration.addRecipes(filterRecipes(MeltingRecipe.class), GradientRecipeSerializers.MELTING.getId());
     registration.addRecipes(filterRecipes(MixingRecipe.class), GradientRecipeSerializers.MIXING.getId());
+
+    registration.addRecipes(getCastingRecipes(), Gradient.loc("casting"));
   }
 
   @Override
@@ -100,5 +117,73 @@ public class JeiIntegration implements IModPlugin {
       .filter(recipe -> recipe.getClass().isAssignableFrom(recipeClass))
       .map(recipeClass::cast)
       .collect(Collectors.toList());
+  }
+
+  private static Collection<IRecipe<IInventory>> getCastingRecipes() {
+    final List<IRecipe<IInventory>> recipes = new ArrayList<>();
+
+    for(final Metal metal : Metals.all()) {
+      for(final GradientCasts cast : GradientCasts.values()) {
+        recipes.add(new CastingRecipe(cast, metal));
+      }
+    }
+
+    return recipes;
+  }
+
+  protected static class CastingRecipe implements IRecipe<IInventory> {
+    public final GradientCasts cast;
+    public final Metal metal;
+    public final GradientFluidStack fluid;
+    private final NonNullList<Ingredient> ingredients;
+    private final ItemStack output;
+
+    public CastingRecipe(final GradientCasts cast, final Metal metal) {
+      this.cast = cast;
+      this.metal = metal;
+      this.fluid = new GradientFluidStack(GradientFluids.METAL(metal).get(), 1.0f, Float.NaN);
+      this.ingredients = NonNullList.withSize(1, Ingredient.fromItems(GradientItems.CLAY_CAST(cast).get()));
+      this.output = new ItemStack(GradientItems.CASTED(cast, metal).get());
+    }
+
+    @Override
+    public NonNullList<Ingredient> getIngredients() {
+      return this.ingredients;
+    }
+
+    @Override
+    public boolean matches(final IInventory inv, final World world) {
+      return false;
+    }
+
+    @Override
+    public ItemStack getCraftingResult(final IInventory inv) {
+      return this.output.copy();
+    }
+
+    @Override
+    public boolean canFit(final int width, final int height) {
+      return false;
+    }
+
+    @Override
+    public ItemStack getRecipeOutput() {
+      return this.output;
+    }
+
+    @Override
+    public ResourceLocation getId() {
+      return GradientItems.CASTED(this.cast, this.metal).getId();
+    }
+
+    @Override
+    public IRecipeSerializer<?> getSerializer() {
+      return null;
+    }
+
+    @Override
+    public IRecipeType<?> getType() {
+      return null;
+    }
   }
 }
