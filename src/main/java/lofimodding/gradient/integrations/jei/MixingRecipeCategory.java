@@ -11,6 +11,7 @@ import lofimodding.progression.Stage;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.ingredient.IGuiFluidStackGroup;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
@@ -52,7 +53,7 @@ public class MixingRecipeCategory implements IRecipeCategory<MixingRecipe> {
 
   @Override
   public IDrawable getBackground() {
-    return this.guiHelper.createDrawable(BACKGROUND_LOCATION, 0, 0, 136, 43);
+    return this.guiHelper.createDrawable(BACKGROUND_LOCATION, 0, 0, 156, 43);
   }
 
   @Override
@@ -63,12 +64,14 @@ public class MixingRecipeCategory implements IRecipeCategory<MixingRecipe> {
   @Override
   public void setIngredients(final MixingRecipe recipe, final IIngredients ingredients) {
     ingredients.setInputIngredients(recipe.getIngredients());
+    ingredients.setInput(VanillaTypes.FLUID, recipe.getFluid());
     ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
   }
 
   @Override
   public void setRecipe(final IRecipeLayout recipeLayout, final MixingRecipe recipe, final IIngredients ingredients) {
     final IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
+    final IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
     final List<List<ItemStack>> inputs = ingredients.getInputs(VanillaTypes.ITEM);
 
     for(int slot = 0; slot < Math.min(MixingBasinTile.INPUT_SIZE, inputs.size()); slot++) {
@@ -76,8 +79,11 @@ public class MixingRecipeCategory implements IRecipeCategory<MixingRecipe> {
       guiItemStacks.set(slot, inputs.get(slot));
     }
 
-    guiItemStacks.init(MixingBasinTile.INPUT_SIZE + 1, true, 118, 0);
-    guiItemStacks.set(MixingBasinTile.INPUT_SIZE + 1, ingredients.getOutputs(VanillaTypes.ITEM).get(0));
+    guiFluidStacks.init(MixingBasinTile.INPUT_SIZE + 1, true, 101, 1);
+    guiFluidStacks.set(MixingBasinTile.INPUT_SIZE + 1, ingredients.getInputs(VanillaTypes.FLUID).get(0));
+
+    guiItemStacks.init(MixingBasinTile.INPUT_SIZE + 2, true, 138, 0);
+    guiItemStacks.set(MixingBasinTile.INPUT_SIZE + 2, ingredients.getOutputs(VanillaTypes.ITEM).get(0));
   }
 
   @Override
@@ -88,7 +94,7 @@ public class MixingRecipeCategory implements IRecipeCategory<MixingRecipe> {
     font.drawString(I18n.format("jei.mixing.ticks", recipe.getTicks()), 1, 35, 0x404040);
 
     RenderSystem.pushMatrix();
-    RenderSystem.translatef(123.0f, 31.0f, 0.0f);
+    RenderSystem.translatef(143.0f, 31.0f, 0.0f);
     RenderSystem.scalef(0.75f, 0.75f, 0.0f);
 
     for(final Stage stage : recipe.getStages()) {
@@ -104,7 +110,7 @@ public class MixingRecipeCategory implements IRecipeCategory<MixingRecipe> {
   public List<String> getTooltipStrings(final MixingRecipe recipe, final double mouseX, final double mouseY) {
     if(mouseY >= 31 && mouseY <= 43) {
       for(int i = 0; i < recipe.getStages().size(); i++) {
-        if(mouseX >= 123 - i * 16 && mouseX <= 135 - i * 16) {
+        if(mouseX >= 143 - i * 16 && mouseX <= 155 - i * 16) {
           final ITextComponent stage = recipe.getStages().get(i).getName();
           final ITextComponent requirement = new TranslationTextComponent("jei.stage.requirement", stage);
           return Lists.newArrayList(requirement.getFormattedText());
