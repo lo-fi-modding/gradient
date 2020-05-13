@@ -1131,9 +1131,16 @@ public final class GradientDataGenerator {
       this.add("jei.hardening.ticks", "%d ticks");
       this.add("jei.hardening.instructions", "Place next to a lit firepit or furnace");
 
+      this.add("jei.melting.name", "Melting");
+      this.add("jei.melting.temperature", "%f °C");
+      this.add("jei.melting.ticks", "%d ticks");
+
       this.add("jei.mixing.name", "Mixing");
       this.add("jei.mixing.passes", "%d stirs");
       this.add("jei.mixing.ticks", "%d ticks");
+
+      this.add("jei.gradient_fluid.amount", "Amount: %d B");
+      this.add("jei.gradient_fluid.amount_with_capacity", "Amount: %d/%d B");
 
       this.age1("root", "Age 1: Stone Age", "Humankind's first steps");
       this.age1("basic_materials", "Basic Materials", "Gather sticks from leaves, fibre from grass, and pebbles from the ground");

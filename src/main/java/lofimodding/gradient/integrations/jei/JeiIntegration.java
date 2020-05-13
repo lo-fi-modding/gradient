@@ -3,15 +3,19 @@ package lofimodding.gradient.integrations.jei;
 import lofimodding.gradient.Gradient;
 import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientRecipeSerializers;
+import lofimodding.gradient.fluids.GradientFluid;
+import lofimodding.gradient.fluids.GradientFluidStack;
 import lofimodding.gradient.recipes.CookingRecipe;
 import lofimodding.gradient.recipes.DryingRecipe;
 import lofimodding.gradient.recipes.FuelRecipe;
 import lofimodding.gradient.recipes.GrindingRecipe;
 import lofimodding.gradient.recipes.HardeningRecipe;
+import lofimodding.gradient.recipes.MeltingRecipe;
 import lofimodding.gradient.recipes.MixingRecipe;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.registration.IModIngredientRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
@@ -20,6 +24,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.Collection;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @JeiPlugin
@@ -37,6 +42,7 @@ public class JeiIntegration implements IModPlugin {
     registration.addRecipeCategories(new FuelRecipeCategory(guiHelper));
     registration.addRecipeCategories(new GrindingRecipeCategory(guiHelper));
     registration.addRecipeCategories(new HardeningRecipeCategory(guiHelper));
+    registration.addRecipeCategories(new MeltingRecipeCategory(guiHelper));
     registration.addRecipeCategories(new MixingRecipeCategory(guiHelper));
   }
 
@@ -56,21 +62,33 @@ public class JeiIntegration implements IModPlugin {
 */
 
     registration.addRecipes(filterRecipes(CookingRecipe.class), GradientRecipeSerializers.COOKING.getId());
-    registration.addRecipes(filterRecipes(MixingRecipe.class), GradientRecipeSerializers.MIXING.getId());
-    registration.addRecipes(filterRecipes(GrindingRecipe.class), GradientRecipeSerializers.GRINDING.getId());
-    registration.addRecipes(filterRecipes(HardeningRecipe.class), GradientRecipeSerializers.HARDENING.getId());
     registration.addRecipes(filterRecipes(DryingRecipe.class), GradientRecipeSerializers.DRYING.getId());
     registration.addRecipes(filterRecipes(FuelRecipe.class), GradientRecipeSerializers.FUEL.getId());
+    registration.addRecipes(filterRecipes(GrindingRecipe.class), GradientRecipeSerializers.GRINDING.getId());
+    registration.addRecipes(filterRecipes(HardeningRecipe.class), GradientRecipeSerializers.HARDENING.getId());
+    registration.addRecipes(filterRecipes(MeltingRecipe.class), GradientRecipeSerializers.MELTING.getId());
+    registration.addRecipes(filterRecipes(MixingRecipe.class), GradientRecipeSerializers.MIXING.getId());
   }
 
   @Override
   public void registerRecipeCatalysts(final IRecipeCatalystRegistration registration) {
     registration.addRecipeCatalyst(new ItemStack(GradientBlocks.FIREPIT.get()), GradientRecipeSerializers.COOKING.getId());
-    registration.addRecipeCatalyst(new ItemStack(GradientBlocks.MIXING_BASIN.get()), GradientRecipeSerializers.MIXING.getId());
-    registration.addRecipeCatalyst(new ItemStack(GradientBlocks.GRINDSTONE.get()), GradientRecipeSerializers.GRINDING.getId());
-    registration.addRecipeCatalyst(new ItemStack(GradientBlocks.FIREPIT.get()), GradientRecipeSerializers.HARDENING.getId());
     registration.addRecipeCatalyst(new ItemStack(GradientBlocks.DRYING_RACK.get()), GradientRecipeSerializers.DRYING.getId());
     registration.addRecipeCatalyst(new ItemStack(GradientBlocks.FIREPIT.get()), GradientRecipeSerializers.FUEL.getId());
+    registration.addRecipeCatalyst(new ItemStack(GradientBlocks.GRINDSTONE.get()), GradientRecipeSerializers.GRINDING.getId());
+    registration.addRecipeCatalyst(new ItemStack(GradientBlocks.FIREPIT.get()), GradientRecipeSerializers.HARDENING.getId());
+    registration.addRecipeCatalyst(new ItemStack(GradientBlocks.CLAY_CRUCIBLE.get()), GradientRecipeSerializers.MELTING.getId());
+    registration.addRecipeCatalyst(new ItemStack(GradientBlocks.MIXING_BASIN.get()), GradientRecipeSerializers.MIXING.getId());
+  }
+
+  @Override
+  public void registerIngredients(final IModIngredientRegistration registration) {
+    registration.register(
+      IngredientTypes.GRADIENT_FLUID,
+      GradientFluid.REGISTRY.get().getValues().stream().map(fluid -> new GradientFluidStack(fluid, 1.0f, Float.NaN)).filter(((Predicate<GradientFluidStack>)GradientFluidStack::isEmpty).negate()).collect(Collectors.toList()),
+      new GradientFluidStackHelper(),
+      new GradientFluidStackRenderer()
+    );
   }
 
   private static <T extends IRecipe<?>> Collection<T> filterRecipes(final Class<T> recipeClass) {
