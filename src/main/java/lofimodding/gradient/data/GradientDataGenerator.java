@@ -1129,7 +1129,7 @@ public final class GradientDataGenerator {
 
       this.add("jei.hardening.name", "Hardening");
       this.add("jei.hardening.ticks", "%d ticks");
-      this.add("jei.hardening.instructions", "Place next to a firepit");
+      this.add("jei.hardening.instructions", "Place next to a lit firepit or furnace");
 
       this.add("jei.mixing.name", "Mixing");
       this.add("jei.mixing.passes", "%d stirs");

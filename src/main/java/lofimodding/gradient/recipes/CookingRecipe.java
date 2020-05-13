@@ -7,6 +7,7 @@ import com.google.gson.JsonParseException;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientRecipeSerializers;
 import lofimodding.progression.Stage;
+import lofimodding.progression.recipes.IStagedRecipe;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -27,7 +28,7 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CookingRecipe implements IRecipe<IInventory> {
+public class CookingRecipe implements IRecipe<IInventory>, IStagedRecipe {
   public static final IRecipeType<CookingRecipe> TYPE = IRecipeType.register("cooking");
 
   private static final RecipeItemHelper RECIPE_ITEM_HELPER = new RecipeItemHelper();
@@ -141,6 +142,11 @@ public class CookingRecipe implements IRecipe<IInventory> {
   @Override
   public IRecipeType<?> getType() {
     return TYPE;
+  }
+
+  @Override
+  public NonNullList<Stage> getStages() {
+    return this.stages;
   }
 
   public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<CookingRecipe> {

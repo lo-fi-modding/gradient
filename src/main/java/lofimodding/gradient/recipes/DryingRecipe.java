@@ -7,6 +7,7 @@ import com.google.gson.JsonParseException;
 import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientRecipeSerializers;
 import lofimodding.progression.Stage;
+import lofimodding.progression.recipes.IStagedRecipe;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class DryingRecipe implements IRecipe<IInventory> {
+public class DryingRecipe implements IRecipe<IInventory>, IStagedRecipe {
   public static final IRecipeType<DryingRecipe> TYPE = IRecipeType.register("drying");
 
   private static final RecipeItemHelper RECIPE_ITEM_HELPER = new RecipeItemHelper();

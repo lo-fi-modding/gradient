@@ -318,7 +318,7 @@
   "jei.fuel.ticks": "Burn time: %d ticks",
   "jei.grinding.name": "Grinding",
   "jei.grinding.ticks": "%d ticks",
-  "jei.hardening.instructions": "Place next to a firepit",
+  "jei.hardening.instructions": "Place next to a lit firepit or furnace",
   "jei.hardening.name": "Hardening",
   "jei.hardening.ticks": "%d ticks",
   "jei.mixing.name": "Mixing",

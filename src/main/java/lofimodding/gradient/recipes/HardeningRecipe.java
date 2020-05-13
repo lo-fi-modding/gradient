@@ -8,6 +8,7 @@ import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientRecipeSerializers;
 import lofimodding.gradient.utils.WorldUtils;
 import lofimodding.progression.Stage;
+import lofimodding.progression.recipes.IStagedRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.inventory.IInventory;
@@ -30,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class HardeningRecipe implements IRecipe<IInventory> {
+public class HardeningRecipe implements IRecipe<IInventory>, IStagedRecipe {
   public static final IRecipeType<HardeningRecipe> TYPE = IRecipeType.register("hardening");
 
   private static final RecipeItemHelper RECIPE_ITEM_HELPER = new RecipeItemHelper();
@@ -52,6 +53,11 @@ public class HardeningRecipe implements IRecipe<IInventory> {
     this.result = result;
     this.ingredients = ingredients;
     this.simple = ingredients.stream().allMatch(Ingredient::isSimple);
+  }
+
+  @Override
+  public NonNullList<Stage> getStages() {
+    return this.stages;
   }
 
   @Override
