@@ -1,7 +1,6 @@
 package lofimodding.gradient.integrations.jei;
 
 import lofimodding.gradient.Gradient;
-import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientRecipeSerializers;
 import lofimodding.gradient.recipes.DryingRecipe;
@@ -40,7 +39,7 @@ public class DryingRecipeCategory implements IRecipeCategory<DryingRecipe> {
 
   @Override
   public String getTitle() {
-    return GradientBlocks.DRYING_RACK.get().getNameTextComponent().getFormattedText();
+    return I18n.format("jei.drying.name");
   }
 
   @Override
@@ -80,6 +79,6 @@ public class DryingRecipeCategory implements IRecipeCategory<DryingRecipe> {
 //    final String requirement = I18n.format("jei.requirement.age", age);
 //    font.drawString(requirement, 4, 8, 0x404040);
 
-    font.drawString(I18n.format("jei.mixer.ticks", recipe.getTicks()), 4, 46, 0x404040);
+    font.drawString(I18n.format("jei.drying.ticks", recipe.getTicks()), 4, 46, 0x404040);
   }
 }

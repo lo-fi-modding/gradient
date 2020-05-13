@@ -71,9 +71,9 @@ public class FuelRecipeCategory implements IRecipeCategory<FuelRecipe> {
   public void draw(final FuelRecipe recipe, final double mouseX, final double mouseY) {
     final FontRenderer font = Minecraft.getInstance().fontRenderer;
 
-    font.drawString(I18n.format("jei.fuel.duration", recipe.ticks), 5,  25, 0x404040);
-    font.drawString(I18n.format("jei.fuel.ignitionTemp", recipe.ignitionTemp), 5, 36, 0x404040);
-    font.drawString(I18n.format("jei.fuel.burnTemp", recipe.burnTemp), 5, 47, 0x404040);
-    font.drawString(I18n.format("jei.fuel.heatPerSec", recipe.heatPerSec), 5, 58, 0x404040);
+    font.drawString(I18n.format("jei.fuel.ticks", recipe.ticks), 5,  25, 0x404040);
+    font.drawString(I18n.format("jei.fuel.ignition_temp", recipe.ignitionTemp), 5, 36, 0x404040);
+    font.drawString(I18n.format("jei.fuel.burn_temp", recipe.burnTemp), 5, 47, 0x404040);
+    font.drawString(I18n.format("jei.fuel.heat_per_sec", recipe.heatPerSec), 5, 58, 0x404040);
   }
 }

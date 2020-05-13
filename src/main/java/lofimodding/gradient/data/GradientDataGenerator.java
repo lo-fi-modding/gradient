@@ -1111,6 +1111,30 @@ public final class GradientDataGenerator {
 
       this.add(GradientItems.INFINICOAL.get(), "Infinicoal (Debug Item)");
 
+      this.add("jei.cooking.name", "Cooking");
+      this.add("jei.cooking.temperature", "%f °C");
+      this.add("jei.cooking.ticks", "%d ticks");
+
+      this.add("jei.drying.name", "Drying");
+      this.add("jei.drying.ticks", "%d ticks");
+
+      this.add("jei.fuel.name", "Fuel");
+      this.add("jei.fuel.ticks", "Burn time: %d ticks");
+      this.add("jei.fuel.ignition_temp", "Ignition temperature: %d °C");
+      this.add("jei.fuel.burn_temp", "Max temperature: %d °C");
+      this.add("jei.fuel.heat_per_sec", "Heat: %d °C/s");
+
+      this.add("jei.grinding.name", "Grinding");
+      this.add("jei.grinding.ticks", "%d ticks");
+
+      this.add("jei.hardening.name", "Hardening");
+      this.add("jei.hardening.ticks", "%d ticks");
+      this.add("jei.hardening.instructions", "Place next to a firepit");
+
+      this.add("jei.mixing.name", "Mixing");
+      this.add("jei.mixing.passes", "%d stirs");
+      this.add("jei.mixing.ticks", "%d ticks");
+
       this.age1("root", "Age 1: Stone Age", "Humankind's first steps");
       this.age1("basic_materials", "Basic Materials", "Gather sticks from leaves, fibre from grass, and pebbles from the ground");
       this.age1("stone_hammer", "Hammer Time!", "Craft a stone hammer");

@@ -1,7 +1,6 @@
 package lofimodding.gradient.integrations.jei;
 
 import lofimodding.gradient.Gradient;
-import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientRecipeSerializers;
 import lofimodding.gradient.recipes.CookingRecipe;
@@ -40,7 +39,7 @@ public class CookingRecipeCategory implements IRecipeCategory<CookingRecipe> {
 
   @Override
   public String getTitle() {
-    return GradientBlocks.FIREPIT.get().getNameTextComponent().getFormattedText();
+    return I18n.format("jei.cooking.name");
   }
 
   @Override

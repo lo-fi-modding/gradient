@@ -1,7 +1,6 @@
 package lofimodding.gradient.integrations.jei;
 
 import lofimodding.gradient.Gradient;
-import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientRecipeSerializers;
 import lofimodding.gradient.recipes.MixingRecipe;
@@ -41,7 +40,7 @@ public class MixingRecipeCategory implements IRecipeCategory<MixingRecipe> {
 
   @Override
   public String getTitle() {
-    return GradientBlocks.MIXING_BASIN.get().getNameTextComponent().getFormattedText();
+    return I18n.format("jei.mixing.name");
   }
 
   @Override
@@ -83,7 +82,7 @@ public class MixingRecipeCategory implements IRecipeCategory<MixingRecipe> {
 //    final String requirement = I18n.format("jei.requirement.age", age);
 //    font.drawString(requirement, 4, 8, 0x404040);
 
-    font.drawString(I18n.format("jei.mixer.passes", recipe.getPasses()), 4, 46, 0x404040);
-    font.drawString(I18n.format("jei.mixer.ticks", recipe.getTicks()), 4, 60, 0x404040);
+    font.drawString(I18n.format("jei.mixing.passes", recipe.getPasses()), 4, 46, 0x404040);
+    font.drawString(I18n.format("jei.mixing.ticks", recipe.getTicks()), 4, 60, 0x404040);
   }
 }

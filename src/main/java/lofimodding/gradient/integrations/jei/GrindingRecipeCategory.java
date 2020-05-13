@@ -1,7 +1,6 @@
 package lofimodding.gradient.integrations.jei;
 
 import lofimodding.gradient.Gradient;
-import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientRecipeSerializers;
 import lofimodding.gradient.recipes.GrindingRecipe;
@@ -40,7 +39,7 @@ public class GrindingRecipeCategory implements IRecipeCategory<GrindingRecipe> {
 
   @Override
   public String getTitle() {
-    return GradientBlocks.GRINDSTONE.get().getNameTextComponent().getFormattedText();
+    return I18n.format("jei.grinding.name");
   }
 
   @Override
@@ -81,6 +80,6 @@ public class GrindingRecipeCategory implements IRecipeCategory<GrindingRecipe> {
 //    font.drawString(requirement, 9, 8, 0x404040);
 //
 //    font.drawString(I18n.format("jei.grinder.passes", recipe.passes), 9, 46, 0x404040);
-    font.drawString(I18n.format("jei.grinder.ticks", recipe.getTicks()), 9, 60, 0x404040);
+    font.drawString(I18n.format("jei.grinding.ticks", recipe.getTicks()), 9, 60, 0x404040);
   }
 }

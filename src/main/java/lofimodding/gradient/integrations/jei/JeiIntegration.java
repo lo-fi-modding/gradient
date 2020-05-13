@@ -15,7 +15,6 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
-import mezz.jei.api.registration.IVanillaCategoryExtensionRegistration;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
@@ -72,13 +71,6 @@ public class JeiIntegration implements IModPlugin {
     registration.addRecipeCatalyst(new ItemStack(GradientBlocks.FIREPIT.get()), GradientRecipeSerializers.HARDENING.getId());
     registration.addRecipeCatalyst(new ItemStack(GradientBlocks.DRYING_RACK.get()), GradientRecipeSerializers.DRYING.getId());
     registration.addRecipeCatalyst(new ItemStack(GradientBlocks.FIREPIT.get()), GradientRecipeSerializers.FUEL.getId());
-  }
-
-  @Override
-  public void registerVanillaCategoryExtensions(final IVanillaCategoryExtensionRegistration registration) {
-    //TODO
-//    registration.getCraftingCategory().addCategoryExtension(AgeGatedShapedToolRecipe.class, ShapedAgeCraftingExtension::new);
-//    registration.getCraftingCategory().addCategoryExtension(AgeGatedShapelessToolRecipe.class, ShapelessAgeCraftingExtension::new);
   }
 
   private static <T extends IRecipe<?>> Collection<T> filterRecipes(final Class<T> recipeClass) {
