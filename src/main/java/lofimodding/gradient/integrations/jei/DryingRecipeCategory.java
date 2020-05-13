@@ -51,7 +51,7 @@ public class DryingRecipeCategory implements IRecipeCategory<DryingRecipe> {
 
   @Override
   public IDrawable getBackground() {
-    return this.guiHelper.createDrawable(BACKGROUND_LOCATION, 0, 0, 116, 43);
+    return this.guiHelper.createDrawable(BACKGROUND_LOCATION, 0, 0, 117, 43);
   }
 
   @Override
