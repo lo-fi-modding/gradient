@@ -1357,6 +1357,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shapelessRecipe(GradientItems.FIRE_STARTER.get())
+        .stage(GradientStages.AGE_1)
         .addIngredient(Tags.Items.RODS_WOODEN)
         .addIngredient(Tags.Items.STRING)
         .addIngredient(Tags.Items.RODS_WOODEN)

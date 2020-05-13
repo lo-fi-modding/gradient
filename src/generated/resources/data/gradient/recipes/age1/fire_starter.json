@@ -1,6 +1,8 @@
 {
   "type": "progression:shapeless_staged",
-  "stages": [],
+  "stages": [
+    "gradient:age_1"
+  ],
   "damage_tools": true,
   "ingredients": [
     {
