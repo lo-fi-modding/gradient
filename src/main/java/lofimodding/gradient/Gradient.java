@@ -53,6 +53,7 @@ public class Gradient {
     GradientLoot.init(bus);
     GradientRecipeSerializers.init(bus);
     GradientSounds.init(bus);
+    GradientStages.init(bus);
     GradientTileEntities.init(bus);
   }
 

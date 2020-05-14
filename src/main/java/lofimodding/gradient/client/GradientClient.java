@@ -7,6 +7,7 @@ import lofimodding.gradient.GradientEntities;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientTileEntities;
 import lofimodding.gradient.blocks.MetalBlock;
+import lofimodding.gradient.blocks.OreBlock;
 import lofimodding.gradient.client.tesr.ClayCrucibleRenderer;
 import lofimodding.gradient.client.tesr.ClayOvenRenderer;
 import lofimodding.gradient.client.tesr.DryingRackRenderer;
@@ -16,10 +17,10 @@ import lofimodding.gradient.client.tesr.MixingBasinRenderer;
 import lofimodding.gradient.client.tesr.WoodenConveyorBeltRenderer;
 import lofimodding.gradient.client.tesr.WoodenCrankRenderer;
 import lofimodding.gradient.items.MetalItem;
+import lofimodding.gradient.items.OreItem;
 import lofimodding.gradient.science.Metal;
-import lofimodding.gradient.science.Metals;
+import lofimodding.gradient.science.Minerals;
 import lofimodding.gradient.science.Ore;
-import lofimodding.gradient.science.Ores;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
@@ -55,7 +56,7 @@ public final class GradientClient {
 
     final RenderType cutoutMipped = RenderType.getCutoutMipped();
 
-    for(final Ore ore : Ores.all()) {
+    for(final Ore ore : Minerals.ores()) {
       RenderTypeLookup.setRenderLayer(GradientBlocks.ORE(ore).get(), cutoutMipped);
     }
 
@@ -78,14 +79,14 @@ public final class GradientClient {
     final BlockColors blockColors = mc.getBlockColors();
     final ItemColors itemColors = mc.getItemColors();
 
-    for(final Ore ore : Ores.all()) {
-      blockColors.register(GradientClient::metalBlockColour, GradientBlocks.ORE(ore).get());
-      itemColors.register(GradientClient::metalBlockColour, GradientItems.ORE(ore).get());
-      itemColors.register(GradientClient::metalItemColour, GradientItems.CRUSHED(ore).get());
-      itemColors.register(GradientClient::metalItemColour, GradientItems.PURIFIED(ore).get());
+    for(final Ore ore : Minerals.ores()) {
+      blockColors.register(GradientClient::oreBlockColour, GradientBlocks.ORE(ore).get());
+      itemColors.register(GradientClient::oreBlockColour, GradientItems.ORE(ore).get());
+      itemColors.register(GradientClient::oreItemColour, GradientItems.CRUSHED(ore).get());
+      itemColors.register(GradientClient::oreItemColour, GradientItems.PURIFIED(ore).get());
     }
 
-    for(final Metal metal : Metals.all()) {
+    for(final Metal metal : Minerals.metals()) {
       itemColors.register(GradientClient::metalItemColour, GradientItems.INGOT(metal).get());
       itemColors.register(GradientClient::metalItemColour, GradientItems.DUST(metal).get());
       itemColors.register(GradientClient::metalItemColour, GradientItems.NUGGET(metal).get());
@@ -149,6 +150,42 @@ public final class GradientClient {
         return metal.colourEdge2;
       case 7:
         return metal.colourEdge3;
+    }
+
+    return 0xffffffff;
+  }
+
+  private static int oreBlockColour(final BlockState state, final ILightReader world, final BlockPos pos, final int tintIndex) {
+    final Ore ore = ((OreBlock)state.getBlock()).ore;
+    return getOreColour(ore, tintIndex);
+  }
+
+  private static int oreBlockColour(final ItemStack stack, final int tintIndex) {
+    final Ore ore = ((OreBlock)((BlockItem)stack.getItem()).getBlock()).ore;
+    return getOreColour(ore, tintIndex);
+  }
+
+  private static int oreItemColour(final ItemStack stack, final int tintIndex) {
+    final Ore ore = ((OreItem)stack.getItem()).ore;
+    return getOreColour(ore, tintIndex);
+  }
+
+  private static int getOreColour(final Ore ore, final int tintIndex) {
+    switch(tintIndex) {
+      case 1:
+        return ore.colourDiffuse;
+      case 2:
+        return ore.colourSpecular;
+      case 3:
+        return ore.colourShadow1;
+      case 4:
+        return ore.colourShadow2;
+      case 5:
+        return ore.colourEdge1;
+      case 6:
+        return ore.colourEdge2;
+      case 7:
+        return ore.colourEdge3;
     }
 
     return 0xffffffff;

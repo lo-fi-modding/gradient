@@ -29,7 +29,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "gradient:hematite_nugget"
+          "name": "gradient:iron_nugget"
         }
       ],
       "conditions": [

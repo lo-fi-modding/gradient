@@ -9,19 +9,19 @@ public final class GradientIds {
   public static final String PEBBLE = "pebble";
 
   public static String PEBBLE(final Ore ore) {
-    return ore.metal.name + "_pebble";
+    return ore.name + "_pebble";
   }
 
   public static String ORE(final Ore ore) {
-    return ore.metal.name + "_ore";
+    return ore.name + "_ore";
   }
 
   public static String CRUSHED(final Ore ore) {
-    return ore.metal.name + "_crushed";
+    return ore.name + "_crushed";
   }
 
   public static String PURIFIED(final Ore ore) {
-    return ore.metal.name + "_purified";
+    return ore.name + "_purified";
   }
 
   public static String DUST(final Metal metal) {

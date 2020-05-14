@@ -12,6 +12,7 @@ import lofimodding.gradient.blocks.LitFibreTorchBlock;
 import lofimodding.gradient.blocks.LitFibreWallTorchBlock;
 import lofimodding.gradient.blocks.MetalBlock;
 import lofimodding.gradient.blocks.MixingBasinBlock;
+import lofimodding.gradient.blocks.OreBlock;
 import lofimodding.gradient.blocks.PebbleBlock;
 import lofimodding.gradient.blocks.TorchStandBlock;
 import lofimodding.gradient.blocks.UnhardenedClayBlock;
@@ -23,9 +24,8 @@ import lofimodding.gradient.blocks.WoodenConveyorBeltDriverBlock;
 import lofimodding.gradient.blocks.WoodenCrankBlock;
 import lofimodding.gradient.blocks.WoodenGearboxBlock;
 import lofimodding.gradient.science.Metal;
-import lofimodding.gradient.science.Metals;
+import lofimodding.gradient.science.Minerals;
 import lofimodding.gradient.science.Ore;
-import lofimodding.gradient.science.Ores;
 import net.minecraft.block.Block;
 import net.minecraft.block.LogBlock;
 import net.minecraft.block.SlabBlock;
@@ -55,23 +55,23 @@ public final class GradientBlocks {
   private static final Map<Ore, RegistryObject<PebbleBlock>> PEBBLES = new HashMap<>();
 
   static {
-    for(final Ore ore : Ores.all()) {
+    for(final Ore ore : Minerals.ores()) {
       PEBBLES.put(ore, REGISTRY.register(GradientIds.PEBBLE(ore), () -> new PebbleBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0f))));
     }
   }
 
-  private static final Map<Ore, RegistryObject<MetalBlock>> ORES = new HashMap<>();
+  private static final Map<Ore, RegistryObject<OreBlock>> ORES = new HashMap<>();
 
   static {
-    for(final Ore ore : Ores.all()) {
-      ORES.put(ore, REGISTRY.register(GradientIds.ORE(ore), () -> new MetalBlock(ore.metal, Block.Properties.create(Material.ROCK).hardnessAndResistance(ore.metal.hardness).harvestTool(ToolType.PICKAXE).harvestLevel(ore.metal.harvestLevel))));
+    for(final Ore ore : Minerals.ores()) {
+      ORES.put(ore, REGISTRY.register(GradientIds.ORE(ore), () -> new OreBlock(ore, Block.Properties.create(Material.ROCK).hardnessAndResistance(ore.hardness).harvestTool(ToolType.PICKAXE).harvestLevel(ore.harvestLevel))));
     }
   }
 
   private static final Map<Metal, RegistryObject<MetalBlock>> METAL_BLOCKS = new HashMap<>();
 
   static {
-    for(final Metal metal : Metals.all()) {
+    for(final Metal metal : Minerals.metals()) {
       METAL_BLOCKS.put(metal, REGISTRY.register(GradientIds.METAL_BLOCK(metal), () -> new MetalBlock(metal, Block.Properties.create(Material.ROCK).sound(SoundType.METAL).hardnessAndResistance(metal.hardness).harvestTool(ToolType.PICKAXE).harvestLevel(metal.harvestLevel))));
     }
   }
@@ -149,7 +149,7 @@ public final class GradientBlocks {
     return PEBBLES.get(ore);
   }
 
-  public static RegistryObject<MetalBlock> ORE(final Ore ore) {
+  public static RegistryObject<OreBlock> ORE(final Ore ore) {
     return ORES.get(ore);
   }
 

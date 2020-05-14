@@ -17,7 +17,7 @@ import lofimodding.gradient.recipes.HardeningRecipe;
 import lofimodding.gradient.recipes.MeltingRecipe;
 import lofimodding.gradient.recipes.MixingRecipe;
 import lofimodding.gradient.science.Metal;
-import lofimodding.gradient.science.Metals;
+import lofimodding.gradient.science.Minerals;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -122,7 +122,7 @@ public class JeiIntegration implements IModPlugin {
   private static Collection<IRecipe<IInventory>> getCastingRecipes() {
     final List<IRecipe<IInventory>> recipes = new ArrayList<>();
 
-    for(final Metal metal : Metals.all()) {
+    for(final Metal metal : Minerals.metals()) {
       for(final GradientCasts cast : GradientCasts.values()) {
         recipes.add(new CastingRecipe(cast, metal));
       }

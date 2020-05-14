@@ -57,7 +57,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "gradient:cassiterite_nugget"
+          "name": "gradient:tin_nugget"
         }
       ],
       "conditions": [

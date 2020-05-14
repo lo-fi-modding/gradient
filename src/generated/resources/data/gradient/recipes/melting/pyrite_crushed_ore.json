@@ -9,7 +9,7 @@
     "tag": "forge:crushed_ores/pyrite"
   },
   "fluid": {
-    "fluid": "gradient:pyrite",
+    "fluid": "gradient:iron",
     "amount": 0.75,
     "temperature": 1188.0
   }

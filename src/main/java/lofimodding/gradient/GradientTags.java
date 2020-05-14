@@ -1,9 +1,8 @@
 package lofimodding.gradient;
 
 import lofimodding.gradient.science.Metal;
-import lofimodding.gradient.science.Metals;
+import lofimodding.gradient.science.Minerals;
 import lofimodding.gradient.science.Ore;
-import lofimodding.gradient.science.Ores;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.tags.BlockTags;
@@ -26,13 +25,13 @@ public final class GradientTags {
     public static final Tag<Block> PEBBLE_SOURCES = tag("pebble_sources");
 
     public static final Map<Ore, Tag<Block>> ORE = Collections.unmodifiableMap(Util.make(new LinkedHashMap<>(), tags -> {
-      for(final Ore ore : Ores.all()) {
+      for(final Ore ore : Minerals.ores()) {
         tags.put(ore, forgeTag("ores/" + ore.name));
       }
     }));
 
     public static final Map<Metal, Tag<Block>> STORAGE_BLOCK = Collections.unmodifiableMap(Util.make(new LinkedHashMap<>(), tags -> {
-      for(final Metal metal : Metals.all()) {
+      for(final Metal metal : Minerals.metals()) {
         tags.put(metal, forgeTag("storage_blocks/" + metal.name));
       }
     }));
@@ -59,52 +58,52 @@ public final class GradientTags {
     public static final Tag<Item> FIBRE_TORCH_LIGHTERS = tag("fibre_torch_lighters");
 
     public static final Map<Ore, Tag<Item>> ORE = Collections.unmodifiableMap(Util.make(new LinkedHashMap<>(), tags -> {
-      for(final Ore ore : Ores.all()) {
+      for(final Ore ore : Minerals.ores()) {
         tags.put(ore, forgeTag("ores/" + ore.name));
       }
     }));
 
     public static final Tag<Item> CRUSHED_ORES = forgeTag("crushed_ores");
     public static final Map<Ore, Tag<Item>> CRUSHED_ORE = Collections.unmodifiableMap(Util.make(new LinkedHashMap<>(), tags -> {
-      for(final Ore ore : Ores.all()) {
+      for(final Ore ore : Minerals.ores()) {
         tags.put(ore, forgeTag("crushed_ores/" + ore.name));
       }
     }));
 
     public static final Tag<Item> PURIFIED_ORES = forgeTag("purified_ores");
     public static final Map<Ore, Tag<Item>> PURIFIED_ORE = Collections.unmodifiableMap(Util.make(new LinkedHashMap<>(), tags -> {
-      for(final Ore ore : Ores.all()) {
+      for(final Ore ore : Minerals.ores()) {
         tags.put(ore, forgeTag("purified_ores/" + ore.name));
       }
     }));
 
     public static final Map<Metal, Tag<Item>> DUST = Collections.unmodifiableMap(Util.make(new LinkedHashMap<>(), tags -> {
-      for(final Metal metal : Metals.all()) {
+      for(final Metal metal : Minerals.metals()) {
         tags.put(metal, forgeTag("dusts/" + metal.name));
       }
     }));
 
     public static final Map<Metal, Tag<Item>> INGOT = Collections.unmodifiableMap(Util.make(new LinkedHashMap<>(), tags -> {
-      for(final Metal metal : Metals.all()) {
+      for(final Metal metal : Minerals.metals()) {
         tags.put(metal, forgeTag("ingots/" + metal.name));
       }
     }));
 
     public static final Map<Metal, Tag<Item>> NUGGET = Collections.unmodifiableMap(Util.make(new LinkedHashMap<>(), tags -> {
-      for(final Metal metal : Metals.all()) {
+      for(final Metal metal : Minerals.metals()) {
         tags.put(metal, forgeTag("nuggets/" + metal.name));
       }
     }));
 
     public static final Tag<Item> PLATES = forgeTag("plates");
     public static final Map<Metal, Tag<Item>> PLATE = Collections.unmodifiableMap(Util.make(new LinkedHashMap<>(), tags -> {
-      for(final Metal metal : Metals.all()) {
+      for(final Metal metal : Minerals.metals()) {
         tags.put(metal, forgeTag("plates/" + metal.name));
       }
     }));
 
     public static final Map<Metal, Tag<Item>> STORAGE_BLOCK = Collections.unmodifiableMap(Util.make(new LinkedHashMap<>(), tags -> {
-      for(final Metal metal : Metals.all()) {
+      for(final Metal metal : Minerals.metals()) {
         tags.put(metal, forgeTag("storage_blocks/" + metal.name));
       }
     }));

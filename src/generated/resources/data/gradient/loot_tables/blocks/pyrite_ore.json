@@ -57,7 +57,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "gradient:pyrite_nugget"
+          "name": "gradient:iron_nugget"
         }
       ],
       "conditions": [

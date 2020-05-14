@@ -1,26 +1,20 @@
 package lofimodding.gradient;
 
+import lofimodding.gradient.utils.DeferredRegister2;
+import lofimodding.gradient.utils.RegistryObject2;
 import lofimodding.progression.Stage;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.eventbus.api.IEventBus;
 
-@Mod.EventBusSubscriber(modid = Gradient.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-@ObjectHolder(Gradient.MOD_ID)
 public final class GradientStages {
   private GradientStages() { }
 
-  public static final Stage AGE_1 = null;
-  public static final Stage AGE_2 = null;
+  private static final DeferredRegister2<Stage> REGISTRY = new DeferredRegister2<>(Stage.REGISTRY, Gradient.MOD_ID);
 
-  @SubscribeEvent
-  public static void registerStages(final RegistryEvent.Register<Stage> event) {
+  public static final RegistryObject2<Stage> AGE_1 = REGISTRY.register("age_1", Stage::new);
+  public static final RegistryObject2<Stage> AGE_2 = REGISTRY.register("age_2", Stage::new);
+
+  static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering stages...");
-
-    event.getRegistry().registerAll(
-      new Stage().setRegistryName("age_1"),
-      new Stage().setRegistryName("age_2")
-    );
+    REGISTRY.register(bus);
   }
 }

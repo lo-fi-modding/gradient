@@ -1,18 +1,12 @@
 {
   "replace": false,
   "values": [
-    "#forge:ingots/azurite",
     "#forge:ingots/bronze",
-    "#forge:ingots/cassiterite",
     "#forge:ingots/copper",
     "#forge:ingots/gold",
-    "#forge:ingots/graphite",
-    "#forge:ingots/hematite",
     "#forge:ingots/iron",
     "#forge:ingots/lead",
     "#forge:ingots/magnesium",
-    "#forge:ingots/pyrite",
-    "#forge:ingots/sphalerite",
     "#forge:ingots/tin",
     "#forge:ingots/zinc"
   ]

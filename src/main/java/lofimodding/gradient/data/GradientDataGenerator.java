@@ -14,16 +14,15 @@ import lofimodding.gradient.GradientTags;
 import lofimodding.gradient.blocks.ClayMetalMixerBlock;
 import lofimodding.gradient.blocks.DryingRackBlock;
 import lofimodding.gradient.blocks.FirepitBlock;
-import lofimodding.gradient.blocks.MetalBlock;
 import lofimodding.gradient.blocks.MixingBasinBlock;
+import lofimodding.gradient.blocks.OreBlock;
 import lofimodding.gradient.fluids.GradientFluid;
 import lofimodding.gradient.fluids.GradientFluidStack;
 import lofimodding.gradient.fluids.GradientFluids;
 import lofimodding.gradient.items.PebbleItem;
 import lofimodding.gradient.science.Metal;
-import lofimodding.gradient.science.Metals;
+import lofimodding.gradient.science.Minerals;
 import lofimodding.gradient.science.Ore;
-import lofimodding.gradient.science.Ores;
 import lofimodding.progression.recipes.StagedRecipeBuilder;
 import net.minecraft.advancements.criterion.ImpossibleTrigger;
 import net.minecraft.advancements.criterion.ItemPredicate;
@@ -150,7 +149,7 @@ public final class GradientDataGenerator {
         .face(Direction.EAST ).texture("stone").uvs(0.0f, 0.0f, 7.0f, 1.0f).end()
         .end();
 
-      for(final Ore ore : Ores.all()) {
+      for(final Ore ore : Minerals.ores()) {
         this.getBuilder(GradientIds.PEBBLE(ore)).parent(this.getExistingFile(this.modLoc("block/" + GradientIds.PEBBLE)));
       }
 
@@ -175,7 +174,7 @@ public final class GradientDataGenerator {
         .element().allFaces(this.addTexture("edge_3").andThen((dir, f) -> f.cullface(dir).tintindex(7))).end()
       ;
 
-      for(final Ore ore : Ores.all()) {
+      for(final Ore ore : Minerals.ores()) {
         this.getBuilder(GradientIds.ORE(ore)).parent(this.getExistingFile(this.modLoc("block/ore")));
       }
 
@@ -186,7 +185,7 @@ public final class GradientDataGenerator {
         .element().allFaces(this.addTexture("all").andThen((dir, f) -> f.cullface(dir).tintindex(1))).end()
       ;
 
-      for(final Metal metal : Metals.all()) {
+      for(final Metal metal : Minerals.metals()) {
         this.getBuilder(GradientIds.METAL_BLOCK(metal)).parent(this.getExistingFile(this.modLoc("block/metal_block")));
       }
 
@@ -657,13 +656,13 @@ public final class GradientDataGenerator {
         .texture("layer7", this.modLoc("item/plate/edge_3"))
       ;
 
-      for(final Ore ore : Ores.all()) {
+      for(final Ore ore : Minerals.ores()) {
         this.getBuilder(GradientIds.ORE(ore)).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.ORE(ore))));
         this.getBuilder(GradientIds.CRUSHED(ore)).parent(this.getExistingFile(this.modLoc("item/crushed")));
         this.getBuilder(GradientIds.PURIFIED(ore)).parent(this.getExistingFile(this.modLoc("item/purified")));
       }
 
-      for(final Metal metal : Metals.all()) {
+      for(final Metal metal : Minerals.metals()) {
         this.getBuilder(GradientIds.DUST(metal)).parent(this.getExistingFile(this.modLoc("item/dust")));
         this.getBuilder(GradientIds.INGOT(metal)).parent(this.getExistingFile(this.modLoc("item/ingot")));
         this.getBuilder(GradientIds.NUGGET(metal)).parent(this.getExistingFile(this.modLoc("item/nugget")));
@@ -685,7 +684,7 @@ public final class GradientDataGenerator {
           .texture("layer7", this.modLoc("item/" + cast.name + "/edge_3"))
         ;
 
-        for(final Metal metal : Metals.all()) {
+        for(final Metal metal : Minerals.metals()) {
           this.getBuilder(GradientIds.CASTED(cast, metal)).parent(this.getExistingFile(this.modLoc("item/" + cast.name)));
         }
       }
@@ -789,15 +788,12 @@ public final class GradientDataGenerator {
     protected void registerStatesAndModels() {
       this.simpleBlock(GradientBlocks.PEBBLE.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.PEBBLE)));
 
-      for(final Ore ore : Ores.all()) {
+      for(final Ore ore : Minerals.ores()) {
         this.simpleBlock(GradientBlocks.PEBBLE(ore).get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.PEBBLE(ore))));
-      }
-
-      for(final Ore ore : Ores.all()) {
         this.simpleBlock(GradientBlocks.ORE(ore).get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.ORE(ore))));
       }
 
-      for(final Metal metal : Metals.all()) {
+      for(final Metal metal : Minerals.metals()) {
         this.simpleBlock(GradientBlocks.METAL_BLOCK(metal).get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.METAL_BLOCK(metal))));
       }
 
@@ -971,7 +967,7 @@ public final class GradientDataGenerator {
 
       this.add("fluids.gradient.air", "Air");
 
-      for(final Metal metal : Metals.all()) {
+      for(final Metal metal : Minerals.metals()) {
         final String metalName = StringUtils.capitalize(metal.name);
         this.add(GradientFluids.METAL(metal).get(), "Molten " + metalName);
       }
@@ -985,7 +981,7 @@ public final class GradientDataGenerator {
       this.add(GradientBlocks.PEBBLE.get(), "Pebble");
       this.add(GradientItems.PEBBLE.get(), "Pebble");
 
-      for(final Ore ore : Ores.all()) {
+      for(final Ore ore : Minerals.ores()) {
         final String oreName = StringUtils.capitalize(ore.name);
 
         this.add(GradientBlocks.PEBBLE(ore).get(), oreName + " Pebble");
@@ -994,7 +990,7 @@ public final class GradientDataGenerator {
         this.add(GradientItems.PURIFIED(ore).get(), "Purified " + oreName + " Ore");
       }
 
-      for(final Metal metal : Metals.all()) {
+      for(final Metal metal : Minerals.metals()) {
         final String metalName = StringUtils.capitalize(metal.name);
 
         this.add(GradientItems.DUST(metal).get(), metalName + " Dust");
@@ -1092,7 +1088,7 @@ public final class GradientDataGenerator {
         this.add(GradientItems.CLAY_CAST(cast).get(), "Clay Cast (" + text + ')');
         this.add(GradientItems.CLAY_CAST(cast).get().getTranslationKey() + ".tooltip", "Right click on a crucible to cast");
 
-        for(final Metal metal : Metals.all()) {
+        for(final Metal metal : Minerals.metals()) {
           final String metalName = StringUtils.capitalize(metal.name);
           this.add(GradientItems.CASTED(cast, metal).get(), metalName + ' ' + text);
         }
@@ -1197,12 +1193,12 @@ public final class GradientDataGenerator {
       this.getBuilder(GradientTags.Blocks.PEBBLE_SOURCES)
         .add(Tags.Blocks.GRAVEL);
 
-      for(final Ore ore : Ores.all()) {
+      for(final Ore ore : Minerals.ores()) {
         this.getBuilder(GradientTags.Blocks.ORE.get(ore)).add(GradientBlocks.ORE(ore).get());
         this.getBuilder(Tags.Blocks.ORES).add(GradientTags.Blocks.ORE.get(ore));
       }
 
-      for(final Metal metal : Metals.all()) {
+      for(final Metal metal : Minerals.metals()) {
         this.getBuilder(GradientTags.Blocks.STORAGE_BLOCK.get(metal)).add(GradientBlocks.METAL_BLOCK(metal).get());
         this.getBuilder(Tags.Blocks.STORAGE_BLOCKS).add(GradientTags.Blocks.STORAGE_BLOCK.get(metal));
       }
@@ -1225,7 +1221,7 @@ public final class GradientDataGenerator {
 
       this.getBuilder(GradientTags.Items.FIBRE_TORCH_LIGHTERS).add(GradientItems.LIT_FIBRE_TORCH.get(), Items.TORCH, Items.FLINT_AND_STEEL);
 
-      for(final Ore ore : Ores.all()) {
+      for(final Ore ore : Minerals.ores()) {
         this.getBuilder(GradientTags.Items.ORE.get(ore)).add(GradientItems.ORE(ore).get());
         this.getBuilder(Tags.Items.ORES).add(GradientTags.Items.ORE.get(ore));
 
@@ -1236,7 +1232,7 @@ public final class GradientDataGenerator {
         this.getBuilder(GradientTags.Items.PURIFIED_ORES).add(GradientTags.Items.PURIFIED_ORE.get(ore));
       }
 
-      for(final Metal metal : Metals.all()) {
+      for(final Metal metal : Minerals.metals()) {
         this.getBuilder(GradientTags.Items.DUST.get(metal)).add(GradientItems.DUST(metal).get());
         this.getBuilder(Tags.Items.DUSTS).add(GradientTags.Items.DUST.get(metal));
 
@@ -1303,7 +1299,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shapelessRecipe(GradientItems.HARDENED_PLANKS.get(), 2)
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .addIngredient(GradientItems.HARDENED_LOG.get())
         .addIngredient(GradientTags.Items.AXES)
         .addCriterion("has_hardened_log", this.hasItem(GradientItems.HARDENED_LOG.get()))
@@ -1311,7 +1307,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shapelessRecipe(GradientItems.HARDENED_STICK.get(), 2)
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .addIngredient(GradientItems.HARDENED_PLANKS.get())
         .addIngredient(GradientTags.Items.AXES)
         .addCriterion("has_hardened_planks", this.hasItem(GradientItems.HARDENED_PLANKS.get()))
@@ -1319,7 +1315,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.HARDENED_LOG_SLAB.get(), 6)
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .patternLine("SSS")
         .key('S', GradientItems.HARDENED_LOG.get())
         .addCriterion("has_hardened_log", this.hasItem(GradientItems.HARDENED_LOG.get()))
@@ -1327,7 +1323,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.HARDENED_PLANKS_SLAB.get(), 6)
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .patternLine("SSS")
         .key('S', GradientItems.HARDENED_PLANKS.get())
         .addCriterion("has_hardened_planks", this.hasItem(GradientItems.HARDENED_PLANKS.get()))
@@ -1335,7 +1331,7 @@ public final class GradientDataGenerator {
 
       GradientRecipeBuilder
         .grinding(GradientItems.MULCH.get())
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .ticks(40)
         .addIngredient(GradientItems.BARK.get())
         .addCriterion("has_bark", this.hasItem(GradientItems.BARK.get()))
@@ -1343,7 +1339,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shapelessRecipe(GradientItems.RAW_HIDE.get())
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .addIngredient(GradientTags.Items.PELTS)
         .addIngredient(GradientItems.FLINT_KNIFE.get())
         .addCriterion("has_hide", this.hasItem(GradientTags.Items.PELTS))
@@ -1351,7 +1347,7 @@ public final class GradientDataGenerator {
 
       GradientRecipeBuilder
         .mixing(GradientItems.SALTED_HIDE.get(), 3)
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .passes(3)
         .ticks(60)
         .addIngredient(GradientItems.RAW_HIDE.get(), 3)
@@ -1362,7 +1358,7 @@ public final class GradientDataGenerator {
 
       GradientRecipeBuilder
         .mixing(GradientItems.TANNED_HIDE.get(), 3)
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .passes(3)
         .ticks(60)
         .addIngredient(GradientItems.PRESERVED_HIDE.get(), 3)
@@ -1373,7 +1369,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shapelessRecipe(GradientItems.LEATHER_STRIP.get(), 3)
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .addIngredient(Tags.Items.LEATHER)
         .addIngredient(GradientItems.FLINT_KNIFE.get())
         .addCriterion("has_leather", this.hasItem(Tags.Items.LEATHER))
@@ -1381,7 +1377,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shapelessRecipe(GradientItems.FIRE_STARTER.get())
-        .stage(GradientStages.AGE_1)
+        .stage(GradientStages.AGE_1.get())
         .addIngredient(Tags.Items.RODS_WOODEN)
         .addIngredient(Tags.Items.STRING)
         .addIngredient(Tags.Items.RODS_WOODEN)
@@ -1390,7 +1386,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.STONE_HAMMER.get())
-        .stage(GradientStages.AGE_1)
+        .stage(GradientStages.AGE_1.get())
         .patternLine("P")
         .patternLine("F")
         .patternLine("S")
@@ -1402,7 +1398,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.STONE_HATCHET.get())
-        .stage(GradientStages.AGE_1)
+        .stage(GradientStages.AGE_1.get())
         .patternLine("PF")
         .patternLine(" S")
         .key('P', GradientItems.PEBBLE.get())
@@ -1413,7 +1409,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.STONE_MATTOCK.get())
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .patternLine("P  ")
         .patternLine("PLP")
         .patternLine(" S ")
@@ -1425,7 +1421,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.STONE_PICKAXE.get())
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .patternLine("PPP")
         .patternLine(" L ")
         .patternLine(" S ")
@@ -1437,7 +1433,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.FLINT_KNIFE.get())
-        .stage(GradientStages.AGE_1)
+        .stage(GradientStages.AGE_1.get())
         .patternLine("F")
         .patternLine("S")
         .patternLine("W")
@@ -1449,7 +1445,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shapelessRecipe(GradientItems.BONE_AWL.get())
-        .stage(GradientStages.AGE_1)
+        .stage(GradientStages.AGE_1.get())
         .addIngredient(Tags.Items.BONES)
         .addIngredient(GradientTags.Items.HAMMERS)
         .addCriterion("has_bone", this.hasItem(Tags.Items.BONES))
@@ -1457,7 +1453,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.HIDE_BEDDING.get())
-        .stage(GradientStages.AGE_1)
+        .stage(GradientStages.AGE_1.get())
         .patternLine("PPP")
         .patternLine("FFF")
         .key('P', GradientTags.Items.PELTS)
@@ -1467,7 +1463,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.EMPTY_WATERSKIN.get())
-        .stage(GradientStages.AGE_1)
+        .stage(GradientStages.AGE_1.get())
         .patternLine("SHS")
         .patternLine("HAH")
         .patternLine("SHS")
@@ -1479,7 +1475,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.HIDE_HAT.get())
-        .stage(GradientStages.AGE_1)
+        .stage(GradientStages.AGE_1.get())
         .patternLine("SHS")
         .patternLine("HAH")
         .key('S', Tags.Items.STRING)
@@ -1490,7 +1486,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.HIDE_SHIRT.get())
-        .stage(GradientStages.AGE_1)
+        .stage(GradientStages.AGE_1.get())
         .patternLine("HAH")
         .patternLine("SHS")
         .patternLine("HHH")
@@ -1502,7 +1498,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.HIDE_PANTS.get())
-        .stage(GradientStages.AGE_1)
+        .stage(GradientStages.AGE_1.get())
         .patternLine("SHS")
         .patternLine("HAH")
         .patternLine("H H")
@@ -1514,7 +1510,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.HIDE_BOOTS.get())
-        .stage(GradientStages.AGE_1)
+        .stage(GradientStages.AGE_1.get())
         .patternLine("S S")
         .patternLine("HAH")
         .key('S', Tags.Items.STRING)
@@ -1525,7 +1521,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.FIREPIT.get())
-        .stage(GradientStages.AGE_1)
+        .stage(GradientStages.AGE_1.get())
         .patternLine(" S ")
         .patternLine("SSS")
         .patternLine(" S ")
@@ -1535,7 +1531,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shapelessRecipe(GradientItems.UNLIT_FIBRE_TORCH.get())
-        .stage(GradientStages.AGE_1)
+        .stage(GradientStages.AGE_1.get())
         .addIngredient(Tags.Items.STRING)
         .addIngredient(Tags.Items.STRING)
         .addIngredient(Tags.Items.STRING)
@@ -1545,7 +1541,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.TORCH_STAND.get())
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .patternLine(" T ")
         .patternLine("FSF")
         .patternLine(" P ")
@@ -1559,7 +1555,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.GRINDSTONE.get())
-        .stage(GradientStages.AGE_1)
+        .stage(GradientStages.AGE_1.get())
         .patternLine(" P ")
         .patternLine("S S")
         .patternLine("CSC")
@@ -1573,7 +1569,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.MIXING_BASIN.get())
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .patternLine(" S ")
         .patternLine("W W")
         .patternLine("CWC")
@@ -1585,7 +1581,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.DRYING_RACK.get())
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .patternLine("PP")
         .patternLine("SS")
         .key('P', ItemTags.PLANKS)
@@ -1595,7 +1591,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.UNHARDENED_CLAY_FURNACE.get())
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .patternLine("CCC")
         .patternLine("C C")
         .patternLine("CCC")
@@ -1605,7 +1601,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.UNHARDENED_CLAY_CRUCIBLE.get())
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .patternLine("C C")
         .patternLine("C C")
         .patternLine("CCC")
@@ -1615,7 +1611,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.UNHARDENED_CLAY_OVEN.get())
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .patternLine(" C ")
         .patternLine("C C")
         .patternLine("CCC")
@@ -1625,7 +1621,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.UNHARDENED_CLAY_METAL_MIXER.get())
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .patternLine("CCC")
         .patternLine("PCP")
         .patternLine("PCP")
@@ -1636,7 +1632,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.UNHARDENED_CLAY_BUCKET.get())
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .patternLine("C C")
         .patternLine("CCC")
         .key('C', Items.CLAY_BALL)
@@ -1645,7 +1641,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shapelessRecipe(GradientItems.UNHARDENED_CLAY_CAST_BLANK.get())
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .addIngredient(Items.CLAY_BALL)
         .addIngredient(ItemTags.SAND)
         .addCriterion("has_clay_ball", this.hasItem(Items.CLAY_BALL))
@@ -1653,7 +1649,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.WOODEN_GEAR.get())
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .patternLine("FSF")
         .patternLine("S S")
         .patternLine("FSF")
@@ -1664,7 +1660,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.WOODEN_AXLE.get())
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .patternLine(" C ")
         .patternLine("SSS")
         .patternLine(" C ")
@@ -1675,7 +1671,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.WOODEN_GEARBOX.get())
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .patternLine("PGP")
         .patternLine("GAG")
         .patternLine("PGP")
@@ -1688,7 +1684,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.WOODEN_CONVEYOR_BELT.get())
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .patternLine("SSS")
         .patternLine("AGA")
         .patternLine("SSS")
@@ -1701,7 +1697,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.WOODEN_CONVEYOR_BELT_DRIVER.get())
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .patternLine("PAP")
         .patternLine("GGG")
         .patternLine("APA")
@@ -1714,7 +1710,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.WOODEN_CRANK.get())
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .patternLine("S S")
         .patternLine("PPP")
         .patternLine("PGP")
@@ -1811,7 +1807,7 @@ public final class GradientDataGenerator {
     private void registerCookingRecipes(final Consumer<IFinishedRecipe> finished) {
       GradientRecipeBuilder
         .cooking(Items.COOKED_BEEF)
-        .stage(GradientStages.AGE_1)
+        .stage(GradientStages.AGE_1.get())
         .ticks(2400)
         .temperature(200.0f)
         .addIngredient(Items.BEEF)
@@ -1820,7 +1816,7 @@ public final class GradientDataGenerator {
 
       GradientRecipeBuilder
         .cooking(Items.COOKED_CHICKEN)
-        .stage(GradientStages.AGE_1)
+        .stage(GradientStages.AGE_1.get())
         .ticks(2400)
         .temperature(200.0f)
         .addIngredient(Items.CHICKEN)
@@ -1829,7 +1825,7 @@ public final class GradientDataGenerator {
 
       GradientRecipeBuilder
         .cooking(Items.COOKED_COD)
-        .stage(GradientStages.AGE_1)
+        .stage(GradientStages.AGE_1.get())
         .ticks(2400)
         .temperature(200.0f)
         .addIngredient(Items.COD)
@@ -1838,7 +1834,7 @@ public final class GradientDataGenerator {
 
       GradientRecipeBuilder
         .cooking(Items.COOKED_MUTTON)
-        .stage(GradientStages.AGE_1)
+        .stage(GradientStages.AGE_1.get())
         .ticks(2400)
         .temperature(200.0f)
         .addIngredient(Items.MUTTON)
@@ -1847,7 +1843,7 @@ public final class GradientDataGenerator {
 
       GradientRecipeBuilder
         .cooking(Items.COOKED_PORKCHOP)
-        .stage(GradientStages.AGE_1)
+        .stage(GradientStages.AGE_1.get())
         .ticks(2400)
         .temperature(200.0f)
         .addIngredient(Items.PORKCHOP)
@@ -1856,7 +1852,7 @@ public final class GradientDataGenerator {
 
       GradientRecipeBuilder
         .cooking(Items.BAKED_POTATO)
-        .stage(GradientStages.AGE_1)
+        .stage(GradientStages.AGE_1.get())
         .ticks(2400)
         .temperature(200.0f)
         .addIngredient(Items.POTATO)
@@ -1865,7 +1861,7 @@ public final class GradientDataGenerator {
 
       GradientRecipeBuilder
         .cooking(Items.COOKED_RABBIT)
-        .stage(GradientStages.AGE_1)
+        .stage(GradientStages.AGE_1.get())
         .ticks(2400)
         .temperature(200.0f)
         .addIngredient(Items.RABBIT)
@@ -1874,7 +1870,7 @@ public final class GradientDataGenerator {
 
       GradientRecipeBuilder
         .cooking(Items.COOKED_SALMON)
-        .stage(GradientStages.AGE_1)
+        .stage(GradientStages.AGE_1.get())
         .ticks(2400)
         .temperature(200.0f)
         .addIngredient(Items.SALMON)
@@ -1885,7 +1881,7 @@ public final class GradientDataGenerator {
     private void registerHardeningRecipes(final Consumer<IFinishedRecipe> finished) {
       GradientRecipeBuilder
         .hardening(GradientItems.HARDENED_LOG.get())
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .ticks(1200)
         .addIngredient(ItemTags.LOGS)
         .addCriterion("has_log", this.hasItem(ItemTags.LOGS))
@@ -1893,7 +1889,7 @@ public final class GradientDataGenerator {
 
       GradientRecipeBuilder
         .hardening(GradientItems.HARDENED_PLANKS.get())
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .ticks(1200)
         .addIngredient(ItemTags.PLANKS)
         .addCriterion("has_planks", this.hasItem(ItemTags.PLANKS))
@@ -1901,7 +1897,7 @@ public final class GradientDataGenerator {
 
       GradientRecipeBuilder
         .hardening(GradientItems.HARDENED_PLANKS_SLAB.get())
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .ticks(600)
         .addIngredient(ItemTags.WOODEN_SLABS)
         .addCriterion("has_wooden_slabs", this.hasItem(ItemTags.WOODEN_SLABS))
@@ -1909,7 +1905,7 @@ public final class GradientDataGenerator {
 
       GradientRecipeBuilder
         .hardening(GradientItems.CLAY_FURNACE.get())
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .ticks(3600)
         .addIngredient(GradientBlocks.UNHARDENED_CLAY_FURNACE.get())
         .addCriterion("has_unhardened_clay_furnace", this.hasItem(GradientBlocks.UNHARDENED_CLAY_FURNACE.get()))
@@ -1917,7 +1913,7 @@ public final class GradientDataGenerator {
 
       GradientRecipeBuilder
         .hardening(GradientItems.CLAY_OVEN.get())
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .ticks(3600)
         .addIngredient(GradientBlocks.UNHARDENED_CLAY_OVEN.get())
         .addCriterion("has_unhardened_clay_oven", this.hasItem(GradientBlocks.UNHARDENED_CLAY_OVEN.get()))
@@ -1925,7 +1921,7 @@ public final class GradientDataGenerator {
 
       GradientRecipeBuilder
         .hardening(GradientItems.CLAY_CRUCIBLE.get())
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .ticks(3600)
         .addIngredient(GradientBlocks.UNHARDENED_CLAY_CRUCIBLE.get())
         .addCriterion("has_unhardened_clay_crucible", this.hasItem(GradientBlocks.UNHARDENED_CLAY_CRUCIBLE.get()))
@@ -1933,7 +1929,7 @@ public final class GradientDataGenerator {
 
       GradientRecipeBuilder
         .hardening(GradientItems.CLAY_METAL_MIXER.get())
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .ticks(3600)
         .addIngredient(GradientBlocks.UNHARDENED_CLAY_METAL_MIXER.get())
         .addCriterion("has_unhardened_clay_metal_mixer", this.hasItem(GradientBlocks.UNHARDENED_CLAY_METAL_MIXER.get()))
@@ -1942,7 +1938,7 @@ public final class GradientDataGenerator {
       for(final GradientCasts cast : GradientCasts.values()) {
         GradientRecipeBuilder
           .hardening(GradientItems.CLAY_CAST(cast).get())
-          .stage(GradientStages.AGE_2)
+          .stage(GradientStages.AGE_2.get())
           .ticks(1200)
           .addIngredient(GradientBlocks.UNHARDENED_CLAY_CAST(cast).get())
           .addCriterion("has_unhardened_clay_cast", this.hasItem(GradientBlocks.UNHARDENED_CLAY_CAST(cast).get()))
@@ -1953,7 +1949,7 @@ public final class GradientDataGenerator {
     private void registerDryingRecipes(final Consumer<IFinishedRecipe> finished) {
       GradientRecipeBuilder
         .drying(GradientItems.PRESERVED_HIDE.get())
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .ticks(1800)
         .addIngredient(GradientItems.SALTED_HIDE.get())
         .addCriterion("has_salted_hide", this.hasItem(GradientItems.SALTED_HIDE.get()))
@@ -1961,7 +1957,7 @@ public final class GradientDataGenerator {
 
       GradientRecipeBuilder
         .drying(Items.LEATHER)
-        .stage(GradientStages.AGE_2)
+        .stage(GradientStages.AGE_2.get())
         .ticks(1800)
         .addIngredient(GradientItems.TANNED_HIDE.get())
         .addCriterion("has_tanned_hide", this.hasItem(GradientItems.TANNED_HIDE.get()))
@@ -1969,42 +1965,42 @@ public final class GradientDataGenerator {
     }
 
     private void registerMeltingRecipes(final Consumer<IFinishedRecipe> finished) {
-      for(final Ore ore : Ores.all()) {
+      for(final Ore ore : Minerals.ores()) {
         GradientRecipeBuilder
           .melting()
-          .stage(GradientStages.AGE_2)
-          .ticks((int)(ore.metal.meltTime * 1.2f))
-          .temperature(ore.metal.meltTemp)
-          .fluid(new GradientFluidStack(GradientFluids.METAL(ore.simple).get(), 0.5f, ore.metal.meltTemp))
+          .stage(GradientStages.AGE_2.get())
+          .ticks((int)(ore.meltTime * 1.2f))
+          .temperature(ore.meltTemp)
+          .fluid(new GradientFluidStack(GradientFluids.METAL(ore.metal).get(), 0.5f, ore.meltTemp))
           .ingredient(GradientTags.Items.ORE.get(ore))
           .addCriterion("has_ore", this.hasItem(GradientTags.Items.ORE.get(ore)))
           .build(finished, Gradient.loc("melting/" + ore.name + "_ore"));
 
         GradientRecipeBuilder
           .melting()
-          .stage(GradientStages.AGE_2)
-          .ticks(ore.metal.meltTime)
-          .temperature(ore.metal.meltTemp)
-          .fluid(new GradientFluidStack(GradientFluids.METAL(ore.simple).get(), 0.75f, ore.metal.meltTemp))
+          .stage(GradientStages.AGE_2.get())
+          .ticks(ore.meltTime)
+          .temperature(ore.meltTemp)
+          .fluid(new GradientFluidStack(GradientFluids.METAL(ore.metal).get(), 0.75f, ore.meltTemp))
           .ingredient(GradientTags.Items.CRUSHED_ORE.get(ore))
           .addCriterion("has_crushed_ore", this.hasItem(GradientTags.Items.CRUSHED_ORE.get(ore)))
           .build(finished, Gradient.loc("melting/" + ore.name + "_crushed_ore"));
 
         GradientRecipeBuilder
           .melting()
-          .stage(GradientStages.AGE_2)
-          .ticks(ore.metal.meltTime)
-          .temperature(ore.metal.meltTemp)
-          .fluid(new GradientFluidStack(GradientFluids.METAL(ore.simple).get(), 1.0f, ore.metal.meltTemp))
+          .stage(GradientStages.AGE_2.get())
+          .ticks(ore.meltTime)
+          .temperature(ore.meltTemp)
+          .fluid(new GradientFluidStack(GradientFluids.METAL(ore.metal).get(), 1.0f, ore.meltTemp))
           .ingredient(GradientTags.Items.PURIFIED_ORE.get(ore))
           .addCriterion("has_purified_ore", this.hasItem(GradientTags.Items.PURIFIED_ORE.get(ore)))
           .build(finished, Gradient.loc("melting/" + ore.name + "_purified_ore"));
       }
 
-      for(final Metal metal : Metals.all()) {
+      for(final Metal metal : Minerals.metals()) {
         GradientRecipeBuilder
           .melting()
-          .stage(GradientStages.AGE_2)
+          .stage(GradientStages.AGE_2.get())
           .ticks(metal.meltTime)
           .temperature(metal.meltTemp)
           .fluid(new GradientFluidStack(GradientFluids.METAL(metal).get(), 1.0f, metal.meltTemp))
@@ -2014,7 +2010,7 @@ public final class GradientDataGenerator {
 
         GradientRecipeBuilder
           .melting()
-          .stage(GradientStages.AGE_2)
+          .stage(GradientStages.AGE_2.get())
           .ticks(metal.meltTime)
           .temperature(metal.meltTemp)
           .fluid(new GradientFluidStack(GradientFluids.METAL(metal).get(), 1.0f, metal.meltTemp))
@@ -2024,7 +2020,7 @@ public final class GradientDataGenerator {
 
         GradientRecipeBuilder
           .melting()
-          .stage(GradientStages.AGE_2)
+          .stage(GradientStages.AGE_2.get())
           .ticks((int)(metal.meltTime / 9.0f))
           .temperature(metal.meltTemp)
           .fluid(new GradientFluidStack(GradientFluids.METAL(metal).get(), 1.0f / 9.0f, metal.meltTemp))
@@ -2034,7 +2030,7 @@ public final class GradientDataGenerator {
 
         GradientRecipeBuilder
           .melting()
-          .stage(GradientStages.AGE_2)
+          .stage(GradientStages.AGE_2.get())
           .ticks(metal.meltTime)
           .temperature(metal.meltTemp)
           .fluid(new GradientFluidStack(GradientFluids.METAL(metal).get(), 1.0f, metal.meltTemp))
@@ -2044,7 +2040,7 @@ public final class GradientDataGenerator {
 
         GradientRecipeBuilder
           .melting()
-          .stage(GradientStages.AGE_2)
+          .stage(GradientStages.AGE_2.get())
           .ticks(metal.meltTime * 9)
           .temperature(metal.meltTemp)
           .fluid(new GradientFluidStack(GradientFluids.METAL(metal).get(), 9.0f, metal.meltTemp))
@@ -2055,7 +2051,7 @@ public final class GradientDataGenerator {
         for(final GradientCasts cast : GradientCasts.values()) {
           GradientRecipeBuilder
             .melting()
-            .stage(GradientStages.AGE_2)
+            .stage(GradientStages.AGE_2.get())
             .ticks((int)(metal.meltTime * cast.metalAmount))
             .temperature(metal.meltTemp)
             .fluid(new GradientFluidStack(GradientFluids.METAL(metal).get(), cast.metalAmount, metal.meltTemp))
@@ -2068,9 +2064,9 @@ public final class GradientDataGenerator {
 
     private void registerAlloyRecipes(final Consumer<IFinishedRecipe> finished) {
       GradientRecipeBuilder
-        .alloy(new GradientFluidStack(GradientFluids.METAL(Metals.BRONZE).get(), 0.004f))
-        .addInput(new GradientFluidStack(GradientFluids.METAL(Metals.COPPER).get(), 0.003f))
-        .addInput(new GradientFluidStack(GradientFluids.METAL(Metals.TIN).get(), 0.001f))
+        .alloy(new GradientFluidStack(GradientFluids.METAL(Minerals.BRONZE).get(), 0.004f))
+        .addInput(new GradientFluidStack(GradientFluids.METAL(Minerals.COPPER).get(), 0.003f))
+        .addInput(new GradientFluidStack(GradientFluids.METAL(Minerals.TIN).get(), 0.001f))
         .addCriterion("impossible", new ImpossibleTrigger.Instance())
         .build(finished, Gradient.loc("alloy/bronze_from_copper_and_tin"));
     }
@@ -2208,7 +2204,7 @@ public final class GradientDataGenerator {
       }
 
       private static LootTable.Builder oreDrops(final Ore ore) {
-        final MetalBlock block = GradientBlocks.ORE(ore).get();
+        final OreBlock block = GradientBlocks.ORE(ore).get();
         final Item nugget = GradientItems.NUGGET(ore.metal).get();
         final PebbleItem pebble = GradientItems.PEBBLE.get();
 
@@ -2276,12 +2272,12 @@ public final class GradientDataGenerator {
 
         this.registerLootTable(GradientBlocks.PEBBLE.get(), pebbleDrops());
 
-        for(final Ore ore : Ores.all()) {
+        for(final Ore ore : Minerals.ores()) {
           this.registerLootTable(GradientBlocks.PEBBLE(ore).get(), metalPebbleDrops(ore.metal));
           this.registerLootTable(GradientBlocks.ORE(ore).get(), oreDrops(ore));
         }
 
-        for(final Metal metal : Metals.all()) {
+        for(final Metal metal : Minerals.metals()) {
           this.registerDropSelfLootTable(GradientBlocks.METAL_BLOCK(metal).get());
         }
 

@@ -7,6 +7,7 @@ import lofimodding.gradient.items.FlintKnifeItem;
 import lofimodding.gradient.items.HideBeddingItem;
 import lofimodding.gradient.items.MetalItem;
 import lofimodding.gradient.items.MulchItem;
+import lofimodding.gradient.items.OreItem;
 import lofimodding.gradient.items.PebbleItem;
 import lofimodding.gradient.items.StoneHammerItem;
 import lofimodding.gradient.items.StoneHatchetItem;
@@ -14,9 +15,8 @@ import lofimodding.gradient.items.StoneMattockItem;
 import lofimodding.gradient.items.StonePickaxeItem;
 import lofimodding.gradient.items.UnhardenedClayCastItem;
 import lofimodding.gradient.science.Metal;
-import lofimodding.gradient.science.Metals;
+import lofimodding.gradient.science.Minerals;
 import lofimodding.gradient.science.Ore;
-import lofimodding.gradient.science.Ores;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.BlockItem;
@@ -45,31 +45,31 @@ public final class GradientItems {
   private static final Map<Ore, RegistryObject<BlockItem>> ORES = new HashMap<>();
 
   static {
-    for(final Ore ore : Ores.all()) {
+    for(final Ore ore : Minerals.ores()) {
       ORES.put(ore, REGISTRY.register(GradientIds.ORE(ore), () -> new BlockItem(GradientBlocks.ORE(ore).get(), new Item.Properties().group(GROUP).maxStackSize(16))));
     }
   }
 
-  private static final Map<Ore, RegistryObject<MetalItem>> CRUSHED = new HashMap<>();
+  private static final Map<Ore, RegistryObject<OreItem>> CRUSHED = new HashMap<>();
 
   static {
-    for(final Ore ore : Ores.all()) {
-      CRUSHED.put(ore, REGISTRY.register(GradientIds.CRUSHED(ore), () -> new MetalItem(ore.metal, new Item.Properties().group(GROUP))));
+    for(final Ore ore : Minerals.ores()) {
+      CRUSHED.put(ore, REGISTRY.register(GradientIds.CRUSHED(ore), () -> new OreItem(ore, new Item.Properties().group(GROUP))));
     }
   }
 
-  private static final Map<Ore, RegistryObject<MetalItem>> PURIFIED = new HashMap<>();
+  private static final Map<Ore, RegistryObject<OreItem>> PURIFIED = new HashMap<>();
 
   static {
-    for(final Ore ore : Ores.all()) {
-      PURIFIED.put(ore, REGISTRY.register(GradientIds.PURIFIED(ore), () -> new MetalItem(ore.metal, new Item.Properties().group(GROUP))));
+    for(final Ore ore : Minerals.ores()) {
+      PURIFIED.put(ore, REGISTRY.register(GradientIds.PURIFIED(ore), () -> new OreItem(ore, new Item.Properties().group(GROUP))));
     }
   }
 
   private static final Map<Metal, RegistryObject<MetalItem>> DUSTS = new HashMap<>();
 
   static {
-    for(final Metal metal : Metals.all()) {
+    for(final Metal metal : Minerals.metals()) {
       DUSTS.put(metal, REGISTRY.register(GradientIds.DUST(metal), () -> new MetalItem(metal, new Item.Properties().group(GROUP))));
     }
   }
@@ -77,7 +77,7 @@ public final class GradientItems {
   private static final Map<Metal, RegistryObject<MetalItem>> INGOTS = new HashMap<>();
 
   static {
-    for(final Metal metal : Metals.all()) {
+    for(final Metal metal : Minerals.metals()) {
       INGOTS.put(metal, REGISTRY.register(GradientIds.INGOT(metal), () -> new MetalItem(metal, new Item.Properties().group(GROUP))));
     }
   }
@@ -85,7 +85,7 @@ public final class GradientItems {
   private static final Map<Metal, RegistryObject<MetalItem>> NUGGETS = new HashMap<>();
 
   static {
-    for(final Metal metal : Metals.all()) {
+    for(final Metal metal : Minerals.metals()) {
       NUGGETS.put(metal, REGISTRY.register(GradientIds.NUGGET(metal), () -> new MetalItem(metal, new Item.Properties().group(GROUP))));
     }
   }
@@ -93,7 +93,7 @@ public final class GradientItems {
   private static final Map<Metal, RegistryObject<MetalItem>> PLATES = new HashMap<>();
 
   static {
-    for(final Metal metal : Metals.all()) {
+    for(final Metal metal : Minerals.metals()) {
       PLATES.put(metal, REGISTRY.register(GradientIds.PLATE(metal), () -> new MetalItem(metal, new Item.Properties().group(GROUP))));
     }
   }
@@ -101,7 +101,7 @@ public final class GradientItems {
   private static final Map<Metal, RegistryObject<BlockItem>> METAL_BLOCKS = new HashMap<>();
 
   static {
-    for(final Metal metal : Metals.all()) {
+    for(final Metal metal : Minerals.metals()) {
       METAL_BLOCKS.put(metal, REGISTRY.register(GradientIds.METAL_BLOCK(metal), () -> new BlockItem(GradientBlocks.METAL_BLOCK(metal).get(), new Item.Properties().group(GROUP))));
     }
   }
@@ -190,7 +190,7 @@ public final class GradientItems {
 
   static {
     for(final GradientCasts cast : GradientCasts.values()) {
-      for(final Metal metal : Metals.all()) {
+      for(final Metal metal : Minerals.metals()) {
         CASTED.computeIfAbsent(cast, key -> new HashMap<>()).put(metal, REGISTRY.register(GradientIds.CASTED(cast, metal), () -> new CastedItem(cast, metal)));
       }
     }
@@ -214,11 +214,11 @@ public final class GradientItems {
     return ORES.get(ore);
   }
 
-  public static RegistryObject<MetalItem> CRUSHED(final Ore ore) {
+  public static RegistryObject<OreItem> CRUSHED(final Ore ore) {
     return CRUSHED.get(ore);
   }
 
-  public static RegistryObject<MetalItem> PURIFIED(final Ore ore) {
+  public static RegistryObject<OreItem> PURIFIED(final Ore ore) {
     return PURIFIED.get(ore);
   }
 

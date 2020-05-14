@@ -29,7 +29,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "gradient:azurite_nugget"
+          "name": "gradient:copper_nugget"
         }
       ],
       "conditions": [

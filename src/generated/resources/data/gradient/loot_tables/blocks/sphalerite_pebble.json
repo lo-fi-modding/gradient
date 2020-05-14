@@ -29,7 +29,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "gradient:sphalerite_nugget"
+          "name": "gradient:zinc_nugget"
         }
       ],
       "conditions": [

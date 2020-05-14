@@ -2,7 +2,7 @@ package lofimodding.gradient.fluids;
 
 import lofimodding.gradient.Gradient;
 import lofimodding.gradient.science.Metal;
-import lofimodding.gradient.science.Metals;
+import lofimodding.gradient.science.Minerals;
 import lofimodding.gradient.utils.DeferredRegister2;
 import lofimodding.gradient.utils.RegistryObject2;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -20,7 +20,7 @@ public final class GradientFluids {
   private static final Map<Metal, RegistryObject2<GradientFluid>> METALS = new HashMap<>();
 
   static {
-    for(final Metal metal : Metals.all()) {
+    for(final Metal metal : Minerals.metals()) {
       METALS.put(metal, REGISTRY.register(metal.name, () -> new MetalFluid(metal)));
     }
   }
