@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=top": {
+      "model": "gradient:block/hardened_planks_slab_top"
+    },
+    "type=bottom": {
+      "model": "gradient:block/hardened_planks_slab"
+    },
+    "type=double": {
+      "model": "gradient:block/hardened_planks"
+    }
+  }
+}

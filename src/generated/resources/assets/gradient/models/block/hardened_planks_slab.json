@@ -1,0 +1,8 @@
+{
+  "parent": "block/slab",
+  "textures": {
+    "side": "gradient:block/hardened_planks",
+    "bottom": "gradient:block/hardened_planks",
+    "top": "gradient:block/hardened_planks"
+  }
+}

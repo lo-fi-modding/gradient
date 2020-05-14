@@ -49,6 +49,8 @@ public final class GradientIds {
 
   public static final String HARDENED_LOG = "hardened_log";
   public static final String HARDENED_PLANKS = "hardened_planks";
+  public static final String HARDENED_LOG_SLAB = "hardened_log_slab";
+  public static final String HARDENED_PLANKS_SLAB = "hardened_planks_slab";
   public static final String HARDENED_STICK = "hardened_stick";
 
   public static final String FIBRE = "fibre";
