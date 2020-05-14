@@ -11,7 +11,7 @@
   ],
   "key": {
     "S": {
-      "tag": "forge:rods/wooden"
+      "item": "gradient:hardened_stick"
     },
     "C": {
       "item": "gradient:leather_strip"

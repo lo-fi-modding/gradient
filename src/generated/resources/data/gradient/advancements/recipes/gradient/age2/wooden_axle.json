@@ -6,12 +6,12 @@
     ]
   },
   "criteria": {
-    "has_stick": {
+    "has_hardened_stick": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "tag": "forge:rods/wooden"
+            "item": "gradient:hardened_stick"
           }
         ]
       }
@@ -25,7 +25,7 @@
   },
   "requirements": [
     [
-      "has_stick",
+      "has_hardened_stick",
       "has_the_recipe"
     ]
   ]

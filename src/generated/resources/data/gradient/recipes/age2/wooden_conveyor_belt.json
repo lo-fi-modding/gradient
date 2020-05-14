@@ -11,7 +11,7 @@
   ],
   "key": {
     "S": {
-      "tag": "minecraft:wooden_slabs"
+      "item": "gradient:hardened_planks_slab"
     },
     "G": {
       "item": "gradient:wooden_gear"

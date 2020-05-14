@@ -11,7 +11,7 @@
   ],
   "key": {
     "S": {
-      "tag": "forge:rods/wooden"
+      "item": "gradient:hardened_stick"
     },
     "F": {
       "item": "minecraft:flint"

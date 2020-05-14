@@ -1657,9 +1657,9 @@ public final class GradientDataGenerator {
         .patternLine("FSF")
         .patternLine("S S")
         .patternLine("FSF")
-        .key('S', Tags.Items.RODS_WOODEN)
+        .key('S', GradientItems.HARDENED_STICK.get())
         .key('F', Items.FLINT)
-        .addCriterion("has_stick", this.hasItem(Tags.Items.RODS_WOODEN))
+        .addCriterion("has_hardened_stick", this.hasItem(GradientItems.HARDENED_STICK.get()))
         .build(finished, Gradient.loc("age2/" + GradientIds.WOODEN_GEAR));
 
       StagedRecipeBuilder
@@ -1668,9 +1668,9 @@ public final class GradientDataGenerator {
         .patternLine(" C ")
         .patternLine("SSS")
         .patternLine(" C ")
-        .key('S', Tags.Items.RODS_WOODEN)
+        .key('S', GradientItems.HARDENED_STICK.get())
         .key('C', GradientItems.LEATHER_STRIP.get())
-        .addCriterion("has_stick", this.hasItem(Tags.Items.RODS_WOODEN))
+        .addCriterion("has_hardened_stick", this.hasItem(GradientItems.HARDENED_STICK.get()))
         .build(finished, Gradient.loc("age2/" + GradientIds.WOODEN_AXLE));
 
       StagedRecipeBuilder
@@ -1679,7 +1679,7 @@ public final class GradientDataGenerator {
         .patternLine("PGP")
         .patternLine("GAG")
         .patternLine("PGP")
-        .key('P', ItemTags.PLANKS)
+        .key('P', GradientItems.HARDENED_PLANKS.get())
         .key('G', GradientItems.WOODEN_GEAR.get())
         .key('A', GradientItems.WOODEN_AXLE.get())
         .addCriterion("has_wooden_gear", this.hasItem(GradientItems.WOODEN_GEAR.get()))
@@ -1692,7 +1692,7 @@ public final class GradientDataGenerator {
         .patternLine("SSS")
         .patternLine("AGA")
         .patternLine("SSS")
-        .key('S', ItemTags.WOODEN_SLABS)
+        .key('S', GradientItems.HARDENED_PLANKS_SLAB.get())
         .key('G', GradientItems.WOODEN_GEAR.get())
         .key('A', GradientItems.WOODEN_AXLE.get())
         .addCriterion("has_wooden_gear", this.hasItem(GradientItems.WOODEN_GEAR.get()))
@@ -1705,7 +1705,7 @@ public final class GradientDataGenerator {
         .patternLine("PAP")
         .patternLine("GGG")
         .patternLine("APA")
-        .key('P', ItemTags.PLANKS)
+        .key('P', GradientItems.HARDENED_PLANKS.get())
         .key('G', GradientItems.WOODEN_GEAR.get())
         .key('A', GradientItems.WOODEN_AXLE.get())
         .addCriterion("has_wooden_gear", this.hasItem(GradientItems.WOODEN_GEAR.get()))
