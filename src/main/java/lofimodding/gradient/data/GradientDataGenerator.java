@@ -1454,6 +1454,52 @@ public final class GradientDataGenerator {
         .build(finished, Gradient.loc("age1/" + GradientIds.EMPTY_WATERSKIN));
 
       StagedRecipeBuilder
+        .shaped(GradientItems.HIDE_HAT.get())
+        .stage(GradientStages.AGE_1)
+        .patternLine("SHS")
+        .patternLine("HAH")
+        .key('S', Tags.Items.STRING)
+        .key('H', GradientTags.Items.PELTS)
+        .key('A', GradientItems.BONE_AWL.get())
+        .addCriterion("has_awl", this.hasItem(GradientItems.BONE_AWL.get()))
+        .build(finished, Gradient.loc("age1/" + GradientIds.HIDE_HAT));
+
+      StagedRecipeBuilder
+        .shaped(GradientItems.HIDE_SHIRT.get())
+        .stage(GradientStages.AGE_1)
+        .patternLine("HAH")
+        .patternLine("SHS")
+        .patternLine("HHH")
+        .key('S', Tags.Items.STRING)
+        .key('H', GradientTags.Items.PELTS)
+        .key('A', GradientItems.BONE_AWL.get())
+        .addCriterion("has_awl", this.hasItem(GradientItems.BONE_AWL.get()))
+        .build(finished, Gradient.loc("age1/" + GradientIds.HIDE_SHIRT));
+
+      StagedRecipeBuilder
+        .shaped(GradientItems.HIDE_PANTS.get())
+        .stage(GradientStages.AGE_1)
+        .patternLine("SHS")
+        .patternLine("HAH")
+        .patternLine("H H")
+        .key('S', Tags.Items.STRING)
+        .key('H', GradientTags.Items.PELTS)
+        .key('A', GradientItems.BONE_AWL.get())
+        .addCriterion("has_awl", this.hasItem(GradientItems.BONE_AWL.get()))
+        .build(finished, Gradient.loc("age1/" + GradientIds.HIDE_PANTS));
+
+      StagedRecipeBuilder
+        .shaped(GradientItems.HIDE_BOOTS.get())
+        .stage(GradientStages.AGE_1)
+        .patternLine("S S")
+        .patternLine("HAH")
+        .key('S', Tags.Items.STRING)
+        .key('H', GradientTags.Items.PELTS)
+        .key('A', GradientItems.BONE_AWL.get())
+        .addCriterion("has_awl", this.hasItem(GradientItems.BONE_AWL.get()))
+        .build(finished, Gradient.loc("age1/" + GradientIds.HIDE_BOOTS));
+
+      StagedRecipeBuilder
         .shaped(GradientItems.FIREPIT.get())
         .stage(GradientStages.AGE_1)
         .patternLine(" S ")

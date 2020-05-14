@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "gradient:age1/hide_boots"
+    ]
+  },
+  "criteria": {
+    "has_awl": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "gradient:bone_awl"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "gradient:age1/hide_boots"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_awl",
+      "has_the_recipe"
+    ]
+  ]
+}

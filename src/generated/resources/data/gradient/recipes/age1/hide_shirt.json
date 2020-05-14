@@ -1,0 +1,26 @@
+{
+  "type": "progression:shaped_staged",
+  "stages": [
+    "gradient:age_1"
+  ],
+  "damage_tools": true,
+  "pattern": [
+    "HAH",
+    "SHS",
+    "HHH"
+  ],
+  "key": {
+    "S": {
+      "tag": "forge:string"
+    },
+    "H": {
+      "tag": "gradient:pelts"
+    },
+    "A": {
+      "item": "gradient:bone_awl"
+    }
+  },
+  "result": {
+    "item": "gradient:hide_shirt"
+  }
+}

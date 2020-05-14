@@ -540,6 +540,10 @@ b8f48aad5aa3ff5ad82c61edcfe17766395de365 data\gradient\advancements\recipes\grad
 f95a70f169c1d0541b1e07a6f7389fccbcf1d173 data\gradient\advancements\recipes\gradient\age1\flint_knife.json
 27c5398efd63f00cd10907ec7bf572b98c9ddd1e data\gradient\advancements\recipes\gradient\age1\grindstone.json
 2cf7a67e591d1c2cb3569cfa6e582384a8290b84 data\gradient\advancements\recipes\gradient\age1\hide_bedding.json
+f4f126cbe9d7da35b76cc34a89f583ddc3a60cdb data\gradient\advancements\recipes\gradient\age1\hide_boots.json
+0332f8a135db6db0115debf00b50f43efa6a78b5 data\gradient\advancements\recipes\gradient\age1\hide_hat.json
+949e9544afb805f3f621251f29e30b7f110fb24a data\gradient\advancements\recipes\gradient\age1\hide_pants.json
+804f546b640f7adeef06ba538a46a89c3500ea2a data\gradient\advancements\recipes\gradient\age1\hide_shirt.json
 1c4c2227ce1ff8d0a31fc391b3eb0ef48fd67d00 data\gradient\advancements\recipes\gradient\age1\mixing_basin.json
 b8091a4679dcf280ae8b266fc073b9b145536cae data\gradient\advancements\recipes\gradient\age1\salt_block.json
 365d207ac2b0a55049b6b802da37517d3c66a287 data\gradient\advancements\recipes\gradient\age1\stone_hammer.json
@@ -819,6 +823,10 @@ fbc87806854e6aa43daedd577a8c2b52e9303dcc data\gradient\recipes\age1\firepit.json
 20773dbcdfe0b45015fd55aea06d42621284ea63 data\gradient\recipes\age1\flint_knife.json
 941ebdf4edef6d2e5dccd044a45f6c699ef16179 data\gradient\recipes\age1\grindstone.json
 403fc894c1d4334e6b01fd1e29a59fbb7c512f80 data\gradient\recipes\age1\hide_bedding.json
+51813ceb98247be19504e6ef35987b82d665bb86 data\gradient\recipes\age1\hide_boots.json
+923476102522f09f277b04aeb6bc3c402ac83688 data\gradient\recipes\age1\hide_hat.json
+86172098a452b3b85fd1435441f2878d4ba8b02c data\gradient\recipes\age1\hide_pants.json
+d8b86099b8dadbfa698992b19ef8c3522af19fab data\gradient\recipes\age1\hide_shirt.json
 eaf511fc01506967382d263d63809dde0dcdf8cb data\gradient\recipes\age1\mixing_basin.json
 1f7c12f36d4c3be44f5daec85e5bbc555c1d2fee data\gradient\recipes\age1\salt_block.json
 fc58d07c366627993935b1253fe8ad63d9c69f12 data\gradient\recipes\age1\stone_hammer.json
