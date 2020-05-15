@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gradient:block/unhardened_clay_cast_nugget"
+    },
+    "facing=south": {
+      "model": "gradient:block/unhardened_clay_cast_nugget",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "gradient:block/unhardened_clay_cast_nugget",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "gradient:block/unhardened_clay_cast_nugget",
+      "y": 90
+    }
+  }
+}

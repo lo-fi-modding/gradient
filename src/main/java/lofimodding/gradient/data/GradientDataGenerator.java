@@ -995,7 +995,6 @@ public final class GradientDataGenerator {
         final String metalName = StringUtils.capitalize(metal.name);
 
         this.add(GradientItems.DUST(metal).get(), metalName + " Dust");
-        this.add(GradientItems.NUGGET(metal).get(), metalName + " Nugget");
         this.add(GradientItems.PLATE(metal).get(), metalName + " Plate");
         this.add(GradientItems.METAL_BLOCK(metal).get(), "Block of " + metalName);
       }
@@ -2007,16 +2006,6 @@ public final class GradientDataGenerator {
           .ingredient(GradientTags.Items.DUST.get(metal))
           .addCriterion("has_dust", this.hasItem(GradientTags.Items.DUST.get(metal)))
           .build(finished, Gradient.loc("melting/" + metal.name + "_dust"));
-
-        GradientRecipeBuilder
-          .melting()
-          .stage(GradientStages.AGE_2.get())
-          .ticks((int)(metal.meltTime / 9.0f))
-          .temperature(metal.meltTemp)
-          .fluid(new GradientFluidStack(GradientFluids.METAL(metal).get(), 1.0f / 9.0f, metal.meltTemp))
-          .ingredient(GradientTags.Items.NUGGET.get(metal))
-          .addCriterion("has_nugget", this.hasItem(GradientTags.Items.NUGGET.get(metal)))
-          .build(finished, Gradient.loc("melting/" + metal.name + "_nugget"));
 
         GradientRecipeBuilder
           .melting()

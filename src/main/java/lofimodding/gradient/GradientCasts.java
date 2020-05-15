@@ -17,6 +17,7 @@ public enum GradientCasts {
   HAMMER_HEAD(1.0f),
   SWORD_BLADE(1.0f),
   INGOT(1.0f, metal -> GradientItems.INGOT(metal).get(), GradientTags.Items.INGOT::get),
+  NUGGET(1.0f / 9.0f, metal -> GradientItems.NUGGET(metal).get(), GradientTags.Items.NUGGET::get),
   ;
 
   public static Stream<GradientCasts> stream() {
