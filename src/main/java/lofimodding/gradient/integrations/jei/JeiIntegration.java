@@ -143,7 +143,7 @@ public class JeiIntegration implements IModPlugin {
       this.metal = metal;
       this.fluid = new GradientFluidStack(GradientFluids.METAL(metal).get(), 1.0f, Float.NaN);
       this.ingredients = NonNullList.withSize(1, Ingredient.fromItems(GradientItems.CLAY_CAST(cast).get()));
-      this.output = new ItemStack(GradientItems.CASTED(cast, metal).get());
+      this.output = new ItemStack(cast.getItem(metal));
     }
 
     @Override
@@ -173,7 +173,7 @@ public class JeiIntegration implements IModPlugin {
 
     @Override
     public ResourceLocation getId() {
-      return GradientItems.CASTED(this.cast, this.metal).getId();
+      return this.cast.getItem(this.metal).getRegistryName();
     }
 
     @Override

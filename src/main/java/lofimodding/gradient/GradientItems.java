@@ -189,11 +189,11 @@ public final class GradientItems {
   private static final Map<GradientCasts, Map<Metal, RegistryObject<CastedItem>>> CASTED = new EnumMap<>(GradientCasts.class);
 
   static {
-    for(final GradientCasts cast : GradientCasts.values()) {
+    GradientCasts.stream().filter(GradientCasts::usesDefaultItem).forEach(cast -> {
       for(final Metal metal : Minerals.metals()) {
         CASTED.computeIfAbsent(cast, key -> new HashMap<>()).put(metal, REGISTRY.register(GradientIds.CASTED(cast, metal), () -> new CastedItem(cast, metal)));
       }
-    }
+    });
   }
 
   public static final RegistryObject<Item> WOODEN_GEAR = REGISTRY.register(GradientIds.WOODEN_GEAR, () -> new Item(new Item.Properties().group(GROUP)));

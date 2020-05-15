@@ -1,0 +1,15 @@
+{
+  "type": "gradient:hardening",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 1200,
+  "ingredients": [
+    {
+      "item": "gradient:unhardened_clay_cast_ingot"
+    }
+  ],
+  "result": {
+    "item": "gradient:clay_cast_ingot"
+  }
+}

@@ -87,7 +87,6 @@ public final class GradientClient {
     }
 
     for(final Metal metal : Minerals.metals()) {
-      itemColors.register(GradientClient::metalItemColour, GradientItems.INGOT(metal).get());
       itemColors.register(GradientClient::metalItemColour, GradientItems.DUST(metal).get());
       itemColors.register(GradientClient::metalItemColour, GradientItems.NUGGET(metal).get());
       itemColors.register(GradientClient::metalItemColour, GradientItems.PLATE(metal).get());
@@ -95,7 +94,7 @@ public final class GradientClient {
       itemColors.register(GradientClient::metalBlockColour, GradientItems.METAL_BLOCK(metal).get());
 
       for(final GradientCasts cast : GradientCasts.values()) {
-        itemColors.register(GradientClient::metalItemColour, GradientItems.CASTED(cast, metal).get());
+        itemColors.register(GradientClient::metalItemColour, cast.getItem(metal));
       }
     }
 

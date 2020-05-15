@@ -2,16 +2,16 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "gradient:melting/zinc_hammer_head"
+      "gradient:hardening/age2/clay_cast_ingot"
     ]
   },
   "criteria": {
-    "has_hammer_head": {
+    "has_unhardened_clay_cast": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "gradient:zinc_hammer_head"
+            "item": "gradient:unhardened_clay_cast_ingot"
           }
         ]
       }
@@ -19,13 +19,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "gradient:melting/zinc_hammer_head"
+        "recipe": "gradient:hardening/age2/clay_cast_ingot"
       }
     }
   },
   "requirements": [
     [
-      "has_hammer_head",
+      "has_unhardened_clay_cast",
       "has_the_recipe"
     ]
   ]

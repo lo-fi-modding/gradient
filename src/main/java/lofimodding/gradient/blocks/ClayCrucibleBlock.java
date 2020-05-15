@@ -1,7 +1,6 @@
 package lofimodding.gradient.blocks;
 
 import lofimodding.gradient.GradientCasts;
-import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientMaterials;
 import lofimodding.gradient.fluids.MetalFluid;
 import lofimodding.gradient.science.Metal;
@@ -106,7 +105,7 @@ public class ClayCrucibleBlock extends HeatSinkerBlock {
           te.consumeMetal(cast.metalAmount);
         }
 
-        ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(GradientItems.CASTED(cast, metal).get()));
+        ItemHandlerHelper.giveItemToPlayer(player, new ItemStack(cast.getItem(metal)));
         return ActionResultType.SUCCESS;
       }
 

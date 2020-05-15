@@ -44,6 +44,7 @@ import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.Tag;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.ConstantRange;
@@ -671,7 +672,7 @@ public final class GradientDataGenerator {
         this.getBuilder(GradientIds.METAL_BLOCK(metal)).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.METAL_BLOCK(metal))));
       }
 
-      for(final GradientCasts cast : GradientCasts.values()) {
+      GradientCasts.stream().filter(GradientCasts::usesDefaultItem).forEach(cast -> {
         this.getBuilder(cast.name)
           .parent(new ModelFile.ExistingModelFile(this.mcLoc("item/generated"), this.existingFileHelper))
           .texture("layer0", this.modLoc("item/" + cast.name + "/background"))
@@ -687,7 +688,7 @@ public final class GradientDataGenerator {
         for(final Metal metal : Minerals.metals()) {
           this.getBuilder(GradientIds.CASTED(cast, metal)).parent(this.getExistingFile(this.modLoc("item/" + cast.name)));
         }
-      }
+      });
 
       this.getBuilder(GradientIds.SALT_BLOCK).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.SALT_BLOCK)));
       this.singleTexture(GradientIds.SALT, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.SALT));
@@ -994,7 +995,6 @@ public final class GradientDataGenerator {
         final String metalName = StringUtils.capitalize(metal.name);
 
         this.add(GradientItems.DUST(metal).get(), metalName + " Dust");
-        this.add(GradientItems.INGOT(metal).get(), metalName + " Ingot");
         this.add(GradientItems.NUGGET(metal).get(), metalName + " Nugget");
         this.add(GradientItems.PLATE(metal).get(), metalName + " Plate");
         this.add(GradientItems.METAL_BLOCK(metal).get(), "Block of " + metalName);
@@ -1090,7 +1090,7 @@ public final class GradientDataGenerator {
 
         for(final Metal metal : Minerals.metals()) {
           final String metalName = StringUtils.capitalize(metal.name);
-          this.add(GradientItems.CASTED(cast, metal).get(), metalName + ' ' + text);
+          this.add(cast.getItem(metal), metalName + ' ' + text);
         }
       }
 
@@ -2011,16 +2011,6 @@ public final class GradientDataGenerator {
         GradientRecipeBuilder
           .melting()
           .stage(GradientStages.AGE_2.get())
-          .ticks(metal.meltTime)
-          .temperature(metal.meltTemp)
-          .fluid(new GradientFluidStack(GradientFluids.METAL(metal).get(), 1.0f, metal.meltTemp))
-          .ingredient(GradientTags.Items.INGOT.get(metal))
-          .addCriterion("has_ingot", this.hasItem(GradientTags.Items.INGOT.get(metal)))
-          .build(finished, Gradient.loc("melting/" + metal.name + "_ingot"));
-
-        GradientRecipeBuilder
-          .melting()
-          .stage(GradientStages.AGE_2.get())
           .ticks((int)(metal.meltTime / 9.0f))
           .temperature(metal.meltTemp)
           .fluid(new GradientFluidStack(GradientFluids.METAL(metal).get(), 1.0f / 9.0f, metal.meltTemp))
@@ -2049,14 +2039,16 @@ public final class GradientDataGenerator {
           .build(finished, Gradient.loc("melting/" + metal.name + "_block"));
 
         for(final GradientCasts cast : GradientCasts.values()) {
+          final Tag<Item> tag = cast.getTag(metal);
+
           GradientRecipeBuilder
             .melting()
             .stage(GradientStages.AGE_2.get())
             .ticks((int)(metal.meltTime * cast.metalAmount))
             .temperature(metal.meltTemp)
             .fluid(new GradientFluidStack(GradientFluids.METAL(metal).get(), cast.metalAmount, metal.meltTemp))
-            .ingredient(GradientItems.CASTED(cast, metal).get())
-            .addCriterion("has_casted", this.hasItem(GradientItems.CASTED(cast, metal).get()))
+            .ingredient(cast.getIngredient(metal))
+            .addCriterion("has_" + cast.name, tag != null ? this.hasItem(tag) : this.hasItem(cast.getItem(metal)))
             .build(finished, Gradient.loc("melting/" + metal.name + '_' + cast.name));
         }
       }
