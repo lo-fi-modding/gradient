@@ -26,19 +26,12 @@ authors="Corey Frenette" #optional
 description='''
 A long-term technological progression mod.
 '''
-# A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
-[[dependencies.gradient]] #optional
-  # the modid of the dependency
-  modId="forge" #mandatory
-  # Does this dependency have to exist - if not, ordering below must be specified
-  mandatory=true #mandatory
-  # The version range of the dependency
-  versionRange="[31,)" #mandatory
-  # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
+[[dependencies.gradient]]
+  modId="forge"
+  mandatory=true
+  versionRange="[31.2,)"
   ordering="NONE"
-  # Side this dependency is applied on - BOTH, CLIENT or SERVER
   side="BOTH"
-# Here's another dependency
 [[dependencies.gradient]]
   modId="minecraft"
   mandatory=true
@@ -48,6 +41,12 @@ A long-term technological progression mod.
 [[dependencies.gradient]]
   modId="terra"
   mandatory=true
-  versionRange="[1.15.2-1.0.0]"
+  versionRange="[1.15.2-1.0.0,)"
+  ordering="NONE"
+  side="BOTH"
+[[dependencies.gradient]]
+  modId="progression"
+  mandatory=true
+  versionRange="[1.15.2-1.0.0,)"
   ordering="NONE"
   side="BOTH"
