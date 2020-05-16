@@ -1,6 +1,7 @@
 package lofimodding.gradient.client.tesr;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import lofimodding.gradient.Gradient;
 import lofimodding.gradient.blocks.GrindstoneBlock;
 import lofimodding.gradient.client.RenderUtils;
@@ -8,9 +9,9 @@ import lofimodding.gradient.tileentities.GrindstoneTile;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Atlases;
-import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.Vector3f;
+import net.minecraft.client.renderer.model.BakedQuad;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
@@ -42,7 +43,7 @@ public class GrindstoneRenderer extends TileEntityRenderer<GrindstoneTile> {
     matrixStack.translate(-0.5d, -0.5d, -0.5d);
     matrixStack.translate(0.0d, 0.3125d, 0.2d + te.getAnimation() * 0.6d);
     matrixStack.rotate(Vector3f.XP.rotation(te.getAnimation() * (float)Math.PI));
-    this.renderWheel(te, matrixStack, buffer, combinedLight);
+    this.renderWheel(te, matrixStack, buffer, combinedLight, combinedOverlay);
     matrixStack.pop();
 
     matrixStack.translate(0.5d, 0.5d, 0.5d);
@@ -120,11 +121,8 @@ public class GrindstoneRenderer extends TileEntityRenderer<GrindstoneTile> {
     }
   }
 
-  protected static BlockRendererDispatcher blockRenderer;
-
-  private void renderWheel(final GrindstoneTile te, final MatrixStack mat, final IRenderTypeBuffer renderer, final int light) {
-    if(blockRenderer == null) {
-      blockRenderer = Minecraft.getInstance().getBlockRendererDispatcher();
+  private void renderWheel(final GrindstoneTile te, final MatrixStack mat, final IRenderTypeBuffer renderer, final int combinedLight, final int combinedOverlay) {
+    if(this.wheel == null) {
       this.wheel = Minecraft.getInstance().getModelManager().getModel(Gradient.loc("block/grindstone_wheel"));
     }
 
@@ -132,6 +130,24 @@ public class GrindstoneRenderer extends TileEntityRenderer<GrindstoneTile> {
     final ILightReader world = MinecraftForgeClient.getRegionRenderCache(te.getWorld(), pos);
     final BlockState state = world.getBlockState(pos);
     final IModelData data = this.wheel.getModelData(world, pos, state, ModelDataManager.getModelData(te.getWorld(), pos));
-    blockRenderer.getBlockModelRenderer().renderModel(world, this.wheel, state, pos, mat, renderer.getBuffer(Atlases.getSolidBlockType()), false, new Random(), 42, light, data);
+    final IVertexBuilder buffer = renderer.getBuffer(Atlases.getSolidBlockType());
+
+    for(final BakedQuad quad : this.wheel.getQuads(state, null, new Random(), data)) {
+      final float r;
+      final float g;
+      final float b;
+      if(quad.hasTintIndex()) {
+        final int i = Minecraft.getInstance().getBlockColors().getColor(state, world, pos, quad.getTintIndex());
+        r = (i >> 16 & 255) / 255.0f;
+        g = (i >> 8 & 255) / 255.0f;
+        b = (i & 255) / 255.0f;
+      } else {
+        r = 1.0f;
+        g = 1.0f;
+        b = 1.0f;
+      }
+
+      buffer.addQuad(mat.getLast(), quad, r, g, b, combinedLight, combinedOverlay);
+    }
   }
 }
