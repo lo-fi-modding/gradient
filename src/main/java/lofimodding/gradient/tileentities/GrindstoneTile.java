@@ -139,7 +139,7 @@ public class GrindstoneTile extends ProcessorTile<GrindingRecipe, ManualEnergySo
 
   @Override
   protected void onAnimationTick(final int ticks) {
-    this.animation = Math.abs(ticks % 20 - 10.0f) / 10.0f;
+    this.animation = Math.abs((ticks + 10) % 20 - 10.0f) / 10.0f;
   }
 
   @Override
