@@ -1,5 +1,6 @@
 package lofimodding.gradient.tileentities;
 
+import lofimodding.gradient.GradientSounds;
 import lofimodding.gradient.GradientTileEntities;
 import lofimodding.gradient.recipes.GrindingRecipe;
 import lofimodding.gradient.tileentities.pieces.GrinderProcessor;
@@ -14,9 +15,11 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
@@ -117,9 +120,15 @@ public class GrindstoneTile extends ProcessorTile<GrindingRecipe, ManualEnergySo
     return this.inv.insertItem(INPUT_SLOT, stack, false);
   }
 
-  public void crank(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
-    this.getEnergy().crank(state, world, pos, player, hand, hit);
+  public ActionResultType crank(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
+    final ActionResultType result = this.getEnergy().crank(state, world, pos, player, hand, hit);
     this.sync();
+
+    if(result == ActionResultType.SUCCESS) {
+      this.world.playSound(null, this.pos, GradientSounds.GRINDSTONE.get(), SoundCategory.NEUTRAL, 0.8f, this.world.rand.nextFloat() * 0.1f + 0.9f);
+    }
+
+    return result;
   }
 
   private void updateRecipe() {

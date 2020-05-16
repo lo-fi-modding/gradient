@@ -3,5 +3,10 @@
     "category": "neutral",
     "subtitle": "gradient.subtitle.fire_starter",
     "sounds": ["gradient:fire_starter"]
+  },
+  "grindstone": {
+    "category": "neutral",
+    "subtitle": "gradient.subtitle.grindstone",
+    "sounds": ["gradient:grindstone"]
   }
 }

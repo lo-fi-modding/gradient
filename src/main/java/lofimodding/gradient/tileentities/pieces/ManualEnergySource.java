@@ -15,9 +15,10 @@ public class ManualEnergySource implements IEnergySource {
   public ActionResultType crank(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
     if(this.energy == 0) {
       this.energy = 20;
+      return ActionResultType.SUCCESS;
     }
 
-    return ActionResultType.SUCCESS;
+    return ActionResultType.FAIL;
   }
 
   @Override

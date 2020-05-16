@@ -90,7 +90,7 @@ public class GrindstoneBlock extends Block {
         return ActionResultType.SUCCESS;
       }
 
-      grindstone.crank(state, world, pos, player, hand, hit);
+      return grindstone.crank(state, world, pos, player, hand, hit);
     }
 
     return ActionResultType.SUCCESS;
