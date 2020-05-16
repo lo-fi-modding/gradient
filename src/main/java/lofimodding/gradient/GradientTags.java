@@ -109,12 +109,15 @@ public final class GradientTags {
     }));
 
     public static final Tag<Item> PELTS = tag("pelts");
+    public static final Tag<Item> PELTS_CAT = tag("pelts/cat");
     public static final Tag<Item> PELTS_COW = tag("pelts/cow");
     public static final Tag<Item> PELTS_DONKEY = tag("pelts/donkey");
+    public static final Tag<Item> PELTS_FOX = tag("pelts/fox");
     public static final Tag<Item> PELTS_HORSE = tag("pelts/horse");
     public static final Tag<Item> PELTS_LLAMA = tag("pelts/llama");
     public static final Tag<Item> PELTS_MULE = tag("pelts/mule");
     public static final Tag<Item> PELTS_OCELOT = tag("pelts/ocelot");
+    public static final Tag<Item> PELTS_PANDA = tag("pelts/panda");
     public static final Tag<Item> PELTS_PIG = tag("pelts/pig");
     public static final Tag<Item> PELTS_POLAR_BEAR = tag("pelts/polar_bear");
     public static final Tag<Item> PELTS_SHEEP = tag("pelts/sheep");

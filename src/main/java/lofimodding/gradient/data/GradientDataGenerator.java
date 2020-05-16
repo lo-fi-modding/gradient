@@ -701,12 +701,15 @@ public final class GradientDataGenerator {
       this.getBuilder(GradientIds.HARDENED_PLANKS_SLAB).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.HARDENED_PLANKS_SLAB)));
       this.singleTexture(GradientIds.BARK, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.BARK));
       this.singleTexture(GradientIds.MULCH, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.MULCH));
+      this.singleTexture(GradientIds.CAT_PELT, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.CAT_PELT));
       this.singleTexture(GradientIds.COW_PELT, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.COW_PELT));
       this.singleTexture(GradientIds.DONKEY_PELT, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.DONKEY_PELT));
+      this.singleTexture(GradientIds.FOX_PELT, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.FOX_PELT));
       this.singleTexture(GradientIds.HORSE_PELT, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.HORSE_PELT));
       this.singleTexture(GradientIds.LLAMA_PELT, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.LLAMA_PELT));
       this.singleTexture(GradientIds.MULE_PELT, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.MULE_PELT));
       this.singleTexture(GradientIds.OCELOT_PELT, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.OCELOT_PELT));
+      this.singleTexture(GradientIds.PANDA_PELT, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.PANDA_PELT));
       this.singleTexture(GradientIds.PIG_PELT, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.PIG_PELT));
       this.singleTexture(GradientIds.POLAR_BEAR_PELT, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.POLAR_BEAR_PELT));
       this.singleTexture(GradientIds.SHEEP_PELT, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.SHEEP_PELT));
@@ -1010,12 +1013,15 @@ public final class GradientDataGenerator {
       this.add(GradientItems.TWINE.get(), "Twine");
       this.add(GradientItems.BARK.get(), "Bark");
       this.add(GradientItems.MULCH.get(), "Mulch");
+      this.add(GradientItems.CAT_PELT.get(), "Cat Pelt");
       this.add(GradientItems.COW_PELT.get(), "Cow Pelt");
       this.add(GradientItems.DONKEY_PELT.get(), "Donkey Pelt");
+      this.add(GradientItems.FOX_PELT.get(), "Fox Pelt");
       this.add(GradientItems.HORSE_PELT.get(), "Horse Pelt");
       this.add(GradientItems.LLAMA_PELT.get(), "Llama Pelt");
       this.add(GradientItems.MULE_PELT.get(), "Mule Pelt");
       this.add(GradientItems.OCELOT_PELT.get(), "Ocelot Pelt");
+      this.add(GradientItems.PANDA_PELT.get(), "Panda Pelt");
       this.add(GradientItems.PIG_PELT.get(), "Pig Pelt");
       this.add(GradientItems.POLAR_BEAR_PELT.get(), "Polar Bear Pelt");
       this.add(GradientItems.SHEEP_PELT.get(), "Sheep Pelt");
@@ -1254,13 +1260,16 @@ public final class GradientDataGenerator {
 
       this.getBuilder(Tags.Items.STRING).add(GradientItems.TWINE.get());
 
-      this.getBuilder(GradientTags.Items.PELTS).add(GradientTags.Items.PELTS_COW, GradientTags.Items.PELTS_DONKEY, GradientTags.Items.PELTS_HORSE, GradientTags.Items.PELTS_LLAMA, GradientTags.Items.PELTS_MULE, GradientTags.Items.PELTS_OCELOT, GradientTags.Items.PELTS_PIG, GradientTags.Items.PELTS_POLAR_BEAR, GradientTags.Items.PELTS_SHEEP, GradientTags.Items.PELTS_WOLF);
+      this.getBuilder(GradientTags.Items.PELTS).add(GradientTags.Items.PELTS_COW, GradientTags.Items.PELTS_CAT, GradientTags.Items.PELTS_DONKEY, GradientTags.Items.PELTS_FOX, GradientTags.Items.PELTS_HORSE, GradientTags.Items.PELTS_LLAMA, GradientTags.Items.PELTS_MULE, GradientTags.Items.PELTS_OCELOT, GradientTags.Items.PELTS_PANDA, GradientTags.Items.PELTS_PIG, GradientTags.Items.PELTS_POLAR_BEAR, GradientTags.Items.PELTS_SHEEP, GradientTags.Items.PELTS_WOLF);
+      this.getBuilder(GradientTags.Items.PELTS_CAT).add(GradientItems.CAT_PELT.get());
       this.getBuilder(GradientTags.Items.PELTS_COW).add(GradientItems.COW_PELT.get());
       this.getBuilder(GradientTags.Items.PELTS_DONKEY).add(GradientItems.DONKEY_PELT.get());
+      this.getBuilder(GradientTags.Items.PELTS_FOX).add(GradientItems.FOX_PELT.get());
       this.getBuilder(GradientTags.Items.PELTS_HORSE).add(GradientItems.HORSE_PELT.get());
       this.getBuilder(GradientTags.Items.PELTS_LLAMA).add(GradientItems.LLAMA_PELT.get());
       this.getBuilder(GradientTags.Items.PELTS_MULE).add(GradientItems.MULE_PELT.get());
       this.getBuilder(GradientTags.Items.PELTS_OCELOT).add(GradientItems.OCELOT_PELT.get());
+      this.getBuilder(GradientTags.Items.PELTS_PANDA).add(GradientItems.PANDA_PELT.get());
       this.getBuilder(GradientTags.Items.PELTS_PIG).add(GradientItems.PIG_PELT.get());
       this.getBuilder(GradientTags.Items.PELTS_POLAR_BEAR).add(GradientItems.POLAR_BEAR_PELT.get());
       this.getBuilder(GradientTags.Items.PELTS_SHEEP).add(GradientItems.SHEEP_PELT.get());
@@ -2068,12 +2077,15 @@ public final class GradientDataGenerator {
         Pair.of(HideArmourAdvancementLootTable::new, LootParameterSets.ADVANCEMENT),
         Pair.of(FibreAdditionsLootTable::new, LootParameterSets.BLOCK),
         Pair.of(PebbleAdditionsLootTable::new, LootParameterSets.BLOCK),
+        Pair.of(() -> new PeltDropsTable(GradientIds.CAT_PELT, GradientItems.CAT_PELT.get()), LootParameterSets.ENTITY),
         Pair.of(() -> new PeltDropsTable(GradientIds.COW_PELT, GradientItems.COW_PELT.get()), LootParameterSets.ENTITY),
         Pair.of(() -> new PeltDropsTable(GradientIds.DONKEY_PELT, GradientItems.DONKEY_PELT.get()), LootParameterSets.ENTITY),
+        Pair.of(() -> new PeltDropsTable(GradientIds.FOX_PELT, GradientItems.FOX_PELT.get()), LootParameterSets.ENTITY),
         Pair.of(() -> new PeltDropsTable(GradientIds.HORSE_PELT, GradientItems.HORSE_PELT.get()), LootParameterSets.ENTITY),
         Pair.of(() -> new PeltDropsTable(GradientIds.LLAMA_PELT, GradientItems.LLAMA_PELT.get()), LootParameterSets.ENTITY),
         Pair.of(() -> new PeltDropsTable(GradientIds.MULE_PELT, GradientItems.MULE_PELT.get()), LootParameterSets.ENTITY),
         Pair.of(() -> new PeltDropsTable(GradientIds.OCELOT_PELT, GradientItems.OCELOT_PELT.get()), LootParameterSets.ENTITY),
+        Pair.of(() -> new PeltDropsTable(GradientIds.PANDA_PELT, GradientItems.PANDA_PELT.get()), LootParameterSets.ENTITY),
         Pair.of(() -> new PeltDropsTable(GradientIds.PIG_PELT, GradientItems.PIG_PELT.get()), LootParameterSets.ENTITY),
         Pair.of(() -> new PeltDropsTable(GradientIds.POLAR_BEAR_PELT, GradientItems.POLAR_BEAR_PELT.get()), LootParameterSets.ENTITY),
         Pair.of(() -> new PeltDropsTable(GradientIds.SHEEP_PELT, GradientItems.SHEEP_PELT.get()), LootParameterSets.ENTITY),

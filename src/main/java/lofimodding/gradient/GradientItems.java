@@ -117,12 +117,15 @@ public final class GradientItems {
   public static final RegistryObject<BlockItem> HARDENED_LOG_SLAB = REGISTRY.register(GradientIds.HARDENED_LOG_SLAB, () -> new BlockItem(GradientBlocks.HARDENED_LOG_SLAB.get(), new Item.Properties().group(GROUP)));
   public static final RegistryObject<BlockItem> HARDENED_PLANKS_SLAB = REGISTRY.register(GradientIds.HARDENED_PLANKS_SLAB, () -> new BlockItem(GradientBlocks.HARDENED_PLANKS_SLAB.get(), new Item.Properties().group(GROUP)));
   public static final RegistryObject<MulchItem> MULCH = REGISTRY.register(GradientIds.MULCH, () -> new MulchItem(new Item.Properties().group(GROUP)));
+  public static final RegistryObject<Item> CAT_PELT = REGISTRY.register(GradientIds.CAT_PELT, () -> new Item(new Item.Properties().group(GROUP)));
   public static final RegistryObject<Item> COW_PELT = REGISTRY.register(GradientIds.COW_PELT, () -> new Item(new Item.Properties().group(GROUP)));
   public static final RegistryObject<Item> DONKEY_PELT = REGISTRY.register(GradientIds.DONKEY_PELT, () -> new Item(new Item.Properties().group(GROUP)));
+  public static final RegistryObject<Item> FOX_PELT = REGISTRY.register(GradientIds.FOX_PELT, () -> new Item(new Item.Properties().group(GROUP)));
   public static final RegistryObject<Item> HORSE_PELT = REGISTRY.register(GradientIds.HORSE_PELT, () -> new Item(new Item.Properties().group(GROUP)));
   public static final RegistryObject<Item> LLAMA_PELT = REGISTRY.register(GradientIds.LLAMA_PELT, () -> new Item(new Item.Properties().group(GROUP)));
   public static final RegistryObject<Item> MULE_PELT = REGISTRY.register(GradientIds.MULE_PELT, () -> new Item(new Item.Properties().group(GROUP)));
   public static final RegistryObject<Item> OCELOT_PELT = REGISTRY.register(GradientIds.OCELOT_PELT, () -> new Item(new Item.Properties().group(GROUP)));
+  public static final RegistryObject<Item> PANDA_PELT = REGISTRY.register(GradientIds.PANDA_PELT, () -> new Item(new Item.Properties().group(GROUP)));
   public static final RegistryObject<Item> PIG_PELT = REGISTRY.register(GradientIds.PIG_PELT, () -> new Item(new Item.Properties().group(GROUP)));
   public static final RegistryObject<Item> POLAR_BEAR_PELT = REGISTRY.register(GradientIds.POLAR_BEAR_PELT, () -> new Item(new Item.Properties().group(GROUP)));
   public static final RegistryObject<Item> SHEEP_PELT = REGISTRY.register(GradientIds.SHEEP_PELT, () -> new Item(new Item.Properties().group(GROUP)));
