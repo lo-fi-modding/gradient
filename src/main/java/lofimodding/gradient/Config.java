@@ -25,6 +25,10 @@ public final class Config {
 
   public static final class Interop {
     public final ForgeConfigSpec.BooleanValue REMOVE_LEATHER_RECIPES;
+    public final ForgeConfigSpec.BooleanValue REPLACE_PLANK_RECIPES;
+    public final ForgeConfigSpec.BooleanValue REPLACE_STICK_RECIPES;
+    public final ForgeConfigSpec.BooleanValue HALVE_PLANK_RECIPE_OUTPUT;
+    public final ForgeConfigSpec.BooleanValue HALVE_STICK_RECIPE_OUTPUT;
 
     private Interop(final ForgeConfigSpec.Builder builder) {
       builder
@@ -35,6 +39,26 @@ public final class Config {
         .comment("Should leather recipes be removed?")
         .translation("config.gradient.interop.remove_leather_recipes")
         .define("remove_leather_recipes", true);
+
+      this.REPLACE_PLANK_RECIPES = builder
+        .comment("Should plank recipes be modified to require axes to split?")
+        .translation("config.gradient.interop.replace_plank_recipes")
+        .define("replace_plank_recipes", true);
+
+      this.REPLACE_STICK_RECIPES = builder
+        .comment("Should stick recipes be modified to require axes to split?")
+        .translation("config.gradient.interop.replace_stick_recipes")
+        .define("replace_stick_recipes", true);
+
+      this.HALVE_PLANK_RECIPE_OUTPUT = builder
+        .comment("Should plank recipes output be halved?")
+        .translation("config.gradient.interop.halve_plank_recipe_output")
+        .define("halve_plank_recipe_output", true);
+
+      this.HALVE_STICK_RECIPE_OUTPUT = builder
+        .comment("Should stick recipes output be halved?")
+        .translation("config.gradient.interop.halve_stick_recipe_output")
+        .define("halve_stick_recipe_output", true);
 
       builder.pop();
     }
