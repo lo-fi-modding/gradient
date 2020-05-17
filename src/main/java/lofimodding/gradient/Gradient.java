@@ -26,6 +26,7 @@ import net.minecraft.util.Tuple;
 import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.event.world.RegisterDimensionsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -34,8 +35,8 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.items.ItemHandlerHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -57,7 +58,7 @@ public class Gradient {
     modBus.addListener(this::setup);
     modBus.addListener(this::enqueueIMC);
     modBus.addListener(this::clientSetup);
-    forgeBus.addListener(this::serverStarting);
+    forgeBus.addListener(this::setRecipeManagerServer);
 
     GradientBlocks.init(modBus);
     GradientContainers.init(modBus);
@@ -90,7 +91,7 @@ public class Gradient {
 
   private void clientSetup(final FMLClientSetupEvent event) {
     LOGGER.info("Loading client-only features...");
-    MinecraftForge.EVENT_BUS.addListener(this::recipesUpdated);
+    MinecraftForge.EVENT_BUS.addListener(this::setRecipeManagerClient);
     GradientClient.clientSetup(event);
 
     ScreenManager.registerFactory(GradientContainers.CLAY_CRUCIBLE.get(), ClayCrucibleScreen::new);
@@ -138,13 +139,16 @@ public class Gradient {
 
   private static final ThreadLocal<RecipeManager> RECIPE_MANAGER = new ThreadLocal<>();
 
-  private void recipesUpdated(final RecipesUpdatedEvent event) {
-    LOGGER.info("Setting recipe manager for client {}", event.getRecipeManager());
-    RECIPE_MANAGER.set(event.getRecipeManager());
+  private void setRecipeManagerClient(final RecipesUpdatedEvent event) {
+    final RecipeManager recipeManager = event.getRecipeManager();
+
+    LOGGER.info("Setting recipe manager for client {}", recipeManager);
+    RECIPE_MANAGER.set(recipeManager);
   }
 
-  private void serverStarting(final FMLServerStartingEvent event) {
-    final RecipeManager recipeManager = event.getServer().getRecipeManager();
+  // Not ideal, but this event fires at just the right time - after data packs are loaded, but before worlds
+  private void setRecipeManagerServer(final RegisterDimensionsEvent event) {
+    final RecipeManager recipeManager = ServerLifecycleHooks.getCurrentServer().getRecipeManager();
 
     LOGGER.info("Setting recipe manager for server {}", recipeManager);
     RECIPE_MANAGER.set(recipeManager);
