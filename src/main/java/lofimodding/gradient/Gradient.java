@@ -13,7 +13,6 @@ import lofimodding.gradient.network.Packets;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RecipesUpdatedEvent;
@@ -31,8 +30,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Predicate;
 
 @Mod(Gradient.MOD_ID)
@@ -101,27 +98,15 @@ public class Gradient {
   private static final ThreadLocal<RecipeManager> RECIPE_MANAGER = new ThreadLocal<>();
 
   private void onWorldLoad(final RecipesUpdatedEvent event) {
-    // Set the recipe manager for clients
-    LOGGER.info("Setting recipe manager from client {}", event.getRecipeManager());
+    LOGGER.info("Setting recipe manager for client {}", event.getRecipeManager());
     RECIPE_MANAGER.set(event.getRecipeManager());
   }
 
   private void serverStarting(final FMLServerStartingEvent event) {
     final RecipeManager recipeManager = event.getServer().getRecipeManager();
 
-    // Set the recipe manager for servers
-    LOGGER.info("Setting recipe manager from server {}", recipeManager);
+    LOGGER.info("Setting recipe manager for server {}", recipeManager);
     RECIPE_MANAGER.set(recipeManager);
-
-    final Map<IRecipeType<?>, Map<ResourceLocation, IRecipe<?>>> recipes = new HashMap<>();
-
-    for(final IRecipe<?> recipe : recipeManager.getRecipes()) {
-      if(!recipe.getId().equals(new ResourceLocation("crafting_table"))) {
-        recipes.computeIfAbsent(recipe.getType(), key -> new HashMap<>()).put(recipe.getId(), recipe);
-      }
-    }
-
-    recipeManager.recipes = recipes;
   }
 
   public static RecipeManager getRecipeManager() {
