@@ -8,13 +8,36 @@ import org.apache.commons.lang3.tuple.Pair;
 public final class Config {
   private Config() { }
 
+  public static final ForgeConfigSpec INTEROP_SPEC;
+  public static final Interop INTEROP;
   public static final ForgeConfigSpec ENET_SPEC;
   public static final Enet ENET;
 
   static {
-    final Pair<Enet, ForgeConfigSpec> gameplaySpec = new ForgeConfigSpec.Builder().configure(Enet::new);
-    ENET_SPEC = gameplaySpec.getRight();
-    ENET = gameplaySpec.getLeft();
+    final Pair<Interop, ForgeConfigSpec> interopSpec = new ForgeConfigSpec.Builder().configure(Interop::new);
+    INTEROP_SPEC = interopSpec.getRight();
+    INTEROP = interopSpec.getLeft();
+
+    final Pair<Enet, ForgeConfigSpec> enetSpec = new ForgeConfigSpec.Builder().configure(Enet::new);
+    ENET_SPEC = enetSpec.getRight();
+    ENET = enetSpec.getLeft();
+  }
+
+  public static final class Interop {
+    public final ForgeConfigSpec.BooleanValue REMOVE_LEATHER_RECIPES;
+
+    private Interop(final ForgeConfigSpec.Builder builder) {
+      builder
+        .comment("Potentially mod-breaking config")
+        .push("interop");
+
+      this.REMOVE_LEATHER_RECIPES = builder
+        .comment("Should leather recipes be removed?")
+        .translation("config.gradient.interop.remove_leather_recipes")
+        .define("remove_leather_recipes", true);
+
+      builder.pop();
+    }
   }
 
   public static final class Enet {

@@ -1260,7 +1260,7 @@ public final class GradientDataGenerator {
 
       this.getBuilder(Tags.Items.STRING).add(GradientItems.TWINE.get());
 
-      this.getBuilder(GradientTags.Items.PELTS).add(GradientTags.Items.PELTS_COW, GradientTags.Items.PELTS_CAT, GradientTags.Items.PELTS_DONKEY, GradientTags.Items.PELTS_FOX, GradientTags.Items.PELTS_HORSE, GradientTags.Items.PELTS_LLAMA, GradientTags.Items.PELTS_MULE, GradientTags.Items.PELTS_OCELOT, GradientTags.Items.PELTS_PANDA, GradientTags.Items.PELTS_PIG, GradientTags.Items.PELTS_POLAR_BEAR, GradientTags.Items.PELTS_SHEEP, GradientTags.Items.PELTS_WOLF);
+      this.getBuilder(GradientTags.Items.PELTS).add(GradientTags.Items.PELTS_COW, GradientTags.Items.PELTS_CAT, GradientTags.Items.PELTS_DONKEY, GradientTags.Items.PELTS_FOX, GradientTags.Items.PELTS_HORSE, GradientTags.Items.PELTS_LLAMA, GradientTags.Items.PELTS_MULE, GradientTags.Items.PELTS_OCELOT, GradientTags.Items.PELTS_PANDA, GradientTags.Items.PELTS_PIG, GradientTags.Items.PELTS_POLAR_BEAR, GradientTags.Items.PELTS_RABBIT, GradientTags.Items.PELTS_SHEEP, GradientTags.Items.PELTS_WOLF);
       this.getBuilder(GradientTags.Items.PELTS_CAT).add(GradientItems.CAT_PELT.get());
       this.getBuilder(GradientTags.Items.PELTS_COW).add(GradientItems.COW_PELT.get());
       this.getBuilder(GradientTags.Items.PELTS_DONKEY).add(GradientItems.DONKEY_PELT.get());
@@ -1272,6 +1272,7 @@ public final class GradientDataGenerator {
       this.getBuilder(GradientTags.Items.PELTS_PANDA).add(GradientItems.PANDA_PELT.get());
       this.getBuilder(GradientTags.Items.PELTS_PIG).add(GradientItems.PIG_PELT.get());
       this.getBuilder(GradientTags.Items.PELTS_POLAR_BEAR).add(GradientItems.POLAR_BEAR_PELT.get());
+      this.getBuilder(GradientTags.Items.PELTS_RABBIT).add(Items.RABBIT_HIDE);
       this.getBuilder(GradientTags.Items.PELTS_SHEEP).add(GradientItems.SHEEP_PELT.get());
       this.getBuilder(GradientTags.Items.PELTS_WOLF).add(GradientItems.WOLF_PELT.get());
     }

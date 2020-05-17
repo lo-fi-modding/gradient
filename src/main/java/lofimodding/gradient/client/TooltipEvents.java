@@ -19,6 +19,11 @@ public final class TooltipEvents {
 
   @SubscribeEvent
   public static void meltableTooltips(final ItemTooltipEvent event) {
+    if(event.getPlayer() == null) {
+      // Only run on the client
+      return;
+    }
+
     final ItemStack stack = event.getItemStack();
 
     if(stack.isEmpty()) {

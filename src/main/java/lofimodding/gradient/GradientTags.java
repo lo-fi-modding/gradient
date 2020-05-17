@@ -120,6 +120,7 @@ public final class GradientTags {
     public static final Tag<Item> PELTS_PANDA = tag("pelts/panda");
     public static final Tag<Item> PELTS_PIG = tag("pelts/pig");
     public static final Tag<Item> PELTS_POLAR_BEAR = tag("pelts/polar_bear");
+    public static final Tag<Item> PELTS_RABBIT = tag("pelts/rabbit");
     public static final Tag<Item> PELTS_SHEEP = tag("pelts/sheep");
     public static final Tag<Item> PELTS_WOLF = tag("pelts/wolf");
 

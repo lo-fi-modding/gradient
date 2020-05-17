@@ -847,7 +847,7 @@ e7cd8ed9065b30a836c0fce53939ef05cd486b13 data\gradient\tags\blocks\pebble_source
 894d32506001745409f938d3230927ec1dcbc0b4 data\gradient\tags\items\axes.json
 149fbf8fa7cd80664f258d0035d183f78f5388fd data\gradient\tags\items\fibre_torch_lighters.json
 1163b6e270d01e04dac07775f5ddcc0bdf900752 data\gradient\tags\items\hammers.json
-2716217374cafa2ea53220037eebd902584dce86 data\gradient\tags\items\pelts.json
+24401b423446f329ad1e274d194dec2af500803f data\gradient\tags\items\pelts.json
 17b861d2f2f65fab1a8b8f42c4a6344fade1825a data\gradient\tags\items\pelts\cat.json
 9b7f1834ab0d375542598b40ee8b60a2c51bbbcd data\gradient\tags\items\pelts\cow.json
 ead729e052d192accea68bea5bdf57144447f7ee data\gradient\tags\items\pelts\donkey.json
@@ -859,6 +859,7 @@ d87f7ec6eade166b123262157bfe2edcaec9794e data\gradient\tags\items\pelts\ocelot.j
 20b1f50161c19559f2346631c40d819312d52414 data\gradient\tags\items\pelts\panda.json
 c80350b180a25f2bcdf295539c93d66e3ed14d43 data\gradient\tags\items\pelts\pig.json
 de8a00ce670e29e30167bc0146c920322ae5de75 data\gradient\tags\items\pelts\polar_bear.json
+769cf702d36322f7b0960a3699f7ec2db9919b19 data\gradient\tags\items\pelts\rabbit.json
 b82a62cf656cd76cd686bcc1ec57b4dddd27162e data\gradient\tags\items\pelts\sheep.json
 243e50d4350411aa310ab72170cbe8a838465118 data\gradient\tags\items\pelts\wolf.json
 36da013bf35a19f4c24a34f485cde4caf7aa7c82 data\minecraft\loot_tables\blocks\andesite.json

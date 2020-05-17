@@ -120,6 +120,7 @@ dependencies {
   compile fg.deobf("lofimodding.progression:progression:1.15.2-1.0.0")
   compile fg.deobf("lofimodding.no-punching:no-punching:1.15.2-1.0.0")
   compile fg.deobf("lofimodding.no-tools:no-tools:1.15.2-1.0.0")
+  compile fg.deobf("lofimodding.no-recipes:no-recipes:1.15.2-1.0.0")
 
   testCompile "org.junit.jupiter:junit-jupiter-api:5.6.2"
   testRuntime "org.junit.jupiter:junit-jupiter-engine:5.6.2"
