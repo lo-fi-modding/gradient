@@ -47,31 +47,13 @@ public class MixingBasinTile extends TileEntity implements ITickableTileEntity {
   private static Capability<IFluidHandler> FLUID_HANDLER_CAPABILITY;
 
   private final FluidTank tank = new FluidTank(1000, fluid -> fluid.getFluid() == Fluids.WATER) {
-    //TODO: for some reason, onContentsChanged is called when draining even on simulate mode
-    private boolean simulating;
-
-    @Override
-    public int fill(final FluidStack resource, final FluidAction action) {
-      this.simulating = action.simulate();
-      return super.fill(resource, action);
-    }
-
-    @Nonnull
-    @Override
-    public FluidStack drain(final int maxDrain, final FluidAction action) {
-      this.simulating = action.simulate();
-      return super.drain(maxDrain, action);
-    }
-
     @Override
     protected void onContentsChanged() {
       super.onContentsChanged();
 
-      if(!this.simulating) {
-        MixingBasinTile.this.world.setBlockState(MixingBasinTile.this.pos, MixingBasinTile.this.getBlockState().with(MixingBasinBlock.HAS_WATER, !this.fluid.isEmpty()));
-        MixingBasinTile.this.updateRecipe();
-        MixingBasinTile.this.sync();
-      }
+      MixingBasinTile.this.world.setBlockState(MixingBasinTile.this.pos, MixingBasinTile.this.getBlockState().with(MixingBasinBlock.HAS_WATER, !this.fluid.isEmpty()));
+      MixingBasinTile.this.updateRecipe();
+      MixingBasinTile.this.sync();
     }
   };
 
