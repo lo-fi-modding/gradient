@@ -9,7 +9,9 @@ import net.minecraft.advancements.Criterion;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.event.entity.player.AdvancementEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.Map;
@@ -21,6 +23,15 @@ public final class AdvancementEvents {
   @SubscribeEvent
   public static void onAdvancement(final AdvancementEvent event) {
     GradientCriteriaTriggers.ADVANCEMENT_UNLOCKED.trigger((ServerPlayerEntity)event.getPlayer());
+  }
+
+  @SubscribeEvent
+  public static void onBlockRightClicked(final PlayerInteractEvent.RightClickBlock event) {
+    if(event.getSide() == LogicalSide.CLIENT) {
+      return;
+    }
+
+    GradientCriteriaTriggers.BLOCK_RIGHT_CLICKED.trigger((ServerPlayerEntity)event.getPlayer(), event.getWorld().getBlockState(event.getPos()).getBlock(), event.getItemStack());
   }
 
   @SubscribeEvent

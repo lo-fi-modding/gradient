@@ -32,6 +32,15 @@
           }
         ]
       }
+    },
+    "lit_fire": {
+      "trigger": "gradient:block_right_clicked",
+      "conditions": {
+        "clicked_block": "gradient:firepit",
+        "held_item": {
+          "item": "gradient:fire_starter"
+        }
+      }
     }
   },
   "requirements": [
@@ -40,6 +49,9 @@
     ],
     [
       "has_fire_starter"
+    ],
+    [
+      "lit_fire"
     ]
   ]
 }
