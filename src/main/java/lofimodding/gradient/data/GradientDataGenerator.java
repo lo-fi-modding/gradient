@@ -26,8 +26,10 @@ import lofimodding.gradient.science.Ore;
 import lofimodding.progression.recipes.StagedRecipeBuilder;
 import net.minecraft.advancements.criterion.ImpossibleTrigger;
 import net.minecraft.advancements.criterion.ItemPredicate;
+import net.minecraft.advancements.criterion.StatePropertiesPredicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.CropsBlock;
 import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
@@ -55,6 +57,7 @@ import net.minecraft.world.storage.loot.LootPool;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.RandomValueRange;
 import net.minecraft.world.storage.loot.ValidationTracker;
+import net.minecraft.world.storage.loot.conditions.BlockStateProperty;
 import net.minecraft.world.storage.loot.conditions.ILootCondition;
 import net.minecraft.world.storage.loot.conditions.Inverted;
 import net.minecraft.world.storage.loot.conditions.MatchTool;
@@ -2122,6 +2125,12 @@ public final class GradientDataGenerator {
               .acceptFunction(
                 ExplosionDecay.builder()
               )
+          ).addEntry(
+            ItemLootEntry
+              .builder(GradientItems.FIBRE.get())
+              .acceptCondition(BlockStateProperty.builder(Blocks.WHEAT).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(CropsBlock.AGE, ((CropsBlock)Blocks.WHEAT).getMaxAge())))
+              .acceptFunction(ApplyBonus.uniformBonusCount(Enchantments.FORTUNE, 2))
+              .acceptFunction(ExplosionDecay.builder())
           )
         ));
       }
