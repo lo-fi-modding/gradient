@@ -1207,10 +1207,6 @@ public final class GradientDataGenerator {
         this.getBuilder(GradientTags.Blocks.STORAGE_BLOCK.get(metal)).add(GradientBlocks.METAL_BLOCK(metal).get());
         this.getBuilder(Tags.Blocks.STORAGE_BLOCKS).add(GradientTags.Blocks.STORAGE_BLOCK.get(metal));
       }
-
-      this.getBuilder(BlockTags.LOGS).add(GradientBlocks.HARDENED_LOG.get());
-      this.getBuilder(BlockTags.PLANKS).add(GradientBlocks.HARDENED_PLANKS.get());
-      this.getBuilder(BlockTags.WOODEN_SLABS).add(GradientBlocks.HARDENED_PLANKS_SLAB.get());
     }
   }
 
@@ -1253,10 +1249,6 @@ public final class GradientDataGenerator {
         this.getBuilder(GradientTags.Items.STORAGE_BLOCK.get(metal)).add(GradientItems.METAL_BLOCK(metal).get());
         this.getBuilder(Tags.Items.STORAGE_BLOCKS).add(GradientTags.Items.STORAGE_BLOCK.get(metal));
       }
-
-      this.getBuilder(ItemTags.LOGS).add(GradientItems.HARDENED_LOG.get());
-      this.getBuilder(ItemTags.PLANKS).add(GradientItems.HARDENED_PLANKS.get());
-      this.getBuilder(ItemTags.WOODEN_SLABS).add(GradientItems.HARDENED_PLANKS_SLAB.get());
 
       this.getBuilder(Tags.Items.STRING).add(GradientItems.TWINE.get());
 

@@ -867,9 +867,3 @@ b82a62cf656cd76cd686bcc1ec57b4dddd27162e data\gradient\tags\items\pelts\sheep.js
 b2bda147a9836d6dd74270e96285fe8ce4a52936 data\minecraft\loot_tables\blocks\diorite.json
 ff220930700cc18c78e68f448853ae627105ebcb data\minecraft\loot_tables\blocks\granite.json
 4d6ff7b18060fbb25b698bd54bc79e2e96aa21f1 data\minecraft\loot_tables\blocks\stone.json
-60c8fbbed3b87128d4ca71ab1e0e1bc9748db66e data\minecraft\tags\blocks\logs.json
-8dc84e6aba895196bf32c7cbd4f43edc46616f65 data\minecraft\tags\blocks\planks.json
-d056091139fb091be3550b9da71bd9152a0e8f94 data\minecraft\tags\blocks\wooden_slabs.json
-60c8fbbed3b87128d4ca71ab1e0e1bc9748db66e data\minecraft\tags\items\logs.json
-8dc84e6aba895196bf32c7cbd4f43edc46616f65 data\minecraft\tags\items\planks.json
-d056091139fb091be3550b9da71bd9152a0e8f94 data\minecraft\tags\items\wooden_slabs.json
