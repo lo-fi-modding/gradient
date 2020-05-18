@@ -121,6 +121,10 @@ public class GrindstoneTile extends ProcessorTile<GrindingRecipe, ManualEnergySo
   }
 
   public ActionResultType crank(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
+    if(!this.hasRecipe()) {
+      return ActionResultType.FAIL;
+    }
+
     final ActionResultType result = this.getEnergy().crank(state, world, pos, player, hand, hit);
     this.sync();
 
@@ -149,6 +153,11 @@ public class GrindstoneTile extends ProcessorTile<GrindingRecipe, ManualEnergySo
   @Override
   protected void onAnimationTick(final int ticks) {
     this.animation = Math.abs((ticks + 10) % 20 - 10.0f) / 10.0f;
+  }
+
+  @Override
+  protected void resetAnimation() {
+
   }
 
   @Override

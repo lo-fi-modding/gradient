@@ -43,18 +43,16 @@ public class MixingRecipe implements IRecipe<IInventory> {
   private final String group;
   private final NonNullList<Stage> stages;
   private final int ticks;
-  private final int passes;
   private final ItemStack result;
   private final NonNullList<Ingredient> ingredients;
   private final FluidStack fluid;
   private final boolean simple;
 
-  public MixingRecipe(final ResourceLocation id, final String group, final NonNullList<Stage> stages, final int ticks, final int passes, final ItemStack result, final NonNullList<Ingredient> ingredients, final FluidStack fluid) {
+  public MixingRecipe(final ResourceLocation id, final String group, final NonNullList<Stage> stages, final int ticks, final ItemStack result, final NonNullList<Ingredient> ingredients, final FluidStack fluid) {
     this.id = id;
     this.group = group;
     this.stages = stages;
     this.ticks = ticks;
-    this.passes = passes;
     this.result = result;
     this.ingredients = ingredients;
     this.simple = ingredients.stream().allMatch(Ingredient::isSimple);
@@ -77,10 +75,6 @@ public class MixingRecipe implements IRecipe<IInventory> {
 
   public int getTicks() {
     return this.ticks;
-  }
-
-  public int getPasses() {
-    return this.passes;
   }
 
   @Override
@@ -183,7 +177,6 @@ public class MixingRecipe implements IRecipe<IInventory> {
       }
 
       final int ticks = JSONUtils.getInt(json, "ticks");
-      final int passes = JSONUtils.getInt(json, "passes");
 
       final NonNullList<Ingredient> ingredients = readIngredients(JSONUtils.getJsonArray(json, "ingredients"));
       if(ingredients.isEmpty()) {
@@ -192,7 +185,7 @@ public class MixingRecipe implements IRecipe<IInventory> {
 
       final FluidStack fluid = deserializeFluid(JSONUtils.getJsonObject(json, "fluid"));
       final ItemStack result = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
-      return new MixingRecipe(id, group, stages, ticks, passes, result, ingredients, fluid);
+      return new MixingRecipe(id, group, stages, ticks, result, ingredients, fluid);
     }
 
     private static FluidStack deserializeFluid(final JsonObject fluidJson) {
@@ -233,7 +226,6 @@ public class MixingRecipe implements IRecipe<IInventory> {
       }
 
       final int ticks = buffer.readVarInt();
-      final int passes = buffer.readVarInt();
 
       final int ingredientCount = buffer.readVarInt();
       final NonNullList<Ingredient> ingredients = NonNullList.withSize(ingredientCount, Ingredient.EMPTY);
@@ -244,7 +236,7 @@ public class MixingRecipe implements IRecipe<IInventory> {
       final FluidStack fluid = buffer.readFluidStack();
       final ItemStack result = buffer.readItemStack();
 
-      return new MixingRecipe(id, group, stages, ticks, passes, result, ingredients, fluid);
+      return new MixingRecipe(id, group, stages, ticks, result, ingredients, fluid);
     }
 
     @Override
@@ -257,7 +249,6 @@ public class MixingRecipe implements IRecipe<IInventory> {
       }
 
       buffer.writeVarInt(recipe.ticks);
-      buffer.writeVarInt(recipe.passes);
 
       buffer.writeVarInt(recipe.ingredients.size());
       for(final Ingredient ingredient : recipe.ingredients) {

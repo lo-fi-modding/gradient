@@ -4,7 +4,6 @@
     "gradient:age_2"
   ],
   "ticks": 60,
-  "passes": 3,
   "ingredients": [
     {
       "item": "gradient:raw_hide"

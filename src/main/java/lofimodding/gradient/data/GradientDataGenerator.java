@@ -429,18 +429,21 @@ public final class GradientDataGenerator {
         .face(Direction.WEST).uvs(1.0f, 8.0f, 2.0f, 15.0f).texture("side").end()
         .face(Direction.UP).uvs(2.0f, 4.0f, 3.0f, 14.0f).texture("side").rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).end()
         .face(Direction.DOWN).uvs(13.0f, 3.0f, 14.0f, 13.0f).texture("side").rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).end()
-        .end()
+        .end();
 
-        .element() // Rod
-        .from(7.0f, 2.0f, 9.4f)
-        .to(8.0f, 14.0f, 10.4f)
-        .rotation().angle(45.0f).axis(Direction.Axis.X).origin(7.5f, 7.0f, 6.5f).end()
-        .face(Direction.NORTH).uvs(1.0f, 2.0f, 2.0f, 14.0f).texture("side").end()
-        .face(Direction.EAST).uvs(0.0f, 2.0f, 1.0f, 14.0f).texture("side").end()
-        .face(Direction.SOUTH).uvs(3.0f, 2.0f, 4.0f, 14.0f).texture("side").end()
-        .face(Direction.WEST).uvs(2.0f, 2.0f, 3.0f, 14.0f).texture("side").end()
-        .face(Direction.UP).uvs(0.0f, 0.0f, 1.0f, 1.0f).texture("side").end()
-        .face(Direction.DOWN).uvs(0.0f, 0.0f, 1.0f, 1.0f).texture("side").end()
+      this.getBuilder(GradientIds.MIXING_BASIN + "_rod")
+        .parent(this.getExistingFile(this.mcLoc("block/block")))
+        .texture("rod", this.mcLoc("block/dark_oak_log"))
+
+        .element()
+        .from(7.5f, 2.0f, 7.5f)
+        .to(8.5f, 14.0f, 8.5f)
+        .face(Direction.NORTH).uvs(1.0f, 2.0f, 2.0f, 14.0f).texture("rod").end()
+        .face(Direction.EAST).uvs(0.0f, 2.0f, 1.0f, 14.0f).texture("rod").end()
+        .face(Direction.SOUTH).uvs(3.0f, 2.0f, 4.0f, 14.0f).texture("rod").end()
+        .face(Direction.WEST).uvs(2.0f, 2.0f, 3.0f, 14.0f).texture("rod").end()
+        .face(Direction.UP).uvs(0.0f, 0.0f, 1.0f, 1.0f).texture("rod").end()
+        .face(Direction.DOWN).uvs(0.0f, 0.0f, 1.0f, 1.0f).texture("rod").end()
         .end();
 
       this.getBuilder(GradientIds.MIXING_BASIN + "_water")
@@ -1146,7 +1149,6 @@ public final class GradientDataGenerator {
       this.add("jei.melting.ticks", "%d ticks");
 
       this.add("jei.mixing.name", "Mixing");
-      this.add("jei.mixing.passes", "%d stirs");
       this.add("jei.mixing.ticks", "%d ticks");
 
       this.add("jei.alloy.name", "Alloying");
@@ -1353,7 +1355,6 @@ public final class GradientDataGenerator {
       GradientRecipeBuilder
         .mixing(GradientItems.SALTED_HIDE.get(), 3)
         .stage(GradientStages.AGE_2.get())
-        .passes(3)
         .ticks(60)
         .addIngredient(GradientItems.RAW_HIDE.get(), 3)
         .addIngredient(GradientItems.SALT.get())
@@ -1364,7 +1365,6 @@ public final class GradientDataGenerator {
       GradientRecipeBuilder
         .mixing(GradientItems.TANNED_HIDE.get(), 3)
         .stage(GradientStages.AGE_2.get())
-        .passes(3)
         .ticks(60)
         .addIngredient(GradientItems.PRESERVED_HIDE.get(), 3)
         .addIngredient(GradientItems.MULCH.get())

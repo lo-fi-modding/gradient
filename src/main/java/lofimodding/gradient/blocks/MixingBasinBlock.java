@@ -119,8 +119,7 @@ public class MixingBasinBlock extends Block {
         return ActionResultType.SUCCESS;
       }
 
-      basin.mix();
-      return ActionResultType.SUCCESS;
+      return basin.mix(state, world, pos, player, hand, hit);
     }
 
     return ActionResultType.SUCCESS;

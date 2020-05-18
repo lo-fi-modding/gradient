@@ -3,6 +3,8 @@ package lofimodding.gradient.tileentities;
 import lofimodding.gradient.GradientTileEntities;
 import lofimodding.gradient.blocks.MixingBasinBlock;
 import lofimodding.gradient.recipes.MixingRecipe;
+import lofimodding.gradient.tileentities.pieces.ManualEnergySource;
+import lofimodding.gradient.tileentities.pieces.MixerProcessor;
 import lofimodding.gradient.utils.RecipeUtils;
 import lofimodding.progression.Stage;
 import lofimodding.progression.capabilities.Progress;
@@ -16,12 +18,15 @@ import net.minecraft.nbt.StringNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -39,7 +44,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-public class MixingBasinTile extends TileEntity implements ITickableTileEntity {
+public class MixingBasinTile extends ProcessorTile<MixingRecipe, ManualEnergySource, MixerProcessor> {
   @CapabilityInject(IItemHandler.class)
   private static Capability<IItemHandler> ITEM_HANDLER_CAPABILITY;
 
@@ -72,7 +77,7 @@ public class MixingBasinTile extends TileEntity implements ITickableTileEntity {
 
     @Override
     public boolean isItemValid(final int slot, @Nonnull final ItemStack stack) {
-      if(!MixingBasinTile.this.force) {
+      if(!MixingBasinTile.this.forceInsert) {
         if(slot == OUTPUT_SLOT) {
           return false;
         }
@@ -87,19 +92,11 @@ public class MixingBasinTile extends TileEntity implements ITickableTileEntity {
         final ItemStack stack = this.getStackInSlot(slot);
 
         if(!stack.isEmpty()) {
-          if(MixingBasinTile.this.recipe == null) {
-            MixingBasinTile.this.passes = 0;
-            MixingBasinTile.this.ticks = 0;
+          if(!MixingBasinTile.this.hasRecipe()) {
             MixingBasinTile.this.updateRecipe();
-
-            if(MixingBasinTile.this.recipe != null) {
-              MixingBasinTile.this.ticks = MixingBasinTile.this.recipe.getTicks();
-            }
           }
         } else {
-          MixingBasinTile.this.recipe = null;
-          MixingBasinTile.this.passes = 0;
-          MixingBasinTile.this.ticks = 0;
+          MixingBasinTile.this.clearRecipe();
         }
       }
 
@@ -110,15 +107,11 @@ public class MixingBasinTile extends TileEntity implements ITickableTileEntity {
   private final LazyOptional<IItemHandler> lazyInv = LazyOptional.of(() -> this.inventory);
   private final LazyOptional<IFluidHandler> lazyTank = LazyOptional.of(() -> this.tank);
 
-  @Nullable
-  private MixingRecipe recipe;
   private final Set<Stage> stages = new HashSet<>();
-  private int passes;
-  private int ticks;
-  private boolean force;
+  private boolean forceInsert;
 
   public MixingBasinTile() {
-    super(GradientTileEntities.MIXING_BASIN.get());
+    super(GradientTileEntities.MIXING_BASIN.get(), new ManualEnergySource(), new MixerProcessor());
   }
 
   public boolean hasFluid() {
@@ -181,74 +174,81 @@ public class MixingBasinTile extends TileEntity implements ITickableTileEntity {
     return stack;
   }
 
-  @Override
-  public void tick() {
-    if(this.world.isRemote) {
-      return;
+  public ActionResultType mix(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
+    if(!this.hasRecipe()) {
+      return ActionResultType.FAIL;
     }
 
-    if(this.recipe == null) {
-      return;
+    final ActionResultType result = this.getEnergy().crank(state, world, pos, player, hand, hit);
+    this.sync();
+
+    if(result == ActionResultType.SUCCESS) {
+      this.world.playSound(null, this.pos, SoundEvents.ENTITY_GENERIC_SWIM, SoundCategory.NEUTRAL, 0.8f, this.world.rand.nextFloat() * 0.7f + 0.3f);
     }
 
-    if(this.ticks < this.recipe.getTicks()) {
-      final Random rand = this.getWorld().rand;
-
-      if(rand.nextInt(2) == 0) {
-        final double radius = rand.nextDouble() * 0.2d;
-        final double angle = rand.nextDouble() * Math.PI * 2;
-
-        final double x = this.pos.getX() + 0.5d + radius * Math.cos(angle);
-        final double z = this.pos.getZ() + 0.5d + radius * Math.sin(angle);
-
-        ((ServerWorld)this.world).spawnParticle(ParticleTypes.BUBBLE, x, this.pos.getY() + 0.4d, z, 1, 0.0d, 0.0d, 0.0d, 0.0d);
-      }
-
-      this.ticks++;
-      this.markDirty();
-    }
-
-    if(this.ticks >= this.recipe.getTicks() && this.passes >= this.recipe.getPasses()) {
-      final ItemStack output = this.recipe.getRecipeOutput().copy();
-
-      this.passes = 0;
-      this.tank.drain(this.recipe.getFluid(), IFluidHandler.FluidAction.EXECUTE);
-
-      for(int slot = 0; slot < INPUT_SIZE; slot++) {
-        this.inventory.setStackInSlot(slot, ItemStack.EMPTY);
-      }
-
-      this.force = true;
-      this.inventory.setStackInSlot(OUTPUT_SLOT, output);
-      this.force = false;
-    }
-  }
-
-  public void mix() {
-    if(this.recipe == null) {
-      return;
-    }
-
-    if(this.ticks >= this.recipe.getTicks()) {
-      this.getWorld().playSound(this.pos.getX() + 0.5f, this.pos.getY() + 0.5f, this.pos.getZ() + 0.5f, SoundEvents.ENTITY_GENERIC_SWIM, SoundCategory.BLOCKS, 0.8f + this.getWorld().rand.nextFloat(), this.getWorld().rand.nextFloat() * 0.7f + 0.3f, false);
-
-      this.ticks = 0;
-      this.passes++;
-
-      this.markDirty();
-    }
+    return result;
   }
 
   private void updateRecipe() {
-    this.recipe = RecipeUtils.getRecipe(MixingRecipe.TYPE, recipe -> recipe.matches(this.inventory, this.stages, 0, INPUT_SIZE - 1, this.tank)).orElse(null);
+    RecipeUtils.getRecipe(MixingRecipe.TYPE, recipe -> recipe.matches(this.inventory, this.stages, 0, INPUT_SIZE - 1, this.tank)).ifPresent(this::setRecipe);
+  }
+
+  @Override
+  protected void onProcessorTick() {
+    final Random rand = this.world.rand;
+
+    final double radius = rand.nextDouble() * 0.2d;
+    final double angle = rand.nextDouble() * Math.PI * 2;
+
+    final double x = this.pos.getX() + 0.5d;// + radius * Math.cos(angle);
+    final double z = this.pos.getZ() + 0.5d;// + radius * Math.sin(angle);
+
+    if(rand.nextBoolean()) {
+      ((ServerWorld)this.world).spawnParticle(ParticleTypes.SPLASH, x, this.pos.getY() + 0.4d, z, 1, 0.0d, 0.0d, 0.0d, 0.0001d);
+    }
+  }
+
+  private float animation;
+  private boolean isMixing;
+
+  public float getAnimation() {
+    return this.animation;
+  }
+
+  public boolean isMixing() {
+    return this.isMixing;
+  }
+
+  @Override
+  protected void onAnimationTick(final int ticks) {
+    this.animation = (ticks % 40) / 40.0f;
+    this.isMixing = ticks != 0;
+  }
+
+  @Override
+  protected void resetAnimation() {
+    this.isMixing = false;
+  }
+
+  @Override
+  protected void onFinished(final MixingRecipe recipe) {
+    final ItemStack output = recipe.getRecipeOutput().copy();
+
+    this.tank.drain(this.getFluid(), IFluidHandler.FluidAction.EXECUTE);
+
+    for(int slot = 0; slot < INPUT_SIZE; slot++) {
+      this.inventory.setStackInSlot(slot, ItemStack.EMPTY);
+    }
+
+    this.forceInsert = true;
+    this.inventory.setStackInSlot(OUTPUT_SLOT, output);
+    this.forceInsert = false;
   }
 
   @Override
   public CompoundNBT write(final CompoundNBT compound) {
     compound.put("inventory", this.inventory.serializeNBT());
     compound.put("tank", this.tank.writeToNBT(new CompoundNBT()));
-    compound.putInt("passes", this.passes);
-    compound.putInt("ticks", this.ticks);
 
     final ListNBT stagesList = new ListNBT();
     for(final Stage stage : this.stages) {
@@ -266,8 +266,6 @@ public class MixingBasinTile extends TileEntity implements ITickableTileEntity {
     inv.remove("Size");
     this.inventory.deserializeNBT(inv);
     this.tank.readFromNBT(compound.getCompound("tank"));
-    this.passes = compound.getInt("passes");
-    this.ticks = compound.getInt("ticks");
 
     final ListNBT stagesList = compound.getList("stages", Constants.NBT.TAG_STRING);
     this.stages.clear();
@@ -293,28 +291,10 @@ public class MixingBasinTile extends TileEntity implements ITickableTileEntity {
     return super.getCapability(capability, facing);
   }
 
-  protected void sync() {
-    if(!this.getWorld().isRemote) {
-      final BlockState state = this.getWorld().getBlockState(this.getPos());
-      this.getWorld().notifyBlockUpdate(this.getPos(), state, state, 3);
-      this.markDirty();
-    }
-  }
-
   @Override
-  public SUpdateTileEntityPacket getUpdatePacket() {
-    return new SUpdateTileEntityPacket(this.pos, 0, this.getUpdateTag());
-  }
-
-  @Override
-  public CompoundNBT getUpdateTag() {
-    return this.write(new CompoundNBT());
-  }
-
-  @Override
-  public void onDataPacket(final NetworkManager net, final SUpdateTileEntityPacket pkt) {
+  public void onDataPacket(final NetworkManager net, final SUpdateTileEntityPacket packet) {
     final BlockState oldState = this.world.getBlockState(this.pos);
-    this.read(pkt.getNbtCompound());
+    super.onDataPacket(net, packet);
     this.world.notifyBlockUpdate(this.pos, oldState, this.world.getBlockState(this.pos), 2);
   }
 }

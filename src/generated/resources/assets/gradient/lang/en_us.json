@@ -282,7 +282,6 @@
   "jei.melting.temperature": "%f \u00B0C",
   "jei.melting.ticks": "%d ticks",
   "jei.mixing.name": "Mixing",
-  "jei.mixing.passes": "%d stirs",
   "jei.mixing.ticks": "%d ticks",
   "meltable.amount": "Amount: %f B",
   "meltable.display": "%f/%f B (%f \u00B0C)",

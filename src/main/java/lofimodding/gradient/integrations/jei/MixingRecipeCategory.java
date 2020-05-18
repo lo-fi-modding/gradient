@@ -90,7 +90,6 @@ public class MixingRecipeCategory implements IRecipeCategory<MixingRecipe> {
   public void draw(final MixingRecipe recipe, final double mouseX, final double mouseY) {
     final FontRenderer font = Minecraft.getInstance().fontRenderer;
 
-    font.drawString(I18n.format("jei.mixing.passes", recipe.getPasses()), 1, 22, 0x404040);
     font.drawString(I18n.format("jei.mixing.ticks", recipe.getTicks()), 1, 35, 0x404040);
 
     RenderSystem.pushMatrix();

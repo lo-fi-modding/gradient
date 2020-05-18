@@ -67,11 +67,13 @@ public abstract class ProcessorTile<Recipe extends IRecipe<?>, Source extends IE
   protected void clearRecipe() {
     this.processor.setRecipe(null);
     this.recipe = null;
+    this.resetAnimation();
   }
 
   protected abstract void onProcessorTick();
-  protected abstract void onAnimationTick(final int ticks);
   protected abstract void onFinished(final Recipe recipe);
+  protected abstract void onAnimationTick(final int ticks);
+  protected abstract void resetAnimation();
 
   @Override
   public CompoundNBT write(final CompoundNBT compound) {
@@ -108,6 +110,11 @@ public abstract class ProcessorTile<Recipe extends IRecipe<?>, Source extends IE
   @Override
   public void onDataPacket(final NetworkManager net, final SUpdateTileEntityPacket packet) {
     this.read(packet.getNbtCompound());
-    this.onAnimationTick(this.processor.getTicks());
+
+    if(this.hasRecipe()) {
+      this.onAnimationTick(this.processor.getTicks());
+    } else {
+      this.resetAnimation();
+    }
   }
 }

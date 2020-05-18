@@ -116,6 +116,7 @@ public final class GradientClient {
   public static void onModelRegister(final ModelRegistryEvent event) {
     Gradient.LOGGER.info("Registering extra models...");
     ModelLoader.addSpecialModel(Gradient.loc("block/grindstone_wheel"));
+    ModelLoader.addSpecialModel(Gradient.loc("block/mixing_basin_rod"));
   }
 
   private static int metalBlockColour(final BlockState state, final ILightReader world, final BlockPos pos, final int tintIndex) {
