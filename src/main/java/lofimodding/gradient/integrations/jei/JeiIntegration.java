@@ -21,10 +21,13 @@ import lofimodding.gradient.science.Minerals;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IModIngredientRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.gui.screen.inventory.InventoryScreen;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -35,9 +38,13 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -111,6 +118,53 @@ public class JeiIntegration implements IModPlugin {
       new GradientFluidStackRenderer()
     );
   }
+
+  // Oh god this is bad
+  @Override
+  public void registerGuiHandlers(final IGuiHandlerRegistration registration) {
+    try {
+      final Class<?> cls = Class.forName("mezz.jei.load.registration.GuiHandlerRegistration");
+      final Field guiHandlersField = cls.getDeclaredField("guiHandlers");
+      guiHandlersField.setAccessible(true);
+
+      final Object guiHandlers = guiHandlersField.get(registration);
+
+      final Method keySet = Class.forName("mezz.jei.collect.MultiMap").getDeclaredMethod("keySet");
+
+      ((Set<Class<? extends ContainerScreen<?>>>)keySet.invoke(guiHandlers)).removeIf(screenCls -> screenCls == InventoryScreen.class);
+    } catch(final ClassNotFoundException | NoSuchFieldException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+      Gradient.LOGGER.error("Failed to remove JEI's vanilla inventory click thing", e);
+    }
+  }
+
+  //TODO not sure if this will be necessary or not. Removes the vanilla inv transfer handler.
+//  @Override
+//  public void registerRecipeTransferHandlers(final IRecipeTransferRegistration registration) {
+//    try {
+//      final Class<?> cls = Class.forName("mezz.jei.load.registration.RecipeTransferRegistration");
+//      final HashBasedTable<Class<?>, ResourceLocation, IRecipeTransferHandler<?>> handlers = HashBasedTable.create((ImmutableTable<Class<?>, ResourceLocation, IRecipeTransferHandler<?>>)cls.getDeclaredMethod("getRecipeTransferHandlers").invoke(registration));
+//
+//      final Field recipeTransferHandlersMethod = cls.getDeclaredField("recipeTransferHandlers");
+//      recipeTransferHandlersMethod.setAccessible(true);
+//      final Object recipeTransferHandlers = recipeTransferHandlersMethod.get(registration);
+//
+//      final Class<?> tableClass = Class.forName("mezz.jei.collect.Table");
+//      final Method clearMethod = tableClass.getDeclaredMethod("clear");
+//      clearMethod.invoke(recipeTransferHandlers);
+//
+//      final Method putMethod = tableClass.getDeclaredMethod("put", Object.class, Object.class, Object.class);
+//
+//      for(final Table.Cell<Class<?>, ResourceLocation, IRecipeTransferHandler<?>> cell : handlers.cellSet()) {
+//        if("mezz.jei.transfer.PlayerRecipeTransferHandler".equals(cell.getValue().getClass().getName())) {
+//          continue;
+//        }
+//
+//        putMethod.invoke(recipeTransferHandlers, cell.getRowKey(), cell.getColumnKey(), cell.getValue());
+//      }
+//    } catch(final ClassNotFoundException | NoSuchFieldException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+//      e.printStackTrace();
+//    }
+//  }
 
   private static <T extends IRecipe<?>> Collection<T> filterRecipes(final Class<T> recipeClass) {
     return Gradient.getRecipeManager().getRecipes().stream()
