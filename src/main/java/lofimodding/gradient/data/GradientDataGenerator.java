@@ -64,6 +64,7 @@ import net.minecraft.world.storage.loot.conditions.MatchTool;
 import net.minecraft.world.storage.loot.conditions.RandomChance;
 import net.minecraft.world.storage.loot.functions.ApplyBonus;
 import net.minecraft.world.storage.loot.functions.ExplosionDecay;
+import net.minecraft.world.storage.loot.functions.LootingEnchantBonus;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockModelProvider;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
@@ -2074,6 +2075,7 @@ public final class GradientDataGenerator {
         Pair.of(HideArmourAdvancementLootTable::new, LootParameterSets.ADVANCEMENT),
         Pair.of(FibreAdditionsLootTable::new, LootParameterSets.BLOCK),
         Pair.of(PebbleAdditionsLootTable::new, LootParameterSets.BLOCK),
+        Pair.of(BoneDropsTable::new, LootParameterSets.ENTITY),
         Pair.of(() -> new PeltDropsTable(GradientIds.CAT_PELT, GradientItems.CAT_PELT.get()), LootParameterSets.ENTITY),
         Pair.of(() -> new PeltDropsTable(GradientIds.COW_PELT, GradientItems.COW_PELT.get()), LootParameterSets.ENTITY),
         Pair.of(() -> new PeltDropsTable(GradientIds.DONKEY_PELT, GradientItems.DONKEY_PELT.get()), LootParameterSets.ENTITY),
@@ -2147,6 +2149,21 @@ public final class GradientDataGenerator {
               .acceptCondition(RandomChance.builder(0.125f))
               .acceptFunction(ExplosionDecay.builder())
           ).rolls(ConstantRange.of(3))
+        ));
+      }
+    }
+
+    public static class BoneDropsTable implements Consumer<BiConsumer<ResourceLocation, LootTable.Builder>> {
+      @Override
+      public void accept(final BiConsumer<ResourceLocation, LootTable.Builder> builder) {
+        builder.accept(Gradient.loc("entities/bone_additions"), LootTable.builder().addLootPool(
+          LootPool.builder().addEntry(
+            ItemLootEntry
+              .builder(Items.BONE)
+              .acceptCondition(RandomChance.builder(0.5f))
+              .acceptFunction(ExplosionDecay.builder())
+              .acceptFunction(LootingEnchantBonus.builder(RandomValueRange.of(0.0f, 1.0f)))
+          )
         ));
       }
     }

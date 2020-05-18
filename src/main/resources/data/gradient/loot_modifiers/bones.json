@@ -1,0 +1,9 @@
+{
+  "type": "gradient:append_loot",
+  "conditions": [
+    {
+      "condition": "gradient:entity_bone_drops"
+    }
+  ],
+  "add_loot": "gradient:entities/bone_additions"
+}
