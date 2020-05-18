@@ -32,6 +32,7 @@ import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraftforge.client.event.RecipesUpdatedEvent;
@@ -166,7 +167,7 @@ public class Gradient {
           ingredients.add(original.getIngredients().get(0));
           ingredients.add(Ingredient.fromTag(GradientTags.Items.AXES));
 
-          final ItemStack output = ItemHandlerHelper.copyStackWithSize(original.getRecipeOutput(), Config.INTEROP.HALVE_STICK_RECIPE_OUTPUT.get() ? original.getRecipeOutput().getCount() / 2 : original.getRecipeOutput().getCount());
+          final ItemStack output = ItemHandlerHelper.copyStackWithSize(original.getRecipeOutput(), Config.INTEROP.HALVE_STICK_RECIPE_OUTPUT.get() ? MathHelper.ceil(original.getRecipeOutput().getCount() / 2.0f) : original.getRecipeOutput().getCount());
           final ShapelessRecipe recipe = new ShapelessRecipe(original.getId(), original.getGroup(), output, ingredients);
           return new ShapelessStagedRecipe(recipe, NonNullList.create(), true);
         })
