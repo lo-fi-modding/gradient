@@ -8,17 +8,17 @@ import lofimodding.gradient.Gradient;
 import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientLoot;
+import lofimodding.gradient.GradientStages;
 import lofimodding.gradient.GradientTags;
 import lofimodding.gradient.advancements.criterion.AdvancementUnlockedTrigger;
 import lofimodding.gradient.advancements.criterion.BlockRightClickedTrigger;
+import lofimodding.progression.advancements.StageUnlockedTrigger;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.advancements.criterion.ItemPredicate;
-import net.minecraft.advancements.criterion.LocationPredicate;
-import net.minecraft.advancements.criterion.PositionTrigger;
 import net.minecraft.block.Blocks;
 import net.minecraft.command.FunctionObject;
 import net.minecraft.data.AdvancementProvider;
@@ -62,7 +62,7 @@ public class AdvancementsProvider extends AdvancementProvider {
     @Override
     public void accept(final Consumer<Advancement> finished) {
       final Advancement root = builder(GradientItems.PEBBLE.get(), "root", 0.0f, 3.0f, new ResourceLocation("textures/gui/advancements/backgrounds/adventure.png"), FrameType.TASK)
-        .withCriterion("always", PositionTrigger.Instance.forLocation(LocationPredicate.ANY))
+        .withCriterion("has_age_1", StageUnlockedTrigger.Instance.forStage(GradientStages.AGE_1.get()))
         .register(finished, loc("age1/root"));
 
       final Advancement basicMaterials = builder(Items.STICK, "basic_materials", 1.0f, 3.5f, FrameType.TASK, root)

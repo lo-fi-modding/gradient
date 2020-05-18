@@ -18,13 +18,16 @@
     "y": 3.0
   },
   "criteria": {
-    "always": {
-      "trigger": "minecraft:location"
+    "has_age_1": {
+      "trigger": "progression:stage_unlocked",
+      "conditions": {
+        "id": "gradient:age_1"
+      }
     }
   },
   "requirements": [
     [
-      "always"
+      "has_age_1"
     ]
   ]
 }
