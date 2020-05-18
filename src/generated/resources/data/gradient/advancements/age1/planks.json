@@ -13,7 +13,9 @@
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true,
-    "hidden": false
+    "hidden": false,
+    "x": 4.0,
+    "y": 3.5
   },
   "criteria": {
     "has_parent_0": {

@@ -1,5 +1,8 @@
 package lofimodding.gradient;
 
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonObject;
 import lofimodding.gradient.advancements.criterion.GradientCriteriaTriggers;
 import lofimodding.gradient.client.GradientClient;
 import lofimodding.gradient.client.screens.ClayCrucibleScreen;
@@ -11,6 +14,10 @@ import lofimodding.gradient.energy.kinetic.KineticEnergyTransfer;
 import lofimodding.gradient.fluids.GradientFluidHandlerCapability;
 import lofimodding.gradient.network.Packets;
 import lofimodding.progression.recipes.ShapelessStagedRecipe;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementManager;
+import net.minecraft.advancements.AdvancementRewards;
+import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -20,9 +27,13 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.item.crafting.ShapelessRecipe;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.EnumTypeAdapterFactory;
+import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
 import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
@@ -71,6 +82,36 @@ public class Gradient {
     GradientSounds.init(modBus);
     GradientStages.init(modBus);
     GradientTileEntities.init(modBus);
+
+    // Take over advancement deserializer to allow custom positioning
+    AdvancementManager.GSON = new GsonBuilder().registerTypeHierarchyAdapter(Advancement.Builder.class, (JsonDeserializer<Advancement.Builder>)(p_210124_0_, p_210124_1_, context) -> {
+      final JsonObject advancementJson = JSONUtils.getJsonObject(p_210124_0_, "advancement");
+      final Advancement.Builder builder = Advancement.Builder.deserialize(advancementJson, context);
+
+      if(advancementJson.has("display") && builder.display != null) {
+        final JsonObject displayJson = JSONUtils.getJsonObject(advancementJson, "display");
+
+        if(displayJson.has("x") && displayJson.has("y")) {
+          final float x = JSONUtils.getFloat(displayJson, "x");
+          final float y = JSONUtils.getFloat(displayJson, "y");
+
+          // Prevent auto-layout
+          builder.display = new DisplayInfo(builder.display.getIcon(), builder.display.getTitle(), builder.display.getDescription(), builder.display.getBackground(), builder.display.getFrame(), builder.display.shouldShowToast(), builder.display.shouldAnnounceToChat(), builder.display.isHidden()) {
+            @Override
+            public float getX() {
+              return x;
+            }
+
+            @Override
+            public float getY() {
+              return y;
+            }
+          };
+        }
+      }
+
+      return builder;
+    }).registerTypeAdapter(AdvancementRewards.class, new AdvancementRewards.Deserializer()).registerTypeHierarchyAdapter(ITextComponent.class, new ITextComponent.Serializer()).registerTypeHierarchyAdapter(Style.class, new Style.Serializer()).registerTypeAdapterFactory(new EnumTypeAdapterFactory()).create();
   }
 
   private void setup(final FMLCommonSetupEvent event) {

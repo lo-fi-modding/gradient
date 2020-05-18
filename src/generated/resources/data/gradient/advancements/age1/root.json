@@ -13,7 +13,9 @@
     "show_toast": false,
     "announce_to_chat": false,
     "hidden": false,
-    "background": "minecraft:textures/gui/advancements/backgrounds/adventure.png"
+    "background": "minecraft:textures/gui/advancements/backgrounds/adventure.png",
+    "x": 0.0,
+    "y": 3.0
   },
   "criteria": {
     "always": {
