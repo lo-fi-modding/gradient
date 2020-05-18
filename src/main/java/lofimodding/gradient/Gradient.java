@@ -11,6 +11,7 @@ import lofimodding.gradient.energy.kinetic.KineticEnergyTransfer;
 import lofimodding.gradient.fluids.GradientFluidHandlerCapability;
 import lofimodding.gradient.network.Packets;
 import lofimodding.progression.recipes.ShapelessStagedRecipe;
+import net.minecraft.advancements.AdvancementManager;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -149,6 +150,26 @@ public class Gradient {
   // Not ideal, but this event fires at just the right time - after data packs are loaded, but before worlds
   private void setRecipeManagerServer(final RegisterDimensionsEvent event) {
     final RecipeManager recipeManager = ServerLifecycleHooks.getCurrentServer().getRecipeManager();
+
+    final AdvancementManager advancements = ServerLifecycleHooks.getCurrentServer().getAdvancementManager();
+    advancements.getAdvancement(loc("age1/root")).getDisplay().setPosition(0.0f, 3.0f);
+    advancements.getAdvancement(loc("age1/pelt")).getDisplay().setPosition(1.0f, 2.5f);
+    advancements.getAdvancement(loc("age1/bone_awl")).getDisplay().setPosition(2.0f, 1.375f);
+    advancements.getAdvancement(loc("age1/hide_armour")).getDisplay().setPosition(3.0f, 0.375f);
+
+    advancements.getAdvancement(loc("age1/basic_materials")).getDisplay().setPosition(1.0f, 3.5f);
+    advancements.getAdvancement(loc("age1/wood")).getDisplay().setPosition(3.0f, 3.5f);
+    advancements.getAdvancement(loc("age1/planks")).getDisplay().setPosition(4.0f, 3.5f);
+
+    advancements.getAdvancement(loc("age1/firepit")).getDisplay().setPosition(3.0f, 4.75f);
+    advancements.getAdvancement(loc("age1/fire_starter")).getDisplay().setPosition(4.0f, 4.75f);
+
+    advancements.getAdvancement(loc("age1/waterskin")).getDisplay().setPosition(5.75f, 1.0f);
+    advancements.getAdvancement(loc("age1/hide_bedding")).getDisplay().setPosition(5.5f, 2.0f);
+    advancements.getAdvancement(loc("age1/grindstone")).getDisplay().setPosition(5.25f, 3.0f);
+    advancements.getAdvancement(loc("age1/mixing_basin")).getDisplay().setPosition(5.5f, 4.0f);
+    advancements.getAdvancement(loc("age1/fibre_torch")).getDisplay().setPosition(5.75f, 5.0f);
+    advancements.getAdvancement(loc("age1/goal")).getDisplay().setPosition(7.0f, 3.0f);
 
     LOGGER.info("Setting recipe manager for server {}", recipeManager);
     RECIPE_MANAGER.set(recipeManager);
