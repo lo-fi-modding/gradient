@@ -1,5 +1,6 @@
 package lofimodding.gradient;
 
+import com.google.common.collect.Lists;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonObject;
@@ -18,6 +19,7 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementManager;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.DisplayInfo;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -35,6 +37,12 @@ import net.minecraft.util.Tuple;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.SphereReplaceConfig;
+import net.minecraft.world.gen.placement.FrequencyConfig;
+import net.minecraft.world.gen.placement.Placement;
 import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
@@ -46,6 +54,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
@@ -70,6 +79,7 @@ public class Gradient {
     modBus.addListener(this::setup);
     modBus.addListener(this::enqueueIMC);
     modBus.addListener(this::clientSetup);
+    modBus.addListener(this::loadComplete);
     forgeBus.addListener(this::setRecipeManagerServer);
 
     GradientBlocks.init(modBus);
@@ -172,6 +182,12 @@ public class Gradient {
           return new ShapelessStagedRecipe(recipe, NonNullList.create(), true);
         })
       );
+    }
+  }
+
+  private void loadComplete(final FMLLoadCompleteEvent event) {
+    for(final Biome biome : Biome.BIOMES) {
+      biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.DISK.withConfiguration(new SphereReplaceConfig(GradientBlocks.SALT_BLOCK.get().getDefaultState(), 4, 1, Lists.newArrayList(Blocks.DIRT.getDefaultState(), GradientBlocks.SALT_BLOCK.get().getDefaultState()))).withPlacement(Placement.COUNT_TOP_SOLID.configure(new FrequencyConfig(1))));
     }
   }
 
