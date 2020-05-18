@@ -19,6 +19,8 @@ import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.ILightReader;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.model.ModelDataManager;
@@ -35,6 +37,17 @@ public class MixingBasinRenderer extends TileEntityRenderer<MixingBasinTile> {
 
   @Override
   public void render(final MixingBasinTile te, final float partialTicks, final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final int combinedLight, final int combinedOverlay) {
+    final Minecraft mc = Minecraft.getInstance();
+
+    final boolean mouseOver;
+    if(mc.objectMouseOver != null && mc.objectMouseOver.getType() == RayTraceResult.Type.BLOCK) {
+      final BlockRayTraceResult trace = (BlockRayTraceResult)mc.objectMouseOver;
+
+      mouseOver = trace.getPos().equals(te.getPos());
+    } else {
+      mouseOver = false;
+    }
+
     final Direction facing = te.getBlockState().get(MixingBasinBlock.FACING);
 
     matrixStack.push();
@@ -90,7 +103,7 @@ public class MixingBasinRenderer extends TileEntityRenderer<MixingBasinTile> {
 
       matrixStack.translate(inputX, -0.15f, inputZ);
 
-      if(output.getCount() > 1) {
+      if(mouseOver && output.getCount() > 1) {
         matrixStack.push();
         matrixStack.translate(0.0d, 0.5d, 0.0d);
         RenderUtils.renderText(Integer.toString(output.getCount()), matrixStack, buffer, combinedLight);
