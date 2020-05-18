@@ -14,7 +14,9 @@
     "frame": "challenge",
     "show_toast": true,
     "announce_to_chat": true,
-    "hidden": false
+    "hidden": false,
+    "x": 3.0,
+    "y": 0.375
   },
   "rewards": {
     "loot": [

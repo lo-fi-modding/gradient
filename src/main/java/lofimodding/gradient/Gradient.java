@@ -1,5 +1,8 @@
 package lofimodding.gradient;
 
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonObject;
 import lofimodding.gradient.advancements.criterion.GradientCriteriaTriggers;
 import lofimodding.gradient.client.GradientClient;
 import lofimodding.gradient.client.screens.ClayCrucibleScreen;
@@ -11,7 +14,10 @@ import lofimodding.gradient.energy.kinetic.KineticEnergyTransfer;
 import lofimodding.gradient.fluids.GradientFluidHandlerCapability;
 import lofimodding.gradient.network.Packets;
 import lofimodding.progression.recipes.ShapelessStagedRecipe;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementManager;
+import net.minecraft.advancements.AdvancementRewards;
+import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -21,9 +27,13 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.item.crafting.ShapelessRecipe;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.EnumTypeAdapterFactory;
+import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
 import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
@@ -72,6 +82,36 @@ public class Gradient {
     GradientSounds.init(modBus);
     GradientStages.init(modBus);
     GradientTileEntities.init(modBus);
+
+    // Take over advancement deserializer to allow custom positioning
+    AdvancementManager.GSON = new GsonBuilder().registerTypeHierarchyAdapter(Advancement.Builder.class, (JsonDeserializer<Advancement.Builder>)(p_210124_0_, p_210124_1_, context) -> {
+      final JsonObject advancementJson = JSONUtils.getJsonObject(p_210124_0_, "advancement");
+      final Advancement.Builder builder = Advancement.Builder.deserialize(advancementJson, context);
+
+      if(advancementJson.has("display") && builder.display != null) {
+        final JsonObject displayJson = JSONUtils.getJsonObject(advancementJson, "display");
+
+        if(displayJson.has("x") && displayJson.has("y")) {
+          final float x = JSONUtils.getFloat(displayJson, "x");
+          final float y = JSONUtils.getFloat(displayJson, "y");
+
+          // Prevent auto-layout
+          builder.display = new DisplayInfo(builder.display.getIcon(), builder.display.getTitle(), builder.display.getDescription(), builder.display.getBackground(), builder.display.getFrame(), builder.display.shouldShowToast(), builder.display.shouldAnnounceToChat(), builder.display.isHidden()) {
+            @Override
+            public float getX() {
+              return x;
+            }
+
+            @Override
+            public float getY() {
+              return y;
+            }
+          };
+        }
+      }
+
+      return builder;
+    }).registerTypeAdapter(AdvancementRewards.class, new AdvancementRewards.Deserializer()).registerTypeHierarchyAdapter(ITextComponent.class, new ITextComponent.Serializer()).registerTypeHierarchyAdapter(Style.class, new Style.Serializer()).registerTypeAdapterFactory(new EnumTypeAdapterFactory()).create();
   }
 
   private void setup(final FMLCommonSetupEvent event) {
@@ -150,26 +190,6 @@ public class Gradient {
   // Not ideal, but this event fires at just the right time - after data packs are loaded, but before worlds
   private void setRecipeManagerServer(final RegisterDimensionsEvent event) {
     final RecipeManager recipeManager = ServerLifecycleHooks.getCurrentServer().getRecipeManager();
-
-    final AdvancementManager advancements = ServerLifecycleHooks.getCurrentServer().getAdvancementManager();
-    advancements.getAdvancement(loc("age1/root")).getDisplay().setPosition(0.0f, 3.0f);
-    advancements.getAdvancement(loc("age1/pelt")).getDisplay().setPosition(1.0f, 2.5f);
-    advancements.getAdvancement(loc("age1/bone_awl")).getDisplay().setPosition(2.0f, 1.375f);
-    advancements.getAdvancement(loc("age1/hide_armour")).getDisplay().setPosition(3.0f, 0.375f);
-
-    advancements.getAdvancement(loc("age1/basic_materials")).getDisplay().setPosition(1.0f, 3.5f);
-    advancements.getAdvancement(loc("age1/wood")).getDisplay().setPosition(3.0f, 3.5f);
-    advancements.getAdvancement(loc("age1/planks")).getDisplay().setPosition(4.0f, 3.5f);
-
-    advancements.getAdvancement(loc("age1/firepit")).getDisplay().setPosition(3.0f, 4.75f);
-    advancements.getAdvancement(loc("age1/fire_starter")).getDisplay().setPosition(4.0f, 4.75f);
-
-    advancements.getAdvancement(loc("age1/waterskin")).getDisplay().setPosition(5.75f, 1.0f);
-    advancements.getAdvancement(loc("age1/hide_bedding")).getDisplay().setPosition(5.5f, 2.0f);
-    advancements.getAdvancement(loc("age1/grindstone")).getDisplay().setPosition(5.25f, 3.0f);
-    advancements.getAdvancement(loc("age1/mixing_basin")).getDisplay().setPosition(5.5f, 4.0f);
-    advancements.getAdvancement(loc("age1/fibre_torch")).getDisplay().setPosition(5.75f, 5.0f);
-    advancements.getAdvancement(loc("age1/goal")).getDisplay().setPosition(7.0f, 3.0f);
 
     LOGGER.info("Setting recipe manager for server {}", recipeManager);
     RECIPE_MANAGER.set(recipeManager);
