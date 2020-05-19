@@ -269,12 +269,12 @@ public class FirepitTile extends HeatProducerTile {
   public ItemStack insertItem(final ItemStack stack, final PlayerEntity player) {
     for(int slot = 0; slot < FIRST_OUTPUT_SLOT; slot++) {
       if(this.inventory.isItemValid(slot, stack)) {
-        this.inventory.setStackInSlot(slot, stack.split(1));
-
         if(slot == FIRST_INPUT_SLOT) {
           this.stages.clear();
           this.stages.addAll(Progress.get(player).getStages());
         }
+
+        this.inventory.setStackInSlot(slot, stack.split(1));
 
         return stack;
       }
@@ -342,7 +342,9 @@ public class FirepitTile extends HeatProducerTile {
 
   @Override
   protected void tickBeforeCooldown(final float tickScale) {
-    this.igniteFuel();
+    if(!this.world.isRemote) {
+      this.igniteFuel();
+    }
   }
 
   @Override
@@ -352,7 +354,7 @@ public class FirepitTile extends HeatProducerTile {
     this.cook();
     this.updateLight();
 
-    if(this.getWorld().isRemote) {
+    if(this.world.isRemote) {
       this.generateParticles();
       this.playSounds();
     } else {
@@ -383,7 +385,7 @@ public class FirepitTile extends HeatProducerTile {
       }
     }
 
-    if(this.ticks >= this.recipe.ticks) {
+    if(!this.world.isRemote && this.ticks >= this.recipe.ticks) {
       final ItemStack output = this.recipe.getRecipeOutput().copy();
       this.force = true;
       this.inventory.extractItem(FIRST_INPUT_SLOT, 1, false);
@@ -490,9 +492,12 @@ public class FirepitTile extends HeatProducerTile {
   @Override
   protected float calculateHeatGain() {
     final float airBonus = 1.0f + this.getHeatRatio() / 3.0f;
-    this.canDrain = true;
-    this.tank.drain(2, IFluidHandler.FluidAction.EXECUTE);
-    this.canDrain = false;
+
+    if(!this.world.isRemote) {
+      this.canDrain = true;
+      this.tank.drain(2, IFluidHandler.FluidAction.EXECUTE);
+      this.canDrain = false;
+    }
 
     float temperatureChange = 0;
     for(int slot = 0; slot < FUEL_SLOTS_COUNT; slot++) {
@@ -501,7 +506,7 @@ public class FirepitTile extends HeatProducerTile {
 
         fuel.tick();
 
-        if(fuel.isDepleted()) {
+        if(!this.world.isRemote && fuel.isDepleted()) {
           this.setFuelSlot(slot, ItemStack.EMPTY);
         }
 
@@ -691,7 +696,9 @@ public class FirepitTile extends HeatProducerTile {
     }
 
     private void tick() {
-      this.burnTicks++;
+      if(!this.isDepleted()) {
+        this.burnTicks++;
+      }
     }
 
     private void ignite() {
