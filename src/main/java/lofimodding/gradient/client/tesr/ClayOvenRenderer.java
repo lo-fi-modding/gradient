@@ -1,10 +1,12 @@
 package lofimodding.gradient.client.tesr;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import lofimodding.gradient.blocks.ClayOvenBlock;
 import lofimodding.gradient.client.RenderUtils;
 import lofimodding.gradient.tileentities.ClayOvenTile;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
@@ -41,14 +43,11 @@ public class ClayOvenRenderer extends TileEntityRenderer<ClayOvenTile> {
       if(oven.isCooking()) {
         matrixStack.translate(-0.1f, 0.0f, 0.05f);
         matrixStack.scale(0.2f * (1.0f - oven.getCookingPercent()), 0.025f, 1.0f);
-        //TODO
-//        GlStateManager.disableCull();
-//        this.setLightmapDisabled(true);
-//        GlStateManager.disableLighting();
-//        Gui.drawRect(0, 0, 1, 1, 0xFF1AFF00);
-//        GlStateManager.enableLighting();
-//        this.setLightmapDisabled(false);
-//        GlStateManager.enableCull();
+        RenderSystem.enableDepthTest();
+        RenderSystem.disableCull();
+        Screen.fill(matrixStack.getLast().getMatrix(), 0, 0, 1, 1, 0xFF1AFF00);
+        RenderSystem.enableCull();
+        RenderSystem.disableDepthTest();
       }
 
       matrixStack.pop();
