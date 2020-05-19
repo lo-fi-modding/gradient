@@ -1586,7 +1586,7 @@ public final class GradientDataGenerator {
 
       StagedRecipeBuilder
         .shaped(GradientItems.MIXING_BASIN.get())
-        .stage(GradientStages.AGE_2.get())
+        .stage(GradientStages.AGE_1.get())
         .patternLine(" S ")
         .patternLine("W W")
         .patternLine("CWC")

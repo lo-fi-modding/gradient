@@ -1,7 +1,7 @@
 {
   "type": "progression:shaped_staged",
   "stages": [
-    "gradient:age_2"
+    "gradient:age_1"
   ],
   "damage_tools": true,
   "pattern": [
