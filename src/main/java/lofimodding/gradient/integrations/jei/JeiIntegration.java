@@ -3,6 +3,7 @@ package lofimodding.gradient.integrations.jei;
 import lofimodding.gradient.Gradient;
 import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientCasts;
+import lofimodding.gradient.GradientIds;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientRecipeSerializers;
 import lofimodding.gradient.fluids.GradientFluid;
@@ -20,6 +21,7 @@ import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.science.Minerals;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IModIngredientRegistration;
@@ -28,6 +30,7 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.screen.inventory.InventoryScreen;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -95,6 +98,8 @@ public class JeiIntegration implements IModPlugin {
     registration.addRecipes(filterRecipes(MixingRecipe.class), GradientRecipeSerializers.MIXING.getId());
 
     registration.addRecipes(getCastingRecipes(), Gradient.loc("casting"));
+
+    registration.addIngredientInfo(new ItemStack(GradientItems.FIREPIT.get()), VanillaTypes.ITEM, I18n.format("jei.information." + GradientIds.FIREPIT + ".1"), I18n.format("jei.information." + GradientIds.FIREPIT + ".2"), I18n.format("jei.information." + GradientIds.FIREPIT + ".3"));
   }
 
   @Override
