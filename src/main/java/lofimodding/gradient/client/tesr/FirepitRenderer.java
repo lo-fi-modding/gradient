@@ -1,11 +1,13 @@
 package lofimodding.gradient.client.tesr;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import lofimodding.gradient.blocks.FirepitBlock;
 import lofimodding.gradient.client.RenderUtils;
 import lofimodding.gradient.tileentities.FirepitTile;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
@@ -55,14 +57,11 @@ public class FirepitRenderer extends TileEntityRenderer<FirepitTile> {
         if(firepit.isBurning(slot)) {
           matrixStack.translate(-0.1f, 0.2f, 0.0f);
           matrixStack.scale(0.2f * (1.0f - firepit.getBurningFuel(slot).percentBurned()), 0.025f, 1.0f);
-          //TODO
-//          GlStateManager.disableCull();
-//          this.setLightmapDisabled(true);
-//          GlStateManager.disableLighting();
-//          Gui.drawRect(0, 0, 1, 1, 0xFF1AFF00);
-//          GlStateManager.enableLighting();
-//          this.setLightmapDisabled(false);
-//          GlStateManager.enableCull();
+          RenderSystem.enableDepthTest();
+          RenderSystem.disableCull();
+          Screen.fill(matrixStack.getLast().getMatrix(), 0, 0, 1, 1, 0xFF1AFF00);
+          RenderSystem.enableCull();
+          RenderSystem.disableDepthTest();
         }
 
         matrixStack.pop();
@@ -85,14 +84,11 @@ public class FirepitRenderer extends TileEntityRenderer<FirepitTile> {
       if(firepit.isCooking()) {
         matrixStack.translate(-0.1f, 0.2f, 0.0f);
         matrixStack.scale(0.2f * (1.0f - firepit.getCookingPercent()), 0.025f, 1.0f);
-        //TODO
-//        GlStateManager.disableCull();
-//        this.setLightmapDisabled(true);
-//        GlStateManager.disableLighting();
-//        Gui.drawRect(0, 0, 1, 1, 0xFF1AFF00);
-//        GlStateManager.enableLighting();
-//        this.setLightmapDisabled(false);
-//        GlStateManager.enableCull();
+        RenderSystem.enableDepthTest();
+        RenderSystem.disableCull();
+        Screen.fill(matrixStack.getLast().getMatrix(), 0, 0, 1, 1, 0xFF1AFF00);
+        RenderSystem.enableCull();
+        RenderSystem.disableDepthTest();
       }
 
       matrixStack.pop();
@@ -126,7 +122,7 @@ public class FirepitRenderer extends TileEntityRenderer<FirepitTile> {
 
       if(trace.getPos().equals(firepit.getPos())) {
         matrixStack.push();
-        matrixStack.translate(0.0d, 0.5d, 0.0d);
+        matrixStack.translate(0.0d, 0.75d, 0.0d);
         RenderUtils.renderText(I18n.format(state.getBlock().getTranslationKey() + ".heat", Math.round(firepit.getHeat())), matrixStack, buffer, combinedLight);
         matrixStack.pop();
       }
