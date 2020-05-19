@@ -1306,6 +1306,17 @@ public final class GradientDataGenerator {
         .build(finished, Gradient.loc("age1/" + GradientIds.TWINE));
 
       StagedRecipeBuilder
+        .shaped(Blocks.COBBLESTONE)
+        .stage(GradientStages.AGE_1.get())
+        .patternLine("PPP")
+        .patternLine("PCP")
+        .patternLine("PPP")
+        .key('P', GradientItems.PEBBLE.get())
+        .key('C', Items.CLAY_BALL)
+        .addCriterion("has_pebble", this.hasItem(GradientItems.PEBBLE.get()))
+        .build(finished, Gradient.loc("age1/cobblestone_from_pebbles"));
+
+      StagedRecipeBuilder
         .shapelessRecipe(GradientItems.HARDENED_PLANKS.get(), 2)
         .stage(GradientStages.AGE_2.get())
         .addIngredient(GradientItems.HARDENED_LOG.get())

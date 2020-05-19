@@ -118,7 +118,7 @@ public class AdvancementsProvider extends AdvancementProvider {
         .register(finished, loc("age1/bone_awl"));
 
       final Advancement waterskin = builder(GradientItems.EMPTY_WATERSKIN.get(), "waterskin", 5.75f, 1.0f, FrameType.GOAL, boneAwl)
-        .withCriterion("has_waterskin", InventoryChangeTrigger.Instance.forItems(GradientItems.EMPTY_WATERSKIN.get(), GradientItems.FILLED_WATERSKIN.get()))
+        .withCriterion("has_waterskin", InventoryChangeTrigger.Instance.forItems(GradientItems.EMPTY_WATERSKIN.get()))
         .register(finished, loc("age1/waterskin"));
 
       final Advancement hideBedding = builder(GradientItems.HIDE_BEDDING.get(), "hide_bedding", 5.5f, 2.0f, FrameType.GOAL, pelt)

@@ -1,0 +1,23 @@
+{
+  "type": "progression:shaped_staged",
+  "stages": [
+    "gradient:age_1"
+  ],
+  "damage_tools": true,
+  "pattern": [
+    "PPP",
+    "PCP",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "gradient:pebble"
+    },
+    "C": {
+      "item": "minecraft:clay_ball"
+    }
+  },
+  "result": {
+    "item": "minecraft:cobblestone"
+  }
+}

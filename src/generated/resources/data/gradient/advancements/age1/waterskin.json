@@ -30,9 +30,6 @@
         "items": [
           {
             "item": "gradient:empty_waterskin"
-          },
-          {
-            "item": "gradient:filled_waterskin"
           }
         ]
       }
