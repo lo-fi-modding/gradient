@@ -31,6 +31,10 @@ public class UnlitFibreTorchBlock extends TorchBlock {
     this.lit = lit;
   }
 
+  public TorchBlock getLit() {
+    return this.lit.get();
+  }
+
   @Override
   public void addInformation(final ItemStack stack, @Nullable final IBlockReader world, final List<ITextComponent> tooltip, final ITooltipFlag flag) {
     super.addInformation(stack, world, tooltip, flag);

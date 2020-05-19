@@ -14,6 +14,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
@@ -104,14 +105,13 @@ public class FirepitBlock extends HeatSinkerBlock {
           }
         }
 
-        //TODO
-//        if(Block.getBlockFromItem(held.getItem()) instanceof BlockTorchUnlit) {
-//          if(firepit.isBurning()) {
-//            world.playSound(null, pos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.NEUTRAL, 0.15f, world.rand.nextFloat() * 0.1f + 0.9f);
-//            player.setHeldItem(hand, new ItemStack(((BlockTorchUnlit)((BlockItem)held.getItem()).getBlock()).lit, held.getCount()));
-//            return ActionResultType.SUCCESS;
-//          }
-//        }
+        if(Block.getBlockFromItem(held.getItem()) instanceof UnlitFibreTorchBlock) {
+          if(firepit.isBurning()) {
+            world.playSound(null, pos, SoundEvents.ITEM_FIRECHARGE_USE, SoundCategory.NEUTRAL, 0.15f, world.rand.nextFloat() * 0.1f + 0.9f);
+            player.setHeldItem(hand, new ItemStack(((UnlitFibreTorchBlock)((BlockItem)held.getItem()).getBlock()).getLit(), held.getCount()));
+            return ActionResultType.SUCCESS;
+          }
+        }
 
         if(Block.getBlockFromItem(held.getItem()) == GradientBlocks.CLAY_FURNACE.get()) {
           if(!state.get(HAS_FURNACE)) {
