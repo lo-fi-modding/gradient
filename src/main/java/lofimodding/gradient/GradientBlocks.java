@@ -50,13 +50,13 @@ public final class GradientBlocks {
 
   private static final DeferredRegister<Block> REGISTRY = new DeferredRegister<>(ForgeRegistries.BLOCKS, Gradient.MOD_ID);
 
-  public static final RegistryObject<PebbleBlock> PEBBLE = REGISTRY.register(GradientIds.PEBBLE, () -> new PebbleBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(0.0f).doesNotBlockMovement()));
+  public static final RegistryObject<PebbleBlock> PEBBLE = REGISTRY.register(GradientIds.PEBBLE, () -> new PebbleBlock(Block.Properties.create(Material.EARTH).hardnessAndResistance(0.0f).doesNotBlockMovement()));
 
   private static final Map<Ore, RegistryObject<PebbleBlock>> PEBBLES = new HashMap<>();
 
   static {
     for(final Ore ore : Minerals.ores()) {
-      PEBBLES.put(ore, REGISTRY.register(GradientIds.PEBBLE(ore), () -> new PebbleBlock(Block.Properties.create(Material.ROCK).hardnessAndResistance(1.0f))));
+      PEBBLES.put(ore, REGISTRY.register(GradientIds.PEBBLE(ore), () -> new PebbleBlock(Block.Properties.create(Material.EARTH).hardnessAndResistance(1.0f))));
     }
   }
 
