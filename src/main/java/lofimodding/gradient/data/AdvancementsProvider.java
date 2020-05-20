@@ -61,71 +61,76 @@ public class AdvancementsProvider extends AdvancementProvider {
   public static class Age1 implements Consumer<Consumer<Advancement>> {
     @Override
     public void accept(final Consumer<Advancement> finished) {
-      final Advancement root = builder(GradientItems.PEBBLE.get(), "root", 0.0f, 3.0f, new ResourceLocation("textures/gui/advancements/backgrounds/adventure.png"), FrameType.TASK)
+      this.age1(finished);
+      this.age2(finished);
+    }
+
+    public void age1(final Consumer<Advancement> finished) {
+      final Advancement root = builder(1, GradientItems.PEBBLE.get(), "root", 0.0f, 3.0f, new ResourceLocation("textures/gui/advancements/backgrounds/adventure.png"), FrameType.TASK)
         .withCriterion("has_age_1", StageUnlockedTrigger.Instance.forStage(GradientStages.AGE_1.get()))
         .register(finished, loc("age1/root"));
 
-      final Advancement basicMaterials = builder(Items.STICK, "basic_materials", 1.0f, 3.5f, FrameType.TASK, root)
+      final Advancement basicMaterials = builder(1, Items.STICK, "basic_materials", 1.0f, 3.5f, FrameType.TASK, root)
         .withCriterion("has_sticks", InventoryChangeTrigger.Instance.forItems(ItemPredicate.Builder.create().tag(Tags.Items.RODS_WOODEN).build()))
         .withCriterion("has_fibre", InventoryChangeTrigger.Instance.forItems(GradientItems.FIBRE.get()))
         .withCriterion("has_pebble", InventoryChangeTrigger.Instance.forItems(GradientItems.PEBBLE.get()))
         .register(finished, loc("age1/basic_materials"));
 
-      final Advancement stoneHammer = builder(GradientItems.STONE_HAMMER.get(), "stone_hammer", 2.0f, 3.0f, FrameType.TASK, basicMaterials)
+      final Advancement stoneHammer = builder(1, GradientItems.STONE_HAMMER.get(), "stone_hammer", 2.0f, 3.0f, FrameType.TASK, basicMaterials)
         .withCriterion("has_hammer", InventoryChangeTrigger.Instance.forItems(GradientItems.STONE_HAMMER.get()))
         .register(finished, loc("age1/stone_hammer"));
 
-      final Advancement stoneHatchet = builder(GradientItems.STONE_HATCHET.get(), "stone_hatchet", 2.0f, 4.0f, FrameType.TASK, basicMaterials)
+      final Advancement stoneHatchet = builder(1, GradientItems.STONE_HATCHET.get(), "stone_hatchet", 2.0f, 4.0f, FrameType.TASK, basicMaterials)
         .withCriterion("has_hatchet", InventoryChangeTrigger.Instance.forItems(GradientItems.STONE_HATCHET.get()))
         .register(finished, loc("age1/stone_hatchet"));
 
-      final Advancement wood = builder(Blocks.OAK_LOG, "wood", 3.0f, 3.5f, FrameType.TASK, stoneHammer, stoneHatchet)
+      final Advancement wood = builder(1, Blocks.OAK_LOG, "wood", 3.0f, 3.5f, FrameType.TASK, stoneHammer, stoneHatchet)
         .withCriterion("has_wood", InventoryChangeTrigger.Instance.forItems(ItemPredicate.Builder.create().tag(ItemTags.LOGS).build()))
         .register(finished, loc("age1/wood"));
 
-      final Advancement planks = builder(Blocks.OAK_PLANKS, "planks", 4.0f, 3.5f, FrameType.TASK, wood)
+      final Advancement planks = builder(1, Blocks.OAK_PLANKS, "planks", 4.0f, 3.5f, FrameType.TASK, wood)
         .withCriterion("has_planks", InventoryChangeTrigger.Instance.forItems(ItemPredicate.Builder.create().tag(ItemTags.PLANKS).build()))
         .register(finished, loc("age1/planks"));
 
-      final Advancement grindstone = builder(GradientBlocks.GRINDSTONE.get(), "grindstone", 5.25f, 3.0f, FrameType.GOAL, planks)
+      final Advancement grindstone = builder(1, GradientBlocks.GRINDSTONE.get(), "grindstone", 5.25f, 3.0f, FrameType.GOAL, planks)
         .withCriterion("has_grindstone", InventoryChangeTrigger.Instance.forItems(GradientItems.GRINDSTONE.get()))
         .register(finished, loc("age1/grindstone"));
 
-      final Advancement mixingBasin = builder(GradientBlocks.MIXING_BASIN.get(), "mixing_basin", 5.5f, 4.0f, FrameType.GOAL, planks)
+      final Advancement mixingBasin = builder(1, GradientBlocks.MIXING_BASIN.get(), "mixing_basin", 5.5f, 4.0f, FrameType.GOAL, planks)
         .withCriterion("has_mixing_basin", InventoryChangeTrigger.Instance.forItems(GradientItems.MIXING_BASIN.get()))
         .register(finished, loc("age1/mixing_basin"));
 
-      final Advancement firepit = builder(GradientItems.FIREPIT.get(), "firepit", 3.0f, 4.75f, FrameType.TASK, basicMaterials)
+      final Advancement firepit = builder(1, GradientItems.FIREPIT.get(), "firepit", 3.0f, 4.75f, FrameType.TASK, basicMaterials)
         .withCriterion("has_firepit", InventoryChangeTrigger.Instance.forItems(GradientItems.FIREPIT.get()))
         .register(finished, loc("age1/firepit"));
 
-      final Advancement fireStarter = builder(GradientItems.FIRE_STARTER.get(), "fire_starter", 4.0f, 4.75f, FrameType.TASK, firepit)
+      final Advancement fireStarter = builder(1, GradientItems.FIRE_STARTER.get(), "fire_starter", 4.0f, 4.75f, FrameType.TASK, firepit)
         .withCriterion("has_fire_starter", InventoryChangeTrigger.Instance.forItems(GradientItems.FIRE_STARTER.get()))
         .withCriterion("lit_fire", BlockRightClickedTrigger.Instance.of(GradientBlocks.FIREPIT.get(), Ingredient.fromItems(GradientItems.FIRE_STARTER.get())))
         .register(finished, loc("age1/fire_starter"));
 
-      final Advancement fibreTorch = builder(GradientItems.LIT_FIBRE_TORCH.get(), "fibre_torch", 5.75f, 5.0f, FrameType.GOAL, fireStarter)
+      final Advancement fibreTorch = builder(1, GradientItems.LIT_FIBRE_TORCH.get(), "fibre_torch", 5.75f, 5.0f, FrameType.GOAL, fireStarter)
         .withCriterion("has_unlit", InventoryChangeTrigger.Instance.forItems(GradientItems.UNLIT_FIBRE_TORCH.get()))
         .withCriterion("has_lit", InventoryChangeTrigger.Instance.forItems(GradientItems.LIT_FIBRE_TORCH.get()))
         .register(finished, loc("age1/fibre_torch"));
 
-      final Advancement pelt = builder(GradientItems.COW_PELT.get(), "pelt", 1.0f, 2.5f, FrameType.TASK, root)
+      final Advancement pelt = builder(1, GradientItems.COW_PELT.get(), "pelt", 1.0f, 2.5f, FrameType.TASK, root)
         .withCriterion("has_pelt", InventoryChangeTrigger.Instance.forItems(ItemPredicate.Builder.create().tag(GradientTags.Items.PELTS).build()))
         .register(finished, loc("age1/pelt"));
 
-      final Advancement boneAwl = builder(GradientItems.BONE_AWL.get(), "bone_awl", 2.0f, 1.375f, FrameType.TASK, pelt)
+      final Advancement boneAwl = builder(1, GradientItems.BONE_AWL.get(), "bone_awl", 2.0f, 1.375f, FrameType.TASK, pelt)
         .withCriterion("has_bone_awl", InventoryChangeTrigger.Instance.forItems(GradientItems.BONE_AWL.get()))
         .register(finished, loc("age1/bone_awl"));
 
-      final Advancement waterskin = builder(GradientItems.EMPTY_WATERSKIN.get(), "waterskin", 5.75f, 1.0f, FrameType.GOAL, boneAwl)
+      final Advancement waterskin = builder(1, GradientItems.EMPTY_WATERSKIN.get(), "waterskin", 5.75f, 1.0f, FrameType.GOAL, boneAwl)
         .withCriterion("has_waterskin", InventoryChangeTrigger.Instance.forItems(GradientItems.EMPTY_WATERSKIN.get()))
         .register(finished, loc("age1/waterskin"));
 
-      final Advancement hideBedding = builder(GradientItems.HIDE_BEDDING.get(), "hide_bedding", 5.5f, 2.0f, FrameType.GOAL, pelt)
+      final Advancement hideBedding = builder(1, GradientItems.HIDE_BEDDING.get(), "hide_bedding", 5.5f, 2.0f, FrameType.GOAL, pelt)
         .withCriterion("has_hide_bedding", InventoryChangeTrigger.Instance.forItems(GradientItems.HIDE_BEDDING.get()))
         .register(finished, loc("age1/hide_bedding"));
 
-      final Advancement hideArmour = builder(GradientItems.HIDE_PANTS.get(), "hide_armour", 3.0f, 0.375f, FrameType.CHALLENGE, boneAwl)
+      final Advancement hideArmour = builder(1, GradientItems.HIDE_PANTS.get(), "hide_armour", 3.0f, 0.375f, FrameType.CHALLENGE, boneAwl)
         .withCriterion("has_hide_hat", InventoryChangeTrigger.Instance.forItems(GradientItems.HIDE_HAT.get()))
         .withCriterion("has_hide_chest", InventoryChangeTrigger.Instance.forItems(GradientItems.HIDE_SHIRT.get()))
         .withCriterion("has_hide_pants", InventoryChangeTrigger.Instance.forItems(GradientItems.HIDE_PANTS.get()))
@@ -133,13 +138,39 @@ public class AdvancementsProvider extends AdvancementProvider {
         .withRewards(new AdvancementRewards(0, new ResourceLocation[] {GradientLoot.HIDE_ARMOUR_ADVANCEMENT}, new ResourceLocation[0], FunctionObject.CacheableFunction.EMPTY))
         .register(finished, loc("age1/hide_armour"));
 
-      final Advancement goal = builder(Items.WHEAT, "goal", 7.0f, 3.0f, FrameType.CHALLENGE, grindstone, mixingBasin, fibreTorch, waterskin, hideBedding)
+      final Advancement goal = builder(1, Items.WHEAT, "goal", 7.0f, 3.0f, FrameType.CHALLENGE, grindstone, mixingBasin, fibreTorch, waterskin, hideBedding)
         .withRewards(new AdvancementRewards(0, new ResourceLocation[0], new ResourceLocation[0], new FunctionObject.CacheableFunction(Gradient.loc("grant_age_2"))))
         .register(finished, loc("age1/goal"));
     }
 
-    private static Advancement.Builder builder(final IItemProvider icon, final String id, final float x, final float y, @Nullable final ResourceLocation background, final FrameType frame, final Advancement... parents) {
-      final DisplayInfo display = new DisplayInfo(new ItemStack(icon), text(id + ".title"), text(id + ".description"), background, frame, background == null, background == null, false);
+    public void age2(final Consumer<Advancement> finished) {
+      final Advancement root = builder(2, Items.WHEAT, "root", 0.0f, 0.0f, new ResourceLocation("textures/block/farmland.png"), FrameType.TASK)
+        .withCriterion("has_age_2", StageUnlockedTrigger.Instance.forStage(GradientStages.AGE_2.get()))
+        .register(finished, loc("age2/root"));
+
+      final Advancement clay = builder(2, Items.CLAY_BALL, "clay", 1.0f, -2.0f, FrameType.TASK, root)
+        .withCriterion("has_clay", InventoryChangeTrigger.Instance.forItems(Items.CLAY_BALL))
+        .register(finished, loc("age2/clay"));
+
+      final Advancement dryingRack = builder(2, GradientItems.DRYING_RACK.get(), "drying_rack", 1.0f, -1.0f, FrameType.TASK, root)
+        .withCriterion("has_drying_rack", InventoryChangeTrigger.Instance.forItems(GradientItems.DRYING_RACK.get()))
+        .register(finished, loc("age2/drying_rack"));
+
+      final Advancement flintKnife = builder(2, GradientItems.FLINT_KNIFE.get(), "flint_knife", 1.0f, 0.0f, FrameType.TASK, root)
+        .withCriterion("has_flint_knife", InventoryChangeTrigger.Instance.forItems(GradientItems.FLINT_KNIFE.get()))
+        .register(finished, loc("age2/flint_knife"));
+
+      final Advancement hardenedLog = builder(2, GradientItems.HARDENED_LOG.get(), "hardened_log", 1.0f, 1.0f, FrameType.TASK, root)
+        .withCriterion("has_hardened_wood", InventoryChangeTrigger.Instance.forItems(GradientItems.HARDENED_LOG.get()))
+        .register(finished, loc("age2/hardened_wood"));
+
+      final Advancement standingTorch = builder(2, GradientItems.TORCH_STAND.get(), "standing_torch", 1.0f, 2.0f, FrameType.TASK, root)
+        .withCriterion("has_standing_torch", InventoryChangeTrigger.Instance.forItems(GradientItems.TORCH_STAND.get()))
+        .register(finished, loc("age2/standing_torch"));
+    }
+
+    private static Advancement.Builder builder(final int age, final IItemProvider icon, final String id, final float x, final float y, @Nullable final ResourceLocation background, final FrameType frame, final Advancement... parents) {
+      final DisplayInfo display = new DisplayInfo(new ItemStack(icon), text(age, id + ".title"), text(age, id + ".description"), background, frame, background == null, background == null, false);
       display.setPosition(x, y);
 
       final Advancement.Builder builder = Advancement.Builder.builder().withDisplay(display);
@@ -154,12 +185,12 @@ public class AdvancementsProvider extends AdvancementProvider {
       return builder;
     }
 
-    private static Advancement.Builder builder(final IItemProvider icon, final String id, final float x, final float y, final FrameType frame, final Advancement... parents) {
-      return builder(icon, id, x, y, null, frame, parents);
+    private static Advancement.Builder builder(final int age, final IItemProvider icon, final String id, final float x, final float y, final FrameType frame, final Advancement... parents) {
+      return builder(age, icon, id, x, y, null, frame, parents);
     }
 
-    private static TranslationTextComponent text(final String key) {
-      return new TranslationTextComponent("advancements.gradient.age1." + key);
+    private static TranslationTextComponent text(final int age, final String key) {
+      return new TranslationTextComponent("advancements.gradient.age" + age + '.' + key);
     }
   }
 

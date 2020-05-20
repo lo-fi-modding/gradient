@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": {
+      "item": "minecraft:wheat"
+    },
+    "title": {
+      "translate": "advancements.gradient.age2.root.title"
+    },
+    "description": {
+      "translate": "advancements.gradient.age2.root.description"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false,
+    "background": "minecraft:textures/block/farmland.png",
+    "x": 0.0,
+    "y": 0.0
+  },
+  "criteria": {
+    "has_age_2": {
+      "trigger": "progression:stage_unlocked",
+      "conditions": {
+        "id": "gradient:age_2"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_age_2"
+    ]
+  ]
+}

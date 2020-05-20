@@ -1,0 +1,46 @@
+{
+  "parent": "gradient:age2/root",
+  "display": {
+    "icon": {
+      "item": "gradient:drying_rack"
+    },
+    "title": {
+      "translate": "advancements.gradient.age2.drying_rack.title"
+    },
+    "description": {
+      "translate": "advancements.gradient.age2.drying_rack.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+    "x": 1.0,
+    "y": -1.0
+  },
+  "criteria": {
+    "has_parent_0": {
+      "trigger": "gradient:advancement_unlocked",
+      "conditions": {
+        "id": "gradient:age2/root"
+      }
+    },
+    "has_drying_rack": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "gradient:drying_rack"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_parent_0"
+    ],
+    [
+      "has_drying_rack"
+    ]
+  ]
+}

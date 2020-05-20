@@ -1180,11 +1180,23 @@ public final class GradientDataGenerator {
       this.age1("hide_bedding", "Dirt Nap", "Craft some bedding for sleeping on the go");
       this.age1("hide_armour", "The Buttflappening", "Craft a full set of hide armour. You'll be rewarded with a handful of torches that don't go out!");
       this.age1("goal", "Settle Down", "Age 1 complete!");
+
+      this.age2("root", "Age 2: Agriculture", "Settling down");
+      this.age2("clay", "Pottery and Other More Useful Things", "Find some clay");
+      this.age2("drying_rack", "Hang It Up", "Craft a drying rack");
+      this.age2("flint_knife", "Work It", "Craft a flint knife");
+      this.age2("hardened_log", "Hard Wood", "Harden a log by placing it next to a firepit");
+      this.age2("standing_torch", "Let There Be Slightly More Light", "Make a torch stand to improve your fibre torches");
     }
 
     private void age1(final String key, final String title, final String description) {
       this.add("advancements.gradient.age1." + key + ".title", title);
       this.add("advancements.gradient.age1." + key + ".description", description);
+    }
+
+    private void age2(final String key, final String title, final String description) {
+      this.add("advancements.gradient.age2." + key + ".title", title);
+      this.add("advancements.gradient.age2." + key + ".description", description);
     }
 
     private void add(final GradientFluid fluid, final String translation) {
