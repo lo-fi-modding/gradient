@@ -13,20 +13,27 @@ import lofimodding.gradient.energy.kinetic.KineticEnergyStorage;
 import lofimodding.gradient.energy.kinetic.KineticEnergyTransfer;
 import lofimodding.gradient.fluids.GradientFluidHandlerCapability;
 import lofimodding.gradient.network.Packets;
+import lofimodding.gradient.recipes.CraftingRecipeWrapper;
+import lofimodding.gradient.recipes.FurnaceRecipeWrapper;
 import lofimodding.progression.recipes.ShapelessStagedRecipe;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementManager;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.inventory.container.WorkbenchContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.crafting.FurnaceRecipe;
+import net.minecraft.item.crafting.ICraftingRecipe;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.item.crafting.ShapelessRecipe;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tileentity.AbstractFurnaceTileEntity;
 import net.minecraft.util.EnumTypeAdapterFactory;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
@@ -173,6 +180,26 @@ public class Gradient {
           final ShapelessRecipe recipe = new ShapelessRecipe(original.getId(), original.getGroup(), output, ingredients);
           return new ShapelessStagedRecipe(recipe, NonNullList.create(), true);
         })
+      );
+    }
+
+    if(Config.INTEROP.DISABLE_VANILLA_CRAFTING_TABLE.get()) {
+      // Wraps all crafting recipes in a special IRecipe implementation that delegates all methods to the wrapped IRecipe.
+      // It has special handling to fail matches if the container is the vanilla workbench container.
+
+      InterModComms.sendTo("no-recipes", "replace_recipe", () -> new Tuple<Predicate<IRecipe<?>>, Function<IRecipe<?>, IRecipe<?>>>(
+        recipe -> recipe.getType() == IRecipeType.CRAFTING && recipe instanceof ICraftingRecipe,
+        original -> new CraftingRecipeWrapper((IRecipe<CraftingInventory>)original, (inv, world) -> !(inv.eventHandler instanceof WorkbenchContainer)))
+      );
+    }
+
+    if(Config.INTEROP.DISABLE_VANILLA_FURNACE.get()) {
+      // Wraps all furnace recipes in a special IRecipe implementation that delegates all methods to the wrapped IRecipe.
+      // It has special handling to fail matches if the inventory is the vanilla furnace TE.
+
+      InterModComms.sendTo("no-recipes", "replace_recipe", () -> new Tuple<Predicate<IRecipe<?>>, Function<IRecipe<?>, IRecipe<?>>>(
+        recipe -> recipe.getType() == IRecipeType.SMELTING && recipe instanceof FurnaceRecipe,
+        original -> new FurnaceRecipeWrapper((FurnaceRecipe)original, (inv, world) -> !(inv instanceof AbstractFurnaceTileEntity)))
       );
     }
   }

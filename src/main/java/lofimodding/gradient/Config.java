@@ -29,6 +29,8 @@ public final class Config {
     public final ForgeConfigSpec.BooleanValue REPLACE_STICK_RECIPES;
     public final ForgeConfigSpec.BooleanValue HALVE_PLANK_RECIPE_OUTPUT;
     public final ForgeConfigSpec.BooleanValue HALVE_STICK_RECIPE_OUTPUT;
+    public final ForgeConfigSpec.BooleanValue DISABLE_VANILLA_CRAFTING_TABLE;
+    public final ForgeConfigSpec.BooleanValue DISABLE_VANILLA_FURNACE;
 
     private Interop(final ForgeConfigSpec.Builder builder) {
       builder
@@ -59,6 +61,16 @@ public final class Config {
         .comment("Should stick recipes output be halved?")
         .translation("config.gradient.interop.halve_stick_recipe_output")
         .define("halve_stick_recipe_output", true);
+
+      this.DISABLE_VANILLA_CRAFTING_TABLE = builder
+        .comment("Disables the vanilla crafting table. Try disabling this if any recipes or crafting machines are broken.")
+        .translation("config.gradient.interop.disable_vanilla_crafting_table")
+        .define("disable_vanilla_crafting_table", true);
+
+      this.DISABLE_VANILLA_FURNACE = builder
+        .comment("Disables the vanilla furnace. Try disabling this if any recipes or furnaces are broken.")
+        .translation("config.gradient.interop.disable_vanilla_furnace")
+        .define("disable_vanilla_furnace", true);
 
       builder.pop();
     }

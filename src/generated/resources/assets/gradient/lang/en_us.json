@@ -149,6 +149,8 @@
   "fluid.gradient.tin": "Molten Tin",
   "fluid.gradient.zinc": "Molten Zinc",
   "fluids.gradient.air": "Air",
+  "gradient.crafting_table_disabled": "The crafting table has been disabled by Gradient and will not function. Its remains only for use in other crafting recipes.",
+  "gradient.furnace_disabled": "The furnace has been disabled by Gradient and will not function. Its remains only for use in other crafting recipes.",
   "item.gradient.azurite_crushed": "Crushed Azurite Ore",
   "item.gradient.azurite_purified": "Purified Azurite Ore",
   "item.gradient.bark": "Bark",
