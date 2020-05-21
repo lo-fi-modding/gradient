@@ -1186,6 +1186,7 @@ public final class GradientDataGenerator {
 
       this.age2("root", "Age 2: Agriculture", "Settling down");
       this.age2("clay", "Pottery and Other More Useful Things", "Find some clay");
+      this.age2("clay_furnace", "Heating Things Up", "Make a furnace out of clay and place it beside your fire pit to harden");
       this.age2("drying_rack", "Hang It Up", "Craft a drying rack");
       this.age2("flint_knife", "Work It", "Craft a flint knife");
       this.age2("hardened_log", "Hard Wood", "Harden a log by placing it next to a firepit");

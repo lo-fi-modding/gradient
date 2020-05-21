@@ -1,36 +1,35 @@
 {
-  "parent": "gradient:age2/leather",
+  "parent": "gradient:age2/root",
   "display": {
     "icon": {
-      "item": "gradient:flint_knife",
-      "nbt": "{Damage:0}"
+      "item": "gradient:bark"
     },
     "title": {
-      "translate": "advancements.gradient.age2.flint_knife.title"
+      "translate": "advancements.gradient.age2.bark.title"
     },
     "description": {
-      "translate": "advancements.gradient.age2.flint_knife.description"
+      "translate": "advancements.gradient.age2.bark.description"
     },
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false,
-    "x": 4.0,
-    "y": 0.5
+    "x": 1.0,
+    "y": 1.0
   },
   "criteria": {
     "has_parent_0": {
       "trigger": "gradient:advancement_unlocked",
       "conditions": {
-        "id": "gradient:age2/leather"
+        "id": "gradient:age2/root"
       }
     },
-    "has_flint_knife": {
+    "has_bark": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "gradient:flint_knife"
+            "item": "gradient:bark"
           }
         ]
       }
@@ -41,7 +40,7 @@
       "has_parent_0"
     ],
     [
-      "has_flint_knife"
+      "has_bark"
     ]
   ]
 }

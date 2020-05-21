@@ -35,6 +35,8 @@
   "advancements.gradient.age1.wood.title": "Getting Wood",
   "advancements.gradient.age2.clay.description": "Find some clay",
   "advancements.gradient.age2.clay.title": "Pottery and Other More Useful Things",
+  "advancements.gradient.age2.clay_furnace.description": "Make a furnace out of clay and place it beside your fire pit to harden",
+  "advancements.gradient.age2.clay_furnace.title": "Heating Things Up",
   "advancements.gradient.age2.drying_rack.description": "Craft a drying rack",
   "advancements.gradient.age2.drying_rack.title": "Hang It Up",
   "advancements.gradient.age2.flint_knife.description": "Craft a flint knife",
