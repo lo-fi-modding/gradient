@@ -36,6 +36,8 @@ public final class GradientIds {
     return metal.name + "_nugget";
   }
 
+  public static final String COAL_NUGGET = "coal_nugget";
+
   public static String PLATE(final Metal metal) {
     return metal.name + "_plate";
   }

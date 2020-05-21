@@ -697,6 +697,8 @@ public final class GradientDataGenerator {
         }
       });
 
+      this.singleTexture(GradientIds.COAL_NUGGET, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.COAL_NUGGET));
+
       this.getBuilder(GradientIds.SALT_BLOCK).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.SALT_BLOCK)));
       this.singleTexture(GradientIds.SALT, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.SALT));
       this.singleTexture(GradientIds.FIBRE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.FIBRE));
@@ -1011,6 +1013,8 @@ public final class GradientDataGenerator {
         this.add(GradientItems.PLATE(metal).get(), metalName + " Plate");
         this.add(GradientItems.METAL_BLOCK(metal).get(), "Block of " + metalName);
       }
+
+      this.add(GradientItems.COAL_NUGGET.get(), "Coal Nugget");
 
       this.add(GradientItems.SALT_BLOCK.get(), "Block of Salt");
       this.add(GradientItems.SALT.get(), "Salt");
@@ -1760,6 +1764,16 @@ public final class GradientDataGenerator {
     }
 
     private void registerFuelRecipes(final Consumer<IFinishedRecipe> finished) {
+      GradientRecipeBuilder
+        .fuel()
+        .ticks(24000)
+        .ignitionTemp(700.0f)
+        .burnTemp(2700.0f)
+        .heatPerSecond(1.5f)
+        .ingredient(ItemTags.COALS)
+        .addCriterion("has_coal", this.hasItem(ItemTags.COALS))
+        .build(finished, Gradient.loc("fuel/coal"));
+
       GradientRecipeBuilder
         .fuel()
         .ticks(24000)

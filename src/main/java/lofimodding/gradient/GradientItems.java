@@ -90,6 +90,8 @@ public final class GradientItems {
     }
   }
 
+  public static final RegistryObject<Item> COAL_NUGGET = REGISTRY.register(GradientIds.COAL_NUGGET, () -> new Item(new Item.Properties().group(GROUP)));
+
   private static final Map<Metal, RegistryObject<MetalItem>> PLATES = new HashMap<>();
 
   static {
