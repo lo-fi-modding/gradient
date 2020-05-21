@@ -1,0 +1,46 @@
+{
+  "parent": "gradient:age2/clay",
+  "display": {
+    "icon": {
+      "item": "gradient:clay_oven"
+    },
+    "title": {
+      "translate": "advancements.gradient.age2.clay_oven.title"
+    },
+    "description": {
+      "translate": "advancements.gradient.age2.clay_oven.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+    "x": 2.5,
+    "y": -2.5
+  },
+  "criteria": {
+    "has_parent_0": {
+      "trigger": "gradient:advancement_unlocked",
+      "conditions": {
+        "id": "gradient:age2/clay"
+      }
+    },
+    "has_clay_oven": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "gradient:clay_oven"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_parent_0"
+    ],
+    [
+      "has_clay_oven"
+    ]
+  ]
+}

@@ -12,6 +12,7 @@ import lofimodding.gradient.GradientStages;
 import lofimodding.gradient.GradientTags;
 import lofimodding.gradient.advancements.criterion.AdvancementUnlockedTrigger;
 import lofimodding.gradient.advancements.criterion.BlockRightClickedTrigger;
+import lofimodding.gradient.science.Minerals;
 import lofimodding.progression.advancements.StageUnlockedTrigger;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRewards;
@@ -160,6 +161,12 @@ public class AdvancementsProvider extends AdvancementProvider {
         .withCriterion("has_clay_furnace", InventoryChangeTrigger.Instance.forItems(GradientItems.CLAY_FURNACE.get()))
         .register(finished, loc("age2/clay_furnace"));
 
+      final Advancement clayOven = builder(2, GradientItems.CLAY_OVEN.get(), "clay_oven", 2.5f, -2.5f, FrameType.TASK, clay)
+        .withCriterion("has_clay_oven", InventoryChangeTrigger.Instance.forItems(GradientItems.CLAY_OVEN.get()))
+        .register(finished, loc("age2/clay_oven"));
+
+      //TODO: bellows
+
       final Advancement dryingRack = builder(2, GradientItems.DRYING_RACK.get(), "drying_rack", 2.0f, 0.0f, FrameType.TASK, root)
         .withCriterion("has_drying_rack", InventoryChangeTrigger.Instance.forItems(GradientItems.DRYING_RACK.get()))
         .register(finished, loc("age2/drying_rack"));
@@ -192,13 +199,19 @@ public class AdvancementsProvider extends AdvancementProvider {
         .withCriterion("has_hardened_stick", InventoryChangeTrigger.Instance.forItems(GradientItems.HARDENED_STICK.get()))
         .register(finished, loc("age2/hardened_stick"));
 
-      final Advancement stoneMattock = builder(2, GradientItems.STONE_MATTOCK.get(), "stone_mattock", 5.0f, -0.25f, FrameType.TASK, flintKnife, hardenedStick)
-        .withCriterion("has_stone_mattock", InventoryChangeTrigger.Instance.forItems(GradientItems.STONE_MATTOCK.get()))
-        .register(finished, loc("age2/stone_mattock"));
-
-      final Advancement stonePickaxe = builder(2, GradientItems.STONE_PICKAXE.get(), "stone_pickaxe", 5.0f, 1.25f, FrameType.TASK, flintKnife, hardenedStick)
+      final Advancement stonePickaxe = builder(2, GradientItems.STONE_PICKAXE.get(), "stone_pickaxe", 5.0f, -0.25f, FrameType.TASK, flintKnife, hardenedStick)
         .withCriterion("has_stone_pickaxe", InventoryChangeTrigger.Instance.forItems(GradientItems.STONE_PICKAXE.get()))
         .register(finished, loc("age2/stone_pickaxe"));
+
+      final Advancement ore = builder(2, GradientItems.NUGGET(Minerals.COPPER).get(), "ore", 6.0f, -0.75f, FrameType.TASK, stonePickaxe)
+        .withCriterion("has_nugget", InventoryChangeTrigger.Instance.forItems(ItemPredicate.Builder.create().tag(Tags.Items.NUGGETS).build()))
+        .withCriterion("has_ore", InventoryChangeTrigger.Instance.forItems(ItemPredicate.Builder.create().tag(Tags.Items.ORES).build()))
+        .withRequirementsStrategy(requirements -> new String[][] {{"has_parent_0"}, {"has_nugget", "has_ore"}})
+        .register(finished, loc("age2/ore"));
+
+      final Advancement stoneMattock = builder(2, GradientItems.STONE_MATTOCK.get(), "stone_mattock", 5.0f, 1.25f, FrameType.TASK, flintKnife, hardenedStick)
+        .withCriterion("has_stone_mattock", InventoryChangeTrigger.Instance.forItems(GradientItems.STONE_MATTOCK.get()))
+        .register(finished, loc("age2/stone_mattock"));
     }
 
     private static Advancement.Builder builder(final int age, final IItemProvider icon, final String id, final float x, final float y, @Nullable final ResourceLocation background, final FrameType frame, final Advancement... parents) {
