@@ -13,6 +13,7 @@ import lofimodding.gradient.GradientStages;
 import lofimodding.gradient.GradientTags;
 import lofimodding.gradient.advancements.criterion.AdvancementUnlockedTrigger;
 import lofimodding.gradient.advancements.criterion.BlockRightClickedTrigger;
+import lofimodding.gradient.advancements.criterion.UsedHoeTrigger;
 import lofimodding.gradient.science.Minerals;
 import lofimodding.progression.advancements.StageUnlockedTrigger;
 import net.minecraft.advancements.Advancement;
@@ -227,6 +228,10 @@ public class AdvancementsProvider extends AdvancementProvider {
       final Advancement stoneMattock = builder(2, GradientItems.STONE_MATTOCK.get(), "stone_mattock", 5.0f, 1.25f, FrameType.TASK, flintKnife, hardenedStick)
         .withCriterion("has_stone_mattock", InventoryChangeTrigger.Instance.forItems(GradientItems.STONE_MATTOCK.get()))
         .register(finished, loc("age2/stone_mattock"));
+
+      final Advancement till = builder(2, Blocks.FARMLAND, "till", 6.0f, 1.25f, FrameType.TASK, stoneMattock)
+        .withCriterion("tilled_soil", new UsedHoeTrigger.Instance())
+        .register(finished, loc("age2/till"));
     }
 
     private static Advancement.Builder builder(final int age, final IItemProvider icon, final String id, final float x, final float y, @Nullable final ResourceLocation background, final FrameType frame, final Advancement... parents) {

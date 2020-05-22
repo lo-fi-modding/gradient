@@ -10,6 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.event.entity.player.AdvancementEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
@@ -32,6 +33,13 @@ public final class AdvancementEvents {
     }
 
     GradientCriteriaTriggers.BLOCK_RIGHT_CLICKED.trigger((ServerPlayerEntity)event.getPlayer(), event.getWorld().getBlockState(event.getPos()).getBlock(), event.getItemStack());
+  }
+
+  @SubscribeEvent
+  public static void onUseHoe(final UseHoeEvent event) {
+    if(!event.getContext().getWorld().isRemote && event.getEntity() instanceof ServerPlayerEntity) {
+      GradientCriteriaTriggers.USED_HOE.trigger((ServerPlayerEntity)event.getEntity());
+    }
   }
 
   @SubscribeEvent
