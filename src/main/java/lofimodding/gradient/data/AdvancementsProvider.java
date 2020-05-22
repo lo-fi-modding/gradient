@@ -232,6 +232,14 @@ public class AdvancementsProvider extends AdvancementProvider {
       final Advancement till = builder(2, Blocks.FARMLAND, "till", 6.0f, 1.25f, FrameType.TASK, stoneMattock)
         .withCriterion("tilled_soil", new UsedHoeTrigger.Instance())
         .register(finished, loc("age2/till"));
+
+      final Advancement wheat = builder(2, Items.WHEAT, "wheat", 7.0f, 1.25f, FrameType.TASK, till)
+        .withCriterion("has_wheat", InventoryChangeTrigger.Instance.forItems(Items.WHEAT))
+        .register(finished, loc("age2/wheat"));
+
+      final Advancement bread = builder(2, Items.BREAD, "bread", 8.0f, 1.25f, FrameType.TASK, wheat)
+        .withCriterion("has_bread", InventoryChangeTrigger.Instance.forItems(Items.BREAD))
+        .register(finished, loc("age2/bread"));
     }
 
     private static Advancement.Builder builder(final int age, final IItemProvider icon, final String id, final float x, final float y, @Nullable final ResourceLocation background, final FrameType frame, final Advancement... parents) {
