@@ -1,35 +1,35 @@
 {
-  "parent": "gradient:age2/clay_furnace",
+  "parent": "gradient:age2/clay_crucible",
   "display": {
     "icon": {
-      "item": "gradient:clay_oven"
+      "item": "gradient:clay_cast_ingot"
     },
     "title": {
-      "translate": "advancements.gradient.age2.clay_oven.title"
+      "translate": "advancements.gradient.age2.clay_cast.title"
     },
     "description": {
-      "translate": "advancements.gradient.age2.clay_oven.description"
+      "translate": "advancements.gradient.age2.clay_cast.description"
     },
-    "frame": "task",
+    "frame": "goal",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false,
-    "x": 2.5,
-    "y": -2.5
+    "x": 8.0,
+    "y": -1.5
   },
   "criteria": {
     "has_parent_0": {
       "trigger": "gradient:advancement_unlocked",
       "conditions": {
-        "id": "gradient:age2/clay_furnace"
+        "id": "gradient:age2/clay_crucible"
       }
     },
-    "has_clay_oven": {
+    "has_clay_cast": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "gradient:clay_oven"
+            "tag": "gradient:casts"
           }
         ]
       }
@@ -40,7 +40,7 @@
       "has_parent_0"
     ],
     [
-      "has_clay_oven"
+      "has_clay_cast"
     ]
   ]
 }

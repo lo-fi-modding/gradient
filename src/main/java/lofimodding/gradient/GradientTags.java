@@ -124,6 +124,8 @@ public final class GradientTags {
     public static final Tag<Item> PELTS_SHEEP = tag("pelts/sheep");
     public static final Tag<Item> PELTS_WOLF = tag("pelts/wolf");
 
+    public static final Tag<Item> CASTS = tag("casts");
+
     private static Tag<Item> tag(final String name) {
       return tag(Gradient.loc(name));
     }

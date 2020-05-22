@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "gradient:fuel/coal_nugget"
+    ]
+  },
+  "criteria": {
+    "has_coal_nugget": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "gradient:coal_nugget"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "gradient:fuel/coal_nugget"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_coal_nugget",
+      "has_the_recipe"
+    ]
+  ]
+}

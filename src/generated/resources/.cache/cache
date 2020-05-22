@@ -64,7 +64,7 @@ e02efa1f66998d1055cc347b6075eaf13dc2ee45 assets\gradient\blockstates\wooden_conv
 1854525310ee03accd90a9e89a11a36af80a1533 assets\gradient\blockstates\wooden_crank.json
 a9ed0046e31fcace51b6832dd1e004f15f81f11f assets\gradient\blockstates\wooden_gearbox.json
 659fa450fe62cdecc69d9276f01c713a1e62a205 assets\gradient\blockstates\zinc_block.json
-470109f80072718bc036d27fb44a5c552c2ca22c assets\gradient\lang\en_us.json
+eddc85a156905111c745cbbd1c4fec811021bcdf assets\gradient\lang\en_us.json
 910f0617e8b2433ac0f97c48cbbc8251b4f162b3 assets\gradient\models\block\azurite_ore.json
 79a72e81ecb79d9775041b9a2d526a90f646005b assets\gradient\models\block\azurite_pebble.json
 f295f4e7338854665f216e2f0ca3e339b0d284a7 assets\gradient\models\block\bronze_block.json
@@ -168,6 +168,7 @@ eb51a0da1fcea511f50cecfe82a7c69cc7db6b41 assets\gradient\models\item\clay_cast_s
 fc7fc1d75898dc3f451d964dc84589cdf2a8966a assets\gradient\models\item\clay_furnace.json
 ecc9c07d4e460363d864105b635950404cf98b4f assets\gradient\models\item\clay_metal_mixer.json
 da430a7b0d617a0f219af5b88b96cdb08e074da2 assets\gradient\models\item\clay_oven.json
+f78fea74d74a3a0d263a6d2119adacc217357559 assets\gradient\models\item\coal_nugget.json
 7b4fa9cf9f42dc1a9054d5dc88fe296d809e1883 assets\gradient\models\item\copper_block.json
 65fd911a0d0991ae744faeb83e40613ba6d290a6 assets\gradient\models\item\copper_crushed.json
 aaaa7a7618b0e6cb38b490992401a55788c41bdd assets\gradient\models\item\copper_dust.json
@@ -429,8 +430,11 @@ dd316d333eddfcbf845fafd7f30da8c7440863da data\gradient\advancements\age1\stone_h
 dfdce714b0b60c11af6eeb3a90c7ee2df2cc681c data\gradient\advancements\age1\wood.json
 38391d4c67ed6975a877727208cfb066b304eecf data\gradient\advancements\age2\bark.json
 e2568b7604b154e961d0c6b36c9f3c6c6279de1e data\gradient\advancements\age2\clay.json
+9a54a1f337613239fe8cdf753ff8af52b41b1039 data\gradient\advancements\age2\clay_cast.json
+f17eb028bcf3a974790068d470afb7d717a500e2 data\gradient\advancements\age2\clay_crucible.json
 f533fb1f9dff89803407fb9b573c0d9582088308 data\gradient\advancements\age2\clay_furnace.json
-06881e8da49c77246569edd5970dd630ee21ac26 data\gradient\advancements\age2\clay_oven.json
+4881d2055c481aa82fbf395429d32684905f6a47 data\gradient\advancements\age2\clay_oven.json
+8aa3d825ac4f774c796b339d2b1467b35e872488 data\gradient\advancements\age2\coal.json
 090562bcb559caa26e2b5f7a51896d331d2a4549 data\gradient\advancements\age2\drying_rack.json
 67e8c6a250b74566f41c2582dfe52ac69e67d9dd data\gradient\advancements\age2\flint_knife.json
 f54bfc5d651f22b1ce7f8dbd3be91e250e672460 data\gradient\advancements\age2\hardened_planks.json
@@ -454,6 +458,7 @@ bc2caa722e9fd129e8a179bcd9fc940b0fc9e067 data\gradient\advancements\recipes\food
 8253a6eeef4eb8d98a77b8fbd1421598af0c4a03 data\gradient\advancements\recipes\food\cooking\age1\rabbit.json
 084016b91a5afc631f306b5baab1e3270282832f data\gradient\advancements\recipes\food\cooking\age1\salmon.json
 e776a90ac45e14ec5bf062bd1ee5bdccc4193447 data\gradient\advancements\recipes\fuel\coal.json
+891550fafc631eead40a962ef21f276fbbeca4b2 data\gradient\advancements\recipes\fuel\coal_nugget.json
 092791ab895820787f302aae81694c4ac98cf042 data\gradient\advancements\recipes\fuel\fibre.json
 4cf763486269d2643ca36070e8dbff9b748af446 data\gradient\advancements\recipes\fuel\infinicoal.json
 5996c1dd8499162321aa00683b7f4e769f962025 data\gradient\advancements\recipes\fuel\log.json
@@ -747,6 +752,7 @@ f8618926c99bdf18395ef596111a6a08486eebd7 data\gradient\recipes\cooking\age1\pota
 888647f3c37924bd70609c84bcb9f57310238f3f data\gradient\recipes\drying\age2\leather.json
 1fbe7b3f556a31138b221c79736a513f3ce3392f data\gradient\recipes\drying\age2\preserved_hide.json
 de421b85762c77bfb11f0af76e35767053d03126 data\gradient\recipes\fuel\coal.json
+ea8611aa9926a0935c6482b22083ca0f927c9d79 data\gradient\recipes\fuel\coal_nugget.json
 da91a78db85fcaf12fc26d8a858fa120ccad8223 data\gradient\recipes\fuel\fibre.json
 eedd884f8ddcc532024221428c541856b3411571 data\gradient\recipes\fuel\infinicoal.json
 129e4774bc4f0d4398bef80f426dcad6e9c9829a data\gradient\recipes\fuel\log.json
@@ -865,6 +871,7 @@ b1cb153c88b8ecc514e25ed71d4b9e903131d703 data\gradient\recipes\melting\zinc_nugg
 49ce2c9c3ffe8fb1aac89563a6fcedfb1342e478 data\gradient\tags\blocks\fibre_sources.json
 e7cd8ed9065b30a836c0fce53939ef05cd486b13 data\gradient\tags\blocks\pebble_sources.json
 894d32506001745409f938d3230927ec1dcbc0b4 data\gradient\tags\items\axes.json
+1f54cca1986a6f3b01df409687d43e49a61f6e29 data\gradient\tags\items\casts.json
 149fbf8fa7cd80664f258d0035d183f78f5388fd data\gradient\tags\items\fibre_torch_lighters.json
 1163b6e270d01e04dac07775f5ddcc0bdf900752 data\gradient\tags\items\hammers.json
 24401b423446f329ad1e274d194dec2af500803f data\gradient\tags\items\pelts.json

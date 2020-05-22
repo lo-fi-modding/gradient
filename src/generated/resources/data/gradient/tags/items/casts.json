@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "gradient:clay_cast_mattock_head",
+    "gradient:clay_cast_pickaxe_head",
+    "gradient:clay_cast_hammer_head",
+    "gradient:clay_cast_sword_blade",
+    "gradient:clay_cast_ingot",
+    "gradient:clay_cast_nugget"
+  ]
+}

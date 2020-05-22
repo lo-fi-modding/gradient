@@ -1298,6 +1298,10 @@ public final class GradientDataGenerator {
       this.getBuilder(GradientTags.Items.PELTS_RABBIT).add(Items.RABBIT_HIDE);
       this.getBuilder(GradientTags.Items.PELTS_SHEEP).add(GradientItems.SHEEP_PELT.get());
       this.getBuilder(GradientTags.Items.PELTS_WOLF).add(GradientItems.WOLF_PELT.get());
+
+      for(final GradientCasts cast : GradientCasts.values()) {
+        this.getBuilder(GradientTags.Items.CASTS).add(GradientItems.CLAY_CAST(cast).get());
+      }
     }
   }
 
@@ -1776,13 +1780,13 @@ public final class GradientDataGenerator {
 
       GradientRecipeBuilder
         .fuel()
-        .ticks(24000)
+        .ticks(8000)
         .ignitionTemp(700.0f)
         .burnTemp(2700.0f)
         .heatPerSecond(1.5f)
         .ingredient(ItemTags.COALS)
-        .addCriterion("has_coal", this.hasItem(ItemTags.COALS))
-        .build(finished, Gradient.loc("fuel/coal"));
+        .addCriterion("has_coal_nugget", this.hasItem(GradientItems.COAL_NUGGET.get()))
+        .build(finished, Gradient.loc("fuel/coal_nugget"));
 
       GradientRecipeBuilder
         .fuel()

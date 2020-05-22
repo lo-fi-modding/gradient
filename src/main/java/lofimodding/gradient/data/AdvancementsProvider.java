@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import lofimodding.gradient.Gradient;
 import lofimodding.gradient.GradientBlocks;
+import lofimodding.gradient.GradientCasts;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientLoot;
 import lofimodding.gradient.GradientStages;
@@ -161,7 +162,7 @@ public class AdvancementsProvider extends AdvancementProvider {
         .withCriterion("has_clay_furnace", InventoryChangeTrigger.Instance.forItems(GradientItems.CLAY_FURNACE.get()))
         .register(finished, loc("age2/clay_furnace"));
 
-      final Advancement clayOven = builder(2, GradientItems.CLAY_OVEN.get(), "clay_oven", 2.5f, -2.5f, FrameType.TASK, clay)
+      final Advancement clayOven = builder(2, GradientItems.CLAY_OVEN.get(), "clay_oven", 2.5f, -2.5f, FrameType.TASK, clayFurnace)
         .withCriterion("has_clay_oven", InventoryChangeTrigger.Instance.forItems(GradientItems.CLAY_OVEN.get()))
         .register(finished, loc("age2/clay_oven"));
 
@@ -208,6 +209,20 @@ public class AdvancementsProvider extends AdvancementProvider {
         .withCriterion("has_ore", InventoryChangeTrigger.Instance.forItems(ItemPredicate.Builder.create().tag(Tags.Items.ORES).build()))
         .withRequirementsStrategy(requirements -> new String[][] {{"has_parent_0"}, {"has_nugget", "has_ore"}})
         .register(finished, loc("age2/ore"));
+
+      final Advancement clayCrucible = builder(2, GradientItems.CLAY_CRUCIBLE.get(), "clay_crucible", 7.0f, -1.5f, FrameType.TASK, clayFurnace, ore)
+        .withCriterion("has_clay_crucible", InventoryChangeTrigger.Instance.forItems(GradientItems.CLAY_CRUCIBLE.get()))
+        .register(finished, loc("age2/clay_crucible"));
+
+      final Advancement clayCast = builder(2, GradientItems.CLAY_CAST(GradientCasts.INGOT).get(), "clay_cast", 8.0f, -1.5f, FrameType.GOAL, clayCrucible)
+        .withCriterion("has_clay_cast", InventoryChangeTrigger.Instance.forItems(ItemPredicate.Builder.create().tag(GradientTags.Items.CASTS).build()))
+        .register(finished, loc("age2/clay_cast"));
+
+      final Advancement coal = builder(2, Items.COAL, "coal", 6.0f, 0.25f, FrameType.TASK, stonePickaxe)
+        .withCriterion("has_nugget", InventoryChangeTrigger.Instance.forItems(GradientItems.COAL_NUGGET.get()))
+        .withCriterion("has_ore", InventoryChangeTrigger.Instance.forItems(ItemPredicate.Builder.create().tag(ItemTags.COALS).build()))
+        .withRequirementsStrategy(requirements -> new String[][] {{"has_parent_0"}, {"has_nugget", "has_ore"}})
+        .register(finished, loc("age2/coal"));
 
       final Advancement stoneMattock = builder(2, GradientItems.STONE_MATTOCK.get(), "stone_mattock", 5.0f, 1.25f, FrameType.TASK, flintKnife, hardenedStick)
         .withCriterion("has_stone_mattock", InventoryChangeTrigger.Instance.forItems(GradientItems.STONE_MATTOCK.get()))
