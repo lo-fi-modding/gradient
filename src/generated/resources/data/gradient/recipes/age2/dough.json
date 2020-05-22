@@ -1,0 +1,31 @@
+{
+  "type": "gradient:mixing",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 180,
+  "ingredients": [
+    {
+      "item": "gradient:flour"
+    },
+    {
+      "item": "gradient:flour"
+    },
+    {
+      "item": "gradient:flour"
+    },
+    {
+      "item": "gradient:salt"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "fluid": {
+    "fluid": "minecraft:empty",
+    "amount": 0
+  },
+  "result": {
+    "item": "gradient:dough"
+  }
+}

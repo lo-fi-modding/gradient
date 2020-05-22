@@ -96,6 +96,10 @@ public final class GradientIds {
   public static final String HIDE_PANTS = "hide_pants";
   public static final String HIDE_BOOTS = "hide_boots";
 
+  public static final String SUGAR_CANE_PASTE = "sugar_cane_paste";
+  public static final String FLOUR = "flour";
+  public static final String DOUGH = "dough";
+
   public static final String FIREPIT = "firepit";
   public static final String UNLIT_FIBRE_TORCH = "unlit_fibre_torch";
   public static final String UNLIT_FIBRE_WALL_TORCH = "unlit_fibre_wall_torch";

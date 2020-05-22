@@ -747,6 +747,10 @@ public final class GradientDataGenerator {
       this.singleTexture(GradientIds.HIDE_PANTS, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.HIDE_PANTS));
       this.singleTexture(GradientIds.HIDE_BOOTS, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.HIDE_BOOTS));
 
+      this.singleTexture(GradientIds.SUGAR_CANE_PASTE, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.SUGAR_CANE_PASTE));
+      this.singleTexture(GradientIds.FLOUR, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.FLOUR));
+      this.singleTexture(GradientIds.DOUGH, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.DOUGH));
+
       this.getBuilder(GradientIds.FIREPIT).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.FIREPIT)));
       this.singleTexture(GradientIds.UNLIT_FIBRE_TORCH, this.mcLoc("item/generated"), "layer0", this.modLoc("block/" + GradientIds.UNLIT_FIBRE_TORCH));
       this.singleTexture(GradientIds.LIT_FIBRE_TORCH, this.mcLoc("item/generated"), "layer0", this.modLoc("block/" + GradientIds.LIT_FIBRE_TORCH));
@@ -1065,6 +1069,10 @@ public final class GradientDataGenerator {
       this.add(GradientItems.HIDE_SHIRT.get(), "Hide Shirt");
       this.add(GradientItems.HIDE_PANTS.get(), "Hide Pants");
       this.add(GradientItems.HIDE_BOOTS.get(), "Hide Boots");
+
+      this.add(GradientItems.SUGAR_CANE_PASTE.get(), "Sugar Cane Paste");
+      this.add(GradientItems.FLOUR.get(), "Flour");
+      this.add(GradientItems.DOUGH.get(), "Dough");
 
       this.add(GradientItems.FIREPIT.get(), "Firepit");
       this.add(GradientItems.FIREPIT.get().getTranslationKey() + ".heat", "%d °C");
@@ -1564,6 +1572,41 @@ public final class GradientDataGenerator {
         .addCriterion("has_awl", this.hasItem(GradientItems.BONE_AWL.get()))
         .build(finished, Gradient.loc("age1/" + GradientIds.HIDE_BOOTS));
 
+      GradientRecipeBuilder
+        .grinding(GradientItems.SUGAR_CANE_PASTE.get(), 2)
+        .stage(GradientStages.AGE_2.get())
+        .ticks(80)
+        .addIngredient(Items.SUGAR_CANE)
+        .addCriterion("has_sugar_cane", this.hasItem(Items.SUGAR_CANE))
+        .build(finished, Gradient.loc("age2/" + GradientIds.SUGAR_CANE_PASTE));
+
+      GradientRecipeBuilder
+        .mixing(GradientItems.DOUGH.get())
+        .stage(GradientStages.AGE_2.get())
+        .ticks(180)
+        .addIngredient(GradientItems.FLOUR.get(), 3)
+        .addIngredient(GradientItems.SALT.get())
+        .addIngredient(Items.SUGAR)
+        .addCriterion("has_flour", this.hasItem(GradientItems.FLOUR.get()))
+        .build(finished, Gradient.loc("age2/" + GradientIds.DOUGH));
+
+      GradientRecipeBuilder
+        .grinding(GradientItems.FLOUR.get())
+        .stage(GradientStages.AGE_2.get())
+        .ticks(80)
+        .addIngredient(Items.WHEAT)
+        .addCriterion("has_wheat", this.hasItem(Items.WHEAT))
+        .build(finished, Gradient.loc("age2/" + GradientIds.FLOUR));
+
+      GradientRecipeBuilder
+        .cooking(Items.BREAD)
+        .stage(GradientStages.AGE_2.get())
+        .ticks(1800)
+        .temperature(200.0f)
+        .addIngredient(GradientItems.DOUGH.get())
+        .addCriterion("has_dough", this.hasItem(GradientItems.DOUGH.get()))
+        .build(finished, Gradient.loc("age2/bread"));
+
       StagedRecipeBuilder
         .shaped(GradientItems.FIREPIT.get())
         .stage(GradientStages.AGE_1.get())
@@ -1931,6 +1974,15 @@ public final class GradientDataGenerator {
         .addIngredient(Items.SALMON)
         .addCriterion("has_salmon", this.hasItem(Items.SALMON))
         .build(finished, Gradient.loc("cooking/age1/salmon"));
+
+      GradientRecipeBuilder
+        .cooking(Items.SUGAR)
+        .stage(GradientStages.AGE_2.get())
+        .ticks(600)
+        .temperature(200.0f)
+        .addIngredient(GradientItems.SUGAR_CANE_PASTE.get())
+        .addCriterion("has_sugar_cane_paste", this.hasItem(GradientItems.SUGAR_CANE_PASTE.get()))
+        .build(finished, Gradient.loc("cooking/age2/sugar"));
     }
 
     private void registerHardeningRecipes(final Consumer<IFinishedRecipe> finished) {

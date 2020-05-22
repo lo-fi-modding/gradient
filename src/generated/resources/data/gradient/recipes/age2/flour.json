@@ -1,0 +1,15 @@
+{
+  "type": "gradient:grinding",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 80,
+  "ingredients": [
+    {
+      "item": "minecraft:wheat"
+    }
+  ],
+  "result": {
+    "item": "gradient:flour"
+  }
+}

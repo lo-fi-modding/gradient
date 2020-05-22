@@ -1,0 +1,16 @@
+{
+  "type": "gradient:grinding",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 80,
+  "ingredients": [
+    {
+      "item": "minecraft:sugar_cane"
+    }
+  ],
+  "result": {
+    "item": "gradient:sugar_cane_paste",
+    "count": 2
+  }
+}

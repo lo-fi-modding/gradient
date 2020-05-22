@@ -1,0 +1,16 @@
+{
+  "type": "gradient:cooking",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 600,
+  "temperature": 200.0,
+  "ingredients": [
+    {
+      "item": "gradient:sugar_cane_paste"
+    }
+  ],
+  "result": {
+    "item": "minecraft:sugar"
+  }
+}

@@ -155,6 +155,10 @@ public final class GradientItems {
   public static final RegistryObject<ArmorItem> HIDE_PANTS = REGISTRY.register(GradientIds.HIDE_PANTS, () -> new ArmorItem(GradientMaterials.Armour.HIDE, EquipmentSlotType.LEGS, new Item.Properties().group(GROUP)));
   public static final RegistryObject<ArmorItem> HIDE_BOOTS = REGISTRY.register(GradientIds.HIDE_BOOTS, () -> new ArmorItem(GradientMaterials.Armour.HIDE, EquipmentSlotType.FEET, new Item.Properties().group(GROUP)));
 
+  public static final RegistryObject<Item> SUGAR_CANE_PASTE = REGISTRY.register(GradientIds.SUGAR_CANE_PASTE, () -> new Item(new Item.Properties().group(GROUP)));
+  public static final RegistryObject<Item> FLOUR = REGISTRY.register(GradientIds.FLOUR, () -> new Item(new Item.Properties().group(GROUP)));
+  public static final RegistryObject<Item> DOUGH = REGISTRY.register(GradientIds.DOUGH, () -> new Item(new Item.Properties().group(GROUP)));
+
   public static final RegistryObject<BlockItem> FIREPIT = REGISTRY.register(GradientIds.FIREPIT, () -> new BlockItem(GradientBlocks.FIREPIT.get(), new Item.Properties().group(GROUP)));
   public static final RegistryObject<WallOrFloorItem> UNLIT_FIBRE_TORCH = REGISTRY.register(GradientIds.UNLIT_FIBRE_TORCH, () -> new WallOrFloorItem(GradientBlocks.UNLIT_FIBRE_TORCH.get(), GradientBlocks.UNLIT_FIBRE_WALL_TORCH.get(), new Item.Properties().group(GROUP)));
   public static final RegistryObject<WallOrFloorItem> LIT_FIBRE_TORCH = REGISTRY.register(GradientIds.LIT_FIBRE_TORCH, () -> new WallOrFloorItem(GradientBlocks.LIT_FIBRE_TORCH.get(), GradientBlocks.LIT_FIBRE_WALL_TORCH.get(), new Item.Properties().group(GROUP)));

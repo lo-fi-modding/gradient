@@ -150,8 +150,10 @@ public class Gradient {
 
   private void enqueueIMC(final InterModEnqueueEvent event) {
     if(Config.INTEROP.REMOVE_LEATHER_RECIPES.get()) {
-      InterModComms.sendTo("no-recipes", "remove_recipe", () -> (Predicate<IRecipe<?>>)recipe -> recipe.getRecipeOutput().getItem() == Items.LEATHER);
+      InterModComms.sendTo("no-recipes", "remove_recipe", () -> (Predicate<IRecipe<?>>)recipe -> recipe.getType() == IRecipeType.CRAFTING && recipe.getRecipeOutput().getItem() == Items.LEATHER);
     }
+
+    InterModComms.sendTo("no-recipes", "remove_recipe", () -> (Predicate<IRecipe<?>>)recipe -> recipe.getType() == IRecipeType.CRAFTING && recipe.getRecipeOutput().getItem() == Items.BREAD || recipe.getRecipeOutput().getItem() == Items.SUGAR);
 
     if(Config.INTEROP.REPLACE_PLANK_RECIPES.get()) {
       InterModComms.sendTo("no-recipes", "replace_recipe", () -> new Tuple<Predicate<IRecipe<?>>, Function<IRecipe<?>, IRecipe<?>>>(
