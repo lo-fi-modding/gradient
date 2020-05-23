@@ -28,11 +28,6 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
   @CapabilityInject(IGradientFluidHandler.class)
   private static Capability<IGradientFluidHandler> FLUID_HANDLER_CAPABILITY;
 
-  private static final int CYCLE_TICKS = 40;
-
-  private boolean isAnimating;
-  private int animationTicks;
-
   private final Map<Direction, IGradientFluidHandler> inputs = new EnumMap<>(Direction.class);
   private final Map<GradientFluid, List<Direction>> fluidSideMap = new HashMap<>();
 
@@ -60,21 +55,7 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
   }
 
   public void outputUpdated() {
-    if(this.world.isRemote) {
-      if(this.output != null) {
-        final GradientFluidStack fluidStack = this.output.drain(0.001f, IGradientFluidHandler.FluidAction.SIMULATE);
 
-        if(!fluidStack.isEmpty()) {
-          //TODO this.asm.transition("spinning");
-          this.isAnimating = true;
-          this.animationTicks = 0;
-          return;
-        }
-      }
-
-      //TODO this.asm.transition("idle");
-      this.isAnimating = false;
-    }
   }
 
   public void inputChanged(final Direction side, @Nullable final IGradientFluidHandler fluidHandler) {
@@ -144,16 +125,6 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
 
   @Override
   protected void tickAfterCooldown(final float tickScale) {
-    if(this.world.isRemote) {
-      if(this.isAnimating) {
-        //TODO this.ticksValue.setValue((float)this.animationTicks / CYCLE_TICKS);
-        this.animationTicks++;
-        this.animationTicks %= CYCLE_TICKS;
-      }
-
-      return;
-    }
-
     if(this.recipe != null && this.output != null) {
       if(this.recipeTicks == 0) {
         // Only mix if there's room

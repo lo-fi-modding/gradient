@@ -558,6 +558,7 @@ public final class GradientDataGenerator {
       ModelGenerator.clayCrucible(this, GradientIds.CLAY_CRUCIBLE, this.mcLoc("block/terracotta"), this.modLoc("block/clay_seared"), this.modLoc("block/clay_seared_gradient"), this.modLoc("block/clay_seared_gradient_light"), this.mcLoc("block/terracotta"));
       ModelGenerator.clayMixer(this, GradientIds.CLAY_METAL_MIXER, this.mcLoc("block/terracotta"), this.mcLoc("block/terracotta"));
       ModelGenerator.clayMixerPipe(this, GradientIds.CLAY_METAL_MIXER + "_pipe", this.mcLoc("block/terracotta"));
+      ModelGenerator.clayMixerAuger(this, GradientIds.CLAY_METAL_MIXER + "_auger", this.mcLoc("block/terracotta"), this.mcLoc("block/stone"));
 
       for(final GradientCasts cast : GradientCasts.values()) {
         this.getBuilder(GradientIds.CLAY_CAST(cast))

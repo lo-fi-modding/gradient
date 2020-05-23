@@ -694,6 +694,79 @@ public final class ModelGenerator {
       .end();
   }
 
+  public static void clayMixerAuger(final GradientDataGenerator.BlockModels generator, final String id, final ResourceLocation side, final ResourceLocation blade) {
+    generator.getBuilder(id)
+      .parent(generator.getExistingFile(generator.mcLoc("block/block")))
+      .texture("side", side)
+      .texture("blade", blade)
+
+      .element() // Rod 1
+      .from(6.5f, -12.0f, 7.0f)
+      .to(9.5f, -2.0f, 9.0f)
+      .face(Direction.NORTH).uvs(6.5f, 0.0f, 9.5f, 10.0f).texture("side").end()
+      .face(Direction.EAST).uvs(7.0f, 0.0f, 9.0f, 10.0f).texture("side").end()
+      .face(Direction.SOUTH).uvs(6.5f, 0.0f, 9.5f, 10.0f).texture("side").end()
+      .face(Direction.WEST).uvs(7.0f, 0.0f, 9.0f, 10.0f).texture("side").end()
+      .face(Direction.UP).uvs(0.0f, 0.0f, 3.0f, 2.0f).texture("side").end()
+      .face(Direction.DOWN).uvs(6.5f, 7.0f, 9.5f, 9.0f).texture("side").end()
+      .end()
+
+      .element() // Rod 2
+      .from(7.0f, -12.0f, 6.5f)
+      .to(9.0f, -2.0f, 9.5f)
+      .face(Direction.NORTH).uvs(7.0f, 0.0f, 9.0f, 10.0f).texture("side").end()
+      .face(Direction.EAST).uvs(6.5f, 0.0f, 9.5f, 10.0f).texture("side").end()
+      .face(Direction.SOUTH).uvs(7.0f, 0.0f, 9.0f, 10.0f).texture("side").end()
+      .face(Direction.WEST).uvs(6.5f, 0.0f, 9.5f, 10.0f).texture("side").end()
+      .face(Direction.UP).uvs(0.0f, 0.0f, 3.0f, 2.0f).texture("side").end()
+      .face(Direction.DOWN).uvs(7.0f, 6.5f, 9.0f, 9.5f).texture("side").end()
+      .end()
+
+      .element() // Blade 1
+      .from(5.0f, -5.0f, 7.5f)
+      .to(7.0f, -3.0f, 8.5f)
+      .face(Direction.NORTH).uvs(14.0f, 0.0f, 16.0f, 2.0f).texture("blade").end()
+      .face(Direction.EAST).uvs(0.0f, 0.0f, 1.0f, 2.0f).texture("blade").end()
+      .face(Direction.SOUTH).uvs(1.0f, 0.0f, 3.0f, 2.0f).texture("blade").end()
+      .face(Direction.WEST).uvs(0.0f, 0.0f, 1.0f, 2.0f).texture("blade").end()
+      .face(Direction.UP).uvs(0.0f, 0.0f, 2.0f, 1.0f).texture("blade").end()
+      .face(Direction.DOWN).uvs(0.0f, 0.0f, 2.0f, 1.0f).texture("blade").end()
+      .end()
+
+      .element() // Blade 2
+      .from(9.0f, -7.0f, 7.5f)
+      .to(11.0f, -5.0f, 8.5f)
+      .face(Direction.NORTH).uvs(14.0f, 2.0f, 16.0f, 4.0f).texture("blade").end()
+      .face(Direction.EAST).uvs(0.0f, 0.0f, 1.0f, 2.0f).texture("blade").end()
+      .face(Direction.SOUTH).uvs(0.0f, 2.0f, 2.0f, 4.0f).texture("blade").end()
+      .face(Direction.WEST).uvs(0.0f, 0.0f, 1.0f, 2.0f).texture("blade").end()
+      .face(Direction.UP).uvs(0.0f, 0.0f, 2.0f, 1.0f).texture("blade").end()
+      .face(Direction.DOWN).uvs(0.0f, 0.0f, 2.0f, 1.0f).texture("blade").end()
+      .end()
+
+      .element() // Blade 3
+      .from(5.0f, -9.0f, 7.5f)
+      .to(7.0f, -7.0f, 8.5f)
+      .face(Direction.NORTH).uvs(14.0f, 4.0f, 16.0f, 6.0f).texture("blade").end()
+      .face(Direction.EAST).uvs(0.0f, 0.0f, 1.0f, 2.0f).texture("blade").end()
+      .face(Direction.SOUTH).uvs(0.0f, 4.0f, 2.0f, 6.0f).texture("blade").end()
+      .face(Direction.WEST).uvs(0.0f, 0.0f, 1.0f, 2.0f).texture("blade").end()
+      .face(Direction.UP).uvs(0.0f, 0.0f, 2.0f, 1.0f).texture("blade").end()
+      .face(Direction.DOWN).uvs(0.0f, 0.0f, 2.0f, 1.0f).texture("blade").end()
+      .end()
+
+      .element() // Blade 4
+      .from(9.0f, -11.0f, 7.5f)
+      .to(11.0f, -9.0f, 8.5f)
+      .face(Direction.NORTH).uvs(14.0f, 6.0f, 16.0f, 8.0f).texture("blade").end()
+      .face(Direction.EAST).uvs(0.0f, 0.0f, 1.0f, 2.0f).texture("blade").end()
+      .face(Direction.SOUTH).uvs(0.0f, 6.0f, 2.0f, 8.0f).texture("blade").end()
+      .face(Direction.WEST).uvs(0.0f, 0.0f, 1.0f, 2.0f).texture("blade").end()
+      .face(Direction.UP).uvs(0.0f, 0.0f, 2.0f, 1.0f).texture("blade").end()
+      .face(Direction.DOWN).uvs(0.0f, 0.0f, 2.0f, 1.0f).texture("blade").end()
+      .end();
+  }
+
   public static void woodenAxle(final GradientDataGenerator.BlockModels generator, final String id, final ResourceLocation side, final ResourceLocation end) {
     generator.getBuilder(id)
       .parent(generator.getExistingFile(generator.mcLoc("block/block")))

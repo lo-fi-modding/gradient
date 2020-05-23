@@ -4,11 +4,13 @@ import lofimodding.gradient.Gradient;
 import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientCasts;
 import lofimodding.gradient.GradientEntities;
+import lofimodding.gradient.GradientIds;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientTileEntities;
 import lofimodding.gradient.blocks.MetalBlock;
 import lofimodding.gradient.blocks.OreBlock;
 import lofimodding.gradient.client.tesr.ClayCrucibleRenderer;
+import lofimodding.gradient.client.tesr.ClayMetalMixerRenderer;
 import lofimodding.gradient.client.tesr.ClayOvenRenderer;
 import lofimodding.gradient.client.tesr.DryingRackRenderer;
 import lofimodding.gradient.client.tesr.FirepitRenderer;
@@ -108,6 +110,7 @@ public final class GradientClient {
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.DRYING_RACK.get(), DryingRackRenderer::new);
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.CLAY_OVEN.get(), ClayOvenRenderer::new);
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.CLAY_CRUCIBLE.get(), ClayCrucibleRenderer::new);
+    ClientRegistry.bindTileEntityRenderer(GradientTileEntities.CLAY_METAL_MIXER.get(), ClayMetalMixerRenderer::new);
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.WOODEN_CRANK.get(), WoodenCrankRenderer::new);
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.WOODEN_CONVEYOR_BELT.get(), WoodenConveyorBeltRenderer::new);
   }
@@ -115,8 +118,9 @@ public final class GradientClient {
   @SubscribeEvent
   public static void onModelRegister(final ModelRegistryEvent event) {
     Gradient.LOGGER.info("Registering extra models...");
-    ModelLoader.addSpecialModel(Gradient.loc("block/grindstone_wheel"));
-    ModelLoader.addSpecialModel(Gradient.loc("block/mixing_basin_rod"));
+    ModelLoader.addSpecialModel(Gradient.loc("block/" + GradientIds.GRINDSTONE + "_wheel"));
+    ModelLoader.addSpecialModel(Gradient.loc("block/" + GradientIds.MIXING_BASIN + "_rod"));
+    ModelLoader.addSpecialModel(Gradient.loc("block/" + GradientIds.CLAY_METAL_MIXER + "_auger"));
   }
 
   private static int metalBlockColour(final BlockState state, final ILightReader world, final BlockPos pos, final int tintIndex) {
