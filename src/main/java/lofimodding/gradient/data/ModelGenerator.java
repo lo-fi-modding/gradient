@@ -557,8 +557,8 @@ public final class ModelGenerator {
       .texture("particle", particle)
 
       .element() // Corner 1
-      .from(13.0f, -2.0f, 0.0f)
-      .to(16.0f, 2.0f, 3.0f)
+      .from(13.0f, -2.0f, -0.001f)
+      .to(16.001f, 2.0f, 3.0f)
       .face(Direction.NORTH).uvs(0.0f, 12.0f, 3.0f, 16.0f).texture("side").end()
       .face(Direction.EAST).uvs(13.0f, 12.0f, 16.0f, 16.0f).texture("side").end()
       .face(Direction.SOUTH).uvs(13.0f, 12.0f, 16.0f, 16.0f).texture("side").end()
@@ -569,7 +569,7 @@ public final class ModelGenerator {
 
       .element() // Corner 2
       .from(13.0f, -2.0f, 13.0f)
-      .to(16.0f, 2.0f, 16.0f)
+      .to(16.001f, 2.0f, 16.001f)
       .face(Direction.NORTH).uvs(0.0f, 12.0f, 3.0f, 16.0f).texture("side").end()
       .face(Direction.EAST).uvs(0.0f, 12.0f, 3.0f, 16.0f).texture("side").end()
       .face(Direction.SOUTH).uvs(13.0f, 12.0f, 16.0f, 16.0f).texture("side").end()
@@ -579,8 +579,8 @@ public final class ModelGenerator {
       .end()
 
       .element() // Corner 3
-      .from(0.0f, -2.0f, 13.0f)
-      .to(3.0f, 2.0f, 16.0f)
+      .from(-0.001f, -2.0f, 13.0f)
+      .to(3.0f, 2.0f, 16.001f)
       .face(Direction.NORTH).uvs(13.0f, 12.0f, 16.0f, 16.0f).texture("side").end()
       .face(Direction.EAST).uvs(0.0f, 12.0f, 3.0f, 16.0f).texture("side").end()
       .face(Direction.SOUTH).uvs(0.0f, 12.0f, 3.0f, 16.0f).texture("side").end()
@@ -590,7 +590,7 @@ public final class ModelGenerator {
       .end()
 
       .element() // Corner 4
-      .from(0.0f, -2.0f, 0.0f)
+      .from(-0.001f, -2.0f, -0.001f)
       .to(3.0f, 2.0f, 3.0f)
       .face(Direction.NORTH).uvs(13.0f, 12.0f, 16.0f, 16.0f).texture("side").end()
       .face(Direction.EAST).uvs(13.0f, 12.0f, 16.0f, 16.0f).texture("side").end()
