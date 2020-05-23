@@ -644,6 +644,14 @@ public final class ModelGenerator {
       .face(Direction.WEST).uvs(6.0f, 10.0f, 10.0f, 11.0f).texture("side").end()
       .face(Direction.UP).uvs(6.0f, 6.0f, 10.0f, 10.0f).texture("side").end()
       .face(Direction.DOWN).uvs(0.0f, 0.0f, 4.0f, 4.0f).texture("side").end()
+      .end()
+
+      .transforms()
+      .transform(ModelBuilder.Perspective.GUI)
+      .rotation(30.0f, 225.0f, 0.0f)
+      .translation(0.0f, 2.0f, 0.0f)
+      .scale(0.625f)
+      .end()
       .end();
   }
 
