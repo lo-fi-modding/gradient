@@ -151,7 +151,7 @@ public class AdvancementsProvider extends AdvancementProvider {
         .withCriterion("has_age_2", StageUnlockedTrigger.Instance.forStage(GradientStages.AGE_2.get()))
         .register(finished, loc("age2/root"));
 
-      final Advancement standingTorch = builder(2, GradientItems.TORCH_STAND.get(), "standing_torch", 1.0f, -3.0f, FrameType.TASK, root)
+      final Advancement standingTorch = builder(2, GradientItems.TORCH_STAND.get(), "standing_torch", 0.5f, -2.5f, FrameType.TASK, root)
         .withCriterion("has_standing_torch", InventoryChangeTrigger.Instance.forItems(GradientItems.TORCH_STAND.get()))
         .register(finished, loc("age2/standing_torch"));
 

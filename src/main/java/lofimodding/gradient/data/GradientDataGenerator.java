@@ -1215,12 +1215,30 @@ public final class GradientDataGenerator {
       this.age1("goal", "Settle Down", "Age 1 complete!");
 
       this.age2("root", "Age 2: Agriculture", "Settling down");
+      this.age2("standing_torch", "Let There Be Slightly More Light", "Make a torch stand to increase the range of your fibre torches");
       this.age2("clay", "Pottery and Other More Useful Things", "Find some clay");
       this.age2("clay_furnace", "Heating Things Up", "Make a furnace out of clay and place it beside your fire pit to harden");
+      this.age2("clay_oven", "Is Something Burning?", "Make a clay oven to cook your food faster");
       this.age2("drying_rack", "Hang It Up", "Craft a drying rack");
+      this.age2("bark", "Barking up the Right Tree", "Use a flint knife to scrape bark off of a tree");
+      this.age2("mulch", "Mulch Ado about Nothing", "Craft mulch to speed up the growth of your crops");
+      this.age2("leather", "Leather!", "Craft some leather");
       this.age2("flint_knife", "Work It", "Craft a flint knife");
       this.age2("hardened_log", "Hard Wood", "Harden a log by placing it next to a firepit");
-      this.age2("standing_torch", "Let There Be Slightly More Light", "Make a torch stand to improve your fibre torches");
+      this.age2("hardened_planks", "Hard Planks", "Harden planks by placing them next to a firepit, or chopping hardened logs");
+      this.age2("hardened_stick", "Hard Sticks", "Chop hardened planks into sticks");
+      this.age2("stone_pickaxe", "Mining 201", "Craft a stone pickaxe");
+      this.age2("ore", "I Dig It", "Mine your first metal with a pickaxe or hammer");
+      this.age2("clay_crucible", "Melting Point", "Make a clay crucible to begin your journey into the bronze age");
+      this.age2("clay_cast", "Casting Call", "Make a clay cast to cast your molten metal");
+      this.age2("coal", "Getting Dirty", "Track down some coal ore and use your pickaxe or hammer to harvest it");
+      this.age2("stone_mattock", "Two For One", "Craft a stone mattock");
+      this.age2("till", "Hoedown", "Till dirt with your mattock");
+      this.age2("wheat", "Graze It", "Harvest some wheat");
+      this.age2("bread", "Toasted", "Make bread with your newly harvested wheat");
+      this.age2("wooden_axle", "Connected", "Craft a wooden axle");
+      this.age2("wooden_gear", "Geared Up", "Craft an wooden gear");
+      this.age2("wooden_gearbox", "Detour", "Craft a wooden gearbox to route your mechanical energy");
     }
 
     private void age1(final String key, final String title, final String description) {
