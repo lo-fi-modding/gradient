@@ -471,6 +471,23 @@ public final class GradientDataGenerator {
         .face(Direction.WEST).uvs(0.0f, 0.0f, 2.0f, 3.0f).texture("all").end()
         .face(Direction.UP).uvs(0.0f, 0.0f, 16.0f, 2.0f).texture("all").end()
         .face(Direction.DOWN).uvs(0.0f, 0.0f, 16.0f, 2.0f).texture("all").end()
+        .end()
+
+        .transforms()
+        .transform(ModelBuilder.Perspective.GUI)
+        .rotation(30.0f, 225.0f, 0.0f)
+        .translation(-3.0f, 0.0f, 0.0f)
+        .scale(0.625f)
+        .end()
+        .transform(ModelBuilder.Perspective.FIRSTPERSON_RIGHT)
+        .rotation(0.0f, 90.0f, 70.0f)
+        .scale(0.4f)
+        .end()
+        .transform(ModelBuilder.Perspective.THIRDPERSON_RIGHT)
+        .translation(2.5f, 1.0f, -1.0f)
+        .rotation(0.0f, 90.0f, 90.0f)
+        .scale(0.375f)
+        .end()
         .end();
 
       this.getBuilder(GradientIds.DRYING_RACK + "_roof")
