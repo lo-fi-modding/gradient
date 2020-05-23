@@ -240,6 +240,18 @@ public class AdvancementsProvider extends AdvancementProvider {
       final Advancement bread = builder(2, Items.BREAD, "bread", 8.0f, 1.25f, FrameType.TASK, wheat)
         .withCriterion("has_bread", InventoryChangeTrigger.Instance.forItems(Items.BREAD))
         .register(finished, loc("age2/bread"));
+
+      final Advancement woodenAxle = builder(2, GradientItems.WOODEN_AXLE.get(), "wooden_axle", 5.0f, 2.75f, FrameType.TASK, flintKnife, hardenedStick)
+        .withCriterion("has_wooden_axle", InventoryChangeTrigger.Instance.forItems(GradientItems.WOODEN_AXLE.get()))
+        .register(finished, loc("age2/wooden_axle"));
+
+      final Advancement woodenGear = builder(2, GradientItems.WOODEN_GEAR.get(), "wooden_gear", 5.0f, 3.75f, FrameType.TASK, flintKnife, hardenedStick)
+        .withCriterion("has_wooden_gear", InventoryChangeTrigger.Instance.forItems(GradientItems.WOODEN_GEAR.get()))
+        .register(finished, loc("age2/wooden_gear"));
+
+      final Advancement woodenGearbox = builder(2, GradientItems.WOODEN_GEARBOX.get(), "wooden_gearbox", 6.0f, 3.25f, FrameType.TASK, woodenAxle, woodenGear)
+        .withCriterion("has_wooden_gearbox", InventoryChangeTrigger.Instance.forItems(GradientItems.WOODEN_GEARBOX.get()))
+        .register(finished, loc("age2/wooden_gearbox"));
     }
 
     private static Advancement.Builder builder(final int age, final IItemProvider icon, final String id, final float x, final float y, @Nullable final ResourceLocation background, final FrameType frame, final Advancement... parents) {

@@ -1,0 +1,55 @@
+{
+  "parent": "gradient:age2/hardened_stick",
+  "display": {
+    "icon": {
+      "item": "gradient:wooden_gear"
+    },
+    "title": {
+      "translate": "advancements.gradient.age2.wooden_gear.title"
+    },
+    "description": {
+      "translate": "advancements.gradient.age2.wooden_gear.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+    "x": 5.0,
+    "y": 3.75
+  },
+  "criteria": {
+    "has_parent_0": {
+      "trigger": "gradient:advancement_unlocked",
+      "conditions": {
+        "id": "gradient:age2/flint_knife"
+      }
+    },
+    "has_parent_1": {
+      "trigger": "gradient:advancement_unlocked",
+      "conditions": {
+        "id": "gradient:age2/hardened_stick"
+      }
+    },
+    "has_wooden_gear": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "gradient:wooden_gear"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_parent_0"
+    ],
+    [
+      "has_parent_1"
+    ],
+    [
+      "has_wooden_gear"
+    ]
+  ]
+}
