@@ -20,6 +20,7 @@ public abstract class HeatSinkerTile extends TileEntity implements ITickableTile
   private boolean firstTick = true;
 
   private float heat;
+  private int heatSyncTicks;
 
   protected HeatSinkerTile(final TileEntityType<? extends HeatSinkerTile> type) {
     super(type);
@@ -83,6 +84,13 @@ public abstract class HeatSinkerTile extends TileEntity implements ITickableTile
     }
 
     this.transferHeat();
+
+    this.heatSyncTicks++;
+
+    if(this.heatSyncTicks >= 40) {
+      this.heatSyncTicks = 0;
+      this.syncMinimal();
+    }
   }
 
   private void transferHeat() {
@@ -136,17 +144,23 @@ public abstract class HeatSinkerTile extends TileEntity implements ITickableTile
   protected abstract float heatTransferEfficiency();
 
   @Override
-  public CompoundNBT write(final CompoundNBT compound) {
-    compound.putFloat("heat", this.getHeat());
+  public CompoundNBT write(final CompoundNBT tag) {
+    return this.writeMinimal(tag);
+  }
 
-    return super.write(compound);
+  protected CompoundNBT writeMinimal(final CompoundNBT tag) {
+    tag.putFloat("heat", this.getHeat());
+    return super.write(tag);
   }
 
   @Override
-  public void read(final CompoundNBT compound) {
-    this.setHeat(compound.getFloat("heat"));
+  public void read(final CompoundNBT tag) {
+    this.readMinimal(tag);
+  }
 
-    super.read(compound);
+  public void readMinimal(final CompoundNBT tag) {
+    this.setHeat(tag.getFloat("heat"));
+    super.read(tag);
   }
 
   protected void sync() {
@@ -157,6 +171,14 @@ public abstract class HeatSinkerTile extends TileEntity implements ITickableTile
     }
   }
 
+  private boolean syncMinimal = false;
+
+  protected void syncMinimal() {
+    this.syncMinimal = true;
+    this.sync();
+    this.syncMinimal = false;
+  }
+
   @Override
   public SUpdateTileEntityPacket getUpdatePacket() {
     return new SUpdateTileEntityPacket(this.pos, 0, this.getUpdateTag());
@@ -164,11 +186,23 @@ public abstract class HeatSinkerTile extends TileEntity implements ITickableTile
 
   @Override
   public CompoundNBT getUpdateTag() {
+    if(this.syncMinimal) {
+      final CompoundNBT tag = new CompoundNBT();
+      this.writeMinimal(tag);
+      tag.putBoolean("SyncMinimal", true);
+      return tag;
+    }
+
     return this.write(new CompoundNBT());
   }
 
   @Override
-  public void onDataPacket(final NetworkManager net, final SUpdateTileEntityPacket pkt) {
-    this.read(pkt.getNbtCompound());
+  public void onDataPacket(final NetworkManager net, final SUpdateTileEntityPacket packet) {
+    if(packet.getNbtCompound().getBoolean("SyncMinimal")) {
+      this.readMinimal(packet.getNbtCompound());
+      return;
+    }
+
+    this.read(packet.getNbtCompound());
   }
 }

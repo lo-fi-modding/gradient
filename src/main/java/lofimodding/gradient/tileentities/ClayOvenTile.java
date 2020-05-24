@@ -240,27 +240,27 @@ public class ClayOvenTile extends HeatSinkerTile {
   }
 
   @Override
-  public CompoundNBT write(final CompoundNBT compound) {
-    compound.put("inventory", this.inventory.serializeNBT());
+  public CompoundNBT write(final CompoundNBT tag) {
+    tag.put("inventory", this.inventory.serializeNBT());
 
     final ListNBT stagesNbt = new ListNBT();
     for(final Stage stage : this.stages) {
       stagesNbt.add(StringNBT.valueOf(stage.getRegistryName().toString()));
     }
 
-    compound.put("stages", stagesNbt);
-    compound.putInt("ticks", this.ticks);
+    tag.put("stages", stagesNbt);
+    tag.putInt("ticks", this.ticks);
 
-    return super.write(compound);
+    return super.write(tag);
   }
 
   @Override
-  public void read(final CompoundNBT compound) {
-    final CompoundNBT inv = compound.getCompound("inventory");
+  public void read(final CompoundNBT tag) {
+    final CompoundNBT inv = tag.getCompound("inventory");
     inv.remove("Size");
     this.inventory.deserializeNBT(inv);
 
-    final ListNBT stagesNbt = compound.getList("stages", Constants.NBT.TAG_STRING);
+    final ListNBT stagesNbt = tag.getList("stages", Constants.NBT.TAG_STRING);
     this.stages.clear();
     for(int i = 0; i < stagesNbt.size(); i++) {
       final Stage stage = Stage.REGISTRY.get().getValue(new ResourceLocation(stagesNbt.getString(i)));
@@ -270,11 +270,11 @@ public class ClayOvenTile extends HeatSinkerTile {
       }
     }
 
-    this.ticks = compound.getInt("ticks");
+    this.ticks = tag.getInt("ticks");
 
     this.updateRecipe();
 
-    super.read(compound);
+    super.read(tag);
   }
 
   @Override

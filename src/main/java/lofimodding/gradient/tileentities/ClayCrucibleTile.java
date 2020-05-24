@@ -301,9 +301,9 @@ public class ClayCrucibleTile extends HeatSinkerTile implements INamedContainerP
   }
 
   @Override
-  public void onDataPacket(final NetworkManager net, final SUpdateTileEntityPacket pkt) {
+  public void onDataPacket(final NetworkManager net, final SUpdateTileEntityPacket packet) {
     final BlockState oldState = this.world.getBlockState(this.pos);
-    super.onDataPacket(net, pkt);
+    super.onDataPacket(net, packet);
     this.world.notifyBlockUpdate(this.pos, oldState, this.world.getBlockState(this.pos), 2);
   }
 
