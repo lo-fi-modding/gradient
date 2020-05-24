@@ -36,14 +36,17 @@ public final class InventoryEvents {
         player.container.craftMatrix.width = CRAFT_SIZE;
         player.container.craftMatrix.height = CRAFT_SIZE;
 
-        for(int y = 0; y < CRAFT_SIZE; ++y) {
-          for(int x = 0; x < CRAFT_SIZE; ++x) {
-            if(y >= 2 || x >= 2) {
-              player.container.addSlot(new Slot(player.container.craftMatrix, x + y * CRAFT_SIZE, 98 + x * 18, 18 + y * 18));
-            } else {
-              player.container.getSlot(x + y * 2 + 1).slotIndex = x + y * CRAFT_SIZE;
-            }
-          }
+        player.container.getSlot(0).yPos += 8.0f;
+
+        for(int slotIndex = 0; slotIndex < 4; slotIndex++) {
+          final Slot slot = player.container.getSlot(slotIndex + 1);
+          slot.xPos = 98 + slotIndex % 3 * 18;
+          slot.yPos = 18 + slotIndex / 3 * 18;
+          slot.slotIndex = slotIndex;
+        }
+
+        for(int slotIndex = 4; slotIndex < CRAFT_SIZE * CRAFT_SIZE; slotIndex++) {
+          player.container.addSlot(new Slot(player.container.craftMatrix, slotIndex, 98 + slotIndex % 3 * 18, 18 + slotIndex / 3 * 18));
         }
       }
     }

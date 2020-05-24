@@ -23,15 +23,19 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.recipe.transfer.IRecipeTransferInfo;
 import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IModIngredientRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.IRecipeTransferRegistration;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.screen.inventory.InventoryScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.container.PlayerContainer;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -124,9 +128,9 @@ public class JeiIntegration implements IModPlugin {
     );
   }
 
-  // Oh god this is bad
   @Override
   public void registerGuiHandlers(final IGuiHandlerRegistration registration) {
+    // Oh god this is bad
     try {
       final Class<?> cls = Class.forName("mezz.jei.load.registration.GuiHandlerRegistration");
       final Field guiHandlersField = cls.getDeclaredField("guiHandlers");
@@ -140,11 +144,15 @@ public class JeiIntegration implements IModPlugin {
     } catch(final ClassNotFoundException | NoSuchFieldException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
       Gradient.LOGGER.error("Failed to remove JEI's vanilla inventory click thing", e);
     }
+
+    registration.addRecipeClickArea(InventoryScreen.class, 154, 18, 16, 16, new ResourceLocation("crafting"));
   }
 
-  //TODO not sure if this will be necessary or not. Removes the vanilla inv transfer handler.
-//  @Override
-//  public void registerRecipeTransferHandlers(final IRecipeTransferRegistration registration) {
+  @Override
+  public void registerRecipeTransferHandlers(final IRecipeTransferRegistration registration) {
+    registration.addRecipeTransferHandler(new InventoryCraftingTransferInfo(new ResourceLocation("crafting")));
+
+    //TODO not sure if this will be necessary or not. Removes the vanilla inv transfer handler.
 //    try {
 //      final Class<?> cls = Class.forName("mezz.jei.load.registration.RecipeTransferRegistration");
 //      final HashBasedTable<Class<?>, ResourceLocation, IRecipeTransferHandler<?>> handlers = HashBasedTable.create((ImmutableTable<Class<?>, ResourceLocation, IRecipeTransferHandler<?>>)cls.getDeclaredMethod("getRecipeTransferHandlers").invoke(registration));
@@ -169,7 +177,7 @@ public class JeiIntegration implements IModPlugin {
 //    } catch(final ClassNotFoundException | NoSuchFieldException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
 //      e.printStackTrace();
 //    }
-//  }
+  }
 
   private static <T extends IRecipe<?>> Collection<T> filterRecipes(final Class<T> recipeClass) {
     return Gradient.getRecipeManager().getRecipes().stream()
@@ -243,6 +251,56 @@ public class JeiIntegration implements IModPlugin {
     @Override
     public IRecipeType<?> getType() {
       return null;
+    }
+  }
+
+  private static final class InventoryCraftingTransferInfo implements IRecipeTransferInfo<PlayerContainer> {
+    private final ResourceLocation uid;
+
+    private InventoryCraftingTransferInfo(final ResourceLocation uid) {
+      this.uid = uid;
+    }
+
+    @Override
+    public Class<PlayerContainer> getContainerClass() {
+      return PlayerContainer.class;
+    }
+
+    @Override
+    public ResourceLocation getRecipeCategoryUid() {
+      return this.uid;
+    }
+
+    @Override
+    public boolean canHandle(final PlayerContainer container) {
+      return true;
+    }
+
+    @Override
+    public List<Slot> getRecipeSlots(final PlayerContainer container) {
+      final List<Slot> slots = new ArrayList<>();
+      slots.add(container.getSlot(1));
+      slots.add(container.getSlot(2));
+      slots.add(container.getSlot(3));
+      slots.add(container.getSlot(4));
+      slots.add(container.getSlot(46));
+      slots.add(container.getSlot(47));
+      slots.add(container.getSlot(48));
+      slots.add(container.getSlot(49));
+      slots.add(container.getSlot(50));
+
+      return slots;
+    }
+
+    @Override
+    public List<Slot> getInventorySlots(final PlayerContainer container) {
+      final List<Slot> slots = new ArrayList<>();
+
+      for(int slot = 9; slot <= 45; slot++) {
+        slots.add(container.getSlot(slot));
+      }
+
+      return slots;
     }
   }
 }
