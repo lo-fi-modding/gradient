@@ -341,15 +341,15 @@ public class FirepitTile extends HeatProducerTile {
   }
 
   @Override
-  protected void tickBeforeCooldown(final float tickScale) {
+  protected void tickBeforeCooldown() {
     if(!this.world.isRemote) {
       this.igniteFuel();
     }
   }
 
   @Override
-  protected void tickAfterCooldown(final float tickScale) {
-    super.tickAfterCooldown(tickScale);
+  protected void tickAfterCooldown() {
+    super.tickAfterCooldown();
 
     this.cook();
     this.updateLight();

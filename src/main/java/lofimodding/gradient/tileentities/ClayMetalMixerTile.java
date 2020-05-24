@@ -119,12 +119,12 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
   }
 
   @Override
-  protected void tickBeforeCooldown(final float tickScale) {
+  protected void tickBeforeCooldown() {
 
   }
 
   @Override
-  protected void tickAfterCooldown(final float tickScale) {
+  protected void tickAfterCooldown() {
     if(this.recipe != null && this.output != null) {
       if(this.recipeTicks == 0) {
         // Only mix if there's room

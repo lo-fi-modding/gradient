@@ -167,12 +167,12 @@ public class ClayOvenTile extends HeatSinkerTile {
   }
 
   @Override
-  protected void tickBeforeCooldown(final float tickScale) {
+  protected void tickBeforeCooldown() {
 
   }
 
   @Override
-  protected void tickAfterCooldown(final float tickScale) {
+  protected void tickAfterCooldown() {
     this.cook();
 
     if(this.getWorld().isRemote) {

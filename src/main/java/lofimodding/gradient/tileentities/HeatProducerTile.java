@@ -8,12 +8,12 @@ public abstract class HeatProducerTile extends HeatSinkerTile {
   }
 
   @Override
-  protected void tickAfterCooldown(final float tickScale) {
-    this.heatUp(tickScale);
+  protected void tickAfterCooldown() {
+    this.heatUp();
   }
 
-  private void heatUp(final float tickScale) {
-    this.addHeat(this.calculateHeatGain() / 20.0f * tickScale);
+  private void heatUp() {
+    this.addHeat(this.calculateHeatGain() / 20.0f);
   }
 
   protected abstract float calculateHeatGain();

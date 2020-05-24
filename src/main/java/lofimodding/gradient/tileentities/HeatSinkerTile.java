@@ -18,7 +18,6 @@ public abstract class HeatSinkerTile extends TileEntity implements ITickableTile
   private final Map<BlockPos, HeatSinkerTile> sinks = new HashMap<>();
 
   private boolean firstTick = true;
-  private long lastTick;
 
   private float heat;
 
@@ -73,18 +72,9 @@ public abstract class HeatSinkerTile extends TileEntity implements ITickableTile
       return;
     }
 
-    final long now = System.nanoTime();
-
-    if(this.lastTick == 0) {
-      this.lastTick = now - 50000000;
-    }
-
-    final float tickScale = (now - this.lastTick) / 50000000.0f;
-    this.lastTick = now;
-
-    this.tickBeforeCooldown(tickScale);
-    this.coolDown(tickScale);
-    this.tickAfterCooldown(tickScale);
+    this.tickBeforeCooldown();
+    this.coolDown();
+    this.tickAfterCooldown();
 
     if(this.firstTick) {
       this.firstTick();
@@ -131,11 +121,11 @@ public abstract class HeatSinkerTile extends TileEntity implements ITickableTile
 
   }
 
-  protected abstract void tickBeforeCooldown(final float tickScale);
-  protected abstract void tickAfterCooldown(final float tickScale);
+  protected abstract void tickBeforeCooldown();
+  protected abstract void tickAfterCooldown();
 
-  private void coolDown(final float tickScale) {
-    this.removeHeat(this.calculateHeatLoss(this.world.getBlockState(this.pos)) / 20.0f * tickScale);
+  private void coolDown() {
+    this.removeHeat(this.calculateHeatLoss(this.world.getBlockState(this.pos)) / 20.0f);
   }
 
   protected abstract float calculateHeatLoss(BlockState state);

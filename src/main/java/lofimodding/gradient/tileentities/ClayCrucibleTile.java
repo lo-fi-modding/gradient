@@ -141,7 +141,7 @@ public class ClayCrucibleTile extends HeatSinkerTile implements INamedContainerP
   }
 
   @Override
-  protected void tickBeforeCooldown(final float tickScale) {
+  protected void tickBeforeCooldown() {
     if(!this.world.isRemote) {
       this.meltMetal();
     }
@@ -151,7 +151,7 @@ public class ClayCrucibleTile extends HeatSinkerTile implements INamedContainerP
   }
 
   @Override
-  protected void tickAfterCooldown(final float tickScale) {
+  protected void tickAfterCooldown() {
     this.updateLight();
   }
 
