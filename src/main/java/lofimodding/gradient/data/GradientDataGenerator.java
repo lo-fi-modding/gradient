@@ -1158,6 +1158,17 @@ public final class GradientDataGenerator {
 
       this.add(GradientItems.INFINICOAL.get(), "Infinicoal (Debug Item)");
 
+      this.add("config.gradient.interop.remove_leather_recipes", "Remove leather recipes");
+      this.add("config.gradient.interop.replace_plank_recipes", "Replace plank recipes");
+      this.add("config.gradient.interop.replace_stick_recipes", "Replace stick recipes");
+      this.add("config.gradient.interop.halve_plank_recipe_output", "Halve plank recipe output");
+      this.add("config.gradient.interop.halve_stick_recipe_output", "Halve stick recipe output");
+      this.add("config.gradient.interop.disable_vanilla_crafting_table", "Disable vanilla crafting table");
+      this.add("config.gradient.interop.disable_vanilla_furnace", "Disable vanilla furnace");
+      this.add("config.gradient.enet.enable_node_debug", "Enable node debug");
+      this.add("config.gradient.enet.enable_path_debug", "Enable path debug");
+      this.add("config.gradient.enet.enable_tick_debug", "Enable tick debug");
+
       this.add("jei.cooking.name", "Cooking");
       this.add("jei.cooking.temperature", "%f °C");
       this.add("jei.cooking.ticks", "%d ticks");
