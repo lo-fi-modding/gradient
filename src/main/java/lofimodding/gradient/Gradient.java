@@ -13,24 +13,24 @@ import lofimodding.gradient.energy.kinetic.KineticEnergyStorage;
 import lofimodding.gradient.energy.kinetic.KineticEnergyTransfer;
 import lofimodding.gradient.fluids.GradientFluidHandlerCapability;
 import lofimodding.gradient.network.Packets;
-import lofimodding.gradient.recipes.CraftingRecipeWrapper;
 import lofimodding.gradient.recipes.FurnaceRecipeWrapper;
+import lofimodding.gradient.recipes.ShapedRecipeWrapper;
+import lofimodding.gradient.recipes.ShapelessRecipeWrapper;
 import lofimodding.progression.recipes.ShapelessStagedRecipe;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementManager;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.container.WorkbenchContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.FurnaceRecipe;
-import net.minecraft.item.crafting.ICraftingRecipe;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.RecipeManager;
+import net.minecraft.item.crafting.ShapedRecipe;
 import net.minecraft.item.crafting.ShapelessRecipe;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tileentity.AbstractFurnaceTileEntity;
@@ -190,8 +190,13 @@ public class Gradient {
       // It has special handling to fail matches if the container is the vanilla workbench container.
 
       InterModComms.sendTo("no-recipes", "replace_recipe", () -> new Tuple<Predicate<IRecipe<?>>, Function<IRecipe<?>, IRecipe<?>>>(
-        recipe -> recipe.getType() == IRecipeType.CRAFTING && recipe instanceof ICraftingRecipe,
-        original -> new CraftingRecipeWrapper((IRecipe<CraftingInventory>)original, (inv, world) -> !(inv.eventHandler instanceof WorkbenchContainer)))
+        recipe -> recipe.getType() == IRecipeType.CRAFTING && recipe instanceof ShapelessRecipe,
+        original -> new ShapelessRecipeWrapper((ShapelessRecipe)original, (inv, world) -> !(inv.eventHandler instanceof WorkbenchContainer)))
+      );
+
+      InterModComms.sendTo("no-recipes", "replace_recipe", () -> new Tuple<Predicate<IRecipe<?>>, Function<IRecipe<?>, IRecipe<?>>>(
+        recipe -> recipe.getType() == IRecipeType.CRAFTING && recipe instanceof ShapedRecipe,
+        original -> new ShapedRecipeWrapper((ShapedRecipe)original, (inv, world) -> !(inv.eventHandler instanceof WorkbenchContainer)))
       );
     }
 
