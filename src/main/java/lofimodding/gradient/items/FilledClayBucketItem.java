@@ -91,7 +91,7 @@ public class FilledClayBucketItem extends Item {
   }
 
   protected ItemStack emptyBucket(final ItemStack stack, final PlayerEntity player) {
-    return !player.abilities.isCreativeMode ? new ItemStack(GradientItems.EMPTY_CLAY_BUCKET.get()) : stack;
+    return player.abilities.isCreativeMode ? stack : new ItemStack(GradientItems.EMPTY_CLAY_BUCKET.get());
   }
 
   private boolean canBlockContainFluid(final World world, final BlockPos pos, final BlockState state, final Fluid fluid) {
@@ -173,7 +173,7 @@ public class FilledClayBucketItem extends Item {
 
     @Override
     public int getTankCapacity(final int tank) {
-      return 1000;
+      return FluidAttributes.BUCKET_VOLUME;
     }
 
     @Override
@@ -187,7 +187,7 @@ public class FilledClayBucketItem extends Item {
 
     @Override
     public int fill(final FluidStack resource, final IFluidHandler.FluidAction action) {
-      if(!this.fluid.isEmpty() || resource.getAmount() < 1000) {
+      if(!this.fluid.isEmpty() || resource.getAmount() < FluidAttributes.BUCKET_VOLUME) {
         return 0;
       }
 

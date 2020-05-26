@@ -25,6 +25,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
@@ -82,9 +83,9 @@ public class EmptyClayBucketItem extends Item {
       }
 
       return FluidUtil.getFluidHandler(world, blockpos, blockraytraceresult.getFace()).map(handler -> {
-        final FluidStack fluid = handler.drain(1000, IFluidHandler.FluidAction.SIMULATE);
+        final FluidStack fluid = handler.drain(FluidAttributes.BUCKET_VOLUME, IFluidHandler.FluidAction.SIMULATE);
 
-        if(fluid.getAmount() == 1000) {
+        if(fluid.getAmount() == FluidAttributes.BUCKET_VOLUME) {
           player.addStat(Stats.ITEM_USED.get(this));
           player.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
           final ItemStack itemstack1 = this.fillBucket(itemstack, player, fluid.getFluid());
@@ -111,7 +112,7 @@ public class EmptyClayBucketItem extends Item {
     emptyBuckets.shrink(1);
 
     final ItemStack stack = new ItemStack(GradientItems.FILLED_CLAY_BUCKET.get());
-    FluidUtil.getFluidHandler(stack).ifPresent(handler -> handler.fill(new FluidStack(fluid, 1000), IFluidHandler.FluidAction.EXECUTE));
+    FluidUtil.getFluidHandler(stack).ifPresent(handler -> handler.fill(new FluidStack(fluid, FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.EXECUTE));
 
     if(emptyBuckets.isEmpty()) {
       return stack;
@@ -125,17 +126,23 @@ public class EmptyClayBucketItem extends Item {
   }
 
   @Override
-  public ICapabilityProvider initCapabilities(final ItemStack stack, @Nullable final CompoundNBT nbt) {
+  public ICapabilityProvider initCapabilities(final ItemStack stack, @Nullable final CompoundNBT tag) {
     return new Handler();
   }
 
   private static class Handler implements IFluidHandlerItem, ICapabilityProvider {
     private final LazyOptional<IFluidHandlerItem> holder = LazyOptional.of(() -> this);
 
+    // This is a pretty big hack
+    private FluidStack lastFluidFilled = FluidStack.EMPTY;
+
     @Nonnull
     @Override
     public ItemStack getContainer() {
-      return new ItemStack(GradientItems.FILLED_CLAY_BUCKET.get());
+      final ItemStack filled = new ItemStack(GradientItems.FILLED_CLAY_BUCKET.get());
+      FluidUtil.getFluidHandler(filled).ifPresent(handler -> handler.fill(new FluidStack(this.lastFluidFilled, FluidAttributes.BUCKET_VOLUME), IFluidHandler.FluidAction.EXECUTE));
+      this.lastFluidFilled = FluidStack.EMPTY;
+      return filled;
     }
 
     @Override
@@ -151,7 +158,7 @@ public class EmptyClayBucketItem extends Item {
 
     @Override
     public int getTankCapacity(final int tank) {
-      return 1000;
+      return FluidAttributes.BUCKET_VOLUME;
     }
 
     @Override
@@ -160,8 +167,12 @@ public class EmptyClayBucketItem extends Item {
     }
 
     @Override
-    public int fill(final FluidStack resource, final IFluidHandler.FluidAction doFill) {
-      return 1000;
+    public int fill(final FluidStack resource, final IFluidHandler.FluidAction action) {
+      if(action.execute()) {
+        this.lastFluidFilled = resource.copy();
+      }
+
+      return FluidAttributes.BUCKET_VOLUME;
     }
 
     @Nonnull
