@@ -1,7 +1,9 @@
 package lofimodding.gradient;
 
 import lofimodding.gradient.items.CastedItem;
+import lofimodding.gradient.items.EmptyClayBucketItem;
 import lofimodding.gradient.items.EmptyWaterskinItem;
+import lofimodding.gradient.items.FilledClayBucketItem;
 import lofimodding.gradient.items.FilledWaterskinItem;
 import lofimodding.gradient.items.FlintKnifeItem;
 import lofimodding.gradient.items.HideBeddingItem;
@@ -186,6 +188,8 @@ public final class GradientItems {
   public static final RegistryObject<BlockItem> CLAY_OVEN = REGISTRY.register(GradientIds.CLAY_OVEN, () -> new BlockItem(GradientBlocks.CLAY_OVEN.get(), new Item.Properties().group(GROUP)));
   public static final RegistryObject<BlockItem> CLAY_CRUCIBLE = REGISTRY.register(GradientIds.CLAY_CRUCIBLE, () -> new BlockItem(GradientBlocks.CLAY_CRUCIBLE.get(), new Item.Properties().group(GROUP)));
   public static final RegistryObject<BlockItem> CLAY_METAL_MIXER = REGISTRY.register(GradientIds.CLAY_METAL_MIXER, () -> new BlockItem(GradientBlocks.CLAY_METAL_MIXER.get(), new Item.Properties().group(GROUP)));
+  public static final RegistryObject<EmptyClayBucketItem> EMPTY_CLAY_BUCKET = REGISTRY.register(GradientIds.EMPTY_CLAY_BUCKET, EmptyClayBucketItem::new);
+  public static final RegistryObject<FilledClayBucketItem> FILLED_CLAY_BUCKET = REGISTRY.register(GradientIds.FILLED_CLAY_BUCKET, FilledClayBucketItem::new);
 
   private static final Map<GradientCasts, RegistryObject<BlockItem>> CLAY_CASTS = new EnumMap<>(GradientCasts.class);
 
