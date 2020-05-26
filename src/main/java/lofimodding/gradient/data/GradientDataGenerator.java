@@ -793,6 +793,7 @@ public final class GradientDataGenerator {
       this.getBuilder(GradientIds.CLAY_OVEN).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.CLAY_OVEN)));
       this.getBuilder(GradientIds.CLAY_CRUCIBLE).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.CLAY_CRUCIBLE)));
       this.getBuilder(GradientIds.CLAY_METAL_MIXER).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.CLAY_METAL_MIXER)));
+      this.singleTexture(GradientIds.EMPTY_CLAY_BUCKET, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.EMPTY_CLAY_BUCKET));
 
       for(final GradientCasts cast : GradientCasts.values()) {
         this.getBuilder(GradientIds.CLAY_CAST(cast)).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.CLAY_CAST(cast))));
@@ -1148,6 +1149,8 @@ public final class GradientDataGenerator {
       this.add(GradientItems.CLAY_CRUCIBLE.get().getTranslationKey() + ".not_enough_metal", "This cast requires %d B");
       this.add(GradientItems.CLAY_METAL_MIXER.get(), "Clay Metal Mixer");
       this.add(GradientItems.CLAY_METAL_MIXER.get().getTranslationKey() + ".tooltip", "Place between two crucibles, with another crucible underneath");
+      this.add(GradientItems.EMPTY_CLAY_BUCKET.get(), "Empty Clay Bucket");
+      this.add(GradientItems.FILLED_CLAY_BUCKET.get(), "Clay Bucket of %s");
 
       this.add(GradientItems.WOODEN_GEAR.get(), "Wooden Gear");
       this.add(GradientItems.WOODEN_AXLE.get(), "Wooden Axle");

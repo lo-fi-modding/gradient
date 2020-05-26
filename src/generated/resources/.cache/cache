@@ -64,7 +64,7 @@ e02efa1f66998d1055cc347b6075eaf13dc2ee45 assets\gradient\blockstates\wooden_conv
 1854525310ee03accd90a9e89a11a36af80a1533 assets\gradient\blockstates\wooden_crank.json
 a9ed0046e31fcace51b6832dd1e004f15f81f11f assets\gradient\blockstates\wooden_gearbox.json
 659fa450fe62cdecc69d9276f01c713a1e62a205 assets\gradient\blockstates\zinc_block.json
-267f600b32f11b246aab5ed7d78ecbbdc1bcf7f8 assets\gradient\lang\en_us.json
+992e80086c8f9df6d304ed1a734875c6b9fb171a assets\gradient\lang\en_us.json
 910f0617e8b2433ac0f97c48cbbc8251b4f162b3 assets\gradient\models\block\azurite_ore.json
 79a72e81ecb79d9775041b9a2d526a90f646005b assets\gradient\models\block\azurite_pebble.json
 f295f4e7338854665f216e2f0ca3e339b0d284a7 assets\gradient\models\block\bronze_block.json
@@ -188,6 +188,7 @@ dc622cf1fe656c010dda0db509b285d0583fc4c0 assets\gradient\models\item\copper_swor
 1c85f110b866f20937ba47226a22712e49c9c79e assets\gradient\models\item\dough.json
 9bdc9ca0817f325b0c1bcbd786941290d5fdfc6f assets\gradient\models\item\drying_rack.json
 c03cd106ddeff29d8f0151d3feea50e0d3f8da56 assets\gradient\models\item\dust.json
+c811a2ce1b0cc3df4895759b86e4bfc1ae332514 assets\gradient\models\item\empty_clay_bucket.json
 f6e68440439d9072f31b284a74703d64fa027ceb assets\gradient\models\item\empty_waterskin.json
 18b9e0d9665332a673dc9ddf17143bd320d597ac assets\gradient\models\item\fibre.json
 215616ab4e7778aa8901ff1b13e03c0b3183fc3d assets\gradient\models\item\filled_waterskin.json

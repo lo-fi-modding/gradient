@@ -26,6 +26,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
@@ -46,6 +48,15 @@ import javax.annotation.Nullable;
 public class FilledClayBucketItem extends Item {
   public FilledClayBucketItem() {
     super(new Item.Properties().group(GradientItems.GROUP).maxStackSize(1));
+  }
+
+  @Override
+  public ITextComponent getDisplayName(final ItemStack stack) {
+    if(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY == null) {
+      return super.getDisplayName(stack);
+    }
+
+    return new TranslationTextComponent(this.getTranslationKey(stack), FluidUtil.getFluidContained(stack).orElse(FluidStack.EMPTY).getDisplayName());
   }
 
   @Override

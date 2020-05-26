@@ -1,0 +1,9 @@
+{
+  "parent": "forge:item/default",
+  "loader": "forge:bucket",
+  "fluid": "water",
+  "textures": {
+    "base": "gradient:item/empty_clay_bucket",
+    "fluid": "gradient:item/clay_bucket_fluid"
+  }
+}
