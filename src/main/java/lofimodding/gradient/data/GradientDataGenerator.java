@@ -1172,6 +1172,8 @@ public final class GradientDataGenerator {
       this.add("config.gradient.enet.enable_path_debug", "Enable path debug");
       this.add("config.gradient.enet.enable_tick_debug", "Enable tick debug");
 
+      this.add("itemGroup.gradient", "Gradient");
+
       this.add("jei.cooking.name", "Cooking");
       this.add("jei.cooking.temperature", "%f °C");
       this.add("jei.cooking.ticks", "%d ticks");

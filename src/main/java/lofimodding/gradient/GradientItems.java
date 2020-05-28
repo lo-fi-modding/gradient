@@ -274,7 +274,7 @@ public final class GradientItems {
 
     @Override
     public ItemStack createIcon() {
-      return ItemStack.EMPTY; //TODO
+      return new ItemStack(GradientItems.WOODEN_GEAR.get());
     }
   }
 }
