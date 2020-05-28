@@ -29,6 +29,7 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
   private static Capability<IGradientFluidHandler> FLUID_HANDLER_CAPABILITY;
 
   private final Map<Direction, IGradientFluidHandler> inputs = new EnumMap<>(Direction.class);
+  private final Map<Direction, GradientFluidStack> flowing = new EnumMap<>(Direction.class);
   private final Map<GradientFluid, List<Direction>> fluidSideMap = new HashMap<>();
 
   @Nullable
@@ -46,6 +47,10 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
 
   public boolean isConnected(final Direction side) {
     return this.inputs.get(side) != null;
+  }
+
+  public GradientFluidStack getFlowingFluid(final Direction side) {
+    return this.flowing.getOrDefault(side, GradientFluidStack.EMPTY);
   }
 
   public void inputUpdated(final Direction side) {
@@ -71,10 +76,10 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
   }
 
   public void updateAllSides() {
-    this.output = this.getFluidHandler(this.world, this.pos.down());
+    this.output = this.getFluidHandler(this.world, this.pos.down(), Direction.UP);
 
     for(final Direction side : Direction.Plane.HORIZONTAL) {
-      this.inputs.put(side, this.getFluidHandler(this.world, this.pos.offset(side)));
+      this.inputs.put(side, this.getFluidHandler(this.world, this.pos.offset(side), side.getOpposite()));
     }
   }
 
@@ -119,6 +124,12 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
   }
 
   @Override
+  public void tick() {
+    this.flowing.clear();
+    super.tick();
+  }
+
+  @Override
   protected void tickBeforeCooldown() {
 
   }
@@ -154,6 +165,7 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
               temperature += drained.getTemperature() * drained.getAmount();
               total += drained.getAmount();
               remaining -= drained.getAmount();
+              this.flowing.put(side, drained);
             } else {
               failed++;
             }
@@ -181,13 +193,13 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
   }
 
   @Nullable
-  private IGradientFluidHandler getFluidHandler(final IBlockReader world, final BlockPos pos) {
+  private IGradientFluidHandler getFluidHandler(final IBlockReader world, final BlockPos pos, final Direction side) {
     final TileEntity output = world.getTileEntity(pos);
 
     if(output == null) {
       return null;
     }
 
-    return output.getCapability(FLUID_HANDLER_CAPABILITY, Direction.UP).orElse(null);
+    return output.getCapability(FLUID_HANDLER_CAPABILITY, side).orElse(null);
   }
 }
