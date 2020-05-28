@@ -3,7 +3,6 @@ package lofimodding.gradient.integrations.jei;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 import lofimodding.gradient.Gradient;
-import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientRecipeSerializers;
 import lofimodding.gradient.recipes.HardeningRecipe;
 import lofimodding.progression.Stage;
@@ -56,7 +55,7 @@ public class HardeningRecipeCategory implements IRecipeCategory<HardeningRecipe>
 
   @Override
   public IDrawable getIcon() {
-    return this.guiHelper.createDrawableIngredient(new ItemStack(GradientItems.FIREPIT.get()));
+    return this.guiHelper.createDrawable(Gradient.loc("textures/gui/jei/icons.png"), 0, 0, 16, 16);
   }
 
   @Override
