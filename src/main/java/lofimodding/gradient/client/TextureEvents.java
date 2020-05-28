@@ -18,7 +18,8 @@ public final class TextureEvents {
     if(event.getMap().getTextureLocation().equals(AtlasTexture.LOCATION_BLOCKS_TEXTURE)) {
       for(final GradientFluid fluid : GradientFluid.REGISTRY.get().getValues()) {
         final GradientFluidStack stack = new GradientFluidStack(fluid, 1.0f, 0.0f);
-        event.addSprite(stack.getStill());
+        event.addSprite(stack.getStillTexture());
+        event.addSprite(stack.getFlowingTexture());
       }
     }
   }

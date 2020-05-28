@@ -27,7 +27,7 @@ public class ClayCrucibleRenderer extends TileEntityRenderer<ClayCrucibleTile> {
     final GradientFluidStack stack = crucible.tank.getFluidStack();
 
     if(!stack.isEmpty()) {
-      final ResourceLocation textureLoc = stack.getFluid().getStillTexture(stack);
+      final ResourceLocation textureLoc = stack.getStillTexture();
       final TextureAtlasSprite sprite = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(textureLoc);
 
       final float height = (1.0f + stack.getAmount() / ClayCrucibleTile.FLUID_CAPACITY * 11.5f) / 16.0f;

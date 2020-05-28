@@ -3,7 +3,6 @@ package lofimodding.gradient.client.screens.widgets;
 import com.mojang.blaze3d.systems.RenderSystem;
 import lofimodding.gradient.Gradient;
 import lofimodding.gradient.client.RenderUtils;
-import lofimodding.gradient.fluids.GradientFluid;
 import lofimodding.gradient.fluids.GradientFluidStack;
 import lofimodding.gradient.fluids.GradientFluidTank;
 import net.minecraft.client.Minecraft;
@@ -46,11 +45,10 @@ public class GradientFluidWidget extends Widget {
     final GradientFluidStack stack = this.tank.getFluidStack();
 
     if(!stack.isEmpty()) {
-      final GradientFluid fluid = stack.getFluid();
-      final ResourceLocation textureLoc = fluid.getStillTexture(stack);
+      final ResourceLocation textureLoc = stack.getStillTexture();
       final TextureAtlasSprite sprite = mc.getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(textureLoc);
       final float renderHeight = this.height * MathHelper.clamp(this.tank.getFluidAmount() / this.tank.getCapacity(), 0.0f, 1.0f);
-      final int color = fluid.getColour(stack);
+      final int color = stack.getColour();
 
       mc.textureManager.bindTexture(new ResourceLocation(textureLoc.getNamespace(), "textures/" + textureLoc.getPath() + ".png"));
       final BufferBuilder buffer = Tessellator.getInstance().getBuffer();

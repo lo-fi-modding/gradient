@@ -9,6 +9,7 @@ public class MetalFluid extends GradientFluid {
   public MetalFluid(final Metal metal) {
     this.metal = metal;
     this.setStillTexture(Gradient.loc("fluid/metal_still"));
+    this.setFlowingTexture(Gradient.loc("fluid/metal_flowing"));
   }
 
   @Override

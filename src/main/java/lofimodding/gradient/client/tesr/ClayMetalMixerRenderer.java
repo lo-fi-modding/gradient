@@ -43,6 +43,7 @@ public class ClayMetalMixerRenderer extends TileEntityRenderer<ClayMetalMixerTil
   public void render(final ClayMetalMixerTile te, final float partialTicks, final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final int combinedLight, final int combinedOverlay) {
     final TileEntity output = te.getWorld().getTileEntity(te.getPos().down());
 
+    matrixStack.push();
     if(output != null) {
       output.getCapability(GradientFluidHandlerCapability.CAPABILITY, Direction.UP).ifPresent(handler -> {
         if(!handler.drain(0.001f, IGradientFluidHandler.FluidAction.SIMULATE).isEmpty()) {
@@ -54,6 +55,7 @@ public class ClayMetalMixerRenderer extends TileEntityRenderer<ClayMetalMixerTil
     }
 
     this.renderAuger(te, matrixStack, buffer, combinedLight, combinedOverlay);
+    matrixStack.pop();
 
     for(final Direction side : Direction.Plane.HORIZONTAL) {
       final GradientFluidStack stack = te.getFlowingFluid(side);
@@ -101,7 +103,7 @@ public class ClayMetalMixerRenderer extends TileEntityRenderer<ClayMetalMixerTil
 
   public void renderFluid(final GradientFluidStack stack, final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final int combinedLight) {
     if(!stack.isEmpty()) {
-      final ResourceLocation textureLoc = stack.getFluid().getStillTexture(stack);
+      final ResourceLocation textureLoc = stack.getFlowingTexture();
       final TextureAtlasSprite sprite = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(textureLoc);
 
       final float a = (stack.getColour() >>> 24 & 255) / 255.0f;
@@ -116,16 +118,16 @@ public class ClayMetalMixerRenderer extends TileEntityRenderer<ClayMetalMixerTil
       final Matrix4f top = matrixStack.getLast().getMatrix();
 
       // North
-      vertices.pos(top, 6.5f / 16.0f, -14.0f / 16.0f, 2.5f / 16.0f).color(r, g, b, a).tex(sprite.getInterpolatedU(0.0d), minV).lightmap(combinedLight).normal(0.0f, 0.0f, -1.0f).endVertex();
-      vertices.pos(top, 6.5f / 16.0f,  -1.0f / 16.0f, 2.5f / 16.0f).color(r, g, b, a).tex(sprite.getInterpolatedU(0.0d), maxV).lightmap(combinedLight).normal(0.0f, 0.0f, -1.0f).endVertex();
-      vertices.pos(top, 9.5f / 16.0f,  -1.0f / 16.0f, 2.5f / 16.0f).color(r, g, b, a).tex(sprite.getInterpolatedU(3.0d), maxV).lightmap(combinedLight).normal(0.0f, 0.0f, -1.0f).endVertex();
-      vertices.pos(top, 9.5f / 16.0f, -14.0f / 16.0f, 2.5f / 16.0f).color(r, g, b, a).tex(sprite.getInterpolatedU(3.0d), minV).lightmap(combinedLight).normal(0.0f, 0.0f, -1.0f).endVertex();
+      vertices.pos(top, 6.5f / 16.0f, -14.0f / 16.0f, 2.5f / 16.0f).color(r, g, b, a).tex(sprite.getInterpolatedU(0.0d), maxV).lightmap(combinedLight).normal(0.0f, 0.0f, -1.0f).endVertex();
+      vertices.pos(top, 6.5f / 16.0f,  -1.0f / 16.0f, 2.5f / 16.0f).color(r, g, b, a).tex(sprite.getInterpolatedU(0.0d), minV).lightmap(combinedLight).normal(0.0f, 0.0f, -1.0f).endVertex();
+      vertices.pos(top, 9.5f / 16.0f,  -1.0f / 16.0f, 2.5f / 16.0f).color(r, g, b, a).tex(sprite.getInterpolatedU(3.0d), minV).lightmap(combinedLight).normal(0.0f, 0.0f, -1.0f).endVertex();
+      vertices.pos(top, 9.5f / 16.0f, -14.0f / 16.0f, 2.5f / 16.0f).color(r, g, b, a).tex(sprite.getInterpolatedU(3.0d), maxV).lightmap(combinedLight).normal(0.0f, 0.0f, -1.0f).endVertex();
 
       // West
-      vertices.pos(top, 6.5f / 16.0f, -14.0f / 16.0f, 3.5f / 16.0f).color(r, g, b, a).tex(sprite.getInterpolatedU(3.0d), minV).lightmap(combinedLight).normal(-1.0f, 0.0f, 0.0f).endVertex();
-      vertices.pos(top, 6.5f / 16.0f,  -1.0f / 16.0f, 3.5f / 16.0f).color(r, g, b, a).tex(sprite.getInterpolatedU(3.0d), maxV).lightmap(combinedLight).normal(-1.0f, 0.0f, 0.0f).endVertex();
-      vertices.pos(top, 6.5f / 16.0f,  -1.0f / 16.0f, 2.5f / 16.0f).color(r, g, b, a).tex(sprite.getInterpolatedU(4.0d), maxV).lightmap(combinedLight).normal(-1.0f, 0.0f, 0.0f).endVertex();
-      vertices.pos(top, 6.5f / 16.0f, -14.0f / 16.0f, 2.5f / 16.0f).color(r, g, b, a).tex(sprite.getInterpolatedU(4.0d), minV).lightmap(combinedLight).normal(-1.0f, 0.0f, 0.0f).endVertex();
+      vertices.pos(top, 6.5f / 16.0f, -14.0f / 16.0f, 3.5f / 16.0f).color(r, g, b, a).tex(sprite.getInterpolatedU(3.0d), maxV).lightmap(combinedLight).normal(-1.0f, 0.0f, 0.0f).endVertex();
+      vertices.pos(top, 6.5f / 16.0f,  -1.0f / 16.0f, 3.5f / 16.0f).color(r, g, b, a).tex(sprite.getInterpolatedU(3.0d), minV).lightmap(combinedLight).normal(-1.0f, 0.0f, 0.0f).endVertex();
+      vertices.pos(top, 6.5f / 16.0f,  -1.0f / 16.0f, 2.5f / 16.0f).color(r, g, b, a).tex(sprite.getInterpolatedU(4.0d), minV).lightmap(combinedLight).normal(-1.0f, 0.0f, 0.0f).endVertex();
+      vertices.pos(top, 6.5f / 16.0f, -14.0f / 16.0f, 2.5f / 16.0f).color(r, g, b, a).tex(sprite.getInterpolatedU(4.0d), maxV).lightmap(combinedLight).normal(-1.0f, 0.0f, 0.0f).endVertex();
 
       // South
       vertices.pos(top, 6.5f / 16.0f,  -1.0f / 16.0f, 3.5f / 16.0f).color(r, g, b, a).tex(sprite.getInterpolatedU(4.0d), minV).lightmap(combinedLight).normal(0.0f, 0.0f, 1.0f).endVertex();

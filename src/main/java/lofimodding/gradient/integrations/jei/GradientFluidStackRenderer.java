@@ -108,7 +108,7 @@ public class GradientFluidStackRenderer implements IIngredientRenderer<GradientF
 
   private static TextureAtlasSprite getStillFluidSprite(final GradientFluidStack fluidStack) {
     final Minecraft minecraft = Minecraft.getInstance();
-    final ResourceLocation fluidStill = fluidStack.getStill();
+    final ResourceLocation fluidStill = fluidStack.getStillTexture();
     return minecraft.getAtlasSpriteGetter(PlayerContainer.LOCATION_BLOCKS_TEXTURE).apply(fluidStill);
   }
 

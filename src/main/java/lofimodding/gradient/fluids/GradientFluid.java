@@ -37,6 +37,7 @@ public class GradientFluid extends ForgeRegistryEntry<GradientFluid> {
 
   private String translationKey;
   private ResourceLocation stillTexture;
+  private ResourceLocation flowingTexture;
 
   public String getTranslationKey() {
     if(this.translationKey == null) {
@@ -64,6 +65,18 @@ public class GradientFluid extends ForgeRegistryEntry<GradientFluid> {
 
   protected void setStillTexture(final ResourceLocation texture) {
     this.stillTexture = texture;
+  }
+
+  public ResourceLocation getFlowingTexture(final GradientFluidStack stack) {
+    if(this.flowingTexture == null) {
+      this.flowingTexture = new ResourceLocation(this.getRegistryName().getNamespace(), "fluid/" + this.getRegistryName().getPath() + "_flowing");
+    }
+
+    return this.flowingTexture;
+  }
+
+  protected void setFlowingTexture(final ResourceLocation texture) {
+    this.flowingTexture = texture;
   }
 
   public int getColour(final GradientFluidStack stack) {

@@ -8,9 +8,11 @@ import lofimodding.gradient.network.UpdateClayMetalMixerNeighboursPacket;
 import lofimodding.gradient.recipes.AlloyRecipe;
 import lofimodding.gradient.utils.RecipeUtils;
 import net.minecraft.block.BlockState;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraftforge.common.capabilities.Capability;
@@ -30,6 +32,7 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
 
   private final Map<Direction, IGradientFluidHandler> inputs = new EnumMap<>(Direction.class);
   private final Map<Direction, GradientFluidStack> flowing = new EnumMap<>(Direction.class);
+  private final Map<Direction, GradientFluidStack> lastFlowing = new EnumMap<>(Direction.class);
   private final Map<GradientFluid, List<Direction>> fluidSideMap = new HashMap<>();
 
   @Nullable
@@ -124,22 +127,21 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
   }
 
   @Override
-  public void tick() {
-    this.flowing.clear();
-    super.tick();
-  }
-
-  @Override
   protected void tickBeforeCooldown() {
 
   }
 
   @Override
   protected void tickAfterCooldown() {
+    if(this.world.isRemote) {
+      return;
+    }
+
     if(this.recipe != null && this.output != null) {
       if(this.recipeTicks == 0) {
         // Only mix if there's room
         if(this.output.fill(this.recipe.getFluidOutput(), IGradientFluidHandler.FluidAction.SIMULATE) < this.recipe.getFluidOutput().getAmount()) {
+          this.flowing.clear();
           return;
         }
 
@@ -179,6 +181,24 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
       } else {
         this.recipeTicks--;
       }
+    } else {
+      this.flowing.clear();
+    }
+
+    boolean different = false;
+
+    for(final Direction side : Direction.Plane.HORIZONTAL) {
+      if(this.flowing.getOrDefault(side, GradientFluidStack.EMPTY).getFluid() != this.lastFlowing.getOrDefault(side, GradientFluidStack.EMPTY).getFluid()) {
+        different = true;
+        break;
+      }
+    }
+
+    if(different) {
+      this.sync();
+
+      this.lastFlowing.clear();
+      this.lastFlowing.putAll(this.flowing);
     }
   }
 
@@ -201,5 +221,33 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
     }
 
     return output.getCapability(FLUID_HANDLER_CAPABILITY, side).orElse(null);
+  }
+
+  @Override
+  public CompoundNBT write(final CompoundNBT tag) {
+    final CompoundNBT flowing = new CompoundNBT();
+
+    for(final Map.Entry<Direction, GradientFluidStack> entry : this.flowing.entrySet()) {
+      flowing.putString(entry.getKey().getName(), entry.getValue().getFluid().getRegistryName().toString());
+    }
+
+    final CompoundNBT nbt = super.write(tag);
+    nbt.put("flowing", flowing);
+
+    return nbt;
+  }
+
+  @Override
+  public void read(final CompoundNBT tag) {
+    super.read(tag);
+
+    this.flowing.clear();
+    final CompoundNBT flowing = tag.getCompound("flowing");
+
+    for(final Direction side : Direction.Plane.HORIZONTAL) {
+      if(flowing.contains(side.getName())) {
+        this.flowing.put(side, new GradientFluidStack(GradientFluid.REGISTRY.get().getValue(new ResourceLocation(flowing.getString(side.getName()))), 1.0f, this.getHeat()));
+      }
+    }
   }
 }
