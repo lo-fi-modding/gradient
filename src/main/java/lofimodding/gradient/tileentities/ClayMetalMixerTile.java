@@ -13,6 +13,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraftforge.common.capabilities.Capability;
@@ -46,6 +47,11 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
 
   public ClayMetalMixerTile() {
     super(GradientTileEntities.CLAY_METAL_MIXER.get());
+  }
+
+  @Override
+  public AxisAlignedBB getRenderBoundingBox() {
+    return super.getRenderBoundingBox().expand(0.0d, -1.0d, 0.0d);
   }
 
   public boolean isConnected(final Direction side) {
