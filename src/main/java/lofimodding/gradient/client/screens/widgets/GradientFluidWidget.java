@@ -69,7 +69,11 @@ public class GradientFluidWidget extends Widget {
 
     final List<String> tooltip = new ArrayList<>();
     tooltip.add(this.tank.getFluidStack().getName().getFormattedText());
-    tooltip.add(I18n.format("meltable.display", FLUID_FORMAT.format(this.tank.getFluidAmount()), FLUID_FORMAT.format(this.tank.getCapacity()), TEMPERATURE_FORMAT.format(this.tank.getFluidStack().getTemperature())));
+    tooltip.add(I18n.format("meltable.capacity", FLUID_FORMAT.format(this.tank.getFluidAmount()), FLUID_FORMAT.format(this.tank.getCapacity())));
+
+    if(!Float.isNaN(this.tank.getFluidStack().getTemperature())) {
+      tooltip.add(I18n.format("meltable.temperature", TEMPERATURE_FORMAT.format(this.tank.getFluidStack().getTemperature())));
+    }
 
     this.screen.renderTooltip(tooltip, mouseX, mouseY);
   }

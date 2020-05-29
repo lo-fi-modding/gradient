@@ -1003,6 +1003,8 @@ public final class GradientDataGenerator {
 
       this.add("fluids.gradient.air", "Air");
 
+      this.add(GradientFluids.EMPTY.get(), "Empty");
+
       for(final Metal metal : Minerals.metals()) {
         final String metalName = StringUtils.capitalize(metal.name);
         this.add(GradientFluids.METAL(metal).get(), "Molten " + metalName);
@@ -1012,7 +1014,8 @@ public final class GradientDataGenerator {
       this.add("meltable.melt_time", "Melting Time: %d ticks");
       this.add("meltable.amount", "Amount: %f B");
       this.add("meltable.fluid", "Fluid: %s");
-      this.add("meltable.display", "%f/%f B (%f °C)");
+      this.add("meltable.capacity", "%f/%f B");
+      this.add("meltable.temperature", "%f °C");
 
       this.add("gradient.furnace_disabled", "The furnace has been disabled by Gradient and will not function. Its remains only for use in other crafting recipes.");
       this.add("gradient.crafting_table_disabled", "The crafting table has been disabled by Gradient and will not function. Its remains only for use in other crafting recipes.");
