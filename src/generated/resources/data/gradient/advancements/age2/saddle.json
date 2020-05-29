@@ -1,5 +1,5 @@
 {
-  "parent": "gradient:age2/hardened_stick",
+  "parent": "gradient:age2/leash",
   "display": {
     "icon": {
       "item": "minecraft:saddle"
@@ -10,24 +10,18 @@
     "description": {
       "translate": "advancements.gradient.age2.saddle.description"
     },
-    "frame": "task",
+    "frame": "goal",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false,
-    "x": 5.0,
+    "x": 6.0,
     "y": 2.75
   },
   "criteria": {
     "has_parent_0": {
       "trigger": "gradient:advancement_unlocked",
       "conditions": {
-        "id": "gradient:age2/flint_knife"
-      }
-    },
-    "has_parent_1": {
-      "trigger": "gradient:advancement_unlocked",
-      "conditions": {
-        "id": "gradient:age2/hardened_stick"
+        "id": "gradient:age2/leash"
       }
     },
     "has_saddle": {
@@ -44,9 +38,6 @@
   "requirements": [
     [
       "has_parent_0"
-    ],
-    [
-      "has_parent_1"
     ],
     [
       "has_saddle"

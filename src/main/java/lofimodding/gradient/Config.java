@@ -23,6 +23,7 @@ public final class Config {
 
   public static final class Interop {
     public final ForgeConfigSpec.BooleanValue REMOVE_LEATHER_RECIPES;
+    public final ForgeConfigSpec.BooleanValue REMOVE_VANILLA_LEASH_RECIPE;
     public final ForgeConfigSpec.BooleanValue REPLACE_PLANK_RECIPES;
     public final ForgeConfigSpec.BooleanValue REPLACE_STICK_RECIPES;
     public final ForgeConfigSpec.BooleanValue HALVE_PLANK_RECIPE_OUTPUT;
@@ -39,6 +40,11 @@ public final class Config {
         .comment("Should leather recipes be removed?")
         .translation("config.gradient.interop.remove_leather_recipes")
         .define("remove_leather_recipes", true);
+
+      this.REMOVE_VANILLA_LEASH_RECIPE = builder
+        .comment("Should the vanilla leash (lead) recipe be removed?")
+        .translation("config.gradient.interop.remove_vanilla_leash_recipe")
+        .define("remove_vanilla_leash_recipe", true);
 
       this.REPLACE_PLANK_RECIPES = builder
         .comment("Should plank recipes be modified to require axes to split?")

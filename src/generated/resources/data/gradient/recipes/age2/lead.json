@@ -1,0 +1,20 @@
+{
+  "type": "progression:shaped_staged",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "damage_tools": true,
+  "pattern": [
+    "LL ",
+    "LL ",
+    "  L"
+  ],
+  "key": {
+    "L": {
+      "item": "gradient:leather_strip"
+    }
+  },
+  "result": {
+    "item": "minecraft:lead"
+  }
+}

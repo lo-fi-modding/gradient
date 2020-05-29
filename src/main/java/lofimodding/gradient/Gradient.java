@@ -185,6 +185,10 @@ public class Gradient {
       );
     }
 
+    if(Config.INTEROP.REMOVE_VANILLA_LEASH_RECIPE.get()) {
+      InterModComms.sendTo("no-recipes", "remove_recipe", () -> (Predicate<IRecipe<?>>)recipe -> recipe.getId().equals(new ResourceLocation("lead")));
+    }
+
     if(Config.INTEROP.DISABLE_VANILLA_CRAFTING_TABLE.get()) {
       // Wraps all crafting recipes in a special IRecipe implementation that delegates all methods to the wrapped IRecipe.
       // It has special handling to fail matches if the container is the vanilla workbench container.

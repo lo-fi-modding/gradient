@@ -241,7 +241,11 @@ public class AdvancementsProvider extends AdvancementProvider {
         .withCriterion("has_bread", InventoryChangeTrigger.Instance.forItems(Items.BREAD))
         .register(finished, loc("age2/bread"));
 
-      final Advancement saddle = builder(2, Items.SADDLE, "saddle", 5.0f, 2.75f, FrameType.TASK, flintKnife, hardenedStick)
+      final Advancement leash = builder(2, Items.LEAD, "leash", 5.0f, 2.75f, FrameType.TASK, flintKnife, hardenedStick)
+        .withCriterion("has_leash", InventoryChangeTrigger.Instance.forItems(Items.LEAD))
+        .register(finished, loc("age2/leash"));
+
+      final Advancement saddle = builder(2, Items.SADDLE, "saddle", 6.0f, 2.75f, FrameType.GOAL, leash)
         .withCriterion("has_saddle", InventoryChangeTrigger.Instance.forItems(Items.SADDLE))
         .register(finished, loc("age2/saddle"));
 

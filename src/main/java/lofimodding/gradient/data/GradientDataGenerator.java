@@ -1162,6 +1162,7 @@ public final class GradientDataGenerator {
       this.add(GradientItems.INFINICOAL.get(), "Infinicoal (Debug Item)");
 
       this.add("config.gradient.interop.remove_leather_recipes", "Remove leather recipes");
+      this.add("config.gradient.interop.remove_vanilla_leash_recipe", "Remove vanilla leash (lead) recipe");
       this.add("config.gradient.interop.replace_plank_recipes", "Replace plank recipes");
       this.add("config.gradient.interop.replace_stick_recipes", "Replace stick recipes");
       this.add("config.gradient.interop.halve_plank_recipe_output", "Halve plank recipe output");
@@ -1252,7 +1253,8 @@ public final class GradientDataGenerator {
       this.age2("till", "Hoedown", "Till dirt with your mattock");
       this.age2("wheat", "Graze It", "Harvest some wheat");
       this.age2("bread", "Toasted", "Make bread with your newly harvested wheat");
-      this.age2("saddle", "Saddled Up", "Craft a saddle");
+      this.age2("leash", "Lead the Way", "Craft a lead to easily herd your animals");
+      this.age2("saddle", "Saddled Up", "Craft a saddle and ride off into the sunset");
       this.age2("wooden_axle", "Connected", "Craft a wooden axle");
       this.age2("wooden_gear", "Geared Up", "Craft an wooden gear");
       this.age2("wooden_gearbox", "Detour", "Craft a wooden gearbox to route your mechanical energy");
@@ -1480,6 +1482,16 @@ public final class GradientDataGenerator {
         .addIngredient(GradientItems.FLINT_KNIFE.get())
         .addCriterion("has_leather", this.hasItem(Tags.Items.LEATHER))
         .build(finished, Gradient.loc("age2/" + GradientIds.LEATHER_STRIP));
+
+      StagedRecipeBuilder
+        .shaped(Items.LEAD)
+        .stage(GradientStages.AGE_2.get())
+        .patternLine("LL ")
+        .patternLine("LL ")
+        .patternLine("  L")
+        .key('L', GradientItems.LEATHER_STRIP.get())
+        .addCriterion("has_leather", this.hasItem(Tags.Items.LEATHER))
+        .build(finished, Gradient.loc("age2/lead"));
 
       StagedRecipeBuilder
         .shaped(Items.SADDLE)
