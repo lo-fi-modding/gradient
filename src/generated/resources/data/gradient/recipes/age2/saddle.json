@@ -1,0 +1,26 @@
+{
+  "type": "progression:shaped_staged",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "damage_tools": true,
+  "pattern": [
+    "LLL",
+    "S S",
+    "H H"
+  ],
+  "key": {
+    "L": {
+      "tag": "forge:leather"
+    },
+    "S": {
+      "item": "gradient:leather_strip"
+    },
+    "H": {
+      "item": "gradient:hardened_stick"
+    }
+  },
+  "result": {
+    "item": "minecraft:saddle"
+  }
+}

@@ -2,20 +2,20 @@
   "parent": "gradient:age2/hardened_stick",
   "display": {
     "icon": {
-      "item": "gradient:wooden_axle"
+      "item": "minecraft:saddle"
     },
     "title": {
-      "translate": "advancements.gradient.age2.wooden_axle.title"
+      "translate": "advancements.gradient.age2.saddle.title"
     },
     "description": {
-      "translate": "advancements.gradient.age2.wooden_axle.description"
+      "translate": "advancements.gradient.age2.saddle.description"
     },
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false,
     "x": 5.0,
-    "y": 4.25
+    "y": 2.75
   },
   "criteria": {
     "has_parent_0": {
@@ -30,12 +30,12 @@
         "id": "gradient:age2/hardened_stick"
       }
     },
-    "has_wooden_axle": {
+    "has_saddle": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "gradient:wooden_axle"
+            "item": "minecraft:saddle"
           }
         ]
       }
@@ -49,7 +49,7 @@
       "has_parent_1"
     ],
     [
-      "has_wooden_axle"
+      "has_saddle"
     ]
   ]
 }

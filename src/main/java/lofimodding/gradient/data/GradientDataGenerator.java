@@ -1252,6 +1252,7 @@ public final class GradientDataGenerator {
       this.age2("till", "Hoedown", "Till dirt with your mattock");
       this.age2("wheat", "Graze It", "Harvest some wheat");
       this.age2("bread", "Toasted", "Make bread with your newly harvested wheat");
+      this.age2("saddle", "Saddled Up", "Craft a saddle");
       this.age2("wooden_axle", "Connected", "Craft a wooden axle");
       this.age2("wooden_gear", "Geared Up", "Craft an wooden gear");
       this.age2("wooden_gearbox", "Detour", "Craft a wooden gearbox to route your mechanical energy");
@@ -1479,6 +1480,18 @@ public final class GradientDataGenerator {
         .addIngredient(GradientItems.FLINT_KNIFE.get())
         .addCriterion("has_leather", this.hasItem(Tags.Items.LEATHER))
         .build(finished, Gradient.loc("age2/" + GradientIds.LEATHER_STRIP));
+
+      StagedRecipeBuilder
+        .shaped(Items.SADDLE)
+        .stage(GradientStages.AGE_2.get())
+        .patternLine("LLL")
+        .patternLine("S S")
+        .patternLine("H H")
+        .key('L', Tags.Items.LEATHER)
+        .key('S', GradientItems.LEATHER_STRIP.get())
+        .key('H', GradientItems.HARDENED_STICK.get())
+        .addCriterion("has_leather", this.hasItem(Tags.Items.LEATHER))
+        .build(finished, Gradient.loc("age2/saddle"));
 
       StagedRecipeBuilder
         .shapelessRecipe(GradientItems.FIRE_STARTER.get())
