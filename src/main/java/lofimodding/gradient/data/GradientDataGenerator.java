@@ -1898,7 +1898,7 @@ public final class GradientDataGenerator {
         .patternLine("PGP")
         .key('S', GradientItems.HARDENED_STICK.get())
         .key('P', GradientItems.HARDENED_PLANKS.get())
-        .key('G', GradientItems.WOODEN_GEAR.get())
+        .key('G', GradientItems.WOODEN_GEARBOX.get())
         .addCriterion("has_wooden_gear", this.hasItem(GradientItems.WOODEN_GEAR.get()))
         .addCriterion("has_hardened_planks", this.hasItem(GradientItems.HARDENED_PLANKS.get()))
         .build(finished, Gradient.loc("age2/" + GradientIds.WOODEN_CRANK));
