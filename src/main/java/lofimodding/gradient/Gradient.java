@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import lofimodding.gradient.advancements.criterion.GradientCriteriaTriggers;
 import lofimodding.gradient.client.GradientClient;
 import lofimodding.gradient.client.screens.ClayCrucibleScreen;
+import lofimodding.gradient.client.screens.WoodenHopperScreen;
 import lofimodding.gradient.energy.EnergyCapability;
 import lofimodding.gradient.energy.kinetic.IKineticEnergyStorage;
 import lofimodding.gradient.energy.kinetic.IKineticEnergyTransfer;
@@ -146,6 +147,7 @@ public class Gradient {
     GradientClient.clientSetup(event);
 
     ScreenManager.registerFactory(GradientContainers.CLAY_CRUCIBLE.get(), ClayCrucibleScreen::new);
+    ScreenManager.registerFactory(GradientContainers.WOODEN_HOPPER.get(), WoodenHopperScreen::new);
   }
 
   private void enqueueIMC(final InterModEnqueueEvent event) {

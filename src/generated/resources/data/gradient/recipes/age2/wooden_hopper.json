@@ -1,0 +1,23 @@
+{
+  "type": "progression:shaped_staged",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "damage_tools": true,
+  "pattern": [
+    "P P",
+    "PGP",
+    " P "
+  ],
+  "key": {
+    "P": {
+      "item": "gradient:hardened_planks"
+    },
+    "G": {
+      "item": "gradient:wooden_gear"
+    }
+  },
+  "result": {
+    "item": "gradient:wooden_hopper"
+  }
+}

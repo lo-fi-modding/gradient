@@ -23,6 +23,7 @@ import lofimodding.gradient.blocks.WoodenConveyorBeltBlock;
 import lofimodding.gradient.blocks.WoodenConveyorBeltDriverBlock;
 import lofimodding.gradient.blocks.WoodenCrankBlock;
 import lofimodding.gradient.blocks.WoodenGearboxBlock;
+import lofimodding.gradient.blocks.WoodenHopperBlock;
 import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.science.Minerals;
 import lofimodding.gradient.science.Ore;
@@ -126,6 +127,7 @@ public final class GradientBlocks {
   public static final RegistryObject<WoodenGearboxBlock> WOODEN_GEARBOX = REGISTRY.register(GradientIds.WOODEN_GEARBOX, WoodenGearboxBlock::new);
   public static final RegistryObject<WoodenConveyorBeltBlock> WOODEN_CONVEYOR_BELT = REGISTRY.register(GradientIds.WOODEN_CONVEYOR_BELT, WoodenConveyorBeltBlock::new);
   public static final RegistryObject<WoodenConveyorBeltDriverBlock> WOODEN_CONVEYOR_BELT_DRIVER = REGISTRY.register(GradientIds.WOODEN_CONVEYOR_BELT_DRIVER, WoodenConveyorBeltDriverBlock::new);
+  public static final RegistryObject<WoodenHopperBlock> WOODEN_HOPPER = REGISTRY.register(GradientIds.WOODEN_HOPPER, WoodenHopperBlock::new);
   public static final RegistryObject<WoodenCrankBlock> WOODEN_CRANK = REGISTRY.register(GradientIds.WOODEN_CRANK, WoodenCrankBlock::new);
 
   static void init(final IEventBus bus) {

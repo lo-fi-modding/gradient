@@ -64,7 +64,7 @@ e02efa1f66998d1055cc347b6075eaf13dc2ee45 assets\gradient\blockstates\wooden_conv
 1854525310ee03accd90a9e89a11a36af80a1533 assets\gradient\blockstates\wooden_crank.json
 a9ed0046e31fcace51b6832dd1e004f15f81f11f assets\gradient\blockstates\wooden_gearbox.json
 659fa450fe62cdecc69d9276f01c713a1e62a205 assets\gradient\blockstates\zinc_block.json
-6b62889e14d8792e584fd39a292b92141583f979 assets\gradient\lang\en_us.json
+b91957513fef8c45af3d60e7730a832869876e98 assets\gradient\lang\en_us.json
 910f0617e8b2433ac0f97c48cbbc8251b4f162b3 assets\gradient\models\block\azurite_ore.json
 79a72e81ecb79d9775041b9a2d526a90f646005b assets\gradient\models\block\azurite_pebble.json
 f295f4e7338854665f216e2f0ca3e339b0d284a7 assets\gradient\models\block\bronze_block.json
@@ -320,6 +320,7 @@ f1498702e8e47e58acc28e26ad182661bd0b6baf assets\gradient\models\item\wolf_pelt.j
 8b5e9e1b4eb460b39ab468d421e736f463927c12 assets\gradient\models\item\wooden_crank.json
 6e58f2209914a4d0341cf1efd36c31e8eb45d9d5 assets\gradient\models\item\wooden_gear.json
 efccd0014b526a3d4d617aff0b4c8117307291b1 assets\gradient\models\item\wooden_gearbox.json
+eb955738742c06f5ee6d71b122f655e69e5ca65f assets\gradient\models\item\wooden_hopper.json
 ff5fa9b744e3ffa8b1afd728efd06085fb738e45 assets\gradient\models\item\zinc_block.json
 aaaa7a7618b0e6cb38b490992401a55788c41bdd assets\gradient\models\item\zinc_dust.json
 aef013dfa7833a2f0223da26048ac3582dbe3b4e assets\gradient\models\item\zinc_hammer_head.json
@@ -523,6 +524,7 @@ c2823ba05c64d17fb175fdcba81448b20b8f8018 data\gradient\advancements\recipes\grad
 0b1ead9361519b83b8e9575512d0a35b492cf722 data\gradient\advancements\recipes\gradient\age2\wooden_crank.json
 a3a023bb7c47da2766bf1724520f6879d1c2fac4 data\gradient\advancements\recipes\gradient\age2\wooden_gear.json
 3c093bd2ae6f183ca0b554139884810e16ccd196 data\gradient\advancements\recipes\gradient\age2\wooden_gearbox.json
+3617b39ce90f274df380f821894e27c0c6bf7fa7 data\gradient\advancements\recipes\gradient\age2\wooden_hopper.json
 313978d004d605fdd56be834d4ec0c116a423197 data\gradient\advancements\recipes\gradient\drying\age2\preserved_hide.json
 e4d16adc49d2db8edba70314be1df0aff38e0d2b data\gradient\advancements\recipes\gradient\hardening\age2\clay_cast_hammer_head.json
 efde4ff10c3d7bd500a5ef850593723ff0b41f8d data\gradient\advancements\recipes\gradient\hardening\age2\clay_cast_ingot.json
@@ -704,6 +706,7 @@ a37a5bf847c54a7c2007b0c5b02f7ecf7c35f890 data\gradient\loot_tables\blocks\wooden
 43e109197527bc7dc8a26bdadfbb53ccec447f25 data\gradient\loot_tables\blocks\wooden_conveyor_belt_driver.json
 2ecb429679514a4542093f3be05a3bbe76de87d0 data\gradient\loot_tables\blocks\wooden_crank.json
 429c0e1369b365784e465078229b9ed6527c7455 data\gradient\loot_tables\blocks\wooden_gearbox.json
+5391f8beee0cfc00fea72ee7e873f9c852432751 data\gradient\loot_tables\blocks\wooden_hopper.json
 4a0137fc2afb972d95bf0d621c453fbdd58ae59c data\gradient\loot_tables\blocks\zinc_block.json
 d0462b2b24ddf2a49425f7bb5af99a0100b0c02f data\gradient\loot_tables\entities\bone_additions.json
 d8abaacee14daa57521c873f56e78fecafc06308 data\gradient\loot_tables\entities\cat_pelt_additions.json
@@ -766,6 +769,7 @@ f82b1b5a68da02011755d07872b48bb8e7de3d6a data\gradient\recipes\age2\wooden_conve
 6a5a032873fa5761cd33a2514d95dba19146dfae data\gradient\recipes\age2\wooden_crank.json
 3b54dac0dce0bf9c433390a11f0226362410a66b data\gradient\recipes\age2\wooden_gear.json
 31c10d8c969494aa80bf7fcdef7a4e47e11726aa data\gradient\recipes\age2\wooden_gearbox.json
+76d2f62499bea560f301669f6193dcd5d0bae667 data\gradient\recipes\age2\wooden_hopper.json
 26f12d12feac2458d10c40693ae3e4710dc6d018 data\gradient\recipes\alloy\bronze_from_copper_and_tin.json
 747068b4b669397a646ce5d364cae0b4aad994d1 data\gradient\recipes\cooking\age1\beef.json
 850a80af7931a0429696dc1bdce1d0c3dadacb5a data\gradient\recipes\cooking\age1\chicken.json

@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "facing=down": { "model": "gradient:block/wooden_hopper" },
+        "facing=north": { "model": "gradient:block/wooden_hopper_side" },
+        "facing=south": { "model": "gradient:block/wooden_hopper_side", "y": 180 },
+        "facing=west": { "model": "gradient:block/wooden_hopper_side", "y": 270 },
+        "facing=east": { "model": "gradient:block/wooden_hopper_side", "y": 90 }
+    }
+}
