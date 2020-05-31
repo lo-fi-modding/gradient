@@ -3,6 +3,7 @@ package lofimodding.gradient;
 import lofimodding.gradient.tileentities.ClayCrucibleTile;
 import lofimodding.gradient.tileentities.ClayMetalMixerTile;
 import lofimodding.gradient.tileentities.ClayOvenTile;
+import lofimodding.gradient.tileentities.CreativeGeneratorTile;
 import lofimodding.gradient.tileentities.DryingRackTile;
 import lofimodding.gradient.tileentities.FirepitTile;
 import lofimodding.gradient.tileentities.GrindstoneTile;
@@ -37,6 +38,8 @@ public final class GradientTileEntities {
   public static final RegistryObject<TileEntityType<WoodenConveyorBeltDriverTile>> WOODEN_CONVEYOR_BELT_DRIVER = REGISTRY.register(GradientIds.WOODEN_CONVEYOR_BELT_DRIVER, () -> TileEntityType.Builder.create(WoodenConveyorBeltDriverTile::new, GradientBlocks.WOODEN_CONVEYOR_BELT_DRIVER.get()).build(null));
   public static final RegistryObject<TileEntityType<WoodenHopperTile>> WOODEN_HOPPER = REGISTRY.register(GradientIds.WOODEN_HOPPER, () -> TileEntityType.Builder.create(WoodenHopperTile::new, GradientBlocks.WOODEN_HOPPER.get()).build(null));
   public static final RegistryObject<TileEntityType<WoodenCrankTile>> WOODEN_CRANK = REGISTRY.register(GradientIds.WOODEN_CRANK, () -> TileEntityType.Builder.create(WoodenCrankTile::new, GradientBlocks.WOODEN_CRANK.get()).build(null));
+
+  public static final RegistryObject<TileEntityType<CreativeGeneratorTile>> CREATIVE_GENERATOR = REGISTRY.register(GradientIds.CREATIVE_GENERATOR, () -> TileEntityType.Builder.create(CreativeGeneratorTile::new, GradientBlocks.CREATIVE_GENERATOR.get()).build(null));
 
   static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering tile entities...");

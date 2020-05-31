@@ -328,7 +328,6 @@ public class ClayCrucibleTile extends HeatSinkerTile implements INamedContainerP
     return new TranslationTextComponent("container.gradient.clay_crucible");
   }
 
-  @Nullable
   @Override
   public Container createMenu(final int id, final PlayerInventory playerInv, final PlayerEntity player) {
     return new ClayCrucibleContainer(id, playerInv, this);

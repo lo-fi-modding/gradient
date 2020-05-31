@@ -1,8 +1,10 @@
 package lofimodding.gradient;
 
 import lofimodding.gradient.containers.ClayCrucibleContainer;
+import lofimodding.gradient.containers.CreativeGeneratorContainer;
 import lofimodding.gradient.containers.WoodenHopperContainer;
 import lofimodding.gradient.tileentities.ClayCrucibleTile;
+import lofimodding.gradient.tileentities.CreativeGeneratorTile;
 import lofimodding.gradient.tileentities.WoodenHopperTile;
 import lofimodding.gradient.utils.WorldUtils;
 import net.minecraft.client.Minecraft;
@@ -22,6 +24,8 @@ public final class GradientContainers {
 
   public static final RegistryObject<ContainerType<ClayCrucibleContainer>> CLAY_CRUCIBLE = REGISTRY.register(GradientIds.CLAY_CRUCIBLE, () -> new ContainerType<>((IContainerFactory<ClayCrucibleContainer>)(windowId, inv, data) -> DistExecutor.callWhenOn(Dist.CLIENT, () -> () -> new ClayCrucibleContainer(windowId, inv, WorldUtils.getTileEntity(Minecraft.getInstance().world, data.readBlockPos(), ClayCrucibleTile.class)))));
   public static final RegistryObject<ContainerType<WoodenHopperContainer>> WOODEN_HOPPER = REGISTRY.register(GradientIds.WOODEN_HOPPER, () -> new ContainerType<>((IContainerFactory<WoodenHopperContainer>)(windowId, inv, data) -> DistExecutor.callWhenOn(Dist.CLIENT, () -> () -> new WoodenHopperContainer(windowId, inv, WorldUtils.getTileEntity(Minecraft.getInstance().world, data.readBlockPos(), WoodenHopperTile.class)))));
+
+  public static final RegistryObject<ContainerType<CreativeGeneratorContainer>> CREATIVE_GENERATOR = REGISTRY.register(GradientIds.CREATIVE_GENERATOR, () -> new ContainerType<>((IContainerFactory<CreativeGeneratorContainer>)(windowId, inv, data) -> DistExecutor.callWhenOn(Dist.CLIENT, () -> () -> new CreativeGeneratorContainer(windowId, inv, WorldUtils.getTileEntity(Minecraft.getInstance().world, data.readBlockPos(), CreativeGeneratorTile.class)))));
 
   static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering containers...");

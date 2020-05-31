@@ -5,6 +5,7 @@ import lofimodding.gradient.blocks.ClayCrucibleBlock;
 import lofimodding.gradient.blocks.ClayFurnaceBlock;
 import lofimodding.gradient.blocks.ClayMetalMixerBlock;
 import lofimodding.gradient.blocks.ClayOvenBlock;
+import lofimodding.gradient.blocks.CreativeGeneratorBlock;
 import lofimodding.gradient.blocks.DryingRackBlock;
 import lofimodding.gradient.blocks.FirepitBlock;
 import lofimodding.gradient.blocks.GrindstoneBlock;
@@ -129,6 +130,8 @@ public final class GradientBlocks {
   public static final RegistryObject<WoodenConveyorBeltDriverBlock> WOODEN_CONVEYOR_BELT_DRIVER = REGISTRY.register(GradientIds.WOODEN_CONVEYOR_BELT_DRIVER, WoodenConveyorBeltDriverBlock::new);
   public static final RegistryObject<WoodenHopperBlock> WOODEN_HOPPER = REGISTRY.register(GradientIds.WOODEN_HOPPER, WoodenHopperBlock::new);
   public static final RegistryObject<WoodenCrankBlock> WOODEN_CRANK = REGISTRY.register(GradientIds.WOODEN_CRANK, WoodenCrankBlock::new);
+
+  public static final RegistryObject<CreativeGeneratorBlock> CREATIVE_GENERATOR = REGISTRY.register(GradientIds.CREATIVE_GENERATOR, CreativeGeneratorBlock::new);
 
   static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering blocks...");

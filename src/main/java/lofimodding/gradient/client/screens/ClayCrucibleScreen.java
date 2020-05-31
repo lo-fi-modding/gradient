@@ -20,8 +20,8 @@ public class ClayCrucibleScreen extends ContainerScreen<ClayCrucibleContainer> {
   private final ClayCrucibleTile te;
   private final PlayerInventory playerInv;
 
-  public ClayCrucibleScreen(final ClayCrucibleContainer container, final PlayerInventory playerInv, final ITextComponent text) {
-    super(container, playerInv, text);
+  public ClayCrucibleScreen(final ClayCrucibleContainer container, final PlayerInventory playerInv, final ITextComponent title) {
+    super(container, playerInv, title);
     this.te = container.crucible;
     this.playerInv = playerInv;
   }

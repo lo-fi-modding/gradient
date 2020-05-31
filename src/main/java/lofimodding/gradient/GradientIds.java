@@ -149,4 +149,5 @@ public final class GradientIds {
   public static String WOODEN_CRANK = "wooden_crank";
 
   public static final String INFINICOAL = "infinicoal";
+  public static final String CREATIVE_GENERATOR = "creative_generator";
 }
