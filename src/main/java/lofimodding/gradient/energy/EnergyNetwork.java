@@ -124,7 +124,7 @@ public class EnergyNetwork<STORAGE extends IEnergyStorage, TRANSFER extends IEne
         }
 
         if(energy != 0.0f) {
-          sink.sinkEnergy(energy, false);
+          sink.sinkEnergy(energy, IEnergyStorage.Action.EXECUTE);
           this.state.addStorage(pos, facing, sink.getEnergy());
         }
       }

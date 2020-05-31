@@ -320,7 +320,7 @@ public class EnergyNetworkSegment<STORAGE extends IEnergyStorage, TRANSFER exten
         available += node.te.getCapability(this.storage, connection.getKey()).map(storage -> {
           if(storage.canSource() && connection.getValue() != null && !this.availableEnergySources.contains(storage)) {
             this.availableEnergySources.add(storage);
-            return storage.sourceEnergy(storage.getEnergy(), true);
+            return storage.sourceEnergy(storage.getEnergy(), IEnergyStorage.Action.SIMULATE);
           }
 
           return 0.0f;
@@ -381,7 +381,7 @@ public class EnergyNetworkSegment<STORAGE extends IEnergyStorage, TRANSFER exten
         final STORAGE source = entry.getKey();
         final List<BlockPos> path = entry.getValue();
 
-        final float sourced = source.sourceEnergy(share, false);
+        final float sourced = source.sourceEnergy(share, IEnergyStorage.Action.EXECUTE);
 
         if(sourced < share) {
           deficit += share - sourced;

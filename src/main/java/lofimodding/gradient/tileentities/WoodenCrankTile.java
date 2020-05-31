@@ -5,6 +5,7 @@ import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientTileEntities;
 import lofimodding.gradient.blocks.WoodenCrankBlock;
 import lofimodding.gradient.energy.EnergyNetworkManager;
+import lofimodding.gradient.energy.IEnergyStorage;
 import lofimodding.gradient.energy.kinetic.IKineticEnergyStorage;
 import lofimodding.gradient.energy.kinetic.IKineticEnergyTransfer;
 import lofimodding.gradient.energy.kinetic.KineticEnergyStorage;
@@ -222,7 +223,7 @@ public class WoodenCrankTile extends TileEntity implements ITickableTileEntity {
 
       if(this.lastTicks != 0 && this.actualTicks < this.lastTicks + 20) {
         final float energy = this.lastTicks / 20000.0f * this.workers.size();
-        this.energy.addEnergy(energy, false);
+        this.energy.addEnergy(energy, IEnergyStorage.Action.EXECUTE);
       }
 
       this.preventEating();
@@ -248,7 +249,7 @@ public class WoodenCrankTile extends TileEntity implements ITickableTileEntity {
       if(this.crankTicks >= 4) {
         this.cranking = false;
         this.crankTicks = 0;
-        this.energy.addEnergy(1.0f, false);
+        this.energy.addEnergy(1.0f, IEnergyStorage.Action.EXECUTE);
         this.markDirty();
       }
     }
@@ -271,7 +272,7 @@ public class WoodenCrankTile extends TileEntity implements ITickableTileEntity {
 
   @Override
   public CompoundNBT write(final CompoundNBT nbt) {
-    nbt.put("Energy", this.energy.serializeNbt());
+    nbt.put("Energy", this.energy.write());
 
     final ListNBT workers = new ListNBT();
     for(final WorkerData worker : this.workers) {
@@ -294,7 +295,7 @@ public class WoodenCrankTile extends TileEntity implements ITickableTileEntity {
     this.workers.clear();
 
     final CompoundNBT energy = nbt.getCompound("Energy");
-    this.energy.deserializeNbt(energy);
+    this.energy.read(energy);
 
     final ListNBT workers = nbt.getList("Workers", Constants.NBT.TAG_COMPOUND);
     if(this.world != null && !this.world.isRemote) {

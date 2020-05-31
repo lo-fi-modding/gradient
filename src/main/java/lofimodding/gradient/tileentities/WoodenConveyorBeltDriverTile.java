@@ -5,6 +5,7 @@ import lofimodding.gradient.GradientTileEntities;
 import lofimodding.gradient.blocks.WoodenConveyorBeltBlock;
 import lofimodding.gradient.blocks.WoodenConveyorBeltDriverBlock;
 import lofimodding.gradient.energy.EnergyNetworkManager;
+import lofimodding.gradient.energy.IEnergyStorage;
 import lofimodding.gradient.energy.kinetic.IKineticEnergyStorage;
 import lofimodding.gradient.energy.kinetic.IKineticEnergyTransfer;
 import lofimodding.gradient.energy.kinetic.KineticEnergyStorage;
@@ -191,7 +192,7 @@ public class WoodenConveyorBeltDriverTile extends TileEntity implements ITickabl
     }
 
     final float neededEnergy = 0.005f * this.beltCount;
-    final float extractedEnergy = this.node.removeEnergy(neededEnergy, false);
+    final float extractedEnergy = this.node.removeEnergy(neededEnergy, IEnergyStorage.Action.EXECUTE);
     final float newBeltSpeed = extractedEnergy / neededEnergy;
 
     if(newBeltSpeed != this.beltSpeed) {
@@ -257,14 +258,14 @@ public class WoodenConveyorBeltDriverTile extends TileEntity implements ITickabl
 
   @Override
   public CompoundNBT write(final CompoundNBT nbt) {
-    nbt.put("Energy", this.node.serializeNbt());
+    nbt.put("Energy", this.node.write());
     return super.write(nbt);
   }
 
   @Override
   public void read(final CompoundNBT nbt) {
     final CompoundNBT energy = nbt.getCompound("Energy");
-    this.node.deserializeNbt(energy);
+    this.node.read(energy);
     super.read(nbt);
   }
 }

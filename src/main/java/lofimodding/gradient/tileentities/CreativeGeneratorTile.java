@@ -31,12 +31,12 @@ public class CreativeGeneratorTile extends TileEntity implements INamedContainer
 
   private final IKineticEnergyStorage energy = new KineticEnergyStorage(1000000000.0f, 0.0f, 1000000000.0f) {
     @Override
-    public float addEnergy(final float amount, final boolean simulate) {
+    public float addEnergy(final float amount, final Action action) {
       return 0.0f;
     }
 
     @Override
-    public float removeEnergy(final float amount, final boolean simulate) {
+    public float removeEnergy(final float amount, final Action action) {
       CreativeGeneratorTile.this.energyRequested = Math.min(this.getEnergy(), amount);
       return CreativeGeneratorTile.this.energyRequested;
     }
@@ -111,14 +111,14 @@ public class CreativeGeneratorTile extends TileEntity implements INamedContainer
 
   @Override
   public CompoundNBT write(final CompoundNBT nbt) {
-    nbt.put("Energy", this.energy.serializeNbt());
+    nbt.put("Energy", this.energy.write());
     return super.write(nbt);
   }
 
   @Override
   public void read(final CompoundNBT nbt) {
     final CompoundNBT energy = nbt.getCompound("Energy");
-    this.energy.deserializeNbt(energy);
+    this.energy.read(energy);
     super.read(nbt);
   }
 

@@ -8,24 +8,22 @@ public interface IEnergyStorage extends IEnergyNode {
    *
    * @param maxSink
    *            Maximum amount of energy to be inserted.
-   * @param simulate
+   * @param action
    *            If TRUE, the insertion will only be simulated.
    * @return Amount of energy that was (or would have been, if simulated) accepted by the storage.
    */
-  //TODO boolean
-  float sinkEnergy(float maxSink, boolean simulate);
+  float sinkEnergy(float maxSink, Action action);
 
   /**
    * Removes energy from the storage. Returns quantity of energy that was removed.
    *
    * @param maxSource
    *            Maximum amount of energy to be extracted.
-   * @param simulate
+   * @param action
    *            If TRUE, the extraction will only be simulated.
    * @return Amount of energy that was (or would have been, if simulated) extracted from the storage.
    */
-  //TODO boolean
-  float sourceEnergy(float maxSource, boolean simulate);
+  float sourceEnergy(float maxSource, Action action);
 
   /**
    * Returns the amount of energy currently stored.
@@ -41,15 +39,13 @@ public interface IEnergyStorage extends IEnergyNode {
    * Add energy to the storage, bypassing sink restrictions (used by things like
    * generators which don't sink power, but still need an internal power buffer)
    */
-  //TODO boolean
-  float addEnergy(float amount, final boolean simulate);
+  float addEnergy(float amount, final Action action);
 
   /**
    * Remove energy from the storage, bypassing source restrictions (used by things
    * like machines which don't source power, but still need an internal power buffer)
    */
-  //TODO boolean
-  float removeEnergy(float amount, final boolean simulate);
+  float removeEnergy(float amount, final Action action);
 
   /**
    * Returns the maximum amount of energy that can be stored.
@@ -69,19 +65,29 @@ public interface IEnergyStorage extends IEnergyNode {
     return Math.min(this.getMaxSink(), space);
   }
 
-  //TODO: rename to write
-  default CompoundNBT serializeNbt() {
+  default CompoundNBT write() {
     final CompoundNBT nbt = new CompoundNBT();
     nbt.putFloat("Energy", this.getEnergy());
     return nbt;
   }
 
-  //TODO: rename to read
-  default void deserializeNbt(final CompoundNBT nbt) {
+  default void read(final CompoundNBT nbt) {
     this.setEnergy(nbt.getFloat("Energy"));
     this.onLoad();
   }
 
   default void onEnergyChanged() { }
   default void onLoad() { }
+
+  enum Action {
+    EXECUTE, SIMULATE;
+
+    public boolean execute() {
+      return this == EXECUTE;
+    }
+
+    public boolean simulate() {
+      return this == SIMULATE;
+    }
+  }
 }

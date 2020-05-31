@@ -745,9 +745,9 @@ public class EnergyNetworkTest {
     final IEnergyStorage source = new StorageNode(10000.0f, 0.0f, 10.0f, 0.0f);
     final IEnergyStorage sink = new StorageNode(10000.0f, 32.0f, 0.0f, 0.0f) {
       @Override
-      public float sinkEnergy(final float maxSink, final boolean simulate) {
+      public float sinkEnergy(final float maxSink, final Action action) {
         Assertions.fail("Should not have received energy");
-        return super.sinkEnergy(maxSink, simulate);
+        return super.sinkEnergy(maxSink, action);
       }
     };
 

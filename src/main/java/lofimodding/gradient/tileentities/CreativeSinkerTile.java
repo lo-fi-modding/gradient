@@ -31,13 +31,13 @@ public class CreativeSinkerTile extends TileEntity implements INamedContainerPro
 
   private final IKineticEnergyStorage energy = new KineticEnergyStorage(1000000000.0f, 1000000000.0f, 0.0f) {
     @Override
-    public float addEnergy(final float amount, final boolean simulate) {
+    public float addEnergy(final float amount, final Action action) {
       CreativeSinkerTile.this.energySinked = Math.min(this.getMaxSink(), amount);
       return CreativeSinkerTile.this.energySinked;
     }
 
     @Override
-    public float removeEnergy(final float amount, final boolean simulate) {
+    public float removeEnergy(final float amount, final Action action) {
       return 0.0f;
     }
 
@@ -117,7 +117,7 @@ public class CreativeSinkerTile extends TileEntity implements INamedContainerPro
 
   @Override
   public CompoundNBT write(final CompoundNBT nbt) {
-    nbt.put("Energy", this.energy.serializeNbt());
+    nbt.put("Energy", this.energy.write());
     nbt.putFloat("RequestedEnergy", this.requestedEnergy);
     return super.write(nbt);
   }
@@ -125,7 +125,7 @@ public class CreativeSinkerTile extends TileEntity implements INamedContainerPro
   @Override
   public void read(final CompoundNBT nbt) {
     final CompoundNBT energy = nbt.getCompound("Energy");
-    this.energy.deserializeNbt(energy);
+    this.energy.read(energy);
     this.requestedEnergy = nbt.getFloat("RequestedEnergy");
     super.read(nbt);
   }
