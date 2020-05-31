@@ -45,15 +45,15 @@ public class WoodenConveyorBeltDriverBlock extends Block {
   @SuppressWarnings("deprecation")
   @Override
   @Deprecated
-  public void neighborChanged(final BlockState state, final World world, final BlockPos pos, final Block block, final BlockPos neighbour, final boolean isMoving) {
-    super.neighborChanged(state, world, pos, block, neighbour, isMoving);
+  public void neighborChanged(final BlockState state, final World world, final BlockPos pos, final Block existingBlock, final BlockPos neighbour, final boolean isMoving) {
+    super.neighborChanged(state, world, pos, existingBlock, neighbour, isMoving);
 
     final WoodenConveyorBeltDriverTile driver = WorldUtils.getTileEntity(world, pos, WoodenConveyorBeltDriverTile.class);
 
     if(driver != null) {
       final Direction side = WorldUtils.getFacingTowards(pos, neighbour);
       if(side.getAxis().isHorizontal()) {
-        if(block == GradientBlocks.WOODEN_CONVEYOR_BELT.get()) {
+        if(world.getBlockState(neighbour).getBlock() == GradientBlocks.WOODEN_CONVEYOR_BELT.get()) {
           driver.addBelt(side);
         } else {
           driver.removeBelt(side);
