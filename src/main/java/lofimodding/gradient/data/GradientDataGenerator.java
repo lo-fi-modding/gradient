@@ -589,6 +589,8 @@ public final class GradientDataGenerator {
       ModelGenerator.woodenConveyorBelt(this, GradientIds.WOODEN_CONVEYOR_BELT, this.modLoc("block/wooden_conveyor_belt"), this.modLoc("block/wooden_conveyor_belt"), this.mcLoc("block/oak_planks"));
       this.orientable(GradientIds.WOODEN_CONVEYOR_BELT_DRIVER, this.modLoc("block/wooden_conveyor_belt_driver_side"), this.modLoc("block/wooden_conveyor_belt_driver_side"), this.modLoc("block/wooden_gearbox"));
       this.orientable(GradientIds.WOODEN_CRANK, this.modLoc("block/salt_block"), this.modLoc("block/salt_block"), this.modLoc("block/hardened_planks"));
+
+      this.cubeAll(GradientIds.CREATIVE_GENERATOR, this.modLoc("block/" + GradientIds.CREATIVE_GENERATOR));
     }
 
     private BiConsumer<Direction, ModelBuilder<BlockModelBuilder>.ElementBuilder.FaceBuilder> addTexture(final String texture) {
@@ -808,6 +810,7 @@ public final class GradientDataGenerator {
       this.getBuilder(GradientIds.WOODEN_CRANK).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.WOODEN_CRANK)));
 
       this.singleTexture(GradientIds.INFINICOAL, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.INFINICOAL));
+      this.getBuilder(GradientIds.CREATIVE_GENERATOR).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.CREATIVE_GENERATOR)));
     }
 
     @Override
@@ -987,6 +990,8 @@ public final class GradientDataGenerator {
       this.horizontalBlock(GradientBlocks.WOODEN_CONVEYOR_BELT.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.WOODEN_CONVEYOR_BELT)));
       this.directionalBlock(GradientBlocks.WOODEN_CONVEYOR_BELT_DRIVER.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.WOODEN_CONVEYOR_BELT_DRIVER)));
       this.directionalBlock(GradientBlocks.WOODEN_CRANK.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.WOODEN_CRANK)));
+
+      this.simpleBlock(GradientBlocks.CREATIVE_GENERATOR.get());
     }
   }
 
@@ -1165,6 +1170,8 @@ public final class GradientDataGenerator {
       this.add(GradientItems.WOODEN_CRANK.get(), "Wooden Crank");
 
       this.add(GradientItems.INFINICOAL.get(), "Infinicoal (Debug Item)");
+      this.add(GradientItems.CREATIVE_GENERATOR.get(), "Creative Generator (Debug Item)");
+      this.add(GradientItems.CREATIVE_GENERATOR.get().getTranslationKey() + ".energy", "Energy: %d");
 
       this.add("config.gradient.interop.remove_leather_recipes", "Remove leather recipes");
       this.add("config.gradient.interop.remove_vanilla_leash_recipe", "Remove vanilla leash (lead) recipe");
@@ -2535,6 +2542,8 @@ public final class GradientDataGenerator {
         this.registerDropSelfLootTable(GradientBlocks.WOODEN_CONVEYOR_BELT_DRIVER.get());
         this.registerDropSelfLootTable(GradientBlocks.WOODEN_HOPPER.get());
         this.registerDropSelfLootTable(GradientBlocks.WOODEN_CRANK.get());
+
+        this.registerDropSelfLootTable(GradientBlocks.CREATIVE_GENERATOR.get());
       }
 
       private final List<Block> blocks = new ArrayList<>();

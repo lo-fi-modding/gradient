@@ -12,6 +12,7 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.IIntArray;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
@@ -37,14 +38,26 @@ public class CreativeGeneratorTile extends TileEntity implements INamedContainer
     public float removeEnergy(final float amount, final boolean simulate) {
       return Math.min(this.getEnergy(), amount);
     }
-
-    @Override
-    public float getEnergy() {
-      return super.getEnergy();
-    }
   };
 
   private final LazyOptional<IKineticEnergyStorage> lazyEnergy = LazyOptional.of(() -> this.energy);
+
+  private final IIntArray syncedData = new IIntArray() {
+    @Override
+    public int get(final int index) {
+      return Float.floatToIntBits(CreativeGeneratorTile.this.energy.getEnergy());
+    }
+
+    @Override
+    public void set(final int index, final int value) {
+      CreativeGeneratorTile.this.energy.setEnergy(Float.intBitsToFloat(value));
+    }
+
+    @Override
+    public int size() {
+      return 1;
+    }
+  };
 
   public CreativeGeneratorTile() {
     super(GradientTileEntities.CREATIVE_GENERATOR.get());
@@ -70,7 +83,7 @@ public class CreativeGeneratorTile extends TileEntity implements INamedContainer
 
   @Override
   public Container createMenu(final int id, final PlayerInventory playerInv, final PlayerEntity player) {
-    return new CreativeGeneratorContainer(id, playerInv, this);
+    return new CreativeGeneratorContainer(id, playerInv, this, this.syncedData);
   }
 
   @Override
