@@ -16,6 +16,12 @@ public interface IEnergyTransfer extends IEnergyNode {
   void transfer(final float amount, final Direction from, final Direction to);
 
   float getEnergyTransferred();
+
+  /**
+   * <b>NOTE:</b> Only called on client side
+   *
+   * @param amount The amount of energy transferred
+   */
   void setEnergyTransferred(final float amount);
   void resetEnergyTransferred();
 }

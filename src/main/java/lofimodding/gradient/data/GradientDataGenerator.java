@@ -1166,6 +1166,7 @@ public final class GradientDataGenerator {
 
       this.add(GradientItems.WOODEN_GEAR.get(), "Wooden Gear");
       this.add(GradientItems.WOODEN_AXLE.get(), "Wooden Axle");
+      this.add(GradientItems.WOODEN_AXLE.get().getTranslationKey() + ".tooltip", "%d KU/t maximum");
       this.add(GradientItems.WOODEN_GEARBOX.get(), "Wooden Gearbox");
       this.add(GradientItems.WOODEN_CONVEYOR_BELT.get(), "Wooden Conveyor Belt");
       this.add(GradientItems.WOODEN_CONVEYOR_BELT_DRIVER.get(), "Wooden Conveyor Belt Driver");
