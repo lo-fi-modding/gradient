@@ -1171,7 +1171,7 @@ public final class GradientDataGenerator {
 
       this.add(GradientItems.INFINICOAL.get(), "Infinicoal (Debug Item)");
       this.add(GradientItems.CREATIVE_GENERATOR.get(), "Creative Generator (Debug Item)");
-      this.add(GradientItems.CREATIVE_GENERATOR.get().getTranslationKey() + ".energy", "Energy: %d");
+      this.add(GradientItems.CREATIVE_GENERATOR.get().getTranslationKey() + ".energy", "Energy: %d/%d");
 
       this.add("config.gradient.interop.remove_leather_recipes", "Remove leather recipes");
       this.add("config.gradient.interop.remove_vanilla_leash_recipe", "Remove vanilla leash (lead) recipe");

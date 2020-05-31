@@ -26,7 +26,6 @@ public class CreativeGeneratorScreen extends ContainerScreen<CreativeGeneratorCo
   protected void init() {
     super.init();
 
-    //TODO Packet to update energy
     this.addButton(new Button(this.guiLeft +   4, this.guiTop + 26, 20, 20, "-10", button -> this.container.changeEnergy(-10.0f)));
     this.addButton(new Button(this.guiLeft +  24, this.guiTop + 26, 20, 20, "-1",  button -> this.container.changeEnergy( -1.0f)));
     this.addButton(new Button(this.guiLeft +  44, this.guiTop + 26, 20, 20, "-.1", button -> this.container.changeEnergy( -0.1f)));
@@ -52,7 +51,7 @@ public class CreativeGeneratorScreen extends ContainerScreen<CreativeGeneratorCo
   @Override
   protected void drawGuiContainerForegroundLayer(final int mouseX, final int mouseY) {
     final String name = I18n.format(GradientBlocks.CREATIVE_GENERATOR.get().getTranslationKey());
-    final String energy = I18n.format(GradientBlocks.CREATIVE_GENERATOR.get().getTranslationKey() + ".energy", ENERGY_FORMAT.format(this.container.getEnergy()));
+    final String energy = I18n.format(GradientBlocks.CREATIVE_GENERATOR.get().getTranslationKey() + ".energy", ENERGY_FORMAT.format(this.container.getEnergyTransferred()), ENERGY_FORMAT.format(this.container.getEnergyAvailable()));
 
     this.font.drawString(name, (this.xSize - this.font.getStringWidth(name)) / 2, 6, 0x404040);
     this.font.drawString(energy, (this.xSize - this.font.getStringWidth(name)) / 2, 16, 0x404040);

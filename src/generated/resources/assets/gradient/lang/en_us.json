@@ -117,7 +117,7 @@
   "block.gradient.copper_ore": "Copper Ore",
   "block.gradient.copper_pebble": "Copper Pebble",
   "block.gradient.creative_generator": "Creative Generator (Debug Item)",
-  "block.gradient.creative_generator.energy": "Energy: %d",
+  "block.gradient.creative_generator.energy": "Energy: %d/%d",
   "block.gradient.drying_rack": "Drying Rack",
   "block.gradient.firepit": "Firepit",
   "block.gradient.firepit.heat": "%d \u00B0C",

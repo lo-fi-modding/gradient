@@ -10,6 +10,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
@@ -36,7 +37,8 @@ public class CreativeGeneratorTile extends TileEntity implements INamedContainer
 
     @Override
     public float removeEnergy(final float amount, final boolean simulate) {
-      return Math.min(this.getEnergy(), amount);
+      CreativeGeneratorTile.this.energyRequested = Math.min(this.getEnergy(), amount);
+      return CreativeGeneratorTile.this.energyRequested;
     }
   };
 
@@ -45,22 +47,43 @@ public class CreativeGeneratorTile extends TileEntity implements INamedContainer
   private final IIntArray syncedData = new IIntArray() {
     @Override
     public int get(final int index) {
-      return Float.floatToIntBits(CreativeGeneratorTile.this.energy.getEnergy());
+      switch(index) {
+        case 0:
+          return Float.floatToIntBits(CreativeGeneratorTile.this.energy.getEnergy());
+
+        case 1:
+          return Float.floatToIntBits(CreativeGeneratorTile.this.energyRequested);
+      }
+
+      return 0;
     }
 
     @Override
     public void set(final int index, final int value) {
-      CreativeGeneratorTile.this.energy.setEnergy(Float.intBitsToFloat(value));
+      switch(index) {
+        case 0:
+          CreativeGeneratorTile.this.energy.setEnergy(Float.intBitsToFloat(value));
+          break;
+
+        case 1:
+          CreativeGeneratorTile.this.energyRequested = Float.intBitsToFloat(value);
+      }
     }
 
     @Override
     public int size() {
-      return 1;
+      return 2;
     }
   };
 
+  private float energyRequested;
+
   public CreativeGeneratorTile() {
     super(GradientTileEntities.CREATIVE_GENERATOR.get());
+  }
+
+  public void setEnergy(final float energy) {
+    this.energy.setEnergy(energy);
   }
 
   @Override
@@ -84,6 +107,19 @@ public class CreativeGeneratorTile extends TileEntity implements INamedContainer
   @Override
   public Container createMenu(final int id, final PlayerInventory playerInv, final PlayerEntity player) {
     return new CreativeGeneratorContainer(id, playerInv, this, this.syncedData);
+  }
+
+  @Override
+  public CompoundNBT write(final CompoundNBT nbt) {
+    nbt.put("Energy", this.energy.serializeNbt());
+    return super.write(nbt);
+  }
+
+  @Override
+  public void read(final CompoundNBT nbt) {
+    final CompoundNBT energy = nbt.getCompound("Energy");
+    this.energy.deserializeNbt(energy);
+    super.read(nbt);
   }
 
   @Override

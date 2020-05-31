@@ -1,6 +1,7 @@
 package lofimodding.gradient.containers;
 
 import lofimodding.gradient.GradientContainers;
+import lofimodding.gradient.network.ChangeCreativeGeneratorEnergyPacket;
 import lofimodding.gradient.tileentities.CreativeGeneratorTile;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.IIntArray;
@@ -11,7 +12,7 @@ public class CreativeGeneratorContainer extends GradientContainer {
   private final IIntArray syncedData;
 
   public CreativeGeneratorContainer(final int id, final PlayerInventory playerInv, final CreativeGeneratorTile generator) {
-    this(id, playerInv, generator, new IntArray(1));
+    this(id, playerInv, generator, new IntArray(2));
   }
 
   public CreativeGeneratorContainer(final int id, final PlayerInventory playerInv, final CreativeGeneratorTile generator, final IIntArray syncedData) {
@@ -22,15 +23,19 @@ public class CreativeGeneratorContainer extends GradientContainer {
     this.trackIntArray(syncedData);
   }
 
-  public float getEnergy() {
+  public float getEnergyAvailable() {
     return Float.intBitsToFloat(this.syncedData.get(0));
   }
 
+  public float getEnergyTransferred() {
+    return Float.intBitsToFloat(this.syncedData.get(1));
+  }
+
   public void setEnergy(final float amount) {
-    this.syncedData.set(0, Float.floatToIntBits(Math.max(0.0f, amount)));
+    ChangeCreativeGeneratorEnergyPacket.sendToServer(this.generator.getPos(), amount);
   }
 
   public void changeEnergy(final float amount) {
-    this.setEnergy(this.getEnergy() + amount);
+    this.setEnergy(this.getEnergyAvailable() + amount);
   }
 }
