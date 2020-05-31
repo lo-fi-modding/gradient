@@ -4,6 +4,7 @@ import lofimodding.gradient.energy.EnergyNetworkManager;
 import lofimodding.gradient.energy.kinetic.IKineticEnergyStorage;
 import lofimodding.gradient.energy.kinetic.IKineticEnergyTransfer;
 import lofimodding.gradient.tileentities.WoodenAxleTile;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.RotatedPillarBlock;
 import net.minecraft.block.SoundType;
@@ -30,6 +31,13 @@ public class WoodenAxleBlock extends RotatedPillarBlock {
 
   public WoodenAxleBlock() {
     super(Properties.create(Material.WOOD).hardnessAndResistance(1.0f, 5.0f).sound(SoundType.WOOD).notSolid());
+  }
+
+  @SuppressWarnings("deprecation")
+  @Override
+  @Deprecated
+  public BlockRenderType getRenderType(final BlockState state) {
+    return BlockRenderType.INVISIBLE;
   }
 
   @SuppressWarnings("deprecation")

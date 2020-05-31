@@ -16,6 +16,7 @@ import lofimodding.gradient.client.tesr.DryingRackRenderer;
 import lofimodding.gradient.client.tesr.FirepitRenderer;
 import lofimodding.gradient.client.tesr.GrindstoneRenderer;
 import lofimodding.gradient.client.tesr.MixingBasinRenderer;
+import lofimodding.gradient.client.tesr.WoodenAxleRenderer;
 import lofimodding.gradient.client.tesr.WoodenConveyorBeltRenderer;
 import lofimodding.gradient.client.tesr.WoodenCrankRenderer;
 import lofimodding.gradient.items.MetalItem;
@@ -111,8 +112,9 @@ public final class GradientClient {
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.CLAY_OVEN.get(), ClayOvenRenderer::new);
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.CLAY_CRUCIBLE.get(), ClayCrucibleRenderer::new);
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.CLAY_METAL_MIXER.get(), ClayMetalMixerRenderer::new);
-    ClientRegistry.bindTileEntityRenderer(GradientTileEntities.WOODEN_CRANK.get(), WoodenCrankRenderer::new);
+    ClientRegistry.bindTileEntityRenderer(GradientTileEntities.WOODEN_AXLE.get(), WoodenAxleRenderer::new);
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.WOODEN_CONVEYOR_BELT.get(), WoodenConveyorBeltRenderer::new);
+    ClientRegistry.bindTileEntityRenderer(GradientTileEntities.WOODEN_CRANK.get(), WoodenCrankRenderer::new);
   }
 
   @SubscribeEvent
@@ -121,6 +123,7 @@ public final class GradientClient {
     ModelLoader.addSpecialModel(Gradient.loc("block/" + GradientIds.GRINDSTONE + "_wheel"));
     ModelLoader.addSpecialModel(Gradient.loc("block/" + GradientIds.MIXING_BASIN + "_rod"));
     ModelLoader.addSpecialModel(Gradient.loc("block/" + GradientIds.CLAY_METAL_MIXER + "_auger"));
+    ModelLoader.addSpecialModel(Gradient.loc("block/" + GradientIds.WOODEN_AXLE));
   }
 
   private static int metalBlockColour(final BlockState state, final ILightReader world, final BlockPos pos, final int tintIndex) {

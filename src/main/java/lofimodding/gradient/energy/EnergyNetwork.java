@@ -16,11 +16,9 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class EnergyNetwork<STORAGE extends IEnergyStorage, TRANSFER extends IEnergyTransfer> {
@@ -47,7 +45,7 @@ public class EnergyNetwork<STORAGE extends IEnergyStorage, TRANSFER extends IEne
   }
 
   private final Map<STORAGE, Tuple<BlockPos, Direction>> tickSinkNodes = new HashMap<>();
-  private final Set<TRANSFER> tickTransferNodes = new HashSet<>();
+  private final Map<TRANSFER, Tuple<BlockPos, Direction>> tickTransferNodes = new HashMap<>();
 
   public EnergyNetworkState tick() {
     QueuedAction queue;
@@ -84,15 +82,22 @@ public class EnergyNetwork<STORAGE extends IEnergyStorage, TRANSFER extends IEne
           }
         });
 
-        te.getCapability(this.transfer, facing).ifPresent(this.tickTransferNodes::add);
+        te.getCapability(this.transfer, facing).ifPresent(transfer -> {
+          this.tickTransferNodes.put(transfer, new Tuple<>(te.getPos(), facing));
+        });
       }
     }
 
-    for(final TRANSFER transfer : this.tickTransferNodes) {
+    for(final Map.Entry<TRANSFER, Tuple<BlockPos, Direction>> entry : this.tickTransferNodes.entrySet()) {
+      final TRANSFER transfer = entry.getKey();
+      final BlockPos pos = entry.getValue().a;
+      final Direction facing = entry.getValue().b;
+
       if(Config.ENET.ENABLE_TICK_DEBUG.get()) {
         Gradient.LOGGER.info("Resetting transfer {}", transfer);
       }
 
+      this.state.addTransfer(pos, facing, transfer.getEnergyTransferred());
       transfer.resetEnergyTransferred();
     }
 
@@ -120,7 +125,7 @@ public class EnergyNetwork<STORAGE extends IEnergyStorage, TRANSFER extends IEne
 
         if(energy != 0.0f) {
           sink.sinkEnergy(energy, false);
-          this.state.add(pos, facing, sink.getEnergy());
+          this.state.addStorage(pos, facing, sink.getEnergy());
         }
       }
     }

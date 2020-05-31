@@ -16,6 +16,11 @@ public class EnergyTransfer implements IEnergyTransfer {
   }
 
   @Override
+  public void setEnergyTransferred(final float amount) {
+    this.energy = amount;
+  }
+
+  @Override
   public void resetEnergyTransferred() {
     this.energy = 0.0f;
   }

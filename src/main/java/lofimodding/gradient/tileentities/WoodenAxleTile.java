@@ -1,5 +1,6 @@
 package lofimodding.gradient.tileentities;
 
+import lofimodding.gradient.Config;
 import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientTileEntities;
 import lofimodding.gradient.blocks.WoodenAxleBlock;
@@ -23,11 +24,43 @@ public class WoodenAxleTile extends TileEntity {
   @CapabilityInject(IKineticEnergyTransfer.class)
   private static Capability<IKineticEnergyTransfer> TRANSFER;
 
-  private final IKineticEnergyTransfer transfer = new KineticEnergyTransfer();
+  private final IKineticEnergyTransfer transfer = new KineticEnergyTransfer() {
+    @Override
+    public void setEnergyTransferred(final float amount) {
+      final double maxSpeed = Config.ENET.WOODEN_AXLE_MAX_ENERGY.get();
+
+      WoodenAxleTile.this.energySamples[WoodenAxleTile.this.energySampleIndex++ % WoodenAxleTile.this.energySamples.length] = amount;
+
+      final double speedPercent = WoodenAxleTile.this.averageEnergy() / maxSpeed;
+      WoodenAxleTile.this.rotation = (WoodenAxleTile.this.rotation + 10.0d * speedPercent) % 360.0d;
+    }
+  };
+
   private final LazyOptional<IKineticEnergyTransfer> lazyTransfer = LazyOptional.of(() -> this.transfer);
+
+  private static final int TICKS_TO_SAMPLE_FOR_ENERGY_AVERAGE = 40;
+
+  private final float[] energySamples = new float[TICKS_TO_SAMPLE_FOR_ENERGY_AVERAGE];
+  private int energySampleIndex;
+
+  private double rotation;
 
   public WoodenAxleTile() {
     super(GradientTileEntities.WOODEN_AXLE.get());
+  }
+
+  private float averageEnergy() {
+    float total = 0.0f;
+
+    for(final float energySample : this.energySamples) {
+      total += energySample;
+    }
+
+    return total / this.energySamples.length;
+  }
+
+  public double getRotation() {
+    return this.rotation;
   }
 
   @Override

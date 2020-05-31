@@ -81,6 +81,8 @@ public final class Config {
   }
 
   public static final class Enet {
+    public final ForgeConfigSpec.DoubleValue WOODEN_AXLE_MAX_ENERGY;
+
     public final ForgeConfigSpec.BooleanValue ENABLE_NODE_DEBUG;
     public final ForgeConfigSpec.BooleanValue ENABLE_PATH_DEBUG;
     public final ForgeConfigSpec.BooleanValue ENABLE_TICK_DEBUG;
@@ -89,6 +91,11 @@ public final class Config {
       builder
         .comment("Energy network settings")
         .push("enet");
+
+      this.WOODEN_AXLE_MAX_ENERGY = builder
+        .comment("Maximum energy a wooden axle may carry. It will still transfer the energy; however, it will break by doing so.")
+        .translation("config.gradient.enet.wooden_axle_max_energy")
+        .defineInRange("wooden_axle_max_energy", 5.0d, Double.MIN_NORMAL, Double.MAX_VALUE);
 
       this.ENABLE_NODE_DEBUG = builder
         .comment("Enable verbose debug logging for connecting/disconnecting nodes.")

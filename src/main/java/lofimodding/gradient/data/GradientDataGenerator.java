@@ -1174,6 +1174,7 @@ public final class GradientDataGenerator {
       this.add("config.gradient.interop.halve_stick_recipe_output", "Halve stick recipe output");
       this.add("config.gradient.interop.disable_vanilla_crafting_table", "Disable vanilla crafting table");
       this.add("config.gradient.interop.disable_vanilla_furnace", "Disable vanilla furnace");
+      this.add("config.gradient.enet.wooden_axle_max_energy", "Maximum energy a wooden axle may carry");
       this.add("config.gradient.enet.enable_node_debug", "Enable node debug");
       this.add("config.gradient.enet.enable_path_debug", "Enable path debug");
       this.add("config.gradient.enet.enable_tick_debug", "Enable tick debug");
