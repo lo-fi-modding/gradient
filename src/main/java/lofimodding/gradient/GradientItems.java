@@ -219,6 +219,7 @@ public final class GradientItems {
 
   public static final RegistryObject<Item> INFINICOAL = REGISTRY.register(GradientIds.INFINICOAL, () -> new Item(new Item.Properties().group(GROUP)));
   public static final RegistryObject<BlockItem> CREATIVE_GENERATOR = REGISTRY.register(GradientIds.CREATIVE_GENERATOR, () -> new BlockItem(GradientBlocks.CREATIVE_GENERATOR.get(), new Item.Properties().group(GROUP)));
+  public static final RegistryObject<BlockItem> CREATIVE_SINKER = REGISTRY.register(GradientIds.CREATIVE_SINKER, () -> new BlockItem(GradientBlocks.CREATIVE_SINKER.get(), new Item.Properties().group(GROUP)));
 
   static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering items...");

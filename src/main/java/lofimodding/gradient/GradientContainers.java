@@ -2,9 +2,11 @@ package lofimodding.gradient;
 
 import lofimodding.gradient.containers.ClayCrucibleContainer;
 import lofimodding.gradient.containers.CreativeGeneratorContainer;
+import lofimodding.gradient.containers.CreativeSinkerContainer;
 import lofimodding.gradient.containers.WoodenHopperContainer;
 import lofimodding.gradient.tileentities.ClayCrucibleTile;
 import lofimodding.gradient.tileentities.CreativeGeneratorTile;
+import lofimodding.gradient.tileentities.CreativeSinkerTile;
 import lofimodding.gradient.tileentities.WoodenHopperTile;
 import lofimodding.gradient.utils.WorldUtils;
 import net.minecraft.client.Minecraft;
@@ -26,6 +28,7 @@ public final class GradientContainers {
   public static final RegistryObject<ContainerType<WoodenHopperContainer>> WOODEN_HOPPER = REGISTRY.register(GradientIds.WOODEN_HOPPER, () -> new ContainerType<>((IContainerFactory<WoodenHopperContainer>)(windowId, inv, data) -> DistExecutor.callWhenOn(Dist.CLIENT, () -> () -> new WoodenHopperContainer(windowId, inv, WorldUtils.getTileEntity(Minecraft.getInstance().world, data.readBlockPos(), WoodenHopperTile.class)))));
 
   public static final RegistryObject<ContainerType<CreativeGeneratorContainer>> CREATIVE_GENERATOR = REGISTRY.register(GradientIds.CREATIVE_GENERATOR, () -> new ContainerType<>((IContainerFactory<CreativeGeneratorContainer>)(windowId, inv, data) -> DistExecutor.callWhenOn(Dist.CLIENT, () -> () -> new CreativeGeneratorContainer(windowId, inv, WorldUtils.getTileEntity(Minecraft.getInstance().world, data.readBlockPos(), CreativeGeneratorTile.class)))));
+  public static final RegistryObject<ContainerType<CreativeSinkerContainer>> CREATIVE_SINKER = REGISTRY.register(GradientIds.CREATIVE_SINKER, () -> new ContainerType<>((IContainerFactory<CreativeSinkerContainer>)(windowId, inv, data) -> DistExecutor.callWhenOn(Dist.CLIENT, () -> () -> new CreativeSinkerContainer(windowId, inv, WorldUtils.getTileEntity(Minecraft.getInstance().world, data.readBlockPos(), CreativeSinkerTile.class)))));
 
   static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering containers...");

@@ -7,6 +7,7 @@ import lofimodding.gradient.advancements.criterion.GradientCriteriaTriggers;
 import lofimodding.gradient.client.GradientClient;
 import lofimodding.gradient.client.screens.ClayCrucibleScreen;
 import lofimodding.gradient.client.screens.CreativeGeneratorScreen;
+import lofimodding.gradient.client.screens.CreativeSinkerScreen;
 import lofimodding.gradient.client.screens.WoodenHopperScreen;
 import lofimodding.gradient.energy.EnergyCapability;
 import lofimodding.gradient.energy.kinetic.IKineticEnergyStorage;
@@ -150,6 +151,7 @@ public class Gradient {
     ScreenManager.registerFactory(GradientContainers.CLAY_CRUCIBLE.get(), ClayCrucibleScreen::new);
     ScreenManager.registerFactory(GradientContainers.WOODEN_HOPPER.get(), WoodenHopperScreen::new);
     ScreenManager.registerFactory(GradientContainers.CREATIVE_GENERATOR.get(), CreativeGeneratorScreen::new);
+    ScreenManager.registerFactory(GradientContainers.CREATIVE_SINKER.get(), CreativeSinkerScreen::new);
   }
 
   private void enqueueIMC(final InterModEnqueueEvent event) {

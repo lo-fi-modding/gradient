@@ -31,11 +31,11 @@ public class CreativeGeneratorContainer extends GradientContainer {
     return Float.intBitsToFloat(this.syncedData.get(1));
   }
 
-  public void setEnergy(final float amount) {
+  public void setEnergyAvailable(final float amount) {
     ChangeCreativeGeneratorEnergyPacket.sendToServer(this.generator.getPos(), amount);
   }
 
-  public void changeEnergy(final float amount) {
-    this.setEnergy(this.getEnergyAvailable() + amount);
+  public void changeEnergyAvailable(final float amount) {
+    this.setEnergyAvailable(this.getEnergyAvailable() + amount);
   }
 }

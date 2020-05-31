@@ -150,4 +150,5 @@ public final class GradientIds {
 
   public static final String INFINICOAL = "infinicoal";
   public static final String CREATIVE_GENERATOR = "creative_generator";
+  public static final String CREATIVE_SINKER = "creative_sinker";
 }

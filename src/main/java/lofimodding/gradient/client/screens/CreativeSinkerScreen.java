@@ -3,7 +3,7 @@ package lofimodding.gradient.client.screens;
 import com.mojang.blaze3d.systems.RenderSystem;
 import lofimodding.gradient.Gradient;
 import lofimodding.gradient.GradientBlocks;
-import lofimodding.gradient.containers.CreativeGeneratorContainer;
+import lofimodding.gradient.containers.CreativeSinkerContainer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.resources.I18n;
@@ -13,12 +13,12 @@ import net.minecraft.util.text.ITextComponent;
 
 import java.text.DecimalFormat;
 
-public class CreativeGeneratorScreen extends ContainerScreen<CreativeGeneratorContainer> {
+public class CreativeSinkerScreen extends ContainerScreen<CreativeSinkerContainer> {
   private static final ResourceLocation BG_TEXTURE = Gradient.loc("textures/gui/creative_generator.png");
 
   private static final DecimalFormat ENERGY_FORMAT = new DecimalFormat("#.###");
 
-  public CreativeGeneratorScreen(final CreativeGeneratorContainer container, final PlayerInventory playerInv, final ITextComponent title) {
+  public CreativeSinkerScreen(final CreativeSinkerContainer container, final PlayerInventory playerInv, final ITextComponent title) {
     super(container, playerInv, title);
   }
 
@@ -26,12 +26,12 @@ public class CreativeGeneratorScreen extends ContainerScreen<CreativeGeneratorCo
   protected void init() {
     super.init();
 
-    this.addButton(new Button(this.guiLeft +   4, this.guiTop + 26, 20, 20, "-10", button -> this.container.changeEnergyAvailable(-10.0f)));
-    this.addButton(new Button(this.guiLeft +  24, this.guiTop + 26, 20, 20, "-1",  button -> this.container.changeEnergyAvailable( -1.0f)));
-    this.addButton(new Button(this.guiLeft +  44, this.guiTop + 26, 20, 20, "-.1", button -> this.container.changeEnergyAvailable( -0.1f)));
-    this.addButton(new Button(this.guiLeft +  64, this.guiTop + 26, 20, 20, "+.1", button -> this.container.changeEnergyAvailable(  0.1f)));
-    this.addButton(new Button(this.guiLeft +  84, this.guiTop + 26, 20, 20, "+1",  button -> this.container.changeEnergyAvailable(  1.0f)));
-    this.addButton(new Button(this.guiLeft + 104, this.guiTop + 26, 20, 20, "+10", button -> this.container.changeEnergyAvailable( 10.0f)));
+    this.addButton(new Button(this.guiLeft +   4, this.guiTop + 26, 20, 20, "-10", button -> this.container.changeRequestedEnergy(-10.0f)));
+    this.addButton(new Button(this.guiLeft +  24, this.guiTop + 26, 20, 20, "-1",  button -> this.container.changeRequestedEnergy( -1.0f)));
+    this.addButton(new Button(this.guiLeft +  44, this.guiTop + 26, 20, 20, "-.1", button -> this.container.changeRequestedEnergy( -0.1f)));
+    this.addButton(new Button(this.guiLeft +  64, this.guiTop + 26, 20, 20, "+.1", button -> this.container.changeRequestedEnergy(  0.1f)));
+    this.addButton(new Button(this.guiLeft +  84, this.guiTop + 26, 20, 20, "+1",  button -> this.container.changeRequestedEnergy(  1.0f)));
+    this.addButton(new Button(this.guiLeft + 104, this.guiTop + 26, 20, 20, "+10", button -> this.container.changeRequestedEnergy( 10.0f)));
   }
 
   @Override
@@ -50,8 +50,8 @@ public class CreativeGeneratorScreen extends ContainerScreen<CreativeGeneratorCo
 
   @Override
   protected void drawGuiContainerForegroundLayer(final int mouseX, final int mouseY) {
-    final String name = I18n.format(GradientBlocks.CREATIVE_GENERATOR.get().getTranslationKey());
-    final String energy = I18n.format(GradientBlocks.CREATIVE_GENERATOR.get().getTranslationKey() + ".energy", ENERGY_FORMAT.format(this.container.getEnergyTransferred()), ENERGY_FORMAT.format(this.container.getEnergyAvailable()));
+    final String name = I18n.format(GradientBlocks.CREATIVE_SINKER.get().getTranslationKey());
+    final String energy = I18n.format(GradientBlocks.CREATIVE_SINKER.get().getTranslationKey() + ".energy", ENERGY_FORMAT.format(this.container.getEnergySinked()), ENERGY_FORMAT.format(this.container.getRequestedEnergy()));
 
     this.font.drawString(name, 6, 6, 0x404040);
     this.font.drawString(energy, 6, 16, 0x404040);

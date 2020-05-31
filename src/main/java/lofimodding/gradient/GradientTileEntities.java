@@ -4,6 +4,7 @@ import lofimodding.gradient.tileentities.ClayCrucibleTile;
 import lofimodding.gradient.tileentities.ClayMetalMixerTile;
 import lofimodding.gradient.tileentities.ClayOvenTile;
 import lofimodding.gradient.tileentities.CreativeGeneratorTile;
+import lofimodding.gradient.tileentities.CreativeSinkerTile;
 import lofimodding.gradient.tileentities.DryingRackTile;
 import lofimodding.gradient.tileentities.FirepitTile;
 import lofimodding.gradient.tileentities.GrindstoneTile;
@@ -40,6 +41,7 @@ public final class GradientTileEntities {
   public static final RegistryObject<TileEntityType<WoodenCrankTile>> WOODEN_CRANK = REGISTRY.register(GradientIds.WOODEN_CRANK, () -> TileEntityType.Builder.create(WoodenCrankTile::new, GradientBlocks.WOODEN_CRANK.get()).build(null));
 
   public static final RegistryObject<TileEntityType<CreativeGeneratorTile>> CREATIVE_GENERATOR = REGISTRY.register(GradientIds.CREATIVE_GENERATOR, () -> TileEntityType.Builder.create(CreativeGeneratorTile::new, GradientBlocks.CREATIVE_GENERATOR.get()).build(null));
+  public static final RegistryObject<TileEntityType<CreativeSinkerTile>> CREATIVE_SINKER = REGISTRY.register(GradientIds.CREATIVE_SINKER, () -> TileEntityType.Builder.create(CreativeSinkerTile::new, GradientBlocks.CREATIVE_SINKER.get()).build(null));
 
   static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering tile entities...");
