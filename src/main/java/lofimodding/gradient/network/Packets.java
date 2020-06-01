@@ -22,6 +22,7 @@ public final class Packets {
     Gradient.LOGGER.info("Registering packets...");
     CHANNEL.messageBuilder(SwitchCastPacket.class, id++).encoder(SwitchCastPacket::encode).decoder(SwitchCastPacket::decode).consumer(SwitchCastPacket::handle).add();
     CHANNEL.messageBuilder(SyncEnergyNetworkPacket.class, id++).encoder(SyncEnergyNetworkPacket::encode).decoder(SyncEnergyNetworkPacket::decode).consumer(SyncEnergyNetworkPacket::handle).add();
+    CHANNEL.messageBuilder(SyncHeatSinkerHeatPacket.class, id++).encoder(SyncHeatSinkerHeatPacket::encode).decoder(SyncHeatSinkerHeatPacket::decode).consumer(SyncHeatSinkerHeatPacket::handle).add();
     CHANNEL.messageBuilder(UpdateHeatNeighboursPacket.class, id++).encoder(UpdateHeatNeighboursPacket::encode).decoder(UpdateHeatNeighboursPacket::decode).consumer(UpdateHeatNeighboursPacket::handle).add();
     CHANNEL.messageBuilder(UpdateClayMetalMixerNeighboursPacket.class, id++).encoder(UpdateClayMetalMixerNeighboursPacket::encode).decoder(UpdateClayMetalMixerNeighboursPacket::decode).consumer(UpdateClayMetalMixerNeighboursPacket::handle).add();
 

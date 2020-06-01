@@ -1,5 +1,6 @@
 package lofimodding.gradient.tileentities;
 
+import lofimodding.gradient.network.SyncHeatSinkerHeatPacket;
 import lofimodding.gradient.utils.WorldUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
@@ -34,15 +35,15 @@ public abstract class HeatSinkerTile extends TileEntity implements ITickableTile
     return this.heat;
   }
 
-  protected void setHeat(final float heat) {
+  public void setHeat(final float heat) {
     this.heat = heat;
   }
 
-  protected void addHeat(final float heat) {
+  public void addHeat(final float heat) {
     this.heat += heat;
   }
 
-  protected void removeHeat(final float heat) {
+  public void removeHeat(final float heat) {
     this.heat -= heat;
 
     if(this.heat < 0.1f) {
@@ -89,7 +90,7 @@ public abstract class HeatSinkerTile extends TileEntity implements ITickableTile
 
     if(this.heatSyncTicks >= 40) {
       this.heatSyncTicks = 0;
-      this.syncMinimal();
+      this.syncHeat();
     }
   }
 
@@ -171,12 +172,8 @@ public abstract class HeatSinkerTile extends TileEntity implements ITickableTile
     }
   }
 
-  private boolean syncMinimal = false;
-
-  protected void syncMinimal() {
-    this.syncMinimal = true;
-    this.sync();
-    this.syncMinimal = false;
+  protected void syncHeat() {
+    SyncHeatSinkerHeatPacket.send(this.world.dimension.getType(), this.pos, this.heat);
   }
 
   @Override
@@ -186,23 +183,11 @@ public abstract class HeatSinkerTile extends TileEntity implements ITickableTile
 
   @Override
   public CompoundNBT getUpdateTag() {
-    if(this.syncMinimal) {
-      final CompoundNBT tag = new CompoundNBT();
-      this.writeMinimal(tag);
-      tag.putBoolean("SyncMinimal", true);
-      return tag;
-    }
-
     return this.write(new CompoundNBT());
   }
 
   @Override
   public void onDataPacket(final NetworkManager net, final SUpdateTileEntityPacket packet) {
-    if(packet.getNbtCompound().getBoolean("SyncMinimal")) {
-      this.readMinimal(packet.getNbtCompound());
-      return;
-    }
-
     this.read(packet.getNbtCompound());
   }
 }
