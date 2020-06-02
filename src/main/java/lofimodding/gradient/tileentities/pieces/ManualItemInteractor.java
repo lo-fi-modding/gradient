@@ -1,7 +1,6 @@
 package lofimodding.gradient.tileentities.pieces;
 
 import lofimodding.gradient.recipes.IGradientRecipe;
-import lofimodding.gradient.tileentities.MixingBasinTile;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -16,7 +15,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 
 public class ManualItemInteractor<Recipe extends IGradientRecipe> implements IInteractor<Recipe> {
   @Override
-  public ActionResultType onBlockActivated(final Processor<Recipe> processor, final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
+  public ActionResultType onInteract(final Processor<Recipe> processor, final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
     // Remove input
     if(player.isSneaking()) {
       for(int slot = 0; slot < processor.inputSlots(); slot++) {
@@ -27,7 +26,7 @@ public class ManualItemInteractor<Recipe extends IGradientRecipe> implements IIn
         }
       }
 
-      return ActionResultType.SUCCESS;
+      return ActionResultType.PASS;
     }
 
     // Take stuff out

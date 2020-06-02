@@ -3,6 +3,8 @@ package lofimodding.gradient.tileentities.pieces;
 import lofimodding.gradient.recipes.IGradientRecipe;
 import lofimodding.gradient.utils.RecipeUtils;
 import lofimodding.progression.Stage;
+import lofimodding.progression.capabilities.Progress;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
@@ -17,7 +19,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.BiConsumer;
@@ -32,7 +34,7 @@ public class Processor<Recipe extends IGradientRecipe> {
   private final ProcessorItemHandler<Recipe> inv;
   private final LazyOptional<ItemStackHandler> lazyInv;
 
-  private Set<Stage> stages = Collections.emptySet();
+  private final Set<Stage> stages = new HashSet<>();
 
   @Nullable
   private Recipe recipe;
@@ -53,8 +55,66 @@ public class Processor<Recipe extends IGradientRecipe> {
     this.lazyInv = LazyOptional.of(() -> this.inv);
   }
 
-  public void setStages(final Set<Stage> stages) {
-    this.stages = stages;
+  public int inputSlots() {
+    return this.itemInputSlots.size();
+  }
+
+  public int outputSlots() {
+    return this.itemOutputSlots.size();
+  }
+
+  public boolean hasInput(final int slot) {
+    return !this.getInput(slot).isEmpty();
+  }
+
+  public boolean hasOutput(final int slot) {
+    return !this.getOutput(slot).isEmpty();
+  }
+
+  public ItemStack getInput(final int slot) {
+    return this.itemInputSlots.get(slot).get(this.inv);
+  }
+
+  public ItemStack getOutput(final int slot) {
+    return this.itemOutputSlots.get(slot).get(this.inv);
+  }
+
+  public ItemStack takeInput(final int slot, final PlayerEntity player) {
+    this.stages.clear();
+    this.stages.addAll(Progress.get(player).getStages());
+
+    final ItemSlot s = this.itemInputSlots.get(slot);
+    return s.extract(this.inv, s.limit, false);
+  }
+
+  public ItemStack takeOutput(final int slot) {
+    final ItemSlot s = this.itemOutputSlots.get(slot);
+    return s.extract(this.inv, s.limit, false);
+  }
+
+  private int findOpenSlot() {
+    for(int slot = 0; slot < this.inputSlots(); slot++) {
+      if(!this.hasInput(slot)) {
+        return slot;
+      }
+    }
+
+    return -1;
+  }
+
+  public ItemStack insertItem(final ItemStack stack, final PlayerEntity player) {
+    final int slot = this.findOpenSlot();
+
+    // No space
+    if(slot == -1) {
+      return stack;
+    }
+
+    this.stages.clear();
+    this.stages.addAll(Progress.get(player).getStages());
+    this.itemInputSlots.get(slot).set(this.inv, stack.split(1));
+
+    return stack;
   }
 
   public boolean tick() {
@@ -72,6 +132,10 @@ public class Processor<Recipe extends IGradientRecipe> {
     return false;
   }
 
+  public int getTicks() {
+    return this.ticks;
+  }
+
   private boolean isFinished() {
     return this.ticks >= this.maxTicks;
   }
@@ -79,14 +143,14 @@ public class Processor<Recipe extends IGradientRecipe> {
   private void outputItem() {
     final Recipe recipe = this.recipe;
 
-    for(int slot = 0; slot < this.itemInputSlots.size(); slot++) {
-      this.inv.extractItem(slot, 1, false);
+    for(final ItemSlot slot : this.itemInputSlots) {
+      slot.extract(this.inv, 1, false);
     }
 
     this.inv.disableValidation();
 
     for(int slot = 0; slot < this.itemOutputSlots.size(); slot++) {
-      this.inv.insertItem(this.itemInputSlots.size() + slot, recipe.getOutput(slot), false);
+      this.itemOutputSlots.get(slot).insert(this.inv, recipe.getOutput(slot), false);
     }
 
     this.inv.enableValidation();
@@ -110,8 +174,8 @@ public class Processor<Recipe extends IGradientRecipe> {
   private boolean recipeMatches(final IGradientRecipe recipe) {
     final NonNullList<ItemStack> inputs = NonNullList.create();
 
-    for(int slot = 0; slot < this.itemInputSlots.size(); slot++) {
-      inputs.add(this.inv.getStackInSlot(slot));
+    for(final ItemSlot slot : this.itemInputSlots) {
+      inputs.add(slot.get(this.inv));
     }
 
     return
@@ -184,14 +248,32 @@ public class Processor<Recipe extends IGradientRecipe> {
   }
 
   public static class ItemSlot {
+    private final int index;
     private final int limit;
     private final Validator validator;
     private final Callback onChanged;
 
-    public ItemSlot(final int limit, final Validator validator, final Callback onChanged) {
+    public ItemSlot(final int index, final int limit, final Validator validator, final Callback onChanged) {
+      this.index = index;
       this.limit = limit;
       this.validator = validator;
       this.onChanged = onChanged;
+    }
+
+    public ItemStack get(final ItemStackHandler inv) {
+      return inv.getStackInSlot(this.index);
+    }
+
+    public void set(final ItemStackHandler inv, final ItemStack stack) {
+      inv.setStackInSlot(this.index, stack);
+    }
+
+    public ItemStack insert(final ItemStackHandler inv, final ItemStack stack, final boolean simulate) {
+      return inv.insertItem(this.index, stack, simulate);
+    }
+
+    public ItemStack extract(final ItemStackHandler inv, final int amount, final boolean simulate) {
+      return inv.extractItem(this.index, amount, simulate);
     }
   }
 
@@ -211,6 +293,7 @@ public class Processor<Recipe extends IGradientRecipe> {
     private final List<ItemSlot> itemSlots = new ArrayList<>();
     private final List<ItemSlot> itemInputSlots = new ArrayList<>();
     private final List<ItemSlot> itemOutputSlots = new ArrayList<>();
+    private int slotIndex;
 
     public Builder addInputItem() {
       this.addInputItem(64, Validator.ALWAYS, Callback.UPDATE_RECIPE);
@@ -218,7 +301,7 @@ public class Processor<Recipe extends IGradientRecipe> {
     }
 
     public Builder addInputItem(final int limit, final Validator validator, final Callback onChanged) {
-      final ItemSlot slot = new ItemSlot(limit, validator, onChanged);
+      final ItemSlot slot = new ItemSlot(this.slotIndex++, limit, validator, onChanged);
       this.itemSlots.add(slot);
       this.itemInputSlots.add(slot);
       return this;
@@ -230,7 +313,7 @@ public class Processor<Recipe extends IGradientRecipe> {
     }
 
     public Builder addOutputItem(final int limit, final Validator validator, final Callback onChanged) {
-      final ItemSlot slot = new ItemSlot(limit, validator, onChanged);
+      final ItemSlot slot = new ItemSlot(this.slotIndex++, limit, validator, onChanged);
       this.itemSlots.add(slot);
       this.itemOutputSlots.add(slot);
       return this;

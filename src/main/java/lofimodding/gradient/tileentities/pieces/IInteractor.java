@@ -10,5 +10,5 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 
 public interface IInteractor<Recipe extends IGradientRecipe> {
-  ActionResultType onBlockActivated(final Processor<Recipe> processor, final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit);
+  ActionResultType onInteract(final Processor<Recipe> processor, final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit);
 }

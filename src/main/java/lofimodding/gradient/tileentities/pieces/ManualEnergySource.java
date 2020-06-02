@@ -20,13 +20,14 @@ public class ManualEnergySource implements IEnergySource {
     this.energyConsumedPerTick = energyConsumedPerTick;
   }
 
-  public ActionResultType crank(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
+  @Override
+  public ActionResultType onInteract(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
     if(this.energy == 0) {
       this.energy = this.energyAddedPerCrank;
       return ActionResultType.SUCCESS;
     }
 
-    return ActionResultType.FAIL;
+    return ActionResultType.PASS;
   }
 
   @Override

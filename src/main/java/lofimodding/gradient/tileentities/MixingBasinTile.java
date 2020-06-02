@@ -179,7 +179,7 @@ public class MixingBasinTile extends ProcessorTileOld<MixingRecipe, ManualEnergy
       return ActionResultType.FAIL;
     }
 
-    final ActionResultType result = this.getEnergy().crank(state, world, pos, player, hand, hit);
+    final ActionResultType result = this.getEnergy().onInteract(state, world, pos, player, hand, hit);
     this.sync();
 
     if(result == ActionResultType.SUCCESS) {

@@ -61,7 +61,7 @@ public class GrindstoneRenderer extends TileEntityRenderer<GrindstoneTile> {
 
     matrixStack.translate(0.5d, 0.5d, 0.5d);
 
-    if(te.hasInput()) {
+    if(te.hasInput(0)) {
       matrixStack.push();
 
       switch(facing) {
@@ -82,7 +82,7 @@ public class GrindstoneRenderer extends TileEntityRenderer<GrindstoneTile> {
           break;
       }
 
-      final ItemStack input = te.getInput();
+      final ItemStack input = te.getInput(0);
 
       if(mouseOver && input.getCount() > 1) {
         matrixStack.push();
@@ -97,7 +97,7 @@ public class GrindstoneRenderer extends TileEntityRenderer<GrindstoneTile> {
       matrixStack.pop();
     }
 
-    if(te.hasOutput()) {
+    if(te.hasOutput(0)) {
       matrixStack.push();
 
       switch(facing) {
@@ -118,7 +118,7 @@ public class GrindstoneRenderer extends TileEntityRenderer<GrindstoneTile> {
           break;
       }
 
-      final ItemStack output = te.getOutput();
+      final ItemStack output = te.getOutput(0);
 
       if(mouseOver && output.getCount() > 1) {
         matrixStack.push();
@@ -129,7 +129,7 @@ public class GrindstoneRenderer extends TileEntityRenderer<GrindstoneTile> {
 
       matrixStack.scale(0.5f, 0.5f, 0.5f);
       matrixStack.rotate(Vector3f.YP.rotationDegrees(-facing.getHorizontalAngle()));
-      Minecraft.getInstance().getItemRenderer().renderItem(te.getOutput(), ItemCameraTransforms.TransformType.GROUND, combinedLight, combinedOverlay, matrixStack, buffer);
+      Minecraft.getInstance().getItemRenderer().renderItem(te.getOutput(0), ItemCameraTransforms.TransformType.GROUND, combinedLight, combinedOverlay, matrixStack, buffer);
       matrixStack.pop();
     }
   }

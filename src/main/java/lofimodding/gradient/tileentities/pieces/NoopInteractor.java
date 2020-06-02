@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 
 public class NoopInteractor<Recipe extends IGradientRecipe> implements IInteractor<Recipe> {
   @Override
-  public ActionResultType onBlockActivated(final Processor<Recipe> processor, final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
+  public ActionResultType onInteract(final Processor<Recipe> processor, final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
     return ActionResultType.PASS;
   }
 }
