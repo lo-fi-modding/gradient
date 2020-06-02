@@ -1,120 +1,94 @@
 package lofimodding.gradient.tileentities;
 
+import lofimodding.gradient.recipes.IGradientRecipe;
 import lofimodding.gradient.tileentities.pieces.IEnergySource;
-import lofimodding.gradient.tileentities.pieces.IProcessor;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.crafting.IRecipe;
+import lofimodding.gradient.tileentities.pieces.IInteractor;
+import lofimodding.gradient.tileentities.pieces.NoopInteractor;
+import lofimodding.gradient.tileentities.pieces.Processor;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraftforge.common.util.Constants;
 
-public abstract class ProcessorTile<Recipe extends IRecipe<?>, Source extends IEnergySource, Processor extends IProcessor<Recipe>> extends TileEntity implements ITickableTileEntity {
-  private final Source energy;
-  private final Processor processor;
-  private Recipe recipe;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Consumer;
 
-  public ProcessorTile(final TileEntityType<?> type, final Source energy, final Processor processor) {
+public class ProcessorTile<Recipe extends IGradientRecipe, Energy extends IEnergySource> extends TileEntity implements ITickableTileEntity {
+  private final Energy energy;
+  private final List<ProcessorInteractor<Recipe>> processors;
+
+  public ProcessorTile(final TileEntityType<?> type, final Energy energy, final Consumer<Builder<Recipe>> builder) {
     super(type);
     this.energy = energy;
-    this.processor = processor;
+
+    final Builder<Recipe> b = new Builder<>();
+    builder.accept(b);
+
+    this.processors = Collections.unmodifiableList(b.processors);
   }
 
   @Override
   public void tick() {
-    if(this.energy.consumeEnergy()) {
-      if(this.processor.tick()) {
-        this.markDirty();
-
-        if(!this.world.isRemote) {
-          this.onProcessorTick();
-
-          if(this.processor.isFinished()) {
-            this.onFinished(this.recipe);
-            this.processor.restart();
-            this.sync();
-          }
-        } else {
-          this.onAnimationTick(this.processor.getTicks());
+    for(final ProcessorInteractor<Recipe> processor : this.processors) {
+      if(processor.processor.hasRecipe() && this.energy.consumeEnergy()) {
+        if(processor.processor.tick()) {
+          this.markDirty();
         }
       }
     }
   }
 
-  protected Source getEnergy() {
-    return this.energy;
-  }
-
-  protected Processor getProcessor() {
-    return this.processor;
-  }
-
-  protected void setRecipe(final Recipe recipe) {
-    this.processor.setRecipe(recipe);
-    this.recipe = recipe;
-  }
-
-  protected Recipe getRecipe() {
-    return this.recipe;
-  }
-
-  protected boolean hasRecipe() {
-    return this.recipe != null;
-  }
-
-  protected void clearRecipe() {
-    this.processor.setRecipe(null);
-    this.recipe = null;
-    this.resetAnimation();
-  }
-
-  protected abstract void onProcessorTick();
-  protected abstract void onFinished(final Recipe recipe);
-  protected abstract void onAnimationTick(final int ticks);
-  protected abstract void resetAnimation();
-
   @Override
   public CompoundNBT write(final CompoundNBT compound) {
-    compound.put("energy", this.energy.write(new CompoundNBT()));
-    compound.put("processor", this.processor.write(new CompoundNBT()));
+    compound.put("Energy", this.energy.write(new CompoundNBT()));
+
+    final ListNBT processorsNbt = new ListNBT();
+    for(final ProcessorInteractor<Recipe> processor : this.processors) {
+      processorsNbt.add(processor.processor.write(new CompoundNBT()));
+    }
+
+    compound.put("Processors", processorsNbt);
+
     return super.write(compound);
   }
 
   @Override
   public void read(final CompoundNBT compound) {
-    this.energy.read(compound.getCompound("energy"));
-    this.processor.read(compound.getCompound("processor"));
+    this.energy.read(compound.getCompound("Energy"));
+
+    final ListNBT processorsNbt = compound.getList("Processors", Constants.NBT.TAG_COMPOUND);
+
+    for(int i = 0; i < Math.min(processorsNbt.size(), this.processors.size()); i++) {
+      this.processors.get(i).processor.read(processorsNbt.getCompound(i));
+    }
+
     super.read(compound);
   }
 
-  protected void sync() {
-    if(!this.world.isRemote) {
-      final BlockState state = this.world.getBlockState(this.getPos());
-      this.world.notifyBlockUpdate(this.getPos(), state, state, 3);
-      this.markDirty();
+  private static final class ProcessorInteractor<Recipe extends IGradientRecipe> {
+    private final Processor<Recipe> processor;
+    private final IInteractor<Recipe> interactor;
+
+    private ProcessorInteractor(final Processor<Recipe> processor, final IInteractor<Recipe> interactor) {
+      this.processor = processor;
+      this.interactor = interactor;
     }
   }
 
-  @Override
-  public SUpdateTileEntityPacket getUpdatePacket() {
-    return new SUpdateTileEntityPacket(this.pos, 0, this.getUpdateTag());
-  }
+  public static class Builder<Recipe extends IGradientRecipe> {
+    private final List<ProcessorInteractor<Recipe>> processors = new ArrayList<>();
 
-  @Override
-  public CompoundNBT getUpdateTag() {
-    return this.write(new CompoundNBT());
-  }
+    public Builder<Recipe> addProcessor(final Processor<Recipe> processor) {
+      return this.addProcessor(processor, new NoopInteractor<>());
+    }
 
-  @Override
-  public void onDataPacket(final NetworkManager net, final SUpdateTileEntityPacket packet) {
-    this.read(packet.getNbtCompound());
-
-    if(this.hasRecipe()) {
-      this.onAnimationTick(this.processor.getTicks());
-    } else {
-      this.resetAnimation();
+    public Builder<Recipe> addProcessor(final Processor<Recipe> processor, final IInteractor<Recipe> interactor) {
+      this.processors.add(new ProcessorInteractor<>(processor, interactor));
+      return this;
     }
   }
 }

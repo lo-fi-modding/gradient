@@ -44,7 +44,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-public class MixingBasinTile extends ProcessorTile<MixingRecipe, ManualEnergySource, MixerProcessor> {
+public class MixingBasinTile extends ProcessorTileOld<MixingRecipe, ManualEnergySource, MixerProcessor> {
   @CapabilityInject(IItemHandler.class)
   private static Capability<IItemHandler> ITEM_HANDLER_CAPABILITY;
 
@@ -111,7 +111,7 @@ public class MixingBasinTile extends ProcessorTile<MixingRecipe, ManualEnergySou
   private boolean forceInsert;
 
   public MixingBasinTile() {
-    super(GradientTileEntities.MIXING_BASIN.get(), new ManualEnergySource(), new MixerProcessor());
+    super(GradientTileEntities.MIXING_BASIN.get(), new ManualEnergySource(20, 1), new MixerProcessor());
   }
 
   public boolean hasFluid() {
