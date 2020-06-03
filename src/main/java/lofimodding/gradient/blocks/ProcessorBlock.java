@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 public abstract class ProcessorBlock<Recipe extends IGradientRecipe, Energy extends IEnergySource, Tile extends ProcessorTile<Recipe, Energy>> extends Block {
   private final Class<Tile> cls;
 
-  public ProcessorBlock(final Class<Tile> cls, final Properties properties) {
+  protected ProcessorBlock(final Class<Tile> cls, final Properties properties) {
     super(properties);
     this.cls = cls;
   }
@@ -33,18 +33,20 @@ public abstract class ProcessorBlock<Recipe extends IGradientRecipe, Energy exte
   @SuppressWarnings("deprecation")
   @Override
   public ActionResultType onBlockActivated(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
-    if(!world.isRemote) {
-      final Tile tile = WorldUtils.getTileEntity(world, pos, this.cls);
+    if(world.isRemote) {
+      return ActionResultType.SUCCESS;
+    }
 
-      if(tile == null) {
-        return ActionResultType.SUCCESS;
-      }
+    final Tile tile = WorldUtils.getTileEntity(world, pos, this.cls);
 
-      final ActionResultType result = tile.onInteract(state, world, pos, player, hand, hit);
+    if(tile == null) {
+      return ActionResultType.SUCCESS;
+    }
 
-      if(result != ActionResultType.PASS) {
-        return result;
-      }
+    final ActionResultType result = tile.onInteract(state, world, pos, player, hand, hit);
+
+    if(result != ActionResultType.PASS) {
+      return result;
     }
 
     return ActionResultType.SUCCESS;

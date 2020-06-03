@@ -13,7 +13,7 @@ import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
@@ -32,7 +32,6 @@ public class Processor<Recipe extends IGradientRecipe> {
   private final List<ItemSlot> itemInputSlots;
   private final List<ItemSlot> itemOutputSlots;
   private final ProcessorItemHandler<Recipe> inv;
-  private final LazyOptional<ItemStackHandler> lazyInv;
 
   private final Set<Stage> stages = new HashSet<>();
 
@@ -41,10 +40,10 @@ public class Processor<Recipe extends IGradientRecipe> {
   private int ticks;
   private int maxTicks;
 
-  public Processor(final IRecipeType<Recipe> recipeType, final Consumer<Builder> builder) {
+  public Processor(final Callback onChange, final IRecipeType<Recipe> recipeType, final Consumer<Builder> builder) {
     this.recipeType = recipeType;
 
-    final Builder b = new Builder();
+    final Builder b = new Builder(onChange);
     builder.accept(b);
 
     this.itemSlots = b.itemSlots;
@@ -52,7 +51,10 @@ public class Processor<Recipe extends IGradientRecipe> {
     this.itemOutputSlots = b.itemOutputSlots;
 
     this.inv = new ProcessorItemHandler<>(this, this.itemSlots.size());
-    this.lazyInv = LazyOptional.of(() -> this.inv);
+  }
+
+  public IItemHandlerModifiable getInv() {
+    return this.inv;
   }
 
   public int inputSlots() {
@@ -112,16 +114,16 @@ public class Processor<Recipe extends IGradientRecipe> {
 
     this.stages.clear();
     this.stages.addAll(Progress.get(player).getStages());
-    this.itemInputSlots.get(slot).set(this.inv, stack.split(1));
+    this.itemInputSlots.get(slot).set(this.inv, stack.split(this.itemInputSlots.get(slot).limit));
 
     return stack;
   }
 
-  public boolean tick() {
+  public boolean tick(final boolean isClient) {
     if(this.hasRecipe()) {
       this.ticks++;
 
-      if(this.isFinished()) {
+      if(!isClient && this.isFinished()) {
         this.outputItem();
         this.ticks = 0;
       }
@@ -161,13 +163,17 @@ public class Processor<Recipe extends IGradientRecipe> {
   }
 
   private void updateRecipe() {
-    this.recipe = RecipeUtils.getRecipe(this.recipeType, this::recipeMatches).orElse(null);
-    this.ticks = 0;
+    final Recipe recipe = RecipeUtils.getRecipe(this.recipeType, this::recipeMatches).orElse(null);
 
-    if(this.hasRecipe()) {
-      this.maxTicks = this.recipe.getTicks() * 3;
-    } else {
-      this.maxTicks = Integer.MAX_VALUE;
+    if(recipe != this.recipe) {
+      this.recipe = recipe;
+      this.ticks = 0;
+
+      if(this.hasRecipe()) {
+        this.maxTicks = this.recipe.getTicks() * 3;
+      } else {
+        this.maxTicks = Integer.MAX_VALUE;
+      }
     }
   }
 
@@ -215,24 +221,34 @@ public class Processor<Recipe extends IGradientRecipe> {
   public static class ProcessorItemHandler<Recipe extends IGradientRecipe> extends ItemStackHandler {
     private final Processor<Recipe> processor;
 
-    private boolean validate;
+    private boolean validate = true;
 
     public ProcessorItemHandler(final Processor<Recipe> processor, final int size) {
       super(size);
       this.processor = processor;
     }
 
-    public void enableValidation() {
+    protected void enableValidation() {
       this.validate = true;
     }
 
-    public void disableValidation() {
+    protected void disableValidation() {
       this.validate = false;
     }
 
     @Override
     public boolean isItemValid(final int slot, @Nonnull final ItemStack stack) {
-      return !this.validate || super.isItemValid(slot, stack) && this.processor.itemSlots.get(slot).validator.test(this, stack);
+      return !this.validate || super.isItemValid(slot, stack) && this.processor.itemSlots.get(slot).insertValidator.test(this, stack);
+    }
+
+    @Nonnull
+    @Override
+    public ItemStack extractItem(final int slot, final int amount, final boolean simulate) {
+      if(this.validate && !this.processor.itemSlots.get(slot).extractValidator.test(this, this.getStackInSlot(slot))) {
+        return ItemStack.EMPTY;
+      }
+
+      return super.extractItem(slot, amount, simulate);
     }
 
     @Override
@@ -250,13 +266,15 @@ public class Processor<Recipe extends IGradientRecipe> {
   public static class ItemSlot {
     private final int index;
     private final int limit;
-    private final Validator validator;
+    private final Validator insertValidator;
+    private final Validator extractValidator;
     private final Callback onChanged;
 
-    public ItemSlot(final int index, final int limit, final Validator validator, final Callback onChanged) {
+    public ItemSlot(final int index, final int limit, final Validator insertValidator, final Validator extractValidator, final Callback onChanged) {
       this.index = index;
       this.limit = limit;
-      this.validator = validator;
+      this.insertValidator = insertValidator;
+      this.extractValidator = extractValidator;
       this.onChanged = onChanged;
     }
 
@@ -264,16 +282,19 @@ public class Processor<Recipe extends IGradientRecipe> {
       return inv.getStackInSlot(this.index);
     }
 
-    public void set(final ItemStackHandler inv, final ItemStack stack) {
+    public void set(final ProcessorItemHandler<?> inv, final ItemStack stack) {
       inv.setStackInSlot(this.index, stack);
     }
 
-    public ItemStack insert(final ItemStackHandler inv, final ItemStack stack, final boolean simulate) {
+    public ItemStack insert(final ProcessorItemHandler<?> inv, final ItemStack stack, final boolean simulate) {
       return inv.insertItem(this.index, stack, simulate);
     }
 
-    public ItemStack extract(final ItemStackHandler inv, final int amount, final boolean simulate) {
-      return inv.extractItem(this.index, amount, simulate);
+    public ItemStack extract(final ProcessorItemHandler<?> inv, final int amount, final boolean simulate) {
+      inv.disableValidation();
+      final ItemStack stack = inv.extractItem(this.index, amount, simulate);
+      inv.enableValidation();
+      return stack;
     }
   }
 
@@ -287,33 +308,44 @@ public class Processor<Recipe extends IGradientRecipe> {
   public interface Callback extends BiConsumer<ProcessorItemHandler<?>, ItemStack> {
     Callback NOOP = (inv, stack) -> { };
     Callback UPDATE_RECIPE = (inv, stack) -> inv.processor.updateRecipe();
+
+    @Override
+    default Callback andThen(final BiConsumer<? super ProcessorItemHandler<?>, ? super ItemStack> after) {
+      return (l, r) -> { this.accept(l, r); after.accept(l, r); };
+    }
   }
 
   public static class Builder {
+    private final Callback onChanged;
+
     private final List<ItemSlot> itemSlots = new ArrayList<>();
     private final List<ItemSlot> itemInputSlots = new ArrayList<>();
     private final List<ItemSlot> itemOutputSlots = new ArrayList<>();
     private int slotIndex;
 
+    public Builder(final Callback onChanged) {
+      this.onChanged = onChanged;
+    }
+
     public Builder addInputItem() {
-      this.addInputItem(64, Validator.ALWAYS, Callback.UPDATE_RECIPE);
+      this.addInputItem(64, Validator.ALWAYS, Validator.NEVER, Callback.UPDATE_RECIPE);
       return this;
     }
 
-    public Builder addInputItem(final int limit, final Validator validator, final Callback onChanged) {
-      final ItemSlot slot = new ItemSlot(this.slotIndex++, limit, validator, onChanged);
+    public Builder addInputItem(final int limit, final Validator insertValidator, final Validator extractValidator, final Callback onChanged) {
+      final ItemSlot slot = new ItemSlot(this.slotIndex++, limit, insertValidator, extractValidator, onChanged.andThen(this.onChanged));
       this.itemSlots.add(slot);
       this.itemInputSlots.add(slot);
       return this;
     }
 
     public Builder addOutputItem() {
-      this.addOutputItem(64, Validator.NEVER, Callback.NOOP);
+      this.addOutputItem(64, Validator.NEVER, Validator.ALWAYS, Callback.NOOP);
       return this;
     }
 
-    public Builder addOutputItem(final int limit, final Validator validator, final Callback onChanged) {
-      final ItemSlot slot = new ItemSlot(this.slotIndex++, limit, validator, onChanged);
+    public Builder addOutputItem(final int limit, final Validator insertValidator, final Validator extractValidator, final Callback onChanged) {
+      final ItemSlot slot = new ItemSlot(this.slotIndex++, limit, insertValidator, extractValidator, onChanged.andThen(this.onChanged));
       this.itemSlots.add(slot);
       this.itemOutputSlots.add(slot);
       return this;

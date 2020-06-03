@@ -75,7 +75,7 @@ public class GrindingRecipe implements IGradientRecipe {
   @Override
   public ItemStack getOutput(final int slot) {
     if(slot == 0) {
-      return this.result;
+      return this.result.copy();
     }
 
     return ItemStack.EMPTY;

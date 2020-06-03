@@ -13,6 +13,7 @@ public class ManualEnergySource implements IEnergySource {
   private final int energyAddedPerCrank;
   private final int energyConsumedPerTick;
 
+  private Runnable onCrank;
   private int energy;
 
   public ManualEnergySource(final int energyAddedPerCrank, final int energyConsumedPerTick) {
@@ -20,10 +21,15 @@ public class ManualEnergySource implements IEnergySource {
     this.energyConsumedPerTick = energyConsumedPerTick;
   }
 
+  public void setOnCrankCallback(final Runnable onCrank) {
+    this.onCrank = onCrank;
+  }
+
   @Override
   public ActionResultType onInteract(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
     if(this.energy == 0) {
       this.energy = this.energyAddedPerCrank;
+      this.onCrank.run();
       return ActionResultType.SUCCESS;
     }
 
