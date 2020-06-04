@@ -10,21 +10,36 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 
 public class ManualEnergySource implements IEnergySource {
+  private final int energyAddedPerCrank;
+  private final int energyConsumedPerTick;
+
+  private Runnable onCrank;
   private int energy;
 
-  public ActionResultType crank(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
+  public ManualEnergySource(final int energyAddedPerCrank, final int energyConsumedPerTick) {
+    this.energyAddedPerCrank = energyAddedPerCrank;
+    this.energyConsumedPerTick = energyConsumedPerTick;
+  }
+
+  public void setOnCrankCallback(final Runnable onCrank) {
+    this.onCrank = onCrank;
+  }
+
+  @Override
+  public ActionResultType onInteract(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
     if(this.energy == 0) {
-      this.energy = 20;
+      this.energy = this.energyAddedPerCrank;
+      this.onCrank.run();
       return ActionResultType.SUCCESS;
     }
 
-    return ActionResultType.FAIL;
+    return ActionResultType.PASS;
   }
 
   @Override
   public boolean consumeEnergy() {
     if(this.energy > 0) {
-      this.energy--;
+      this.energy -= this.energyConsumedPerTick;
       return true;
     }
 
@@ -33,12 +48,12 @@ public class ManualEnergySource implements IEnergySource {
 
   @Override
   public CompoundNBT write(final CompoundNBT compound) {
-    compound.putInt("energy", this.energy);
+    compound.putInt("Energy", this.energy);
     return compound;
   }
 
   @Override
   public void read(final CompoundNBT compound) {
-    this.energy = compound.getInt("energy");
+    this.energy = compound.getInt("Energy");
   }
 }

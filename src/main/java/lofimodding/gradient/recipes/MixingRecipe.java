@@ -9,9 +9,7 @@ import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientRecipeSerializers;
 import lofimodding.progression.Stage;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
@@ -21,11 +19,9 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import net.minecraftforge.common.util.RecipeMatcher;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
@@ -33,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class MixingRecipe implements IRecipe<IInventory> {
+public class MixingRecipe implements IGradientRecipe {
   public static final IRecipeType<MixingRecipe> TYPE = IRecipeType.register("mixing");
 
   private static final RecipeItemHelper RECIPE_ITEM_HELPER = new RecipeItemHelper();
@@ -73,13 +69,9 @@ public class MixingRecipe implements IRecipe<IInventory> {
     return this.stages;
   }
 
+  @Override
   public int getTicks() {
     return this.ticks;
-  }
-
-  @Override
-  public ItemStack getRecipeOutput() {
-    return this.result;
   }
 
   @Override
@@ -87,45 +79,64 @@ public class MixingRecipe implements IRecipe<IInventory> {
     return this.ingredients;
   }
 
-  public FluidStack getFluid() {
-    return this.fluid;
+  @Override
+  public int getItemInputCount() {
+    return this.ingredients.size();
   }
 
   @Override
-  @Deprecated
-  public boolean matches(final IInventory inv, final World world) {
-    return false;
+  public int getItemOutputCount() {
+    return 1;
   }
 
-  public boolean matches(final IItemHandler inv, final Set<Stage> stages, final int firstSlot, final int lastSlot, final IFluidHandler fluidHandler) {
+  @Override
+  public int getFluidInputCount() {
+    return 1;
+  }
+
+  @Override
+  public FluidStack getFluidInput(final int slot) {
+    if(slot == 0) {
+      return this.fluid.copy();
+    }
+
+    return FluidStack.EMPTY;
+  }
+
+  @Override
+  public ItemStack getItemOutput(final int slot) {
+    if(slot == 0) {
+      return this.result.copy();
+    }
+
+    return ItemStack.EMPTY;
+  }
+
+  @Override
+  public boolean matchesStages(final Set<Stage> stages) {
     for(final Stage stage : this.stages) {
       if(!stages.contains(stage)) {
         return false;
       }
     }
 
-    return this.matches(inv, firstSlot, lastSlot, fluidHandler);
+    return true;
   }
 
-  public boolean matches(final IItemHandler inv, final int firstSlot, final int lastSlot, final IFluidHandler fluidHandler) {
-    if(fluidHandler.drain(this.fluid, IFluidHandler.FluidAction.SIMULATE).getAmount() < this.fluid.getAmount()) {
-      return false;
-    }
-
+  @Override
+  public boolean matchesItems(final NonNullList<ItemStack> stacks) {
     RECIPE_ITEM_HELPER.clear();
     INPUT_STACKS.clear();
 
     int ingredientCount = 0;
-    for(int slot = firstSlot; slot <= lastSlot; ++slot) {
-      final ItemStack itemstack = inv.getStackInSlot(slot);
-
-      if(!itemstack.isEmpty()) {
+    for(final ItemStack stack : stacks) {
+      if(!stack.isEmpty()) {
         ++ingredientCount;
 
         if(this.simple) {
-          RECIPE_ITEM_HELPER.accountStack(itemstack);
+          RECIPE_ITEM_HELPER.accountStack(stack);
         } else {
-          INPUT_STACKS.add(itemstack);
+          INPUT_STACKS.add(stack);
         }
       }
     }
@@ -142,8 +153,8 @@ public class MixingRecipe implements IRecipe<IInventory> {
   }
 
   @Override
-  public ItemStack getCraftingResult(final IInventory inv) {
-    return this.result.copy();
+  public boolean matchesFluids(final IFluidHandler fluidHandler) {
+    return fluidHandler.drain(this.fluid, IFluidHandler.FluidAction.SIMULATE).getAmount() >= this.fluid.getAmount();
   }
 
   @Override

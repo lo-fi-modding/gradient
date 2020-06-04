@@ -93,8 +93,8 @@ public class MixingBasinRenderer extends TileEntityRenderer<MixingBasinTile> {
       }
     }
 
-    if(te.hasOutput()) {
-      final ItemStack output = te.getOutput();
+    if(te.hasOutput(0)) {
+      final ItemStack output = te.getOutput(0);
 
       matrixStack.push();
 

@@ -62,7 +62,7 @@ public class GrindingRecipeCategory implements IRecipeCategory<GrindingRecipe> {
   @Override
   public void setIngredients(final GrindingRecipe recipe, final IIngredients ingredients) {
     ingredients.setInputIngredients(recipe.getIngredients());
-    ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
+    ingredients.setOutput(VanillaTypes.ITEM, recipe.getItemOutput(0));
   }
 
   @Override
