@@ -73,16 +73,22 @@ public class GrindingRecipe implements IGradientRecipe {
   }
 
   @Override
-  public ItemStack getOutput(final int slot) {
+  public int getItemInputCount() {
+    return this.ingredients.size();
+  }
+
+  @Override
+  public int getItemOutputCount() {
+    return 1;
+  }
+
+  @Override
+  public ItemStack getItemOutput(final int slot) {
     if(slot == 0) {
       return this.result.copy();
     }
 
     return ItemStack.EMPTY;
-  }
-
-  public boolean matches(final Set<Stage> stages, final NonNullList<ItemStack> stacks) {
-    return this.matchesStages(stages) && this.matchesItems(stacks);
   }
 
   @Override

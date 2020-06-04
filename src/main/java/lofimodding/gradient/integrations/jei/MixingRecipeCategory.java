@@ -64,8 +64,8 @@ public class MixingRecipeCategory implements IRecipeCategory<MixingRecipe> {
   @Override
   public void setIngredients(final MixingRecipe recipe, final IIngredients ingredients) {
     ingredients.setInputIngredients(recipe.getIngredients());
-    ingredients.setInput(VanillaTypes.FLUID, recipe.getFluid());
-    ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
+    ingredients.setInput(VanillaTypes.FLUID, recipe.getFluidOutput(0));
+    ingredients.setOutput(VanillaTypes.ITEM, recipe.getItemOutput(0));
   }
 
   @Override

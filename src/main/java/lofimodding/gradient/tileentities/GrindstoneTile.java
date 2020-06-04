@@ -4,7 +4,7 @@ import lofimodding.gradient.GradientSounds;
 import lofimodding.gradient.GradientTileEntities;
 import lofimodding.gradient.recipes.GrindingRecipe;
 import lofimodding.gradient.tileentities.pieces.ManualEnergySource;
-import lofimodding.gradient.tileentities.pieces.ManualItemInteractor;
+import lofimodding.gradient.tileentities.pieces.ManualInteractor;
 import lofimodding.gradient.tileentities.pieces.Processor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
@@ -22,7 +22,7 @@ public class GrindstoneTile extends ProcessorTile<GrindingRecipe, ManualEnergySo
       builder -> builder.addProcessor(
         GrindingRecipe.TYPE,
         processor -> processor.addInputItem().addOutputItem(),
-        new ManualItemInteractor<>()
+        new ManualInteractor<>()
       )
     );
 

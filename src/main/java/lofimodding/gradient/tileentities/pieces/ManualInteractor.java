@@ -11,11 +11,35 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-public class ManualItemInteractor<Recipe extends IGradientRecipe> implements IInteractor<Recipe> {
+public class ManualInteractor<Recipe extends IGradientRecipe> implements IInteractor<Recipe> {
   @Override
   public ActionResultType onInteract(final Processor<Recipe> processor, final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
+    // Water
+    if(FluidUtil.getFluidHandler(player.getHeldItem(hand)).isPresent()) {
+      final FluidStack fluid = FluidUtil.getFluidContained(player.getHeldItem(hand)).orElse(FluidStack.EMPTY);
+
+      // Make sure the fluid handler is either empty, or contains 1000 mB of water
+      if(!fluid.isEmpty() && fluid.getAmount() < 1000) {
+        return ActionResultType.PASS;
+      }
+
+      processor.unlockFluid();
+      if(FluidUtil.interactWithFluidHandler(player, hand, world, pos, hit.getFace())) {
+        if(fluid.isEmpty()) {
+          world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.NEUTRAL, 1.0f, world.rand.nextFloat() * 0.1f + 0.9f);
+        } else {
+          world.playSound(null, pos, SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.NEUTRAL, 1.0f, world.rand.nextFloat() * 0.1f + 0.9f);
+        }
+      }
+      processor.lockFluid();
+
+      return ActionResultType.SUCCESS;
+    }
+
     // Remove input
     if(player.isSneaking()) {
       for(int slot = 0; slot < processor.inputSlots(); slot++) {

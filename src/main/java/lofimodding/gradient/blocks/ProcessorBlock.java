@@ -55,7 +55,9 @@ public abstract class ProcessorBlock<Recipe extends IGradientRecipe, Energy exte
   @SuppressWarnings("deprecation")
   @Override
   public void onReplaced(final BlockState state, final World world, final BlockPos pos, final BlockState newState, final boolean isMoving) {
-    WorldUtils.dropInventory(world, pos);
-    super.onReplaced(state, world, pos, newState, isMoving);
+    if(state.getBlock() != newState.getBlock()) {
+      WorldUtils.dropInventory(world, pos);
+      super.onReplaced(state, world, pos, newState, isMoving);
+    }
   }
 }

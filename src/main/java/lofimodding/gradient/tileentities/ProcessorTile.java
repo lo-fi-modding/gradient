@@ -26,10 +26,14 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,22 +44,33 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
   @CapabilityInject(IItemHandler.class)
   private static Capability<IItemHandler> ITEM_HANDLER_CAPABILITY;
 
+  @CapabilityInject(IFluidHandler.class)
+  private static Capability<IFluidHandler> FLUID_HANDLER_CAPABILITY;
+
   private final Energy energy;
   private final List<ProcessorInteractor<Recipe>> processors;
   private final IItemHandler inv;
+  private final IFluidHandler fluids;
   private final LazyOptional<IItemHandler> lazyInv;
+  private final LazyOptional<IFluidHandler> lazyFluids;
 
-  protected ProcessorTile(final TileEntityType<?> type, final Energy energy, final Consumer<Builder<Recipe>> builder) {
+  protected ProcessorTile(final TileEntityType<? extends ProcessorTile<Recipe, Energy>> type, final Energy energy, final Consumer<Builder<Recipe>> builder) {
     super(type);
     this.energy = energy;
 
-    final Builder<Recipe> b = new Builder<>(this::onInventoryChanged);
+    final Builder<Recipe> b = new Builder<Recipe>(this::onInventoryChanged, this::onFluidsChanged);
     builder.accept(b);
 
     this.processors = Collections.unmodifiableList(b.processors);
 
     this.inv = new CombinedInvWrapper(this.processors.stream().map(pi -> pi.processor.getInv()).toArray(IItemHandlerModifiable[]::new));
+
+    final List<FluidTank> tanks = new ArrayList<>();
+    this.processors.stream().map(pi -> pi.processor.getFluids()).forEach(tanks::addAll);
+    this.fluids = new MultiTankWrapper(tanks);
+
     this.lazyInv = LazyOptional.of(() -> this.inv);
+    this.lazyFluids = LazyOptional.of(() -> this.fluids);
   }
 
   protected Energy getEnergy() {
@@ -84,6 +99,10 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
   }
 
   protected void onInventoryChanged(final Processor.ProcessorItemHandler<?> inv, final ItemStack stack) {
+
+  }
+
+  protected void onFluidsChanged(final Processor.ProcessorFluidTank<?> tank, final FluidStack stack) {
 
   }
 
@@ -182,6 +201,10 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
       return this.lazyInv.cast();
     }
 
+    if(cap == FLUID_HANDLER_CAPABILITY && this.fluids.getTanks() > 0) {
+      return this.lazyFluids.cast();
+    }
+
     return super.getCapability(cap, side);
   }
 
@@ -226,20 +249,136 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
     }
   }
 
-  public static class Builder<Recipe extends IGradientRecipe> {
-    private final Processor.Callback onChanged;
-    private final List<ProcessorInteractor<Recipe>> processors = new ArrayList<>();
+  public static final class MultiTankWrapper implements IFluidHandler {
+    private final List<FluidTank> tanks;
 
-    public Builder(final Processor.Callback onChanged) {
-      this.onChanged = onChanged;
+    public MultiTankWrapper(final List<FluidTank> tanks) {
+      this.tanks = tanks;
     }
 
-    public Builder<Recipe> addProcessor(final IRecipeType<Recipe> recipeType, final Consumer<Processor.Builder> builder) {
+    @Override
+    public int getTanks() {
+      return this.tanks.size();
+    }
+
+    @Nonnull
+    @Override
+    public FluidStack getFluidInTank(final int tank) {
+      if(tank < 0 || tank >= this.tanks.size()) {
+        return FluidStack.EMPTY;
+      }
+
+      return this.tanks.get(tank).getFluid().copy();
+    }
+
+    @Override
+    public int getTankCapacity(final int tank) {
+      if(tank < 0 || tank >= this.tanks.size()) {
+        return 0;
+      }
+
+      return this.tanks.get(tank).getCapacity();
+    }
+
+    @Override
+    public boolean isFluidValid(final int tank, @Nonnull final FluidStack stack) {
+      if(tank < 0 || tank >= this.tanks.size()) {
+        return false;
+      }
+
+      return this.tanks.get(tank).isFluidValid(stack);
+    }
+
+    @Override
+    public int fill(final FluidStack resource, final IFluidHandler.FluidAction action) {
+      final FluidStack remaining = resource.copy();
+      int totalFilled = 0;
+
+      for(final FluidTank tank : this.tanks) {
+        final int filled = tank.fill(remaining, action);
+        totalFilled += filled;
+        remaining.shrink(filled);
+
+        if(totalFilled >= resource.getAmount()) {
+          break;
+        }
+      }
+
+      return totalFilled;
+    }
+
+    @Nonnull
+    @Override
+    public FluidStack drain(final FluidStack resource, final IFluidHandler.FluidAction action) {
+      final FluidStack remaining = resource.copy();
+      int totalDrained = 0;
+
+      for(final FluidTank tank : this.tanks) {
+        final FluidStack drained = tank.drain(remaining, action);
+        totalDrained += drained.getAmount();
+        remaining.shrink(drained.getAmount());
+
+        if(totalDrained >= resource.getAmount()) {
+          break;
+        }
+      }
+
+      if(totalDrained == 0) {
+        return FluidStack.EMPTY;
+      }
+
+      return new FluidStack(resource.getFluid(), totalDrained);
+    }
+
+    @Nonnull
+    @Override
+    public FluidStack drain(final int maxDrain, final IFluidHandler.FluidAction action) {
+      FluidStack remaining = FluidStack.EMPTY;
+      int totalDrained = 0;
+
+      for(final FluidTank tank : this.tanks) {
+        final FluidStack drained;
+        if(remaining.isEmpty()) {
+          drained = tank.drain(maxDrain, action);
+          remaining = new FluidStack(drained.getFluid(), maxDrain);
+        } else {
+          drained = tank.drain(remaining, action);
+        }
+
+        if(!drained.isEmpty()) {
+          totalDrained += drained.getAmount();
+          remaining.shrink(drained.getAmount());
+
+          if(totalDrained >= maxDrain) {
+            break;
+          }
+        }
+      }
+
+      if(totalDrained == 0) {
+        return FluidStack.EMPTY;
+      }
+
+      return new FluidStack(remaining.getRawFluid(), totalDrained);
+    }
+  }
+
+  public static class Builder<Recipe extends IGradientRecipe> {
+    private final Processor.ProcessorItemHandler.Callback onItemChanged;
+    private final Processor.ProcessorFluidTank.Callback onFluidChanged;
+    private final List<ProcessorInteractor<Recipe>> processors = new ArrayList<>();
+
+    public Builder(final Processor.ProcessorItemHandler.Callback onItemChanged, final Processor.ProcessorFluidTank.Callback onFluidChanged) {
+      this.onItemChanged = onItemChanged;
+      this.onFluidChanged = onFluidChanged;
+    }
+
+    public Builder<Recipe> addProcessor(final IRecipeType<Recipe> recipeType, final Consumer<Processor.Builder<Recipe>> builder) {
       return this.addProcessor(recipeType, builder, new NoopInteractor<>());
     }
 
-    public Builder<Recipe> addProcessor(final IRecipeType<Recipe> recipeType, final Consumer<Processor.Builder> builder, final IInteractor<Recipe> interactor) {
-      this.processors.add(new ProcessorInteractor<>(new Processor<>(this.onChanged, recipeType, builder), interactor));
+    public Builder<Recipe> addProcessor(final IRecipeType<Recipe> recipeType, final Consumer<Processor.Builder<Recipe>> builder, final IInteractor<Recipe> interactor) {
+      this.processors.add(new ProcessorInteractor<>(new Processor<>(this.onItemChanged, this.onFluidChanged, recipeType, builder), interactor));
       return this;
     }
   }
