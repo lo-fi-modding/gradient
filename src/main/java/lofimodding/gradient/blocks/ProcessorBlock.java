@@ -14,7 +14,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-public abstract class ProcessorBlock<Recipe extends IGradientRecipe, Energy extends IEnergySource, Tile extends ProcessorTile<Recipe, Energy>> extends Block {
+public abstract class ProcessorBlock<Recipe extends IGradientRecipe, Energy extends IEnergySource<Recipe, Energy, Tile>, Tile extends ProcessorTile<Recipe, Energy, Tile>> extends Block {
   private final Class<Tile> cls;
 
   protected ProcessorBlock(final Class<Tile> cls, final Properties properties) {

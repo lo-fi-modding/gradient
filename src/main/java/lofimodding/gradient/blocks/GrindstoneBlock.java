@@ -19,7 +19,7 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
-public class GrindstoneBlock extends ProcessorBlock<GrindingRecipe, ManualEnergySource, GrindstoneTile> {
+public class GrindstoneBlock extends ProcessorBlock<GrindingRecipe, ManualEnergySource<GrindingRecipe, GrindstoneTile>, GrindstoneTile> {
   private static final VoxelShape SHAPE = Block.makeCuboidShape(1.0d, 0.0d, 1.0d, 15.0d, 2.0d, 15.0d);
 
   public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;

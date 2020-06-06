@@ -1,5 +1,7 @@
 package lofimodding.gradient.tileentities.pieces;
 
+import lofimodding.gradient.recipes.IGradientRecipe;
+import lofimodding.gradient.tileentities.ProcessorTile;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -9,7 +11,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 
-public interface IEnergySource {
+public interface IEnergySource<Recipe extends IGradientRecipe, Energy extends IEnergySource<Recipe, Energy, Tile>, Tile extends ProcessorTile<Recipe, Energy, Tile>> {
+  default void onAddToWorld(final Tile tile) {
+
+  }
+
+  default void onRemoveFromWorld(final Tile tile) {
+
+  }
+
   default ActionResultType onInteract(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
     return ActionResultType.PASS;
   }

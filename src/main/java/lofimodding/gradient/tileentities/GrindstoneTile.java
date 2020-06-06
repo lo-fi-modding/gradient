@@ -11,13 +11,13 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.server.ServerWorld;
 
-public class GrindstoneTile extends ProcessorTile<GrindingRecipe, ManualEnergySource> {
+public class GrindstoneTile extends ProcessorTile<GrindingRecipe, ManualEnergySource<GrindingRecipe, GrindstoneTile>, GrindstoneTile> {
   private float animation;
 
   public GrindstoneTile() {
     super(
       GradientTileEntities.GRINDSTONE.get(),
-      new ManualEnergySource(20, 1),
+      new ManualEnergySource<>(20, 1),
 
       builder -> builder.addProcessor(
         GrindingRecipe.TYPE,

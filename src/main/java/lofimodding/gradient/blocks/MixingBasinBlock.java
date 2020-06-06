@@ -19,7 +19,7 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
-public class MixingBasinBlock extends ProcessorBlock<MixingRecipe, ManualEnergySource, MixingBasinTile> {
+public class MixingBasinBlock extends ProcessorBlock<MixingRecipe, ManualEnergySource<MixingRecipe, MixingBasinTile>, MixingBasinTile> {
   public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
   public static final BooleanProperty HAS_WATER = BooleanProperty.create("has_water");
 
