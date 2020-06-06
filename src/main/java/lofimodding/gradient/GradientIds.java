@@ -147,6 +147,7 @@ public final class GradientIds {
   public static String WOODEN_CONVEYOR_BELT_DRIVER = "wooden_conveyor_belt_driver";
   public static String WOODEN_HOPPER = "wooden_hopper";
   public static String WOODEN_CRANK = "wooden_crank";
+  public static String MECHANICAL_GRINDSTONE = "mechanical_grindstone";
 
   public static final String INFINICOAL = "infinicoal";
   public static final String CREATIVE_GENERATOR = "creative_generator";

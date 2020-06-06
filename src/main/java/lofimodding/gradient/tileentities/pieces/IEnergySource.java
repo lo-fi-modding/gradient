@@ -6,10 +6,15 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+
+import javax.annotation.Nullable;
 
 public interface IEnergySource<Recipe extends IGradientRecipe, Energy extends IEnergySource<Recipe, Energy, Tile>, Tile extends ProcessorTile<Recipe, Energy, Tile>> {
   default void onAddToWorld(final Tile tile) {
@@ -27,4 +32,8 @@ public interface IEnergySource<Recipe extends IGradientRecipe, Energy extends IE
   boolean consumeEnergy();
   CompoundNBT write(final CompoundNBT compound);
   void read(final CompoundNBT compound);
+
+  default <T> LazyOptional<T> getCapability(final Capability<T> cap, @Nullable final Direction side) {
+    return LazyOptional.empty();
+  }
 }

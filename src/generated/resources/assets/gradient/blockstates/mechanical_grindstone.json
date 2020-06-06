@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "gradient:block/mechanical_grindstone"
+    },
+    "facing=south": {
+      "model": "gradient:block/mechanical_grindstone",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "gradient:block/mechanical_grindstone",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "gradient:block/mechanical_grindstone",
+      "y": 90
+    }
+  }
+}

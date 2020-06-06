@@ -217,6 +217,12 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
 
   @Override
   public <T> LazyOptional<T> getCapability(final Capability<T> cap, @Nullable final Direction side) {
+    final LazyOptional<T> energyCap = this.energy.getCapability(cap, side);
+
+    if(energyCap.isPresent()) {
+      return energyCap;
+    }
+
     if(cap == ITEM_HANDLER_CAPABILITY && this.inv.getSlots() > 0) {
       return this.lazyInv.cast();
     }

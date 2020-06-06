@@ -1,5 +1,6 @@
 package lofimodding.gradient.energy;
 
+import lofimodding.gradient.utils.MathHelper;
 import net.minecraft.nbt.CompoundNBT;
 
 public interface IEnergyStorage extends IEnergyNode {
@@ -56,9 +57,13 @@ public interface IEnergyStorage extends IEnergyNode {
   float getMaxSource();
 
   default float getRequestedEnergy() {
+    if(!this.canSink()) {
+      return 0.0f;
+    }
+
     final float space = this.getCapacity() - this.getEnergy();
 
-    if(!this.canSink() || space < 0.0001f) {
+    if(MathHelper.flEq(space, 0.0f)) {
       return 0.0f;
     }
 

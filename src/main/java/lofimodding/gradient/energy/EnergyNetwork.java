@@ -2,6 +2,7 @@ package lofimodding.gradient.energy;
 
 import lofimodding.gradient.Config;
 import lofimodding.gradient.Gradient;
+import lofimodding.gradient.utils.MathHelper;
 import lofimodding.gradient.utils.Tuple;
 import lofimodding.gradient.utils.WorldUtils;
 import net.minecraft.tileentity.TileEntity;
@@ -116,14 +117,14 @@ public class EnergyNetwork<STORAGE extends IEnergyStorage, TRANSFER extends IEne
         Gradient.LOGGER.info("{} requesting {} energy", sink, requested);
       }
 
-      if(requested != 0.0f) {
+      if(!MathHelper.flEq(requested, 0.0f)) {
         final float energy = this.requestEnergy(pos, requested);
 
         if(Config.ENET.ENABLE_TICK_DEBUG.get()) {
           Gradient.LOGGER.info("{} got {} energy", sink, energy);
         }
 
-        if(energy != 0.0f) {
+        if(!MathHelper.flEq(energy, 0.0f)) {
           sink.sinkEnergy(energy, IEnergyStorage.Action.EXECUTE);
           this.state.addStorage(pos, facing, sink.getEnergy());
         }
@@ -440,7 +441,7 @@ public class EnergyNetwork<STORAGE extends IEnergyStorage, TRANSFER extends IEne
     float deficit = 0.0f;
     float total = 0.0f;
 
-    while(total < amount) {
+    while(MathHelper.flLess(total, amount)) {
       for(final Iterator<Map.Entry<EnergyNetworkSegment<STORAGE, TRANSFER>, Direction>> it = this.extractNetworks.entrySet().iterator(); it.hasNext(); ) {
         final Map.Entry<EnergyNetworkSegment<STORAGE, TRANSFER>, Direction> entry = it.next();
         final EnergyNetworkSegment<STORAGE, TRANSFER> network = entry.getKey();
@@ -448,7 +449,7 @@ public class EnergyNetwork<STORAGE extends IEnergyStorage, TRANSFER extends IEne
 
         final float sourced = network.requestEnergy(requestPosition, requestSide, share);
 
-        if(sourced < share) {
+        if(MathHelper.flLess(sourced, share)) {
           deficit += share - sourced;
           it.remove();
         }
@@ -456,7 +457,7 @@ public class EnergyNetwork<STORAGE extends IEnergyStorage, TRANSFER extends IEne
         total += sourced;
       }
 
-      if(deficit == 0.0f || this.extractNetworks.isEmpty()) {
+      if(MathHelper.flEq(deficit, 0.0f) || this.extractNetworks.isEmpty()) {
         break;
       }
 

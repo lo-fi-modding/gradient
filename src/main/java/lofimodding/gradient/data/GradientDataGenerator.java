@@ -590,6 +590,9 @@ public final class GradientDataGenerator {
       this.orientable(GradientIds.WOODEN_CONVEYOR_BELT_DRIVER, this.modLoc("block/wooden_conveyor_belt_driver_side"), this.modLoc("block/wooden_conveyor_belt_driver_side"), this.modLoc("block/wooden_gearbox"));
       this.orientable(GradientIds.WOODEN_CRANK, this.modLoc("block/salt_block"), this.modLoc("block/salt_block"), this.modLoc("block/hardened_planks"));
 
+      //TODO actual model
+      this.withExistingParent(GradientIds.MECHANICAL_GRINDSTONE, this.modLoc("block/" + GradientIds.GRINDSTONE));
+
       this.cubeAll(GradientIds.CREATIVE_GENERATOR, this.modLoc("block/" + GradientIds.CREATIVE_GENERATOR));
       this.cubeAll(GradientIds.CREATIVE_SINKER, this.modLoc("block/" + GradientIds.CREATIVE_SINKER));
     }
@@ -809,6 +812,7 @@ public final class GradientDataGenerator {
       this.getBuilder(GradientIds.WOODEN_CONVEYOR_BELT_DRIVER).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.WOODEN_CONVEYOR_BELT_DRIVER)));
       this.getBuilder(GradientIds.WOODEN_HOPPER).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.WOODEN_HOPPER)));
       this.getBuilder(GradientIds.WOODEN_CRANK).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.WOODEN_CRANK)));
+      this.getBuilder(GradientIds.MECHANICAL_GRINDSTONE).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.MECHANICAL_GRINDSTONE)));
 
       this.singleTexture(GradientIds.INFINICOAL, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.INFINICOAL));
       this.getBuilder(GradientIds.CREATIVE_GENERATOR).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.CREATIVE_GENERATOR)));
@@ -992,6 +996,7 @@ public final class GradientDataGenerator {
       this.horizontalBlock(GradientBlocks.WOODEN_CONVEYOR_BELT.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.WOODEN_CONVEYOR_BELT)));
       this.directionalBlock(GradientBlocks.WOODEN_CONVEYOR_BELT_DRIVER.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.WOODEN_CONVEYOR_BELT_DRIVER)));
       this.directionalBlock(GradientBlocks.WOODEN_CRANK.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.WOODEN_CRANK)));
+      this.horizontalBlock(GradientBlocks.MECHANICAL_GRINDSTONE.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.MECHANICAL_GRINDSTONE)));
 
       this.simpleBlock(GradientBlocks.CREATIVE_GENERATOR.get());
       this.simpleBlock(GradientBlocks.CREATIVE_SINKER.get());
@@ -1172,6 +1177,7 @@ public final class GradientDataGenerator {
       this.add(GradientItems.WOODEN_CONVEYOR_BELT_DRIVER.get(), "Wooden Conveyor Belt Driver");
       this.add(GradientItems.WOODEN_HOPPER.get(), "Wooden Hopper");
       this.add(GradientItems.WOODEN_CRANK.get(), "Wooden Crank");
+      this.add(GradientItems.MECHANICAL_GRINDSTONE.get(), "Mechanical Grindstone");
 
       this.add(GradientItems.INFINICOAL.get(), "Infinicoal (Debug Item)");
       this.add(GradientItems.CREATIVE_GENERATOR.get(), "Creative Generator (Debug Item)");
@@ -2548,6 +2554,7 @@ public final class GradientDataGenerator {
         this.registerDropSelfLootTable(GradientBlocks.WOODEN_CONVEYOR_BELT_DRIVER.get());
         this.registerDropSelfLootTable(GradientBlocks.WOODEN_HOPPER.get());
         this.registerDropSelfLootTable(GradientBlocks.WOODEN_CRANK.get());
+        this.registerDropSelfLootTable(GradientBlocks.MECHANICAL_GRINDSTONE.get());
 
         this.registerDropSelfLootTable(GradientBlocks.CREATIVE_GENERATOR.get());
         this.registerDropSelfLootTable(GradientBlocks.CREATIVE_SINKER.get());

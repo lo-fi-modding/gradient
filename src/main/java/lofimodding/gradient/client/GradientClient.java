@@ -15,6 +15,7 @@ import lofimodding.gradient.client.tesr.ClayOvenRenderer;
 import lofimodding.gradient.client.tesr.DryingRackRenderer;
 import lofimodding.gradient.client.tesr.FirepitRenderer;
 import lofimodding.gradient.client.tesr.GrindstoneRenderer;
+import lofimodding.gradient.client.tesr.MechanicalGrindstoneRenderer;
 import lofimodding.gradient.client.tesr.MixingBasinRenderer;
 import lofimodding.gradient.client.tesr.WoodenAxleRenderer;
 import lofimodding.gradient.client.tesr.WoodenConveyorBeltRenderer;
@@ -115,6 +116,7 @@ public final class GradientClient {
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.WOODEN_AXLE.get(), WoodenAxleRenderer::new);
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.WOODEN_CONVEYOR_BELT.get(), WoodenConveyorBeltRenderer::new);
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.WOODEN_CRANK.get(), WoodenCrankRenderer::new);
+    ClientRegistry.bindTileEntityRenderer(GradientTileEntities.MECHANICAL_GRINDSTONE.get(), MechanicalGrindstoneRenderer::new);
   }
 
   @SubscribeEvent
