@@ -849,4 +849,92 @@ public final class ModelGenerator {
       .end()
     ;
   }
+
+  public static void mechanicalGrindstone(final GradientDataGenerator.BlockModels generator, final String id, final ResourceLocation particle, final ResourceLocation surface, final ResourceLocation casing) {
+    generator.getBuilder(id)
+      .parent(generator.getExistingFile(generator.mcLoc("block/block")))
+      .texture("particle", particle)
+      .texture("surface", surface)
+      .texture("casing", casing)
+
+      .element() // surface 1
+      .from(7.0f, 0.5f, 2.0f)
+      .to(10.5f, 2.5f, 14.0f)
+      .rotation().angle(-22.5f).axis(Direction.Axis.Z).origin(8.0f, 8.0f, 8.0f).end()
+      .face(Direction.NORTH).uvs(0.0f, 0.0f, 4.0f, 2.0f).texture("surface").end()
+      .face(Direction.EAST).uvs(0.0f, 0.0f, 12.0f, 2.0f).texture("surface").end()
+      .face(Direction.SOUTH).uvs(0.0f, 0.0f, 4.0f, 2.0f).texture("surface").end()
+      .face(Direction.WEST).uvs(0.0f, 0.0f, 12.0f, 2.0f).texture("surface").end()
+      .face(Direction.UP).uvs(0.0f, 2.0f, 4.0f, 14.0f).texture("surface").end()
+      .face(Direction.DOWN).uvs(0.0f, 0.0f, 4.0f, 12.0f).texture("surface").end()
+      .end()
+
+      .element() // surface 2
+      .from(5.5f, 0.5f, 2.0f)
+      .to(9.0f, 2.5f, 14.0f)
+      .rotation().angle(22.5f).axis(Direction.Axis.Z).origin(8.0f, 8.0f, 8.0f).end()
+      .face(Direction.NORTH).uvs(0.0f, 0.0f, 4.0f, 2.0f).texture("surface").end()
+      .face(Direction.EAST).uvs(2.0f, 0.0f, 14.0f, 2.0f).texture("surface").end()
+      .face(Direction.SOUTH).uvs(0.0f, 0.0f, 4.0f, 2.0f).texture("surface").end()
+      .face(Direction.WEST).uvs(0.0f, 0.0f, 12.0f, 2.0f).texture("surface").end()
+      .face(Direction.UP).uvs(12.0f, 2.0f, 16.0f, 14.0f).texture("surface").end()
+      .face(Direction.DOWN).uvs(0.0f, 0.0f, 4.0f, 12.0f).texture("surface").end()
+      .end()
+
+      .element() // north
+      .from(5.0f, 0.0f, 0.0f)
+      .to(11.0f, 4.0f, 2.0f)
+      .face(Direction.NORTH).uvs(5.0f, 12.0f, 11.0f, 16.0f).texture("casing").end()
+      .face(Direction.EAST).uvs(0.0f, 0.0f, 1.0f, 3.0f).texture("casing").end()
+      .face(Direction.SOUTH).uvs(5.0f, 13.0f, 11.0f, 16.0f).texture("casing").end()
+      .face(Direction.WEST).uvs(0.0f, 0.0f, 1.0f, 3.0f).texture("casing").end()
+      .face(Direction.UP).uvs(5.0f, 0.0f, 11.0f, 2.0f).texture("casing").end()
+      .face(Direction.DOWN).uvs(5.0f, 0.0f, 12.0f, 2.0f).texture("casing").end()
+      .end()
+
+      .element() // east
+      .from(11.0f, 0.0f, 0.0f)
+      .to(14.0f, 4.0f, 16.0f)
+      .face(Direction.NORTH).uvs(2.0f, 12.0f, 5.0f, 16.0f).texture("casing").end()
+      .face(Direction.EAST).uvs(0.0f, 12.0f, 16.0f, 16.0f).texture("casing").end()
+      .face(Direction.SOUTH).uvs(11.0f, 12.0f, 14.0f, 16.0f).texture("casing").end()
+      .face(Direction.WEST).uvs(1.0f, 0.0f, 15.0f, 3.0f).texture("casing").end()
+      .face(Direction.UP).uvs(11.0f, 0.0f, 14.0f, 16.0f).texture("casing").end()
+      .face(Direction.DOWN).uvs(2.0f, 0.0f, 5.0f, 16.0f).texture("casing").end()
+      .end()
+
+      .element() // west
+      .from(2.0f, 0.0f, 0.0f)
+      .to(5.0f, 4.0f, 16.0f)
+      .face(Direction.NORTH).uvs(11.0f, 12.0f, 14.0f, 16.0f).texture("casing").end()
+      .face(Direction.EAST).uvs(1.0f, 0.0f, 15.0f, 3.0f).texture("casing").end()
+      .face(Direction.SOUTH).uvs(2.0f, 12.0f, 5.0f, 16.0f).texture("casing").end()
+      .face(Direction.WEST).uvs(0.0f, 12.0f, 16.0f, 16.0f).texture("casing").end()
+      .face(Direction.UP).uvs(2.0f, 0.0f, 5.0f, 16.0f).texture("casing").end()
+      .face(Direction.DOWN).uvs(11.0f, 0.0f, 14.0f, 16.0f).texture("casing").end()
+      .end()
+
+      .element() // south
+      .from(5.0f, 0.0f, 14.0f)
+      .to(11.0f, 4.0f, 16.0f)
+      .face(Direction.NORTH).uvs(5.0f, 13.0f, 11.0f, 16.0f).texture("casing").end()
+      .face(Direction.EAST).uvs(0.0f, 0.0f, 1.0f, 3.0f).texture("casing").end()
+      .face(Direction.SOUTH).uvs(5.0f, 12.0f, 11.0f, 16.0f).texture("casing").end()
+      .face(Direction.WEST).uvs(0.0f, 0.0f, 1.0f, 3.0f).texture("casing").end()
+      .face(Direction.UP).uvs(5.0f, 14.0f, 11.0f, 16.0f).texture("casing").end()
+      .face(Direction.DOWN).uvs(5.0f, 14.0f, 11.0f, 16.0f).texture("casing").end()
+      .end()
+
+      .element() // bottom
+      .from(5.0f, 0.0f, 2.0f)
+      .to(11.0f, 1.0f, 14.0f)
+      .face(Direction.NORTH).uvs(0.0f, 0.0f, 6.0f, 1.0f).texture("casing").end()
+      .face(Direction.EAST).uvs(0.0f, 0.0f, 12.0f, 1.0f).texture("casing").end()
+      .face(Direction.SOUTH).uvs(0.0f, 0.0f, 6.0f, 1.0f).texture("casing").end()
+      .face(Direction.WEST).uvs(0.0f, 0.0f, 12.0f, 1.0f).texture("casing").end()
+      .face(Direction.UP).uvs(0.0f, 0.0f, 6.0f, 12.0f).texture("casing").end()
+      .face(Direction.DOWN).uvs(5.0f, 2.0f, 11.0f, 14.0f).texture("casing").end()
+      .end()
+    ;
+  }
 }
