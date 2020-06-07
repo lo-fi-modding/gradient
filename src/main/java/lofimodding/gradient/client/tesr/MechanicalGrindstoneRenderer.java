@@ -32,13 +32,15 @@ public class MechanicalGrindstoneRenderer extends ProcessorRenderer<MechanicalGr
     this.rotateFacing(facing, matrixStack);
 
     matrixStack.push();
-    matrixStack.translate(0.0d, 0.3125d, 0.2d + te.getAnimation() * 0.6d);
+    matrixStack.translate(0.0d, 0.44d, 0.2d + te.getAnimation() * 0.6d);
     matrixStack.rotate(Vector3f.XP.rotation(te.getAnimation() * (float)Math.PI));
+    matrixStack.translate(-0.25d, 0.0d, 0.0d);
+    matrixStack.scale(1.5f, 1.5f, 1.5f);
     this.renderModel(te, this.wheel, matrixStack, buffer, combinedLight, combinedOverlay);
     matrixStack.pop();
 
-    this.renderInput(te, 0, facing, 0.75d, 0.25d, 0.5d, matrixStack, buffer, combinedLight, combinedOverlay);
-    this.renderOutput(te, 0, facing, 0.25d, 0.25d, 0.5d, matrixStack, buffer, combinedLight, combinedOverlay);
+    this.renderInput(te, 0, facing, 0.5d, 0.25d, 0.25d, matrixStack, buffer, combinedLight, combinedOverlay);
+    this.renderOutput(te, 0, facing, 0.5d, 0.275d, 0.95d, matrixStack, buffer, combinedLight, combinedOverlay);
 
     matrixStack.pop();
   }

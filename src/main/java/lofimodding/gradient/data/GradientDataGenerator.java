@@ -589,7 +589,7 @@ public final class GradientDataGenerator {
       ModelGenerator.woodenConveyorBelt(this, GradientIds.WOODEN_CONVEYOR_BELT, this.modLoc("block/wooden_conveyor_belt"), this.modLoc("block/wooden_conveyor_belt"), this.mcLoc("block/oak_planks"));
       this.orientable(GradientIds.WOODEN_CONVEYOR_BELT_DRIVER, this.modLoc("block/wooden_conveyor_belt_driver_side"), this.modLoc("block/wooden_conveyor_belt_driver_side"), this.modLoc("block/wooden_gearbox"));
       this.orientable(GradientIds.WOODEN_CRANK, this.modLoc("block/salt_block"), this.modLoc("block/salt_block"), this.modLoc("block/hardened_planks"));
-      ModelGenerator.mechanicalGrindstone(this, GradientIds.MECHANICAL_GRINDSTONE, this.mcLoc("block/polished_andesite"), this.mcLoc("block/polished_andesite"), this.mcLoc("block/stone"));
+      ModelGenerator.mechanicalGrindstone(this, GradientIds.MECHANICAL_GRINDSTONE, this.mcLoc("block/polished_andesite"), this.mcLoc("block/polished_andesite"), this.mcLoc("block/stone"), this.modLoc("block/hardened_planks"));
 
       this.cubeAll(GradientIds.CREATIVE_GENERATOR, this.modLoc("block/" + GradientIds.CREATIVE_GENERATOR));
       this.cubeAll(GradientIds.CREATIVE_SINKER, this.modLoc("block/" + GradientIds.CREATIVE_SINKER));
