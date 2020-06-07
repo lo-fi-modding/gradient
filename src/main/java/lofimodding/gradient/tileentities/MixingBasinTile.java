@@ -14,7 +14,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fluids.FluidStack;
 
-public class MixingBasinTile extends ProcessorTile<MixingRecipe, ManualEnergySource> {
+public class MixingBasinTile extends ProcessorTile<MixingRecipe, ManualEnergySource<MixingRecipe, MixingBasinTile>, MixingBasinTile> {
   public static final int INPUT_SIZE = 5;
 
   private float animation;
@@ -23,7 +23,7 @@ public class MixingBasinTile extends ProcessorTile<MixingRecipe, ManualEnergySou
   public MixingBasinTile() {
     super(
       GradientTileEntities.MIXING_BASIN.get(),
-      new ManualEnergySource(20, 1),
+      new ManualEnergySource<>(20, 1),
       builder -> builder.addProcessor(
         MixingRecipe.TYPE,
         processor -> processor

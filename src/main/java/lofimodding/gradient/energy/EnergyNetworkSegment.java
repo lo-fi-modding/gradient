@@ -5,6 +5,7 @@ import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import lofimodding.gradient.Config;
 import lofimodding.gradient.Gradient;
+import lofimodding.gradient.utils.MathHelper;
 import lofimodding.gradient.utils.Tuple;
 import lofimodding.gradient.utils.WorldUtils;
 import net.minecraft.tileentity.TileEntity;
@@ -374,7 +375,7 @@ public class EnergyNetworkSegment<STORAGE extends IEnergyStorage, TRANSFER exten
     float deficit = 0.0f;
     float total = 0.0f;
 
-    while(total < amount) {
+    while(MathHelper.flLess(total, amount)) {
       for(final Iterator<Map.Entry<STORAGE, List<BlockPos>>> it = this.extractEnergySources.entrySet().iterator(); it.hasNext(); ) {
         final Map.Entry<STORAGE, List<BlockPos>> entry = it.next();
 
@@ -383,7 +384,7 @@ public class EnergyNetworkSegment<STORAGE extends IEnergyStorage, TRANSFER exten
 
         final float sourced = source.sourceEnergy(share, IEnergyStorage.Action.EXECUTE);
 
-        if(sourced < share) {
+        if(MathHelper.flLess(sourced, share)) {
           deficit += share - sourced;
           it.remove();
         }
@@ -406,7 +407,7 @@ public class EnergyNetworkSegment<STORAGE extends IEnergyStorage, TRANSFER exten
         total += sourced;
       }
 
-      if(deficit == 0.0f || this.extractEnergySources.isEmpty()) {
+      if(MathHelper.flEq(deficit, 0.0f) || this.extractEnergySources.isEmpty()) {
         break;
       }
 

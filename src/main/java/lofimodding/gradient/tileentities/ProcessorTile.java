@@ -40,7 +40,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
-public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy extends IEnergySource> extends TileEntity implements ITickableTileEntity {
+public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy extends IEnergySource<Recipe, Energy, Tile>, Tile extends ProcessorTile<Recipe, Energy, Tile>> extends TileEntity implements ITickableTileEntity {
   @CapabilityInject(IItemHandler.class)
   private static Capability<IItemHandler> ITEM_HANDLER_CAPABILITY;
 
@@ -54,11 +54,11 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
   private final LazyOptional<IItemHandler> lazyInv;
   private final LazyOptional<IFluidHandler> lazyFluids;
 
-  protected ProcessorTile(final TileEntityType<? extends ProcessorTile<Recipe, Energy>> type, final Energy energy, final Consumer<Builder<Recipe>> builder) {
+  protected ProcessorTile(final TileEntityType<Tile> type, final Energy energy, final Consumer<Builder<Recipe>> builder) {
     super(type);
     this.energy = energy;
 
-    final Builder<Recipe> b = new Builder<Recipe>(this::onInventoryChanged, this::onFluidsChanged);
+    final Builder<Recipe> b = new Builder<>(this::onInventoryChanged, this::onFluidsChanged);
     builder.accept(b);
 
     this.processors = Collections.unmodifiableList(b.processors);
@@ -75,6 +75,26 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
 
   protected Energy getEnergy() {
     return this.energy;
+  }
+
+  @Override
+  public void onLoad() {
+    if(this.world.isRemote) {
+      return;
+    }
+
+    //noinspection unchecked
+    this.energy.onAddToWorld((Tile)this);
+  }
+
+  @Override
+  public void remove() {
+    if(this.world.isRemote) {
+      return;
+    }
+
+    //noinspection unchecked
+    this.energy.onRemoveFromWorld((Tile)this);
   }
 
   @Override
@@ -197,6 +217,12 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
 
   @Override
   public <T> LazyOptional<T> getCapability(final Capability<T> cap, @Nullable final Direction side) {
+    final LazyOptional<T> energyCap = this.energy.getCapability(cap, side);
+
+    if(energyCap.isPresent()) {
+      return energyCap;
+    }
+
     if(cap == ITEM_HANDLER_CAPABILITY && this.inv.getSlots() > 0) {
       return this.lazyInv.cast();
     }
