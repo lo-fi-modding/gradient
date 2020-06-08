@@ -14,6 +14,7 @@ import lofimodding.gradient.GradientTags;
 import lofimodding.gradient.blocks.ClayMetalMixerBlock;
 import lofimodding.gradient.blocks.DryingRackBlock;
 import lofimodding.gradient.blocks.FirepitBlock;
+import lofimodding.gradient.blocks.MechanicalMixingBasinBlock;
 import lofimodding.gradient.blocks.MixingBasinBlock;
 import lofimodding.gradient.blocks.OreBlock;
 import lofimodding.gradient.fluids.GradientFluid;
@@ -589,7 +590,19 @@ public final class GradientDataGenerator {
       ModelGenerator.woodenConveyorBelt(this, GradientIds.WOODEN_CONVEYOR_BELT, this.modLoc("block/wooden_conveyor_belt"), this.modLoc("block/wooden_conveyor_belt"), this.mcLoc("block/oak_planks"));
       this.orientable(GradientIds.WOODEN_CONVEYOR_BELT_DRIVER, this.modLoc("block/wooden_conveyor_belt_driver_side"), this.modLoc("block/wooden_conveyor_belt_driver_side"), this.modLoc("block/wooden_gearbox"));
       this.orientable(GradientIds.WOODEN_CRANK, this.modLoc("block/salt_block"), this.modLoc("block/salt_block"), this.modLoc("block/hardened_planks"));
-      ModelGenerator.mechanicalGrindstone(this, GradientIds.MECHANICAL_GRINDSTONE, this.mcLoc("block/polished_andesite"), this.mcLoc("block/polished_andesite"), this.mcLoc("block/stone"), this.modLoc("block/hardened_planks"));
+      ModelGenerator.mechanicalGrindstone(this, GradientIds.MECHANICAL_GRINDSTONE, this.mcLoc("block/polished_andesite"), this.mcLoc("block/polished_andesite"), this.mcLoc("block/stone"), this.modLoc("block/hardened_log"));
+      ModelGenerator.mechanicalMixingBasin(this, GradientIds.MECHANICAL_MIXING_BASIN, this.mcLoc("block/dark_oak_log"), this.mcLoc("block/dark_oak_log"), this.modLoc("block/hardened_log"));
+      ModelGenerator.mechanicalMixingBasinRod(this, GradientIds.MECHANICAL_MIXING_BASIN + "_rod", this.modLoc("block/hardened_log"));
+
+      this.getBuilder(GradientIds.MECHANICAL_MIXING_BASIN + "_water")
+        .parent(this.getExistingFile(this.mcLoc("block/block")))
+        .texture("water", this.mcLoc("block/water_still"))
+
+        .element()
+        .from(2.0f, 2.0f, 2.0f)
+        .to(14.0f, 7.0f, 14.0f)
+        .face(Direction.UP).texture("water").tintindex(0).cullface(Direction.UP)
+        .end();
 
       this.cubeAll(GradientIds.CREATIVE_GENERATOR, this.modLoc("block/" + GradientIds.CREATIVE_GENERATOR));
       this.cubeAll(GradientIds.CREATIVE_SINKER, this.modLoc("block/" + GradientIds.CREATIVE_SINKER));
@@ -811,6 +824,7 @@ public final class GradientDataGenerator {
       this.getBuilder(GradientIds.WOODEN_HOPPER).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.WOODEN_HOPPER)));
       this.getBuilder(GradientIds.WOODEN_CRANK).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.WOODEN_CRANK)));
       this.getBuilder(GradientIds.MECHANICAL_GRINDSTONE).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.MECHANICAL_GRINDSTONE)));
+      this.getBuilder(GradientIds.MECHANICAL_MIXING_BASIN).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.MECHANICAL_MIXING_BASIN)));
 
       this.singleTexture(GradientIds.INFINICOAL, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.INFINICOAL));
       this.getBuilder(GradientIds.CREATIVE_GENERATOR).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.CREATIVE_GENERATOR)));
@@ -912,25 +926,25 @@ public final class GradientDataGenerator {
         .part()
         .modelFile(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.MIXING_BASIN)))
         .addModel()
-        .condition(FirepitBlock.FACING, Direction.NORTH)
+        .condition(MixingBasinBlock.FACING, Direction.NORTH)
         .end()
         .part()
         .modelFile(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.MIXING_BASIN)))
         .rotationY(90)
         .addModel()
-        .condition(FirepitBlock.FACING, Direction.EAST)
+        .condition(MixingBasinBlock.FACING, Direction.EAST)
         .end()
         .part()
         .modelFile(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.MIXING_BASIN)))
         .rotationY(180)
         .addModel()
-        .condition(FirepitBlock.FACING, Direction.SOUTH)
+        .condition(MixingBasinBlock.FACING, Direction.SOUTH)
         .end()
         .part()
         .modelFile(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.MIXING_BASIN)))
         .rotationY(270)
         .addModel()
-        .condition(FirepitBlock.FACING, Direction.WEST)
+        .condition(MixingBasinBlock.FACING, Direction.WEST)
         .end()
 
         .part()
@@ -995,6 +1009,37 @@ public final class GradientDataGenerator {
       this.directionalBlock(GradientBlocks.WOODEN_CONVEYOR_BELT_DRIVER.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.WOODEN_CONVEYOR_BELT_DRIVER)));
       this.directionalBlock(GradientBlocks.WOODEN_CRANK.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.WOODEN_CRANK)));
       this.horizontalBlock(GradientBlocks.MECHANICAL_GRINDSTONE.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.MECHANICAL_GRINDSTONE)));
+
+      this.getMultipartBuilder(GradientBlocks.MECHANICAL_MIXING_BASIN.get())
+        .part()
+        .modelFile(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.MECHANICAL_MIXING_BASIN)))
+        .addModel()
+        .condition(MechanicalMixingBasinBlock.FACING, Direction.NORTH)
+        .end()
+        .part()
+        .modelFile(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.MECHANICAL_MIXING_BASIN)))
+        .rotationY(90)
+        .addModel()
+        .condition(MechanicalMixingBasinBlock.FACING, Direction.EAST)
+        .end()
+        .part()
+        .modelFile(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.MECHANICAL_MIXING_BASIN)))
+        .rotationY(180)
+        .addModel()
+        .condition(MechanicalMixingBasinBlock.FACING, Direction.SOUTH)
+        .end()
+        .part()
+        .modelFile(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.MECHANICAL_MIXING_BASIN)))
+        .rotationY(270)
+        .addModel()
+        .condition(MechanicalMixingBasinBlock.FACING, Direction.WEST)
+        .end()
+
+        .part()
+        .modelFile(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.MECHANICAL_MIXING_BASIN + "_water")))
+        .addModel()
+        .condition(MechanicalMixingBasinBlock.HAS_WATER, true)
+        .end();
 
       this.simpleBlock(GradientBlocks.CREATIVE_GENERATOR.get());
       this.simpleBlock(GradientBlocks.CREATIVE_SINKER.get());
@@ -1176,6 +1221,7 @@ public final class GradientDataGenerator {
       this.add(GradientItems.WOODEN_HOPPER.get(), "Wooden Hopper");
       this.add(GradientItems.WOODEN_CRANK.get(), "Wooden Crank");
       this.add(GradientItems.MECHANICAL_GRINDSTONE.get(), "Mechanical Grindstone");
+      this.add(GradientItems.MECHANICAL_MIXING_BASIN.get(), "Mechanical Mixing Basin");
 
       this.add(GradientItems.INFINICOAL.get(), "Infinicoal (Debug Item)");
       this.add(GradientItems.CREATIVE_GENERATOR.get(), "Creative Generator (Debug Item)");
@@ -2553,6 +2599,7 @@ public final class GradientDataGenerator {
         this.registerDropSelfLootTable(GradientBlocks.WOODEN_HOPPER.get());
         this.registerDropSelfLootTable(GradientBlocks.WOODEN_CRANK.get());
         this.registerDropSelfLootTable(GradientBlocks.MECHANICAL_GRINDSTONE.get());
+        this.registerDropSelfLootTable(GradientBlocks.MECHANICAL_MIXING_BASIN.get());
 
         this.registerDropSelfLootTable(GradientBlocks.CREATIVE_GENERATOR.get());
         this.registerDropSelfLootTable(GradientBlocks.CREATIVE_SINKER.get());

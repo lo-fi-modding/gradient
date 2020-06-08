@@ -16,6 +16,7 @@ import lofimodding.gradient.client.tesr.DryingRackRenderer;
 import lofimodding.gradient.client.tesr.FirepitRenderer;
 import lofimodding.gradient.client.tesr.GrindstoneRenderer;
 import lofimodding.gradient.client.tesr.MechanicalGrindstoneRenderer;
+import lofimodding.gradient.client.tesr.MechanicalMixingBasinRenderer;
 import lofimodding.gradient.client.tesr.MixingBasinRenderer;
 import lofimodding.gradient.client.tesr.WoodenAxleRenderer;
 import lofimodding.gradient.client.tesr.WoodenConveyorBeltRenderer;
@@ -103,6 +104,7 @@ public final class GradientClient {
     }
 
     blockColors.register(GradientClient::waterColour, GradientBlocks.MIXING_BASIN.get());
+    blockColors.register(GradientClient::waterColour, GradientBlocks.MECHANICAL_MIXING_BASIN.get());
 
     RenderingRegistry.registerEntityRenderingHandler(GradientEntities.PEBBLE.get(), manager -> new SpriteRenderer<>(manager, Minecraft.getInstance().getItemRenderer()));
 
@@ -117,6 +119,7 @@ public final class GradientClient {
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.WOODEN_CONVEYOR_BELT.get(), WoodenConveyorBeltRenderer::new);
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.WOODEN_CRANK.get(), WoodenCrankRenderer::new);
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.MECHANICAL_GRINDSTONE.get(), MechanicalGrindstoneRenderer::new);
+    ClientRegistry.bindTileEntityRenderer(GradientTileEntities.MECHANICAL_MIXING_BASIN.get(), MechanicalMixingBasinRenderer::new);
   }
 
   @SubscribeEvent
@@ -126,6 +129,7 @@ public final class GradientClient {
     ModelLoader.addSpecialModel(Gradient.loc("block/" + GradientIds.MIXING_BASIN + "_rod"));
     ModelLoader.addSpecialModel(Gradient.loc("block/" + GradientIds.CLAY_METAL_MIXER + "_auger"));
     ModelLoader.addSpecialModel(Gradient.loc("block/" + GradientIds.WOODEN_AXLE));
+    ModelLoader.addSpecialModel(Gradient.loc("block/" + GradientIds.MECHANICAL_MIXING_BASIN + "_rod"));
   }
 
   private static int metalBlockColour(final BlockState state, final ILightReader world, final BlockPos pos, final int tintIndex) {
