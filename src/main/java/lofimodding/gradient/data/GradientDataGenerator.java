@@ -308,8 +308,8 @@ public final class GradientDataGenerator {
         .face(Direction.EAST).uvs(1.0f, 0.0f, 15.0f, 3.0f).texture("case").end()
         .face(Direction.SOUTH).uvs(5.0f, 13.0f, 6.0f, 16.0f).texture("case").end()
         .face(Direction.WEST).uvs(1.0f, 13.0f, 15.0f, 16.0f).texture("case").end()
-        .face(Direction.UP).uvs(1.0f, 10.0f, 15.0f, 11.0f).texture("case").end()
-        .face(Direction.DOWN).uvs(11.0f, 1.0f, 12.0f, 15.0f).texture("case").end()
+        .face(Direction.UP).uvs(1.0f, 10.0f, 15.0f, 11.0f).texture("case").rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).end()
+        .face(Direction.DOWN).uvs(11.0f, 1.0f, 12.0f, 15.0f).texture("case").rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).end()
         .end()
 
         .element() // west
@@ -319,8 +319,8 @@ public final class GradientDataGenerator {
         .face(Direction.EAST).uvs(1.0f, 13.0f, 15.0f, 16.0f).texture("case").end()
         .face(Direction.SOUTH).uvs(12.0f, 13.0f, 15.0f, 16.0f).texture("case").end()
         .face(Direction.WEST).uvs(1.0f, 0.0f, 15.0f, 3.0f).texture("case").end()
-        .face(Direction.UP).uvs(1.0f, 11.0f, 15.0f, 12.0f).texture("case").end()
-        .face(Direction.DOWN).uvs(4.0f, 1.0f, 5.0f, 15.0f).texture("case").end()
+        .face(Direction.UP).uvs(1.0f, 11.0f, 15.0f, 12.0f).texture("case").rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).end()
+        .face(Direction.DOWN).uvs(4.0f, 1.0f, 5.0f, 15.0f).texture("case").rotation(ModelBuilder.FaceRotation.COUNTERCLOCKWISE_90).end()
         .end()
 
         .element() // north
