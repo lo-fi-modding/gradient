@@ -20,7 +20,8 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
 public class GrindstoneBlock extends ProcessorBlock<GrindingRecipe, ManualEnergySource<GrindingRecipe, GrindstoneTile>, GrindstoneTile> {
-  private static final VoxelShape SHAPE = Block.makeCuboidShape(1.0d, 0.0d, 1.0d, 15.0d, 2.0d, 15.0d);
+  private static final VoxelShape SHAPE_X = Block.makeCuboidShape(1.0d, 0.0d, 4.0d, 15.0d, 3.0d, 12.0d);
+  private static final VoxelShape SHAPE_Z = Block.makeCuboidShape(4.0d, 0.0d, 1.0d, 12.0d, 3.0d, 15.0d);
 
   public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
 
@@ -65,6 +66,10 @@ public class GrindstoneBlock extends ProcessorBlock<GrindingRecipe, ManualEnergy
   @Override
   @Deprecated
   public VoxelShape getShape(final BlockState state, final IBlockReader source, final BlockPos pos, final ISelectionContext context) {
-    return SHAPE;
+    if(state.get(FACING).getAxis() == Direction.Axis.X) {
+      return SHAPE_X;
+    }
+
+    return SHAPE_Z;
   }
 }

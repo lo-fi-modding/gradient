@@ -23,7 +23,7 @@ public class MechanicalMixingBasinBlock extends ProcessorBlock<MixingRecipe, Kin
   public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
   public static final BooleanProperty HAS_WATER = BooleanProperty.create("has_water");
 
-  private static final VoxelShape SHAPE = makeCuboidShape(2.0d, 0.0d, 2.0d, 14.0d, 8.0d, 14.0d);
+  private static final VoxelShape SHAPE = makeCuboidShape(1.0d, 0.0d, 1.0d, 15.0d, 8.0d, 15.0d);
 
   public MechanicalMixingBasinBlock() {
     super(MechanicalMixingBasinTile.class, Properties.create(Material.WOOD).hardnessAndResistance(1.0f, 5.0f).notSolid());
