@@ -56,10 +56,8 @@ public class MechanicalMixingBasinRenderer extends TileEntityRenderer<Mechanical
     matrixStack.translate(0.5d, 0.5d, 0.5d);
     matrixStack.rotate(Vector3f.YP.rotationDegrees(90 - facing.getHorizontalAngle()));
 
-    //    matrixStack.translate(0.5d, 0.5d, 0.5d);
-    matrixStack.rotate(Vector3f.YP.rotationDegrees(te.getAnimation() * 360.0f));
+    matrixStack.rotate(Vector3f.YP.rotationDegrees(-te.getAnimation() * 360.0f));
     matrixStack.translate(-0.5d, -0.5d, -0.5d);
-    //    matrixStack.translate(-0.35d, -0.5d, -0.35d);
 
     this.renderRod(te, matrixStack, buffer, combinedLight, combinedOverlay);
     matrixStack.pop();
