@@ -217,6 +217,7 @@ public final class GradientItems {
   public static final RegistryObject<BlockItem> WOODEN_HOPPER = REGISTRY.register(GradientIds.WOODEN_HOPPER, () -> new BlockItem(GradientBlocks.WOODEN_HOPPER.get(), new Item.Properties().group(GROUP)));
   public static final RegistryObject<BlockItem> WOODEN_CRANK = REGISTRY.register(GradientIds.WOODEN_CRANK, () -> new BlockItem(GradientBlocks.WOODEN_CRANK.get(), new Item.Properties().group(GROUP)));
   public static final RegistryObject<BlockItem> MECHANICAL_GRINDSTONE = REGISTRY.register(GradientIds.MECHANICAL_GRINDSTONE, () -> new BlockItem(GradientBlocks.MECHANICAL_GRINDSTONE.get(), new Item.Properties().group(GROUP)));
+  public static final RegistryObject<BlockItem> MECHANICAL_MIXING_BASIN = REGISTRY.register(GradientIds.MECHANICAL_MIXING_BASIN, () -> new BlockItem(GradientBlocks.MECHANICAL_MIXING_BASIN.get(), new Item.Properties().group(GROUP)));
 
   public static final RegistryObject<Item> INFINICOAL = REGISTRY.register(GradientIds.INFINICOAL, () -> new Item(new Item.Properties().group(GROUP)));
   public static final RegistryObject<BlockItem> CREATIVE_GENERATOR = REGISTRY.register(GradientIds.CREATIVE_GENERATOR, () -> new BlockItem(GradientBlocks.CREATIVE_GENERATOR.get(), new Item.Properties().group(GROUP)));

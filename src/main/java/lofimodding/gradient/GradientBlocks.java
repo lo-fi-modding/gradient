@@ -13,6 +13,7 @@ import lofimodding.gradient.blocks.GrindstoneBlock;
 import lofimodding.gradient.blocks.LitFibreTorchBlock;
 import lofimodding.gradient.blocks.LitFibreWallTorchBlock;
 import lofimodding.gradient.blocks.MechanicalGrindstoneBlock;
+import lofimodding.gradient.blocks.MechanicalMixingBasinBlock;
 import lofimodding.gradient.blocks.MetalBlock;
 import lofimodding.gradient.blocks.MixingBasinBlock;
 import lofimodding.gradient.blocks.OreBlock;
@@ -133,6 +134,7 @@ public final class GradientBlocks {
   public static final RegistryObject<WoodenHopperBlock> WOODEN_HOPPER = REGISTRY.register(GradientIds.WOODEN_HOPPER, WoodenHopperBlock::new);
   public static final RegistryObject<WoodenCrankBlock> WOODEN_CRANK = REGISTRY.register(GradientIds.WOODEN_CRANK, WoodenCrankBlock::new);
   public static final RegistryObject<MechanicalGrindstoneBlock> MECHANICAL_GRINDSTONE = REGISTRY.register(GradientIds.MECHANICAL_GRINDSTONE, MechanicalGrindstoneBlock::new);
+  public static final RegistryObject<MechanicalMixingBasinBlock> MECHANICAL_MIXING_BASIN = REGISTRY.register(GradientIds.MECHANICAL_MIXING_BASIN, MechanicalMixingBasinBlock::new);
 
   public static final RegistryObject<CreativeGeneratorBlock> CREATIVE_GENERATOR = REGISTRY.register(GradientIds.CREATIVE_GENERATOR, CreativeGeneratorBlock::new);
   public static final RegistryObject<CreativeSinkerBlock> CREATIVE_SINKER = REGISTRY.register(GradientIds.CREATIVE_SINKER, CreativeSinkerBlock::new);

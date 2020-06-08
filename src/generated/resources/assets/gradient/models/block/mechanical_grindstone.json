@@ -4,7 +4,7 @@
     "particle": "block/polished_andesite",
     "surface": "block/polished_andesite",
     "casing": "block/stone",
-    "frame": "gradient:block/hardened_planks"
+    "frame": "gradient:block/hardened_log"
   },
   "elements": [
     {

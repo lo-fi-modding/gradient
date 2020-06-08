@@ -1026,4 +1026,107 @@ public final class ModelGenerator {
       .end()
     ;
   }
+
+  public static void mechanicalMixingBasin(final GradientDataGenerator.BlockModels generator, final String id, final ResourceLocation particle, final ResourceLocation side, final ResourceLocation top) {
+    generator.getBuilder(id)
+      .parent(generator.getExistingFile(generator.mcLoc("block/block")))
+      .texture("particle", particle)
+      .texture("side", side)
+      .texture("top", top)
+
+      .element() // bottom
+      .from(2.0f, 0.0f, 2.0f)
+      .to(14.0f, 1.0f, 14.0f)
+      .face(Direction.NORTH).uvs(2.0f, 15.0f, 14.0f, 16.0f).texture("side").end()
+      .face(Direction.EAST).uvs(2.0f, 15.0f, 14.0f, 16.0f).texture("side").end()
+      .face(Direction.SOUTH).uvs(2.0f, 15.0f, 14.0f, 16.0f).texture("side").end()
+      .face(Direction.WEST).uvs(2.0f, 15.0f, 14.0f, 16.0f).texture("side").end()
+      .face(Direction.UP).uvs(2.0f, 2.0f, 14.0f, 14.0f).texture("side").end()
+      .face(Direction.DOWN).uvs(2.0f, 2.0f, 14.0f, 14.0f).texture("side").end()
+      .end()
+
+      .element() // west
+      .from(1.0f, 1.0f, 2.0f)
+      .to(2.0f, 8.0f, 14.0f)
+      .face(Direction.NORTH).uvs(14.0f, 8.0f, 15.0f, 15.0f).texture("side").end()
+      .face(Direction.EAST).uvs(2.0f, 8.0f, 14.0f, 15.0f).texture("side").end()
+      .face(Direction.SOUTH).uvs(1.0f, 8.0f, 2.0f, 15.0f).texture("side").end()
+      .face(Direction.WEST).uvs(2.0f, 8.0f, 14.0f, 15.0f).texture("side").end()
+      .face(Direction.UP).uvs(1.0f, 2.0f, 2.0f, 14.0f).texture("side").end()
+      .face(Direction.DOWN).uvs(1.0f, 2.0f, 2.0f, 14.0f).texture("side").end()
+      .end()
+
+      .element() // south
+      .from(2.0f, 1.0f, 14.0f)
+      .to(14.0f, 8.0f, 15.0f)
+      .face(Direction.NORTH).uvs(2.0f, 8.0f, 14.0f, 15.0f).texture("side").end()
+      .face(Direction.EAST).uvs(1.0f, 8.0f, 2.0f, 15.0f).texture("side").end()
+      .face(Direction.SOUTH).uvs(2.0f, 8.0f, 14.0f, 15.0f).texture("side").end()
+      .face(Direction.WEST).uvs(14.0f, 8.0f, 15.0f, 15.0f).texture("side").end()
+      .face(Direction.UP).uvs(2.0f, 14.0f, 14.0f, 15.0f).texture("side").end()
+      .face(Direction.DOWN).uvs(2.0f, 1.0f, 14.0f, 2.0f).texture("side").end()
+      .end()
+
+      .element() // east
+      .from(14.0f, 1.0f, 2.0f)
+      .to(15.0f, 8.0f, 14.0f)
+      .face(Direction.NORTH).uvs(1.0f, 8.0f, 2.0f, 15.0f).texture("side").end()
+      .face(Direction.EAST).uvs(2.0f, 8.0f, 14.0f, 15.0f).texture("side").end()
+      .face(Direction.SOUTH).uvs(14.0f, 8.0f, 15.0f, 15.0f).texture("side").end()
+      .face(Direction.WEST).uvs(2.0f, 8.0f, 14.0f, 15.0f).texture("side").end()
+      .face(Direction.UP).uvs(14.0f, 2.0f, 15.0f, 14.0f).texture("side").end()
+      .face(Direction.DOWN).uvs(14.0f, 2.0f, 15.0f, 14.0f).texture("side").end()
+      .end()
+
+      .element() // north
+      .from(2.0f, 1.0f, 1.0f)
+      .to(14.0f, 8.0f, 2.0f)
+      .face(Direction.NORTH).uvs(2.0f, 8.0f, 14.0f, 15.0f).texture("side").end()
+      .face(Direction.EAST).uvs(14.0f, 8.0f, 15.0f, 15.0f).texture("side").end()
+      .face(Direction.SOUTH).uvs(2.0f, 8.0f, 14.0f, 15.0f).texture("side").end()
+      .face(Direction.WEST).uvs(1.0f, 8.0f, 2.0f, 15.0f).texture("side").end()
+      .face(Direction.UP).uvs(2.0f, 1.0f, 14.0f, 2.0f).texture("side").end()
+      .face(Direction.DOWN).uvs(2.0f, 14.0f, 14.0f, 15.0f).texture("side").end()
+      .end()
+
+      .element() // top
+      .from(4.5f, 14.0f, 4.5f)
+      .to(11.5f, 16.0f, 11.5f)
+      .face(Direction.NORTH).uvs(4.0f, 2.0f, 12.0f, 4.0f).texture("top").end()
+      .face(Direction.EAST).uvs(2.0f, 4.0f, 4.0f, 12.0f).texture("top").end()
+      .face(Direction.SOUTH).uvs(4.0f, 12.0f, 12.0f, 14.0f).texture("top").end()
+      .face(Direction.WEST).uvs(12.0f, 4.0f, 14.0f, 12.0f).texture("top").end()
+      .face(Direction.UP).uvs(4.0f, 4.0f, 12.0f, 12.0f).texture("top").end()
+      .face(Direction.DOWN).uvs(4.0f, 4.0f, 12.0f, 12.0f).texture("top").end()
+      .end()
+    ;
+  }
+
+  public static void mechanicalMixingBasinRod(final GradientDataGenerator.BlockModels generator, final String id, final ResourceLocation rod) {
+    generator.getBuilder(id)
+      .texture("rod", rod)
+
+      .element() // horizontal
+      .from(7.0f, 13.0f, 3.0f)
+      .to(9.0f, 14.0f, 11.0f)
+      .face(Direction.NORTH).uvs(7.0f, 0.0f, 9.0f, 1.0f).texture("rod").end()
+      .face(Direction.EAST).uvs(4.0f, 0.0f, 12.0f, 1.0f).texture("rod").end()
+      .face(Direction.SOUTH).uvs(7.0f, 0.0f, 9.0f, 1.0f).texture("rod").end()
+      .face(Direction.WEST).uvs(4.0f, 0.0f, 9.0f, 1.0f).texture("rod").end()
+      .face(Direction.UP).uvs(0.0f, 0.0f, 2.0f, 8.0f).texture("rod").end()
+      .face(Direction.DOWN).uvs(0.0f, 0.0f, 2.0f, 8.0f).texture("rod").end()
+      .end()
+
+      .element() // vertical
+      .from(7.0f, 2.0f, 3.0f)
+      .to(9.0f, 13.0f, 5.0f)
+      .face(Direction.NORTH).uvs(7.0f, 1.0f, 9.0f, 12.0f).texture("rod").end()
+      .face(Direction.EAST).uvs(10.0f, 1.0f, 12.0f, 12.0f).texture("rod").end()
+      .face(Direction.SOUTH).uvs(0.0f, 0.0f, 2.0f, 11.0f).texture("rod").end()
+      .face(Direction.WEST).uvs(4.0f, 1.0f, 6.0f, 12.0f).texture("rod").end()
+      .face(Direction.UP).uvs(7.0f, 7.0f, 9.0f, 9.0f).texture("rod").end()
+      .face(Direction.DOWN).uvs(7.0f, 7.0f, 9.0f, 9.0f).texture("rod").end()
+      .end()
+    ;
+  }
 }
