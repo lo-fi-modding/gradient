@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy extends IEnergySource<Recipe, Energy, Tile>, Tile extends ProcessorTile<Recipe, Energy, Tile>> extends TileEntity implements ITickableTileEntity {
   @CapabilityInject(IItemHandler.class)
@@ -174,6 +175,24 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
     return false;
   }
 
+  public int getProcessors() {
+    return this.processors.size();
+  }
+
+  public Stream<ItemStack> getAllItemInputs() {
+    return this.processors.stream()
+      .map(pi -> pi.processor)
+      .flatMap(Processor::getItemInputs);
+  }
+
+  public int getItemInputSlots() {
+    return this.getItemInputSlots(0);
+  }
+
+  public int getItemInputSlots(final int processor) {
+    return this.processors.get(processor).processor.inputSlots();
+  }
+
   public boolean hasInput(final int slot) {
     return this.hasInput(0, slot);
   }
@@ -206,6 +225,52 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
     return this.processors.get(processor).processor.getOutput(slot);
   }
 
+  public int getFluidInputSlots() {
+    return this.getFluidInputSlots(0);
+  }
+
+  public int getFluidInputSlots(final int processor) {
+    return this.processors.get(processor).processor.fluidInputSlots();
+  }
+
+  public Stream<FluidStack> getAllFluidInputs() {
+    return this.processors.stream()
+      .map(pi -> pi.processor)
+      .flatMap(Processor::getFluidInputs);
+  }
+
+  public boolean hasFluidInput(final int slot) {
+    return this.hasFluidInput(0, slot);
+  }
+
+  public boolean hasFluidInput(final int processor, final int slot) {
+    return !this.getFluidInput(processor, slot).isEmpty();
+  }
+
+  public FluidStack getFluidInput(final int slot) {
+    return this.getFluidInput(0, slot);
+  }
+
+  public FluidStack getFluidInput(final int processor, final int slot) {
+    return this.processors.get(processor).processor.getFluidInput(slot);
+  }
+
+  public boolean hasFluidOutput(final int slot) {
+    return this.hasFluidOutput(0, slot);
+  }
+
+  public boolean hasFluidOutput(final int processor, final int slot) {
+    return !this.getFluidOutput(processor, slot).isEmpty();
+  }
+
+  public FluidStack getFluidOutput(final int slot) {
+    return this.getFluidOutput(0, slot);
+  }
+
+  public FluidStack getFluidOutput(final int processor, final int slot) {
+    return this.processors.get(processor).processor.getFluidOutput(slot);
+  }
+
   protected abstract void onProcessorTick(final Processor<Recipe> processor);
   protected abstract void onAnimationTick(final Processor<Recipe> processor);
   protected abstract void resetAnimation(final Processor<Recipe> processor);
@@ -220,6 +285,7 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
     }
 
     compound.put("Processors", processorsNbt);
+    compound.putBoolean("InputsLocked", this.slotsLocked);
 
     return super.write(compound);
   }
@@ -233,6 +299,8 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
     for(int i = 0; i < Math.min(processorsNbt.size(), this.processors.size()); i++) {
       this.processors.get(i).processor.read(processorsNbt.getCompound(i));
     }
+
+    this.slotsLocked = compound.getBoolean("InputsLocked");
 
     super.read(compound);
   }

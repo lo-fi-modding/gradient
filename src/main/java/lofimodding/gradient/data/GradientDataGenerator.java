@@ -1229,6 +1229,9 @@ public final class GradientDataGenerator {
       this.add(GradientItems.RECIPE_FILTER.get().getTranslationKey() + ".tooltip", "Shift-right-click on most Gradient machines to lock in the current recipe. Shift-right-click again to unlock.");
       this.add(GradientItems.RECIPE_FILTER.get().getTranslationKey() + ".unlocked", "%s inputs unlocked");
       this.add(GradientItems.RECIPE_FILTER.get().getTranslationKey() + ".locked", "%s inputs locked");
+      this.add(GradientItems.RECIPE_FILTER.get().getTranslationKey() + ".items", "Item slots:");
+      this.add(GradientItems.RECIPE_FILTER.get().getTranslationKey() + ".fluids", "Fluid slots:");
+      this.add(GradientItems.RECIPE_FILTER.get().getTranslationKey() + ".list", "- %s");
 
       this.add(GradientItems.INFINICOAL.get(), "Infinicoal (Debug Item)");
       this.add(GradientItems.CREATIVE_GENERATOR.get(), "Creative Generator (Debug Item)");

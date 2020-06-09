@@ -31,6 +31,7 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 public class Processor<Recipe extends IGradientRecipe> {
   private final IRecipeType<Recipe> recipeType;
@@ -41,6 +42,8 @@ public class Processor<Recipe extends IGradientRecipe> {
   private final ProcessorItemHandler<Recipe> inv;
 
   private final List<FluidTank> fluidSlots;
+  private final List<FluidTank> fluidInputSlots;
+  private final List<FluidTank> fluidOutputSlots;
   private final ProcessorTile.MultiTankWrapper fluids;
 
   private final Set<Stage> stages = new HashSet<>();
@@ -64,6 +67,8 @@ public class Processor<Recipe extends IGradientRecipe> {
     this.inv = new ProcessorItemHandler<>(this, this.itemSlots.size());
 
     this.fluidSlots = b.fluidSlots;
+    this.fluidInputSlots = b.fluidInputSlots;
+    this.fluidOutputSlots = b.fluidOutputSlots;
     this.fluids = new ProcessorTile.MultiTankWrapper(this.fluidSlots);
   }
 
@@ -89,6 +94,16 @@ public class Processor<Recipe extends IGradientRecipe> {
 
   public int outputSlots() {
     return this.itemOutputSlots.size();
+  }
+
+  public Stream<ItemStack> getItemInputs() {
+    return this.itemInputSlots.stream()
+      .map(slot -> slot.get(this.inv));
+  }
+
+  public Stream<ItemStack> getItemOutputs() {
+    return this.itemOutputSlots.stream()
+      .map(slot -> slot.get(this.inv));
   }
 
   public boolean hasInput(final int slot) {
@@ -143,6 +158,40 @@ public class Processor<Recipe extends IGradientRecipe> {
     this.itemInputSlots.get(slot).set(this.inv, stack.split(this.itemInputSlots.get(slot).limit));
 
     return stack;
+  }
+
+  public int fluidInputSlots() {
+    return this.fluidInputSlots.size();
+  }
+
+  public int fluidOutputSlots() {
+    return this.fluidOutputSlots.size();
+  }
+
+  public Stream<FluidStack> getFluidInputs() {
+    return this.fluidInputSlots.stream()
+      .map(FluidTank::getFluid);
+  }
+
+  public Stream<FluidStack> getFluidOutputs() {
+    return this.fluidOutputSlots.stream()
+      .map(FluidTank::getFluid);
+  }
+
+  public boolean hasFluidInput(final int slot) {
+    return !this.getFluidInput(slot).isEmpty();
+  }
+
+  public boolean hasFluidOutput(final int slot) {
+    return !this.getFluidOutput(slot).isEmpty();
+  }
+
+  public FluidStack getFluidInput(final int slot) {
+    return this.fluidInputSlots.get(slot).getFluid();
+  }
+
+  public FluidStack getFluidOutput(final int slot) {
+    return this.fluidOutputSlots.get(slot).getFluid();
   }
 
   public void lockSlotsToCurrentContents() {
@@ -525,6 +574,8 @@ public class Processor<Recipe extends IGradientRecipe> {
     private int itemSlotIndex;
 
     private final List<FluidTank> fluidSlots = new ArrayList<>();
+    private final List<FluidTank> fluidInputSlots = new ArrayList<>();
+    private final List<FluidTank> fluidOutputSlots = new ArrayList<>();
 
     public Builder(final Processor<Recipe> processor, final ProcessorItemHandler.Callback onItemChanged, final ProcessorFluidTank.Callback onFluidChanged) {
       this.processor = processor;
@@ -567,7 +618,9 @@ public class Processor<Recipe extends IGradientRecipe> {
     }
 
     public Builder<Recipe> addInputFluid(final int capacity, final ProcessorFluidTank.Validator insertValidator, final ProcessorFluidTank.Validator extractValidator, final ProcessorFluidTank.Callback onChanged) {
-      this.fluidSlots.add(new ProcessorFluidTank<>(this.processor, capacity, insertValidator, extractValidator, onChanged.andThen(this.onFluidChanged)));
+      final ProcessorFluidTank<Recipe> tank = new ProcessorFluidTank<>(this.processor, capacity, insertValidator, extractValidator, onChanged.andThen(this.onFluidChanged));
+      this.fluidSlots.add(tank);
+      this.fluidInputSlots.add(tank);
       return this;
     }
 
@@ -576,7 +629,9 @@ public class Processor<Recipe extends IGradientRecipe> {
     }
 
     public Builder<Recipe> addOutputFluid(final int capacity, final ProcessorFluidTank.Validator insertValidator, final ProcessorFluidTank.Validator extractValidator, final ProcessorFluidTank.Callback onChanged) {
-      this.fluidSlots.add(new ProcessorFluidTank<>(this.processor, capacity, insertValidator, extractValidator, onChanged.andThen(this.onFluidChanged)));
+      final ProcessorFluidTank<Recipe> tank = new ProcessorFluidTank<>(this.processor, capacity, insertValidator, extractValidator, onChanged.andThen(this.onFluidChanged));
+      this.fluidSlots.add(tank);
+      this.fluidOutputSlots.add(tank);
       return this;
     }
   }
