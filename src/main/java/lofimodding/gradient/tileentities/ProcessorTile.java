@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy extends IEnergySource<Recipe, Energy, Tile>, Tile extends ProcessorTile<Recipe, Energy, Tile>> extends TileEntity implements ITickableTileEntity {
   @CapabilityInject(IItemHandler.class)
@@ -53,6 +54,8 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
   private final IFluidHandler fluids;
   private final LazyOptional<IItemHandler> lazyInv;
   private final LazyOptional<IFluidHandler> lazyFluids;
+
+  private boolean slotsLocked;
 
   protected ProcessorTile(final TileEntityType<Tile> type, final Energy energy, final Consumer<Builder<Recipe>> builder) {
     super(type);
@@ -126,6 +129,26 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
 
   }
 
+  public boolean areSlotsLocked() {
+    return this.slotsLocked;
+  }
+
+  public void lockSlotsToCurrentContents() {
+    for(final ProcessorInteractor<Recipe> pi : this.processors) {
+      pi.processor.lockSlotsToCurrentContents();
+    }
+
+    this.slotsLocked = true;
+  }
+
+  public void unlockSlots() {
+    for(final ProcessorInteractor<Recipe> pi : this.processors) {
+      pi.processor.unlockSlots();
+    }
+
+    this.slotsLocked = false;
+  }
+
   public ActionResultType onInteract(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
     for(final ProcessorInteractor<Recipe> pi : this.processors) {
       final ActionResultType result = pi.interactor.onInteract(pi.processor, state, world, pos, player, hand, hit);
@@ -150,6 +173,24 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
     }
 
     return false;
+  }
+
+  public int getProcessors() {
+    return this.processors.size();
+  }
+
+  public Stream<ItemStack> getAllItemInputs() {
+    return this.processors.stream()
+      .map(pi -> pi.processor)
+      .flatMap(Processor::getItemInputs);
+  }
+
+  public int getItemInputSlots() {
+    return this.getItemInputSlots(0);
+  }
+
+  public int getItemInputSlots(final int processor) {
+    return this.processors.get(processor).processor.inputSlots();
   }
 
   public boolean hasInput(final int slot) {
@@ -184,6 +225,52 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
     return this.processors.get(processor).processor.getOutput(slot);
   }
 
+  public int getFluidInputSlots() {
+    return this.getFluidInputSlots(0);
+  }
+
+  public int getFluidInputSlots(final int processor) {
+    return this.processors.get(processor).processor.fluidInputSlots();
+  }
+
+  public Stream<FluidStack> getAllFluidInputs() {
+    return this.processors.stream()
+      .map(pi -> pi.processor)
+      .flatMap(Processor::getFluidInputs);
+  }
+
+  public boolean hasFluidInput(final int slot) {
+    return this.hasFluidInput(0, slot);
+  }
+
+  public boolean hasFluidInput(final int processor, final int slot) {
+    return !this.getFluidInput(processor, slot).isEmpty();
+  }
+
+  public FluidStack getFluidInput(final int slot) {
+    return this.getFluidInput(0, slot);
+  }
+
+  public FluidStack getFluidInput(final int processor, final int slot) {
+    return this.processors.get(processor).processor.getFluidInput(slot);
+  }
+
+  public boolean hasFluidOutput(final int slot) {
+    return this.hasFluidOutput(0, slot);
+  }
+
+  public boolean hasFluidOutput(final int processor, final int slot) {
+    return !this.getFluidOutput(processor, slot).isEmpty();
+  }
+
+  public FluidStack getFluidOutput(final int slot) {
+    return this.getFluidOutput(0, slot);
+  }
+
+  public FluidStack getFluidOutput(final int processor, final int slot) {
+    return this.processors.get(processor).processor.getFluidOutput(slot);
+  }
+
   protected abstract void onProcessorTick(final Processor<Recipe> processor);
   protected abstract void onAnimationTick(final Processor<Recipe> processor);
   protected abstract void resetAnimation(final Processor<Recipe> processor);
@@ -198,6 +285,7 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
     }
 
     compound.put("Processors", processorsNbt);
+    compound.putBoolean("InputsLocked", this.slotsLocked);
 
     return super.write(compound);
   }
@@ -211,6 +299,8 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
     for(int i = 0; i < Math.min(processorsNbt.size(), this.processors.size()); i++) {
       this.processors.get(i).processor.read(processorsNbt.getCompound(i));
     }
+
+    this.slotsLocked = compound.getBoolean("InputsLocked");
 
     super.read(compound);
   }
