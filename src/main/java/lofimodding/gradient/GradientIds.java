@@ -140,15 +140,17 @@ public final class GradientIds {
     return metal.name + '_' + cast.name;
   }
 
-  public static String WOODEN_GEAR = "wooden_gear";
-  public static String WOODEN_AXLE = "wooden_axle";
-  public static String WOODEN_GEARBOX = "wooden_gearbox";
-  public static String WOODEN_CONVEYOR_BELT = "wooden_conveyor_belt";
-  public static String WOODEN_CONVEYOR_BELT_DRIVER = "wooden_conveyor_belt_driver";
-  public static String WOODEN_HOPPER = "wooden_hopper";
-  public static String WOODEN_CRANK = "wooden_crank";
-  public static String MECHANICAL_GRINDSTONE = "mechanical_grindstone";
-  public static String MECHANICAL_MIXING_BASIN = "mechanical_mixing_basin";
+  public static final String WOODEN_GEAR = "wooden_gear";
+  public static final String WOODEN_AXLE = "wooden_axle";
+  public static final String WOODEN_GEARBOX = "wooden_gearbox";
+  public static final String WOODEN_CONVEYOR_BELT = "wooden_conveyor_belt";
+  public static final String WOODEN_CONVEYOR_BELT_DRIVER = "wooden_conveyor_belt_driver";
+  public static final String WOODEN_HOPPER = "wooden_hopper";
+  public static final String WOODEN_CRANK = "wooden_crank";
+  public static final String MECHANICAL_GRINDSTONE = "mechanical_grindstone";
+  public static final String MECHANICAL_MIXING_BASIN = "mechanical_mixing_basin";
+
+  public static final String RECIPE_FILTER = "recipe_filter";
 
   public static final String INFINICOAL = "infinicoal";
   public static final String CREATIVE_GENERATOR = "creative_generator";

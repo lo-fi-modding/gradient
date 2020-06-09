@@ -145,6 +145,26 @@ public class Processor<Recipe extends IGradientRecipe> {
     return stack;
   }
 
+  public void lockSlotsToCurrentContents() {
+    for(final ItemSlot slot : this.itemInputSlots) {
+      slot.setLock(slot.get(this.inv));
+    }
+
+    for(final FluidTank tank : this.fluidSlots) {
+      ((ProcessorFluidTank<?>)tank).setLock(tank.getFluid());
+    }
+  }
+
+  public void unlockSlots() {
+    for(final ItemSlot slot : this.itemInputSlots) {
+      slot.clearLock();
+    }
+
+    for(final FluidTank tank : this.fluidSlots) {
+      ((ProcessorFluidTank<?>)tank).clearLock();
+    }
+  }
+
   public boolean tick(final boolean isClient) {
     if(this.hasRecipe()) {
       this.ticks++;
@@ -232,13 +252,26 @@ public class Processor<Recipe extends IGradientRecipe> {
   public CompoundNBT write(final CompoundNBT compound) {
     if(this.inv.getSlots() != 0) {
       compound.put("Inventory", this.inv.serializeNBT());
+
+      final ListNBT locks = new ListNBT();
+      for(final ItemSlot slot : this.itemInputSlots) {
+        final CompoundNBT lock = new CompoundNBT();
+        slot.lockItem.write(lock);
+        lock.putBoolean("Locked", slot.locked);
+        locks.add(lock);
+      }
+
+      compound.put("InventoryLocks", locks);
     }
 
     if(!this.fluidSlots.isEmpty()) {
       final ListNBT fluids = new ListNBT();
 
       for(final FluidTank tank : this.fluidSlots) {
-        fluids.add(tank.writeToNBT(new CompoundNBT()));
+        final CompoundNBT tankNbt = tank.writeToNBT(new CompoundNBT());
+        tankNbt.put("LockFluid", ((ProcessorFluidTank<?>)tank).lockFluid.writeToNBT(new CompoundNBT()));
+        tankNbt.putBoolean("Locked", ((ProcessorFluidTank<?>)tank).locked);
+        fluids.add(tankNbt);
       }
 
       compound.put("Fluids", fluids);
@@ -261,10 +294,25 @@ public class Processor<Recipe extends IGradientRecipe> {
       this.inv.deserializeNBT(inv);
     }
 
+    if(compound.contains("InventoryLocks")) {
+      final ListNBT locks = compound.getList("InventoryLocks", Constants.NBT.TAG_COMPOUND);
+      for(int i = 0; i < Math.min(this.inv.getSlots(), locks.size()); i++) {
+        final CompoundNBT lock = locks.getCompound(i);
+        final ItemSlot slot = this.itemInputSlots.get(i);
+        slot.lockItem = ItemStack.read(lock);
+        slot.locked = lock.getBoolean("Locked");
+      }
+    }
+
     if(compound.contains("Fluids")) {
       final ListNBT fluids = compound.getList("Fluids", Constants.NBT.TAG_COMPOUND);
       for(int i = 0; i < Math.min(fluids.size(), this.fluidSlots.size()); i++) {
-        this.fluidSlots.get(i).readFromNBT(fluids.getCompound(i));
+        final CompoundNBT tankNbt = fluids.getCompound(i);
+        final FluidTank tank = this.fluidSlots.get(i);
+
+        tank.readFromNBT(tankNbt);
+        ((ProcessorFluidTank<?>)tank).lockFluid = FluidStack.loadFluidStackFromNBT(tankNbt.getCompound("LockFluid"));
+        ((ProcessorFluidTank<?>)tank).locked = tankNbt.getBoolean("Locked");
       }
     }
 
@@ -327,6 +375,11 @@ public class Processor<Recipe extends IGradientRecipe> {
     public interface Validator extends BiPredicate<ProcessorItemHandler<?>, ItemStack> {
       Validator ALWAYS = (inv, stack) -> true;
       Validator NEVER = (inv, stack) -> false;
+
+      @Override
+      default Validator and(final BiPredicate<? super ProcessorItemHandler<?>, ? super ItemStack> other) {
+        return (inv, stack) -> this.test(inv, stack) && other.test(inv, stack);
+      }
     }
 
     @FunctionalInterface
@@ -348,10 +401,13 @@ public class Processor<Recipe extends IGradientRecipe> {
     private final ProcessorItemHandler.Validator extractValidator;
     private final ProcessorItemHandler.Callback onChanged;
 
+    private ItemStack lockItem = ItemStack.EMPTY;
+    private boolean locked;
+
     public ItemSlot(final int index, final int limit, final ProcessorItemHandler.Validator insertValidator, final ProcessorItemHandler.Validator extractValidator, final ProcessorItemHandler.Callback onChanged) {
       this.index = index;
       this.limit = limit;
-      this.insertValidator = insertValidator;
+      this.insertValidator = insertValidator.and((inv, stack) -> !this.locked || this.lockItem.isItemEqual(stack));
       this.extractValidator = extractValidator;
       this.onChanged = onChanged;
     }
@@ -374,6 +430,24 @@ public class Processor<Recipe extends IGradientRecipe> {
       inv.enableValidation();
       return stack;
     }
+
+    public ItemStack getLockItem() {
+      return this.lockItem;
+    }
+
+    public boolean isLocked() {
+      return this.locked;
+    }
+
+    public void setLock(final ItemStack lock) {
+      this.lockItem = lock.copy();
+      this.locked = true;
+    }
+
+    public void clearLock() {
+      this.setLock(ItemStack.EMPTY);
+      this.locked = false;
+    }
   }
 
   public static class ProcessorFluidTank<Recipe extends IGradientRecipe> extends FluidTank {
@@ -381,10 +455,13 @@ public class Processor<Recipe extends IGradientRecipe> {
     private final Validator extractValidator;
     private final Callback onChanged;
 
+    private FluidStack lockFluid = FluidStack.EMPTY;
+    private boolean locked;
+
     public ProcessorFluidTank(final Processor<Recipe> processor, final int capacity, final Validator insertValidator, final Validator extractValidator, final Callback onChanged) {
       super(capacity);
       this.processor = processor;
-      this.setValidator(stack -> !this.processor.tanksLocked || insertValidator.test(this, stack));
+      this.setValidator(stack -> (!this.locked || this.lockFluid.isFluidEqual(stack)) && !this.processor.tanksLocked || insertValidator.test(this, stack));
       this.extractValidator = (tank, stack) -> !this.processor.tanksLocked || extractValidator.test(this, stack);
       this.onChanged = onChanged;
     }
@@ -403,6 +480,16 @@ public class Processor<Recipe extends IGradientRecipe> {
     protected void onContentsChanged() {
       super.onContentsChanged();
       this.onChanged.accept(this, this.fluid);
+    }
+
+    public void setLock(final FluidStack lock) {
+      this.lockFluid = lock.copy();
+      this.locked = true;
+    }
+
+    public void clearLock() {
+      this.setLock(FluidStack.EMPTY);
+      this.locked = false;
     }
 
     @FunctionalInterface

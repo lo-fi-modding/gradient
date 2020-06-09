@@ -826,6 +826,8 @@ public final class GradientDataGenerator {
       this.getBuilder(GradientIds.MECHANICAL_GRINDSTONE).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.MECHANICAL_GRINDSTONE)));
       this.getBuilder(GradientIds.MECHANICAL_MIXING_BASIN).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.MECHANICAL_MIXING_BASIN)));
 
+      this.singleTexture(GradientIds.RECIPE_FILTER, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.RECIPE_FILTER));
+
       this.singleTexture(GradientIds.INFINICOAL, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.INFINICOAL));
       this.getBuilder(GradientIds.CREATIVE_GENERATOR).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.CREATIVE_GENERATOR)));
       this.getBuilder(GradientIds.CREATIVE_SINKER).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.CREATIVE_SINKER)));
@@ -1222,6 +1224,11 @@ public final class GradientDataGenerator {
       this.add(GradientItems.WOODEN_CRANK.get(), "Wooden Crank");
       this.add(GradientItems.MECHANICAL_GRINDSTONE.get(), "Mechanical Grindstone");
       this.add(GradientItems.MECHANICAL_MIXING_BASIN.get(), "Mechanical Mixing Basin");
+
+      this.add(GradientItems.RECIPE_FILTER.get(), "Recipe Filter");
+      this.add(GradientItems.RECIPE_FILTER.get().getTranslationKey() + ".tooltip", "Shift-right-click on most Gradient machines to lock in the current recipe. Shift-right-click again to unlock.");
+      this.add(GradientItems.RECIPE_FILTER.get().getTranslationKey() + ".unlocked", "%s inputs unlocked");
+      this.add(GradientItems.RECIPE_FILTER.get().getTranslationKey() + ".locked", "%s inputs locked");
 
       this.add(GradientItems.INFINICOAL.get(), "Infinicoal (Debug Item)");
       this.add(GradientItems.CREATIVE_GENERATOR.get(), "Creative Generator (Debug Item)");

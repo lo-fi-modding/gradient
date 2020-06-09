@@ -54,6 +54,8 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
   private final LazyOptional<IItemHandler> lazyInv;
   private final LazyOptional<IFluidHandler> lazyFluids;
 
+  private boolean slotsLocked;
+
   protected ProcessorTile(final TileEntityType<Tile> type, final Energy energy, final Consumer<Builder<Recipe>> builder) {
     super(type);
     this.energy = energy;
@@ -124,6 +126,26 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
 
   protected void onFluidsChanged(final Processor.ProcessorFluidTank<?> tank, final FluidStack stack) {
 
+  }
+
+  public boolean areSlotsLocked() {
+    return this.slotsLocked;
+  }
+
+  public void lockSlotsToCurrentContents() {
+    for(final ProcessorInteractor<Recipe> pi : this.processors) {
+      pi.processor.lockSlotsToCurrentContents();
+    }
+
+    this.slotsLocked = true;
+  }
+
+  public void unlockSlots() {
+    for(final ProcessorInteractor<Recipe> pi : this.processors) {
+      pi.processor.unlockSlots();
+    }
+
+    this.slotsLocked = false;
   }
 
   public ActionResultType onInteract(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
