@@ -11,7 +11,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
-public class RecipeProcessor<Recipe extends IGradientRecipe> extends Processor<Recipe> {
+public class RecipeProcessor<Recipe extends IGradientRecipe> extends Processor {
   private final IRecipeType<Recipe> recipeType;
 
   @Nullable
@@ -19,8 +19,8 @@ public class RecipeProcessor<Recipe extends IGradientRecipe> extends Processor<R
   private int ticks;
   private int maxTicks;
 
-  public RecipeProcessor(final ProcessorItemHandler.Callback onItemChange, final ProcessorFluidTank.Callback onFluidChange, final IRecipeType<Recipe> recipeType, final Consumer<Builder<Recipe>> builder) {
-    super(onItemChange, onFluidChange, recipeType, builder);
+  public RecipeProcessor(final ProcessorItemHandler.Callback onItemChange, final ProcessorFluidTank.Callback onFluidChange, final IRecipeType<Recipe> recipeType, final Consumer<Builder> builder) {
+    super(onItemChange, onFluidChange, builder);
     this.recipeType = recipeType;
   }
 

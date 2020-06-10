@@ -34,7 +34,7 @@ public class MixingBasinTile extends ProcessorTile<MixingRecipe, ManualEnergySou
           .addInputItem(1)
           .addOutputItem()
           .addInputFluid(1000, Processor.ProcessorFluidTank.Validator.forFluids(Fluids.WATER)),
-        new ManualInteractor<>()
+        new ManualInteractor()
       )
     );
 
@@ -55,20 +55,20 @@ public class MixingBasinTile extends ProcessorTile<MixingRecipe, ManualEnergySou
   }
 
   @Override
-  protected void onInventoryChanged(final Processor.ProcessorItemHandler<?> inv, final ItemStack stack) {
+  protected void onInventoryChanged(final Processor.ProcessorItemHandler inv, final ItemStack stack) {
     super.onInventoryChanged(inv, stack);
     this.syncToSurrounding();
   }
 
   @Override
-  protected void onFluidsChanged(final Processor.ProcessorFluidTank<?> tank, final FluidStack stack) {
+  protected void onFluidsChanged(final Processor.ProcessorFluidTank tank, final FluidStack stack) {
     super.onFluidsChanged(tank, stack);
     this.world.setBlockState(this.pos, this.getBlockState().with(MixingBasinBlock.HAS_WATER, !stack.isEmpty()));
     this.syncToSurrounding();
   }
 
   @Override
-  protected void onProcessorTick(final Processor<MixingRecipe> processor) {
+  protected void onProcessorTick(final Processor processor) {
     if(this.world.rand.nextBoolean()) {
       final double x = this.pos.getX() + 0.5d;
       final double z = this.pos.getZ() + 0.5d;
@@ -78,13 +78,13 @@ public class MixingBasinTile extends ProcessorTile<MixingRecipe, ManualEnergySou
   }
 
   @Override
-  protected void onAnimationTick(final Processor<MixingRecipe> processor) {
+  protected void onAnimationTick(final Processor processor) {
     this.animation = (processor.getTicks() % 40) / 40.0f;
     this.isMixing = processor.getTicks() != 0;
   }
 
   @Override
-  protected void resetAnimation(final Processor<MixingRecipe> processor) {
+  protected void resetAnimation(final Processor processor) {
     this.isMixing = false;
   }
 }

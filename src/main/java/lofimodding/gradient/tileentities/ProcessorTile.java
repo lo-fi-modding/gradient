@@ -50,7 +50,7 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
   private static Capability<IFluidHandler> FLUID_HANDLER_CAPABILITY;
 
   private final Energy energy;
-  private final List<ProcessorInteractor<Recipe>> processors;
+  private final List<ProcessorInteractor> processors;
   private final IItemHandler inv;
   private final IFluidHandler fluids;
   private final LazyOptional<IItemHandler> lazyInv;
@@ -108,7 +108,7 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
     }
 
     if(this.energy.consumeEnergy()) {
-      for(final ProcessorInteractor<Recipe> pi : this.processors) {
+      for(final ProcessorInteractor pi : this.processors) {
         if(pi.processor.hasWork() && pi.processor.tick(this.world.isRemote)) {
           this.markDirty();
 
@@ -122,11 +122,11 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
     }
   }
 
-  protected void onInventoryChanged(final Processor.ProcessorItemHandler<?> inv, final ItemStack stack) {
+  protected void onInventoryChanged(final Processor.ProcessorItemHandler inv, final ItemStack stack) {
 
   }
 
-  protected void onFluidsChanged(final Processor.ProcessorFluidTank<?> tank, final FluidStack stack) {
+  protected void onFluidsChanged(final Processor.ProcessorFluidTank tank, final FluidStack stack) {
 
   }
 
@@ -135,7 +135,7 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
   }
 
   public void lockSlotsToCurrentContents() {
-    for(final ProcessorInteractor<Recipe> pi : this.processors) {
+    for(final ProcessorInteractor pi : this.processors) {
       pi.processor.lockSlotsToCurrentContents();
     }
 
@@ -143,7 +143,7 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
   }
 
   public void unlockSlots() {
-    for(final ProcessorInteractor<Recipe> pi : this.processors) {
+    for(final ProcessorInteractor pi : this.processors) {
       pi.processor.unlockSlots();
     }
 
@@ -151,7 +151,7 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
   }
 
   public ActionResultType onInteract(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
-    for(final ProcessorInteractor<Recipe> pi : this.processors) {
+    for(final ProcessorInteractor pi : this.processors) {
       final ActionResultType result = pi.interactor.onInteract(pi.processor, state, world, pos, player, hand, hit);
 
       if(result != ActionResultType.PASS) {
@@ -167,7 +167,7 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
   }
 
   public boolean hasWork() {
-    for(final ProcessorInteractor<Recipe> pi : this.processors) {
+    for(final ProcessorInteractor pi : this.processors) {
       if(pi.processor.hasWork()) {
         return true;
       }
@@ -272,16 +272,16 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
     return this.processors.get(processor).processor.getFluidOutput(slot);
   }
 
-  protected abstract void onProcessorTick(final Processor<Recipe> processor);
-  protected abstract void onAnimationTick(final Processor<Recipe> processor);
-  protected abstract void resetAnimation(final Processor<Recipe> processor);
+  protected abstract void onProcessorTick(final Processor processor);
+  protected abstract void onAnimationTick(final Processor processor);
+  protected abstract void resetAnimation(final Processor processor);
 
   @Override
   public CompoundNBT write(final CompoundNBT compound) {
     compound.put("Energy", this.energy.write(new CompoundNBT()));
 
     final ListNBT processorsNbt = new ListNBT();
-    for(final ProcessorInteractor<Recipe> processor : this.processors) {
+    for(final ProcessorInteractor processor : this.processors) {
       processorsNbt.add(processor.processor.write(new CompoundNBT()));
     }
 
@@ -347,7 +347,7 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
   public void onDataPacket(final NetworkManager net, final SUpdateTileEntityPacket packet) {
     this.read(packet.getNbtCompound());
 
-    for(final ProcessorInteractor<Recipe> ri : this.processors) {
+    for(final ProcessorInteractor ri : this.processors) {
       if(ri.processor.hasWork()) {
         this.onAnimationTick(ri.processor);
       } else {
@@ -356,11 +356,11 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
     }
   }
 
-  private static final class ProcessorInteractor<Recipe extends IGradientRecipe> {
-    private final Processor<Recipe> processor;
-    private final IInteractor<Recipe> interactor;
+  private static final class ProcessorInteractor {
+    private final Processor processor;
+    private final IInteractor interactor;
 
-    private ProcessorInteractor(final Processor<Recipe> processor, final IInteractor<Recipe> interactor) {
+    private ProcessorInteractor(final Processor processor, final IInteractor interactor) {
       this.processor = processor;
       this.interactor = interactor;
     }
@@ -483,19 +483,19 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
   public static class Builder<Recipe extends IGradientRecipe> {
     private final Processor.ProcessorItemHandler.Callback onItemChanged;
     private final Processor.ProcessorFluidTank.Callback onFluidChanged;
-    private final List<ProcessorInteractor<Recipe>> processors = new ArrayList<>();
+    private final List<ProcessorInteractor> processors = new ArrayList<>();
 
     public Builder(final Processor.ProcessorItemHandler.Callback onItemChanged, final Processor.ProcessorFluidTank.Callback onFluidChanged) {
       this.onItemChanged = onItemChanged;
       this.onFluidChanged = onFluidChanged;
     }
 
-    public Builder<Recipe> addProcessor(final IRecipeType<Recipe> recipeType, final Consumer<Processor.Builder<Recipe>> builder) {
-      return this.addProcessor(recipeType, builder, new NoopInteractor<>());
+    public Builder<Recipe> addProcessor(final IRecipeType<Recipe> recipeType, final Consumer<Processor.Builder> builder) {
+      return this.addProcessor(recipeType, builder, new NoopInteractor());
     }
 
-    public Builder<Recipe> addProcessor(final IRecipeType<Recipe> recipeType, final Consumer<Processor.Builder<Recipe>> builder, final IInteractor<Recipe> interactor) {
-      this.processors.add(new ProcessorInteractor<>(new RecipeProcessor<>(this.onItemChanged, this.onFluidChanged, recipeType, builder), interactor));
+    public Builder<Recipe> addProcessor(final IRecipeType<Recipe> recipeType, final Consumer<Processor.Builder> builder, final IInteractor interactor) {
+      this.processors.add(new ProcessorInteractor(new RecipeProcessor<>(this.onItemChanged, this.onFluidChanged, recipeType, builder), interactor));
       return this;
     }
   }

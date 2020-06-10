@@ -19,7 +19,7 @@ public class MechanicalGrindstoneTile extends ProcessorTile<GrindingRecipe, Kine
       builder -> builder.addProcessor(
         GrindingRecipe.TYPE,
         processor -> processor.addInputItem().addOutputItem(),
-        new ManualInteractor<>()
+        new ManualInteractor()
       )
     );
   }
@@ -29,23 +29,23 @@ public class MechanicalGrindstoneTile extends ProcessorTile<GrindingRecipe, Kine
   }
 
   @Override
-  protected void onInventoryChanged(final Processor.ProcessorItemHandler<?> inv, final ItemStack stack) {
+  protected void onInventoryChanged(final Processor.ProcessorItemHandler inv, final ItemStack stack) {
     super.onInventoryChanged(inv, stack);
     this.syncToSurrounding();
   }
 
   @Override
-  protected void onProcessorTick(final Processor<GrindingRecipe> processor) {
+  protected void onProcessorTick(final Processor processor) {
     ((ServerWorld)this.world).spawnParticle(ParticleTypes.SMOKE, this.pos.getX() + 0.5d, this.pos.getY() + 0.5d, this.pos.getZ() + 0.5d, 1, 0.1d, 0.1d, 0.1d, 0.01d);
   }
 
   @Override
-  protected void onAnimationTick(final Processor<GrindingRecipe> processor) {
+  protected void onAnimationTick(final Processor processor) {
     this.animation = Math.abs((processor.getTicks() + 10) % 20 - 10.0f) / 10.0f;
   }
 
   @Override
-  protected void resetAnimation(final Processor<GrindingRecipe> processor) {
+  protected void resetAnimation(final Processor processor) {
 
   }
 }
