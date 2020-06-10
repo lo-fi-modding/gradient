@@ -2,7 +2,6 @@ package lofimodding.gradient.tileentities.pieces;
 
 import lofimodding.gradient.recipes.IGradientRecipe;
 import lofimodding.gradient.tileentities.ProcessorTile;
-import lofimodding.gradient.utils.RecipeUtils;
 import lofimodding.progression.Stage;
 import lofimodding.progression.capabilities.Progress;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,13 +15,11 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -33,31 +30,22 @@ import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-public class Processor<Recipe extends IGradientRecipe> {
-  private final IRecipeType<Recipe> recipeType;
+public abstract class Processor<Recipe extends IGradientRecipe> {
+  protected final List<ItemSlot> itemSlots;
+  protected final List<ItemSlot> itemInputSlots;
+  protected final List<ItemSlot> itemOutputSlots;
+  protected final ProcessorItemHandler<Recipe> inv;
 
-  private final List<ItemSlot> itemSlots;
-  private final List<ItemSlot> itemInputSlots;
-  private final List<ItemSlot> itemOutputSlots;
-  private final ProcessorItemHandler<Recipe> inv;
+  protected final List<FluidTank> fluidSlots;
+  protected final List<FluidTank> fluidInputSlots;
+  protected final List<FluidTank> fluidOutputSlots;
+  protected final ProcessorTile.MultiTankWrapper fluids;
 
-  private final List<FluidTank> fluidSlots;
-  private final List<FluidTank> fluidInputSlots;
-  private final List<FluidTank> fluidOutputSlots;
-  private final ProcessorTile.MultiTankWrapper fluids;
+  protected final Set<Stage> stages = new HashSet<>();
 
-  private final Set<Stage> stages = new HashSet<>();
+  protected boolean tanksLocked = true;
 
-  private boolean tanksLocked = true;
-
-  @Nullable
-  private Recipe recipe;
-  private int ticks;
-  private int maxTicks;
-
-  public Processor(final ProcessorItemHandler.Callback onItemChange, final ProcessorFluidTank.Callback onFluidChange, final IRecipeType<Recipe> recipeType, final Consumer<Builder<Recipe>> builder) {
-    this.recipeType = recipeType;
-
+  protected Processor(final ProcessorItemHandler.Callback onItemChange, final ProcessorFluidTank.Callback onFluidChange, final IRecipeType<Recipe> recipeType, final Consumer<Builder<Recipe>> builder) {
     final Builder<Recipe> b = new Builder<>(this, onItemChange, onFluidChange);
     builder.accept(b);
 
@@ -214,72 +202,10 @@ public class Processor<Recipe extends IGradientRecipe> {
     }
   }
 
-  public boolean tick(final boolean isClient) {
-    if(this.hasRecipe()) {
-      this.ticks++;
-
-      if(!isClient && this.isFinished()) {
-        this.finishRecipe();
-        this.ticks = 0;
-      }
-
-      return true;
-    }
-
-    return false;
-  }
-
-  public int getTicks() {
-    return this.ticks;
-  }
-
-  private boolean isFinished() {
-    return this.ticks >= this.maxTicks;
-  }
-
-  private void finishRecipe() {
-    final Recipe recipe = this.recipe;
-
-    for(final ItemSlot slot : this.itemInputSlots) {
-      slot.extract(this.inv, 1, false); //TODO: don't hardcode to extract one item
-    }
-
-    this.inv.disableValidation();
-
-    for(int slot = 0; slot < this.itemOutputSlots.size(); slot++) {
-      this.itemOutputSlots.get(slot).insert(this.inv, recipe.getItemOutput(slot), false);
-    }
-
-    this.inv.enableValidation();
-
-    this.tanksLocked = false;
-    for(int i = 0; i < recipe.getFluidInputCount(); i++) {
-      this.fluids.drain(recipe.getFluidInput(i), IFluidHandler.FluidAction.EXECUTE);
-    }
-    for(int i = 0; i < recipe.getFluidOutputCount(); i++) {
-      this.fluids.fill(recipe.getFluidOutput(i), IFluidHandler.FluidAction.EXECUTE);
-    }
-    this.tanksLocked = true;
-  }
-
-  public boolean hasRecipe() {
-    return this.recipe != null;
-  }
-
-  private void updateRecipe() {
-    final Recipe recipe = RecipeUtils.getRecipe(this.recipeType, this::recipeMatches).orElse(null);
-
-    if(recipe != this.recipe) {
-      this.recipe = recipe;
-      this.ticks = 0;
-
-      if(this.hasRecipe()) {
-        this.maxTicks = this.recipe.getTicks() * 3;
-      } else {
-        this.maxTicks = Integer.MAX_VALUE;
-      }
-    }
-  }
+  public abstract boolean tick(final boolean isClient);
+  public abstract int getTicks();
+  public abstract boolean hasWork();
+  protected abstract void onInputsChanged();
 
   private boolean recipeMatches(final IGradientRecipe recipe) {
     final NonNullList<ItemStack> items = NonNullList.create();
@@ -332,7 +258,6 @@ public class Processor<Recipe extends IGradientRecipe> {
     }
 
     compound.put("Stages", stagesList);
-    compound.putInt("Ticks", this.ticks);
     return compound;
   }
 
@@ -371,9 +296,7 @@ public class Processor<Recipe extends IGradientRecipe> {
       this.stages.add(Stage.REGISTRY.get().getValue(new ResourceLocation(stagesList.getString(i))));
     }
 
-    this.ticks = compound.getInt("Ticks");
-
-    this.updateRecipe();
+    this.onInputsChanged();
   }
 
   public static class ProcessorItemHandler<Recipe extends IGradientRecipe> extends ItemStackHandler {
@@ -434,7 +357,7 @@ public class Processor<Recipe extends IGradientRecipe> {
     @FunctionalInterface
     public interface Callback extends BiConsumer<ProcessorItemHandler<?>, ItemStack> {
       Callback NOOP = (inv, stack) -> { };
-      Callback UPDATE_RECIPE = (inv, stack) -> inv.processor.updateRecipe();
+      Callback UPDATE_RECIPE = (inv, stack) -> inv.processor.onInputsChanged();
 
       @Override
       default Callback andThen(final BiConsumer<? super ProcessorItemHandler<?>, ? super ItemStack> after) {
@@ -554,7 +477,7 @@ public class Processor<Recipe extends IGradientRecipe> {
     @FunctionalInterface
     public interface Callback extends BiConsumer<ProcessorFluidTank<?>, FluidStack> {
       Callback NOOP = (tank, stack) -> { };
-      Callback UPDATE_RECIPE = (tank, stack) -> tank.processor.updateRecipe();
+      Callback UPDATE_RECIPE = (tank, stack) -> tank.processor.onInputsChanged();
 
       @Override
       default Callback andThen(final BiConsumer<? super ProcessorFluidTank<?>, ? super FluidStack> after) {

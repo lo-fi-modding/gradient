@@ -5,6 +5,7 @@ import lofimodding.gradient.tileentities.pieces.IEnergySource;
 import lofimodding.gradient.tileentities.pieces.IInteractor;
 import lofimodding.gradient.tileentities.pieces.NoopInteractor;
 import lofimodding.gradient.tileentities.pieces.Processor;
+import lofimodding.gradient.tileentities.pieces.RecipeProcessor;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -108,7 +109,7 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
 
     if(this.energy.consumeEnergy()) {
       for(final ProcessorInteractor<Recipe> pi : this.processors) {
-        if(pi.processor.hasRecipe() && pi.processor.tick(this.world.isRemote)) {
+        if(pi.processor.hasWork() && pi.processor.tick(this.world.isRemote)) {
           this.markDirty();
 
           if(!this.world.isRemote) {
@@ -167,7 +168,7 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
 
   public boolean hasWork() {
     for(final ProcessorInteractor<Recipe> pi : this.processors) {
-      if(pi.processor.hasRecipe()) {
+      if(pi.processor.hasWork()) {
         return true;
       }
     }
@@ -347,7 +348,7 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
     this.read(packet.getNbtCompound());
 
     for(final ProcessorInteractor<Recipe> ri : this.processors) {
-      if(ri.processor.hasRecipe()) {
+      if(ri.processor.hasWork()) {
         this.onAnimationTick(ri.processor);
       } else {
         this.resetAnimation(ri.processor);
@@ -494,7 +495,7 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
     }
 
     public Builder<Recipe> addProcessor(final IRecipeType<Recipe> recipeType, final Consumer<Processor.Builder<Recipe>> builder, final IInteractor<Recipe> interactor) {
-      this.processors.add(new ProcessorInteractor<>(new Processor<>(this.onItemChanged, this.onFluidChanged, recipeType, builder), interactor));
+      this.processors.add(new ProcessorInteractor<>(new RecipeProcessor<>(this.onItemChanged, this.onFluidChanged, recipeType, builder), interactor));
       return this;
     }
   }
