@@ -6,6 +6,7 @@ import lofimodding.gradient.recipes.MixingRecipe;
 import lofimodding.gradient.tileentities.pieces.ManualEnergySource;
 import lofimodding.gradient.tileentities.pieces.ManualInteractor;
 import lofimodding.gradient.tileentities.pieces.Processor;
+import lofimodding.gradient.tileentities.pieces.ProcessorTier;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
@@ -27,6 +28,7 @@ public class MixingBasinTile extends ProcessorTile<MixingRecipe, ManualEnergySou
       builder -> builder.addProcessor(
         MixingRecipe.TYPE,
         processor -> processor
+          .tier(ProcessorTier.BASIC)
           .addInputItem(1)
           .addInputItem(1)
           .addInputItem(1)

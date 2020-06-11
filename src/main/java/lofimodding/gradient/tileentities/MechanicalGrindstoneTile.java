@@ -5,6 +5,7 @@ import lofimodding.gradient.recipes.GrindingRecipe;
 import lofimodding.gradient.tileentities.pieces.KineticEnergySource;
 import lofimodding.gradient.tileentities.pieces.ManualInteractor;
 import lofimodding.gradient.tileentities.pieces.Processor;
+import lofimodding.gradient.tileentities.pieces.ProcessorTier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.world.server.ServerWorld;
@@ -18,7 +19,10 @@ public class MechanicalGrindstoneTile extends ProcessorTile<GrindingRecipe, Kine
       new KineticEnergySource<>(1.0f, 1.0f, 1.0f),
       builder -> builder.addProcessor(
         GrindingRecipe.TYPE,
-        processor -> processor.addInputItem().addOutputItem(),
+        processor -> processor
+          .tier(ProcessorTier.BASIC)
+          .addInputItem()
+          .addOutputItem(),
         new ManualInteractor()
       )
     );

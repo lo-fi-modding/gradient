@@ -28,6 +28,8 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 public abstract class Processor {
+  protected final IProcessorTier tier;
+
   protected final List<ItemSlot> itemSlots;
   protected final List<ItemSlot> itemInputSlots;
   protected final List<ItemSlot> itemOutputSlots;
@@ -45,6 +47,8 @@ public abstract class Processor {
   protected Processor(final ProcessorItemHandler.Callback onItemChange, final ProcessorFluidTank.Callback onFluidChange, final Consumer<Builder> builder) {
     final Builder b = new Builder(this, onItemChange, onFluidChange);
     builder.accept(b);
+
+    this.tier = b.tier;
 
     this.itemSlots = b.itemSlots;
     this.itemInputSlots = b.itemInputSlots;
@@ -471,6 +475,8 @@ public abstract class Processor {
     private final ProcessorItemHandler.Callback onItemChanged;
     private final ProcessorFluidTank.Callback onFluidChanged;
 
+    private IProcessorTier tier = ProcessorTier.BASIC;
+
     private final List<ItemSlot> itemSlots = new ArrayList<>();
     private final List<ItemSlot> itemInputSlots = new ArrayList<>();
     private final List<ItemSlot> itemOutputSlots = new ArrayList<>();
@@ -484,6 +490,11 @@ public abstract class Processor {
       this.processor = processor;
       this.onItemChanged = onItemChanged;
       this.onFluidChanged = onFluidChanged;
+    }
+
+    public Builder tier(final IProcessorTier tier) {
+      this.tier = tier;
+      return this;
     }
 
     public Builder addInputItem() {

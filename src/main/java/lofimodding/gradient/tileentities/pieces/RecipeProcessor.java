@@ -88,7 +88,7 @@ public class RecipeProcessor<Recipe extends IGradientRecipe> extends Processor {
       this.ticks = 0;
 
       if(this.hasWork()) {
-        this.maxTicks = this.recipe.getTicks() * 3;
+        this.maxTicks = (int)(this.recipe.getTicks() * this.tier.getRecipeTimeMultiplier());
       } else {
         this.maxTicks = Integer.MAX_VALUE;
       }
