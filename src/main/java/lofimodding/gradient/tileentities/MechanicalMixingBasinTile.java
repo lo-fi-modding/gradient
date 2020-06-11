@@ -13,15 +13,13 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fluids.FluidStack;
 
-public class MechanicalMixingBasinTile extends ProcessorTile<MixingRecipe, KineticEnergySource<MixingRecipe, MechanicalMixingBasinTile>, MechanicalMixingBasinTile> {
-  public static final int INPUT_SIZE = 5;
-
+public class MechanicalMixingBasinTile extends ProcessorTile<KineticEnergySource> {
   private float animation;
 
   public MechanicalMixingBasinTile() {
     super(
       GradientTileEntities.MECHANICAL_MIXING_BASIN.get(),
-      new KineticEnergySource<>(1.0f, 1.0f, 1.0f),
+      new KineticEnergySource(1.0f, 1.0f, 1.0f),
       builder -> builder.addProcessor(
         MixingRecipe.TYPE,
         processor -> processor

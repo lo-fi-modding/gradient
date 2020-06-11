@@ -42,7 +42,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy extends IEnergySource<Recipe, Energy, Tile>, Tile extends ProcessorTile<Recipe, Energy, Tile>> extends TileEntity implements ITickableTileEntity {
+public abstract class ProcessorTile<Energy extends IEnergySource<Energy>> extends TileEntity implements ITickableTileEntity {
   @CapabilityInject(IItemHandler.class)
   private static Capability<IItemHandler> ITEM_HANDLER_CAPABILITY;
 
@@ -58,11 +58,11 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
 
   private boolean slotsLocked;
 
-  protected ProcessorTile(final TileEntityType<Tile> type, final Energy energy, final Consumer<Builder<Recipe>> builder) {
+  protected ProcessorTile(final TileEntityType<? extends ProcessorTile<Energy>> type, final Energy energy, final Consumer<Builder> builder) {
     super(type);
     this.energy = energy;
 
-    final Builder<Recipe> b = new Builder<>(this::onInventoryChanged, this::onFluidsChanged);
+    final Builder b = new Builder(this::onInventoryChanged, this::onFluidsChanged);
     builder.accept(b);
 
     this.processors = Collections.unmodifiableList(b.processors);
@@ -87,8 +87,7 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
       return;
     }
 
-    //noinspection unchecked
-    this.energy.onAddToWorld((Tile)this);
+    this.energy.onAddToWorld(this);
   }
 
   @Override
@@ -97,8 +96,7 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
       return;
     }
 
-    //noinspection unchecked
-    this.energy.onRemoveFromWorld((Tile)this);
+    this.energy.onRemoveFromWorld(this);
   }
 
   @Override
@@ -480,7 +478,7 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
     }
   }
 
-  public static class Builder<Recipe extends IGradientRecipe> {
+  public static class Builder {
     private final Processor.ProcessorItemHandler.Callback onItemChanged;
     private final Processor.ProcessorFluidTank.Callback onFluidChanged;
     private final List<ProcessorInteractor> processors = new ArrayList<>();
@@ -490,11 +488,11 @@ public abstract class ProcessorTile<Recipe extends IGradientRecipe, Energy exten
       this.onFluidChanged = onFluidChanged;
     }
 
-    public Builder<Recipe> addProcessor(final IRecipeType<Recipe> recipeType, final Consumer<Processor.Builder> builder) {
+    public <Recipe extends IGradientRecipe> Builder addProcessor(final IRecipeType<Recipe> recipeType, final Consumer<Processor.Builder> builder) {
       return this.addProcessor(recipeType, builder, new NoopInteractor());
     }
 
-    public Builder<Recipe> addProcessor(final IRecipeType<Recipe> recipeType, final Consumer<Processor.Builder> builder, final IInteractor interactor) {
+    public <Recipe extends IGradientRecipe> Builder addProcessor(final IRecipeType<Recipe> recipeType, final Consumer<Processor.Builder> builder, final IInteractor interactor) {
       this.processors.add(new ProcessorInteractor(new RecipeProcessor<>(this.onItemChanged, this.onFluidChanged, recipeType, builder), interactor));
       return this;
     }

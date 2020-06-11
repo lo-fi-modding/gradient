@@ -5,7 +5,6 @@ import lofimodding.gradient.energy.IEnergyStorage;
 import lofimodding.gradient.energy.kinetic.IKineticEnergyStorage;
 import lofimodding.gradient.energy.kinetic.IKineticEnergyTransfer;
 import lofimodding.gradient.energy.kinetic.KineticEnergyStorage;
-import lofimodding.gradient.recipes.IGradientRecipe;
 import lofimodding.gradient.tileentities.ProcessorTile;
 import lofimodding.gradient.utils.MathHelper;
 import net.minecraft.nbt.CompoundNBT;
@@ -16,7 +15,7 @@ import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nullable;
 
-public class KineticEnergySource<Recipe extends IGradientRecipe, Tile extends ProcessorTile<Recipe, KineticEnergySource<Recipe, Tile>, Tile>> implements IEnergySource<Recipe, KineticEnergySource<Recipe, Tile>, Tile> {
+public class KineticEnergySource implements IEnergySource<KineticEnergySource> {
   @CapabilityInject(IKineticEnergyStorage.class)
   private static Capability<IKineticEnergyStorage> STORAGE;
 
@@ -35,12 +34,12 @@ public class KineticEnergySource<Recipe extends IGradientRecipe, Tile extends Pr
   }
 
   @Override
-  public void onAddToWorld(final Tile tile) {
+  public void onAddToWorld(final ProcessorTile<KineticEnergySource> tile) {
     EnergyNetworkManager.getManager(tile.getWorld(), STORAGE, TRANSFER).queueConnection(tile.getPos(), tile);
   }
 
   @Override
-  public void onRemoveFromWorld(final Tile tile) {
+  public void onRemoveFromWorld(final ProcessorTile<KineticEnergySource> tile) {
     EnergyNetworkManager.getManager(tile.getWorld(), STORAGE, TRANSFER).queueDisconnection(tile.getPos());
   }
 

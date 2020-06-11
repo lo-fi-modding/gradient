@@ -10,13 +10,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.world.server.ServerWorld;
 
-public class MechanicalGrindstoneTile extends ProcessorTile<GrindingRecipe, KineticEnergySource<GrindingRecipe, MechanicalGrindstoneTile>, MechanicalGrindstoneTile> {
+public class MechanicalGrindstoneTile extends ProcessorTile<KineticEnergySource> {
   private float animation;
 
   public MechanicalGrindstoneTile() {
     super(
       GradientTileEntities.MECHANICAL_GRINDSTONE.get(),
-      new KineticEnergySource<>(1.0f, 1.0f, 1.0f),
+      new KineticEnergySource(1.0f, 1.0f, 1.0f),
       builder -> builder.addProcessor(
         GrindingRecipe.TYPE,
         processor -> processor
