@@ -63,7 +63,7 @@ public abstract class ProcessorTile<Energy extends IEnergySource<Energy>> extend
     super(type);
     this.energy = energy;
 
-    final Builder b = new Builder(this::onInventoryChanged, this::onFluidsChanged);
+    final Builder b = new Builder(this, this::onInventoryChanged, this::onFluidsChanged);
     builder.accept(b);
 
     this.processors = Collections.unmodifiableList(b.processors);
@@ -89,6 +89,10 @@ public abstract class ProcessorTile<Energy extends IEnergySource<Energy>> extend
     }
 
     this.energy.onAddToWorld(this);
+
+    for(final ProcessorInteractor pi : this.processors) {
+      pi.processor.onAddToWorld();
+    }
   }
 
   @Override
@@ -98,6 +102,10 @@ public abstract class ProcessorTile<Energy extends IEnergySource<Energy>> extend
     }
 
     this.energy.onRemoveFromWorld(this);
+
+    for(final ProcessorInteractor pi : this.processors) {
+      pi.processor.onRemoveFromWorld();
+    }
   }
 
   @Override
@@ -480,11 +488,13 @@ public abstract class ProcessorTile<Energy extends IEnergySource<Energy>> extend
   }
 
   public static class Builder {
+    private final ProcessorTile<?> tile;
     private final Processor.ProcessorItemHandler.Callback onItemChanged;
     private final Processor.ProcessorFluidTank.Callback onFluidChanged;
     private final List<ProcessorInteractor> processors = new ArrayList<>();
 
-    public Builder(final Processor.ProcessorItemHandler.Callback onItemChanged, final Processor.ProcessorFluidTank.Callback onFluidChanged) {
+    public Builder(final ProcessorTile<?> tile, final Processor.ProcessorItemHandler.Callback onItemChanged, final Processor.ProcessorFluidTank.Callback onFluidChanged) {
+      this.tile = tile;
       this.onItemChanged = onItemChanged;
       this.onFluidChanged = onFluidChanged;
     }
@@ -494,7 +504,7 @@ public abstract class ProcessorTile<Energy extends IEnergySource<Energy>> extend
     }
 
     public <Recipe extends IGradientRecipe> Builder addRecipeProcessor(final IRecipeType<Recipe> recipeType, final Consumer<Processor.Builder> builder, final IInteractor interactor) {
-      this.processors.add(new ProcessorInteractor(new RecipeProcessor<>(this.onItemChanged, this.onFluidChanged, recipeType, builder), interactor));
+      this.processors.add(new ProcessorInteractor(new RecipeProcessor<>(this.tile, this.onItemChanged, this.onFluidChanged, recipeType, builder), interactor));
       return this;
     }
 
@@ -503,7 +513,7 @@ public abstract class ProcessorTile<Energy extends IEnergySource<Energy>> extend
     }
 
     public Builder addPumpProcessor(final Consumer<Processor.Builder> builder, final IInteractor interactor) {
-      this.processors.add(new ProcessorInteractor(new PumpProcessor(this.onItemChanged, this.onFluidChanged, builder), interactor));
+      this.processors.add(new ProcessorInteractor(new PumpProcessor(this.tile, this.onItemChanged, this.onFluidChanged, builder), interactor));
       return this;
     }
   }

@@ -1,6 +1,7 @@
 package lofimodding.gradient.tileentities.pieces;
 
 import lofimodding.gradient.recipes.IGradientRecipe;
+import lofimodding.gradient.tileentities.ProcessorTile;
 import lofimodding.gradient.utils.RecipeUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeType;
@@ -19,8 +20,8 @@ public class RecipeProcessor<Recipe extends IGradientRecipe> extends Processor {
   private int ticks;
   private int maxTicks;
 
-  public RecipeProcessor(final ProcessorItemHandler.Callback onItemChange, final ProcessorFluidTank.Callback onFluidChange, final IRecipeType<Recipe> recipeType, final Consumer<Builder> builder) {
-    super(onItemChange, onFluidChange, builder);
+  public RecipeProcessor(final ProcessorTile<?> tile, final ProcessorItemHandler.Callback onItemChange, final ProcessorFluidTank.Callback onFluidChange, final IRecipeType<Recipe> recipeType, final Consumer<Builder> builder) {
+    super(tile, onItemChange, onFluidChange, builder);
     this.recipeType = recipeType;
   }
 

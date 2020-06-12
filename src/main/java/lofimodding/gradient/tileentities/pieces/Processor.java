@@ -28,6 +28,8 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 public abstract class Processor {
+  protected final ProcessorTile<?> tile;
+
   protected final IProcessorTier tier;
 
   protected final List<ItemSlot> itemSlots;
@@ -44,10 +46,11 @@ public abstract class Processor {
 
   protected boolean tanksLocked = true;
 
-  protected Processor(final ProcessorItemHandler.Callback onItemChange, final ProcessorFluidTank.Callback onFluidChange, final Consumer<Builder> builder) {
+  protected Processor(final ProcessorTile<?> tile, final ProcessorItemHandler.Callback onItemChange, final ProcessorFluidTank.Callback onFluidChange, final Consumer<Builder> builder) {
     final Builder b = new Builder(this, onItemChange, onFluidChange);
     builder.accept(b);
 
+    this.tile = tile;
     this.tier = b.tier;
 
     this.itemSlots = b.itemSlots;
@@ -202,6 +205,9 @@ public abstract class Processor {
       ((ProcessorFluidTank)tank).clearLock();
     }
   }
+
+  public void onAddToWorld() { }
+  public void onRemoveFromWorld() { }
 
   public abstract boolean tick(final boolean isClient);
   public abstract int getTicks();
