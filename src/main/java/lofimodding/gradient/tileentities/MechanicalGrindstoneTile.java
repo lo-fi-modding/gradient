@@ -17,7 +17,7 @@ public class MechanicalGrindstoneTile extends ProcessorTile<KineticEnergySource>
     super(
       GradientTileEntities.MECHANICAL_GRINDSTONE.get(),
       new KineticEnergySource(1.0f, 1.0f, 1.0f),
-      builder -> builder.addProcessor(
+      builder -> builder.addRecipeProcessor(
         GrindingRecipe.TYPE,
         processor -> processor
           .tier(ProcessorTier.BASIC)

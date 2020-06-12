@@ -25,7 +25,7 @@ public class MixingBasinTile extends ProcessorTile<ManualEnergySource> {
     super(
       GradientTileEntities.MIXING_BASIN.get(),
       new ManualEnergySource(20, 1),
-      builder -> builder.addProcessor(
+      builder -> builder.addRecipeProcessor(
         MixingRecipe.TYPE,
         processor -> processor
           .tier(ProcessorTier.BASIC)

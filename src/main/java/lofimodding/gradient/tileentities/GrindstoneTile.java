@@ -20,7 +20,7 @@ public class GrindstoneTile extends ProcessorTile<ManualEnergySource> {
       GradientTileEntities.GRINDSTONE.get(),
       new ManualEnergySource(20, 1),
 
-      builder -> builder.addProcessor(
+      builder -> builder.addRecipeProcessor(
         GrindingRecipe.TYPE,
         processor -> processor
           .tier(ProcessorTier.BASIC)

@@ -5,6 +5,7 @@ import lofimodding.gradient.tileentities.pieces.IEnergySource;
 import lofimodding.gradient.tileentities.pieces.IInteractor;
 import lofimodding.gradient.tileentities.pieces.NoopInteractor;
 import lofimodding.gradient.tileentities.pieces.Processor;
+import lofimodding.gradient.tileentities.pieces.PumpProcessor;
 import lofimodding.gradient.tileentities.pieces.RecipeProcessor;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -488,12 +489,21 @@ public abstract class ProcessorTile<Energy extends IEnergySource<Energy>> extend
       this.onFluidChanged = onFluidChanged;
     }
 
-    public <Recipe extends IGradientRecipe> Builder addProcessor(final IRecipeType<Recipe> recipeType, final Consumer<Processor.Builder> builder) {
-      return this.addProcessor(recipeType, builder, new NoopInteractor());
+    public <Recipe extends IGradientRecipe> Builder addRecipeProcessor(final IRecipeType<Recipe> recipeType, final Consumer<Processor.Builder> builder) {
+      return this.addRecipeProcessor(recipeType, builder, new NoopInteractor());
     }
 
-    public <Recipe extends IGradientRecipe> Builder addProcessor(final IRecipeType<Recipe> recipeType, final Consumer<Processor.Builder> builder, final IInteractor interactor) {
+    public <Recipe extends IGradientRecipe> Builder addRecipeProcessor(final IRecipeType<Recipe> recipeType, final Consumer<Processor.Builder> builder, final IInteractor interactor) {
       this.processors.add(new ProcessorInteractor(new RecipeProcessor<>(this.onItemChanged, this.onFluidChanged, recipeType, builder), interactor));
+      return this;
+    }
+
+    public Builder addPumpProcessor(final Consumer<Processor.Builder> builder) {
+      return this.addPumpProcessor(builder, new NoopInteractor());
+    }
+
+    public Builder addPumpProcessor(final Consumer<Processor.Builder> builder, final IInteractor interactor) {
+      this.processors.add(new ProcessorInteractor(new PumpProcessor(this.onItemChanged, this.onFluidChanged, builder), interactor));
       return this;
     }
   }

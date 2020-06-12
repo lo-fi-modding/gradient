@@ -20,7 +20,7 @@ public class MechanicalMixingBasinTile extends ProcessorTile<KineticEnergySource
     super(
       GradientTileEntities.MECHANICAL_MIXING_BASIN.get(),
       new KineticEnergySource(1.0f, 1.0f, 1.0f),
-      builder -> builder.addProcessor(
+      builder -> builder.addRecipeProcessor(
         MixingRecipe.TYPE,
         processor -> processor
           .tier(ProcessorTier.BASIC)
