@@ -3,6 +3,8 @@ package lofimodding.gradient.tileentities.pieces;
 import lofimodding.gradient.tileentities.ProcessorTile;
 import lofimodding.progression.Stage;
 import lofimodding.progression.capabilities.Progress;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
@@ -10,6 +12,8 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
@@ -208,6 +212,7 @@ public abstract class Processor {
 
   public void onAddToWorld() { }
   public void onRemoveFromWorld() { }
+  public void onNeighbourChanged(final BlockState state, final World world, final BlockPos pos, final Block block, final BlockPos neighbor, final boolean isMoving) { }
 
   public abstract boolean tick(final boolean isClient);
   public abstract int getTicks();

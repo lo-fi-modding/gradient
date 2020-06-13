@@ -7,6 +7,7 @@ import lofimodding.gradient.tileentities.pieces.NoopInteractor;
 import lofimodding.gradient.tileentities.pieces.Processor;
 import lofimodding.gradient.tileentities.pieces.PumpProcessor;
 import lofimodding.gradient.tileentities.pieces.RecipeProcessor;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -105,6 +106,12 @@ public abstract class ProcessorTile<Energy extends IEnergySource<Energy>> extend
 
     for(final ProcessorInteractor pi : this.processors) {
       pi.processor.onRemoveFromWorld();
+    }
+  }
+
+  public void neighborChanged(final BlockState state, final World world, final BlockPos pos, final Block block, final BlockPos neighbor, final boolean isMoving) {
+    for(final ProcessorInteractor pi : this.processors) {
+      pi.processor.onNeighbourChanged(state, world, pos, block, neighbor, isMoving);
     }
   }
 

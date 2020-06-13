@@ -59,4 +59,16 @@ public abstract class ProcessorBlock<Energy extends IEnergySource<Energy>, Tile 
       super.onReplaced(state, world, pos, newState, isMoving);
     }
   }
+  @SuppressWarnings("deprecation")
+  @Override
+  @Deprecated
+  public void neighborChanged(final BlockState state, final World world, final BlockPos pos, final Block block, final BlockPos neighbor, final boolean isMoving) {
+    super.neighborChanged(state, world, pos, block, neighbor, isMoving);
+
+    final ProcessorTile<?> te = WorldUtils.getTileEntity(world, pos, ProcessorTile.class);
+
+    if(te != null) {
+      te.neighborChanged(state, world, pos, block, neighbor, isMoving);
+    }
+  }
 }
