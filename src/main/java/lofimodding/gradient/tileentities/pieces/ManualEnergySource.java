@@ -1,7 +1,5 @@
 package lofimodding.gradient.tileentities.pieces;
 
-import lofimodding.gradient.recipes.IGradientRecipe;
-import lofimodding.gradient.tileentities.ProcessorTile;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -11,7 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 
-public class ManualEnergySource<Recipe extends IGradientRecipe, Tile extends ProcessorTile<Recipe, ManualEnergySource<Recipe, Tile>, Tile>> implements IEnergySource<Recipe, ManualEnergySource<Recipe, Tile>, Tile> {
+public class ManualEnergySource implements IEnergySource<ManualEnergySource> {
   private final int energyAddedPerCrank;
   private final int energyConsumedPerTick;
 

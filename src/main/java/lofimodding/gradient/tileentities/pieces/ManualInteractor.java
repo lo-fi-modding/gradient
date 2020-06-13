@@ -1,6 +1,5 @@
 package lofimodding.gradient.tileentities.pieces;
 
-import lofimodding.gradient.recipes.IGradientRecipe;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -15,9 +14,9 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-public class ManualInteractor<Recipe extends IGradientRecipe> implements IInteractor<Recipe> {
+public class ManualInteractor implements IInteractor {
   @Override
-  public ActionResultType onInteract(final Processor<Recipe> processor, final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
+  public ActionResultType onInteract(final Processor processor, final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockRayTraceResult hit) {
     // Water
     if(FluidUtil.getFluidHandler(player.getHeldItem(hand)).isPresent()) {
       final FluidStack fluid = FluidUtil.getFluidContained(player.getHeldItem(hand)).orElse(FluidStack.EMPTY);

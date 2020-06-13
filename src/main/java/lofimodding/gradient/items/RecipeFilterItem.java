@@ -34,7 +34,7 @@ public class RecipeFilterItem extends Item {
       return ActionResultType.SUCCESS;
     }
 
-    final ProcessorTile<?, ?, ?> processor = WorldUtils.getTileEntity(context.getWorld(), context.getPos(), ProcessorTile.class);
+    final ProcessorTile<?> processor = WorldUtils.getTileEntity(context.getWorld(), context.getPos(), ProcessorTile.class);
 
     if(processor != null) {
       final PlayerEntity player = context.getPlayer();

@@ -1,6 +1,5 @@
 package lofimodding.gradient.blocks;
 
-import lofimodding.gradient.recipes.IGradientRecipe;
 import lofimodding.gradient.tileentities.ProcessorTile;
 import lofimodding.gradient.tileentities.pieces.IEnergySource;
 import lofimodding.gradient.utils.WorldUtils;
@@ -14,7 +13,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-public abstract class ProcessorBlock<Recipe extends IGradientRecipe, Energy extends IEnergySource<Recipe, Energy, Tile>, Tile extends ProcessorTile<Recipe, Energy, Tile>> extends Block {
+public abstract class ProcessorBlock<Energy extends IEnergySource<Energy>, Tile extends ProcessorTile<Energy>> extends Block {
   private final Class<Tile> cls;
 
   protected ProcessorBlock(final Class<Tile> cls, final Properties properties) {
@@ -58,6 +57,18 @@ public abstract class ProcessorBlock<Recipe extends IGradientRecipe, Energy exte
     if(state.getBlock() != newState.getBlock()) {
       WorldUtils.dropInventory(world, pos);
       super.onReplaced(state, world, pos, newState, isMoving);
+    }
+  }
+  @SuppressWarnings("deprecation")
+  @Override
+  @Deprecated
+  public void neighborChanged(final BlockState state, final World world, final BlockPos pos, final Block block, final BlockPos neighbor, final boolean isMoving) {
+    super.neighborChanged(state, world, pos, block, neighbor, isMoving);
+
+    final ProcessorTile<?> te = WorldUtils.getTileEntity(world, pos, ProcessorTile.class);
+
+    if(te != null) {
+      te.neighborChanged(state, world, pos, block, neighbor, isMoving);
     }
   }
 }

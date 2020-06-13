@@ -1,6 +1,5 @@
 package lofimodding.gradient.blocks;
 
-import lofimodding.gradient.recipes.MixingRecipe;
 import lofimodding.gradient.tileentities.MechanicalMixingBasinTile;
 import lofimodding.gradient.tileentities.pieces.KineticEnergySource;
 import net.minecraft.block.Block;
@@ -19,7 +18,7 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
-public class MechanicalMixingBasinBlock extends ProcessorBlock<MixingRecipe, KineticEnergySource<MixingRecipe, MechanicalMixingBasinTile>, MechanicalMixingBasinTile> {
+public class MechanicalMixingBasinBlock extends ProcessorBlock<KineticEnergySource, MechanicalMixingBasinTile> {
   public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
   public static final BooleanProperty HAS_WATER = BooleanProperty.create("has_water");
 

@@ -1,28 +1,26 @@
 package lofimodding.gradient.tileentities.pieces;
 
-import lofimodding.gradient.recipes.IGradientRecipe;
 import lofimodding.gradient.tileentities.ProcessorTile;
-import lofimodding.gradient.utils.RecipeUtils;
 import lofimodding.progression.Stage;
 import lofimodding.progression.capabilities.Progress;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -33,38 +31,36 @@ import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-public class Processor<Recipe extends IGradientRecipe> {
-  private final IRecipeType<Recipe> recipeType;
+public abstract class Processor {
+  protected final ProcessorTile<?> tile;
 
-  private final List<ItemSlot> itemSlots;
-  private final List<ItemSlot> itemInputSlots;
-  private final List<ItemSlot> itemOutputSlots;
-  private final ProcessorItemHandler<Recipe> inv;
+  protected final IProcessorTier tier;
 
-  private final List<FluidTank> fluidSlots;
-  private final List<FluidTank> fluidInputSlots;
-  private final List<FluidTank> fluidOutputSlots;
-  private final ProcessorTile.MultiTankWrapper fluids;
+  protected final List<ItemSlot> itemSlots;
+  protected final List<ItemSlot> itemInputSlots;
+  protected final List<ItemSlot> itemOutputSlots;
+  protected final ProcessorItemHandler inv;
 
-  private final Set<Stage> stages = new HashSet<>();
+  protected final List<FluidTank> fluidSlots;
+  protected final List<FluidTank> fluidInputSlots;
+  protected final List<FluidTank> fluidOutputSlots;
+  protected final ProcessorTile.MultiTankWrapper fluids;
 
-  private boolean tanksLocked = true;
+  protected final Set<Stage> stages = new HashSet<>();
 
-  @Nullable
-  private Recipe recipe;
-  private int ticks;
-  private int maxTicks;
+  protected boolean tanksLocked = true;
 
-  public Processor(final ProcessorItemHandler.Callback onItemChange, final ProcessorFluidTank.Callback onFluidChange, final IRecipeType<Recipe> recipeType, final Consumer<Builder<Recipe>> builder) {
-    this.recipeType = recipeType;
-
-    final Builder<Recipe> b = new Builder<>(this, onItemChange, onFluidChange);
+  protected Processor(final ProcessorTile<?> tile, final ProcessorItemHandler.Callback onItemChange, final ProcessorFluidTank.Callback onFluidChange, final Consumer<Builder> builder) {
+    final Builder b = new Builder(this, onItemChange, onFluidChange);
     builder.accept(b);
+
+    this.tile = tile;
+    this.tier = b.tier;
 
     this.itemSlots = b.itemSlots;
     this.itemInputSlots = b.itemInputSlots;
     this.itemOutputSlots = b.itemOutputSlots;
-    this.inv = new ProcessorItemHandler<>(this, this.itemSlots.size());
+    this.inv = new ProcessorItemHandler(this, this.itemSlots.size());
 
     this.fluidSlots = b.fluidSlots;
     this.fluidInputSlots = b.fluidInputSlots;
@@ -200,7 +196,7 @@ public class Processor<Recipe extends IGradientRecipe> {
     }
 
     for(final FluidTank tank : this.fluidSlots) {
-      ((ProcessorFluidTank<?>)tank).setLock(tank.getFluid());
+      ((ProcessorFluidTank)tank).setLock(tank.getFluid());
     }
   }
 
@@ -210,93 +206,18 @@ public class Processor<Recipe extends IGradientRecipe> {
     }
 
     for(final FluidTank tank : this.fluidSlots) {
-      ((ProcessorFluidTank<?>)tank).clearLock();
+      ((ProcessorFluidTank)tank).clearLock();
     }
   }
 
-  public boolean tick(final boolean isClient) {
-    if(this.hasRecipe()) {
-      this.ticks++;
+  public void onAddToWorld() { }
+  public void onRemoveFromWorld() { }
+  public void onNeighbourChanged(final BlockState state, final World world, final BlockPos pos, final Block block, final BlockPos neighbor, final boolean isMoving) { }
 
-      if(!isClient && this.isFinished()) {
-        this.finishRecipe();
-        this.ticks = 0;
-      }
-
-      return true;
-    }
-
-    return false;
-  }
-
-  public int getTicks() {
-    return this.ticks;
-  }
-
-  private boolean isFinished() {
-    return this.ticks >= this.maxTicks;
-  }
-
-  private void finishRecipe() {
-    final Recipe recipe = this.recipe;
-
-    for(final ItemSlot slot : this.itemInputSlots) {
-      slot.extract(this.inv, 1, false); //TODO: don't hardcode to extract one item
-    }
-
-    this.inv.disableValidation();
-
-    for(int slot = 0; slot < this.itemOutputSlots.size(); slot++) {
-      this.itemOutputSlots.get(slot).insert(this.inv, recipe.getItemOutput(slot), false);
-    }
-
-    this.inv.enableValidation();
-
-    this.tanksLocked = false;
-    for(int i = 0; i < recipe.getFluidInputCount(); i++) {
-      this.fluids.drain(recipe.getFluidInput(i), IFluidHandler.FluidAction.EXECUTE);
-    }
-    for(int i = 0; i < recipe.getFluidOutputCount(); i++) {
-      this.fluids.fill(recipe.getFluidOutput(i), IFluidHandler.FluidAction.EXECUTE);
-    }
-    this.tanksLocked = true;
-  }
-
-  public boolean hasRecipe() {
-    return this.recipe != null;
-  }
-
-  private void updateRecipe() {
-    final Recipe recipe = RecipeUtils.getRecipe(this.recipeType, this::recipeMatches).orElse(null);
-
-    if(recipe != this.recipe) {
-      this.recipe = recipe;
-      this.ticks = 0;
-
-      if(this.hasRecipe()) {
-        this.maxTicks = this.recipe.getTicks() * 3;
-      } else {
-        this.maxTicks = Integer.MAX_VALUE;
-      }
-    }
-  }
-
-  private boolean recipeMatches(final IGradientRecipe recipe) {
-    final NonNullList<ItemStack> items = NonNullList.create();
-
-    for(final ItemSlot slot : this.itemInputSlots) {
-      items.add(slot.get(this.inv));
-    }
-
-    this.tanksLocked = false;
-    final boolean matches =
-      recipe.matchesStages(this.stages) &&
-      recipe.matchesItems(items) &&
-      recipe.matchesFluids(this.fluids);
-    this.tanksLocked = true;
-
-    return matches;
-  }
+  public abstract boolean tick(final boolean isClient);
+  public abstract int getTicks();
+  public abstract boolean hasWork();
+  protected abstract void onInputsChanged();
 
   public CompoundNBT write(final CompoundNBT compound) {
     if(this.inv.getSlots() != 0) {
@@ -318,8 +239,8 @@ public class Processor<Recipe extends IGradientRecipe> {
 
       for(final FluidTank tank : this.fluidSlots) {
         final CompoundNBT tankNbt = tank.writeToNBT(new CompoundNBT());
-        tankNbt.put("LockFluid", ((ProcessorFluidTank<?>)tank).lockFluid.writeToNBT(new CompoundNBT()));
-        tankNbt.putBoolean("Locked", ((ProcessorFluidTank<?>)tank).locked);
+        tankNbt.put("LockFluid", ((ProcessorFluidTank)tank).lockFluid.writeToNBT(new CompoundNBT()));
+        tankNbt.putBoolean("Locked", ((ProcessorFluidTank)tank).locked);
         fluids.add(tankNbt);
       }
 
@@ -332,7 +253,6 @@ public class Processor<Recipe extends IGradientRecipe> {
     }
 
     compound.put("Stages", stagesList);
-    compound.putInt("Ticks", this.ticks);
     return compound;
   }
 
@@ -360,8 +280,8 @@ public class Processor<Recipe extends IGradientRecipe> {
         final FluidTank tank = this.fluidSlots.get(i);
 
         tank.readFromNBT(tankNbt);
-        ((ProcessorFluidTank<?>)tank).lockFluid = FluidStack.loadFluidStackFromNBT(tankNbt.getCompound("LockFluid"));
-        ((ProcessorFluidTank<?>)tank).locked = tankNbt.getBoolean("Locked");
+        ((ProcessorFluidTank)tank).lockFluid = FluidStack.loadFluidStackFromNBT(tankNbt.getCompound("LockFluid"));
+        ((ProcessorFluidTank)tank).locked = tankNbt.getBoolean("Locked");
       }
     }
 
@@ -371,17 +291,15 @@ public class Processor<Recipe extends IGradientRecipe> {
       this.stages.add(Stage.REGISTRY.get().getValue(new ResourceLocation(stagesList.getString(i))));
     }
 
-    this.ticks = compound.getInt("Ticks");
-
-    this.updateRecipe();
+    this.onInputsChanged();
   }
 
-  public static class ProcessorItemHandler<Recipe extends IGradientRecipe> extends ItemStackHandler {
-    private final Processor<Recipe> processor;
+  public static class ProcessorItemHandler extends ItemStackHandler {
+    private final Processor processor;
 
     private boolean validate = true;
 
-    public ProcessorItemHandler(final Processor<Recipe> processor, final int size) {
+    public ProcessorItemHandler(final Processor processor, final int size) {
       super(size);
       this.processor = processor;
     }
@@ -421,23 +339,23 @@ public class Processor<Recipe extends IGradientRecipe> {
     }
 
     @FunctionalInterface
-    public interface Validator extends BiPredicate<ProcessorItemHandler<?>, ItemStack> {
+    public interface Validator extends BiPredicate<ProcessorItemHandler, ItemStack> {
       Validator ALWAYS = (inv, stack) -> true;
       Validator NEVER = (inv, stack) -> false;
 
       @Override
-      default Validator and(final BiPredicate<? super ProcessorItemHandler<?>, ? super ItemStack> other) {
+      default Validator and(final BiPredicate<? super ProcessorItemHandler, ? super ItemStack> other) {
         return (inv, stack) -> this.test(inv, stack) && other.test(inv, stack);
       }
     }
 
     @FunctionalInterface
-    public interface Callback extends BiConsumer<ProcessorItemHandler<?>, ItemStack> {
+    public interface Callback extends BiConsumer<ProcessorItemHandler, ItemStack> {
       Callback NOOP = (inv, stack) -> { };
-      Callback UPDATE_RECIPE = (inv, stack) -> inv.processor.updateRecipe();
+      Callback UPDATE_RECIPE = (inv, stack) -> inv.processor.onInputsChanged();
 
       @Override
-      default Callback andThen(final BiConsumer<? super ProcessorItemHandler<?>, ? super ItemStack> after) {
+      default Callback andThen(final BiConsumer<? super ProcessorItemHandler, ? super ItemStack> after) {
         return (l, r) -> { this.accept(l, r); after.accept(l, r); };
       }
     }
@@ -465,15 +383,15 @@ public class Processor<Recipe extends IGradientRecipe> {
       return inv.getStackInSlot(this.index);
     }
 
-    public void set(final ProcessorItemHandler<?> inv, final ItemStack stack) {
+    public void set(final ProcessorItemHandler inv, final ItemStack stack) {
       inv.setStackInSlot(this.index, stack);
     }
 
-    public ItemStack insert(final ProcessorItemHandler<?> inv, final ItemStack stack, final boolean simulate) {
+    public ItemStack insert(final ProcessorItemHandler inv, final ItemStack stack, final boolean simulate) {
       return inv.insertItem(this.index, stack, simulate);
     }
 
-    public ItemStack extract(final ProcessorItemHandler<?> inv, final int amount, final boolean simulate) {
+    public ItemStack extract(final ProcessorItemHandler inv, final int amount, final boolean simulate) {
       inv.disableValidation();
       final ItemStack stack = inv.extractItem(this.index, amount, simulate);
       inv.enableValidation();
@@ -499,15 +417,15 @@ public class Processor<Recipe extends IGradientRecipe> {
     }
   }
 
-  public static class ProcessorFluidTank<Recipe extends IGradientRecipe> extends FluidTank {
-    private final Processor<Recipe> processor;
+  public static class ProcessorFluidTank extends FluidTank {
+    private final Processor processor;
     private final Validator extractValidator;
     private final Callback onChanged;
 
     private FluidStack lockFluid = FluidStack.EMPTY;
     private boolean locked;
 
-    public ProcessorFluidTank(final Processor<Recipe> processor, final int capacity, final Validator insertValidator, final Validator extractValidator, final Callback onChanged) {
+    public ProcessorFluidTank(final Processor processor, final int capacity, final Validator insertValidator, final Validator extractValidator, final Callback onChanged) {
       super(capacity);
       this.processor = processor;
       this.setValidator(stack -> (!this.locked || this.lockFluid.isFluidEqual(stack)) && !this.processor.tanksLocked || insertValidator.test(this, stack));
@@ -542,7 +460,7 @@ public class Processor<Recipe extends IGradientRecipe> {
     }
 
     @FunctionalInterface
-    public interface Validator extends BiPredicate<ProcessorFluidTank<?>, FluidStack> {
+    public interface Validator extends BiPredicate<ProcessorFluidTank, FluidStack> {
       Validator ALWAYS = (tank, stack) -> true;
       Validator NEVER = (tank, stack) -> false;
 
@@ -552,21 +470,23 @@ public class Processor<Recipe extends IGradientRecipe> {
     }
 
     @FunctionalInterface
-    public interface Callback extends BiConsumer<ProcessorFluidTank<?>, FluidStack> {
+    public interface Callback extends BiConsumer<ProcessorFluidTank, FluidStack> {
       Callback NOOP = (tank, stack) -> { };
-      Callback UPDATE_RECIPE = (tank, stack) -> tank.processor.updateRecipe();
+      Callback UPDATE_RECIPE = (tank, stack) -> tank.processor.onInputsChanged();
 
       @Override
-      default Callback andThen(final BiConsumer<? super ProcessorFluidTank<?>, ? super FluidStack> after) {
+      default Callback andThen(final BiConsumer<? super ProcessorFluidTank, ? super FluidStack> after) {
         return (l, r) -> { this.accept(l, r); after.accept(l, r); };
       }
     }
   }
 
-  public static class Builder<Recipe extends IGradientRecipe> {
-    private final Processor<Recipe> processor;
+  public static class Builder {
+    private final Processor processor;
     private final ProcessorItemHandler.Callback onItemChanged;
     private final ProcessorFluidTank.Callback onFluidChanged;
+
+    private IProcessorTier tier = ProcessorTier.BASIC;
 
     private final List<ItemSlot> itemSlots = new ArrayList<>();
     private final List<ItemSlot> itemInputSlots = new ArrayList<>();
@@ -577,59 +497,64 @@ public class Processor<Recipe extends IGradientRecipe> {
     private final List<FluidTank> fluidInputSlots = new ArrayList<>();
     private final List<FluidTank> fluidOutputSlots = new ArrayList<>();
 
-    public Builder(final Processor<Recipe> processor, final ProcessorItemHandler.Callback onItemChanged, final ProcessorFluidTank.Callback onFluidChanged) {
+    public Builder(final Processor processor, final ProcessorItemHandler.Callback onItemChanged, final ProcessorFluidTank.Callback onFluidChanged) {
       this.processor = processor;
       this.onItemChanged = onItemChanged;
       this.onFluidChanged = onFluidChanged;
     }
 
-    public Builder<Recipe> addInputItem() {
+    public Builder tier(final IProcessorTier tier) {
+      this.tier = tier;
+      return this;
+    }
+
+    public Builder addInputItem() {
       return this.addInputItem(64);
     }
 
-    public Builder<Recipe> addInputItem(final int limit) {
+    public Builder addInputItem(final int limit) {
       return this.addInputItem(limit, ProcessorItemHandler.Validator.ALWAYS, ProcessorItemHandler.Validator.NEVER, ProcessorItemHandler.Callback.UPDATE_RECIPE);
     }
 
-    public Builder<Recipe> addInputItem(final int limit, final ProcessorItemHandler.Validator insertValidator, final ProcessorItemHandler.Validator extractValidator, final ProcessorItemHandler.Callback onChanged) {
+    public Builder addInputItem(final int limit, final ProcessorItemHandler.Validator insertValidator, final ProcessorItemHandler.Validator extractValidator, final ProcessorItemHandler.Callback onChanged) {
       final ItemSlot slot = new ItemSlot(this.itemSlotIndex++, limit, insertValidator, extractValidator, onChanged.andThen(this.onItemChanged));
       this.itemSlots.add(slot);
       this.itemInputSlots.add(slot);
       return this;
     }
 
-    public Builder<Recipe> addOutputItem() {
+    public Builder addOutputItem() {
       return this.addOutputItem(64, ProcessorItemHandler.Validator.NEVER, ProcessorItemHandler.Validator.ALWAYS, ProcessorItemHandler.Callback.NOOP);
     }
 
-    public Builder<Recipe> addOutputItem(final int limit, final ProcessorItemHandler.Validator insertValidator, final ProcessorItemHandler.Validator extractValidator, final ProcessorItemHandler.Callback onChanged) {
+    public Builder addOutputItem(final int limit, final ProcessorItemHandler.Validator insertValidator, final ProcessorItemHandler.Validator extractValidator, final ProcessorItemHandler.Callback onChanged) {
       final ItemSlot slot = new ItemSlot(this.itemSlotIndex++, limit, insertValidator, extractValidator, onChanged.andThen(this.onItemChanged));
       this.itemSlots.add(slot);
       this.itemOutputSlots.add(slot);
       return this;
     }
 
-    public Builder<Recipe> addInputFluid(final int capacity) {
+    public Builder addInputFluid(final int capacity) {
       return this.addInputFluid(capacity, ProcessorFluidTank.Validator.ALWAYS);
     }
 
-    public Builder<Recipe> addInputFluid(final int capacity, final ProcessorFluidTank.Validator insertValidator) {
+    public Builder addInputFluid(final int capacity, final ProcessorFluidTank.Validator insertValidator) {
       return this.addInputFluid(capacity, insertValidator, ProcessorFluidTank.Validator.NEVER, ProcessorFluidTank.Callback.UPDATE_RECIPE);
     }
 
-    public Builder<Recipe> addInputFluid(final int capacity, final ProcessorFluidTank.Validator insertValidator, final ProcessorFluidTank.Validator extractValidator, final ProcessorFluidTank.Callback onChanged) {
-      final ProcessorFluidTank<Recipe> tank = new ProcessorFluidTank<>(this.processor, capacity, insertValidator, extractValidator, onChanged.andThen(this.onFluidChanged));
+    public Builder addInputFluid(final int capacity, final ProcessorFluidTank.Validator insertValidator, final ProcessorFluidTank.Validator extractValidator, final ProcessorFluidTank.Callback onChanged) {
+      final ProcessorFluidTank tank = new ProcessorFluidTank(this.processor, capacity, insertValidator, extractValidator, onChanged.andThen(this.onFluidChanged));
       this.fluidSlots.add(tank);
       this.fluidInputSlots.add(tank);
       return this;
     }
 
-    public Builder<Recipe> addOutputFluid(final int capacity) {
+    public Builder addOutputFluid(final int capacity) {
       return this.addOutputFluid(capacity, ProcessorFluidTank.Validator.NEVER, ProcessorFluidTank.Validator.ALWAYS, ProcessorFluidTank.Callback.NOOP);
     }
 
-    public Builder<Recipe> addOutputFluid(final int capacity, final ProcessorFluidTank.Validator insertValidator, final ProcessorFluidTank.Validator extractValidator, final ProcessorFluidTank.Callback onChanged) {
-      final ProcessorFluidTank<Recipe> tank = new ProcessorFluidTank<>(this.processor, capacity, insertValidator, extractValidator, onChanged.andThen(this.onFluidChanged));
+    public Builder addOutputFluid(final int capacity, final ProcessorFluidTank.Validator insertValidator, final ProcessorFluidTank.Validator extractValidator, final ProcessorFluidTank.Callback onChanged) {
+      final ProcessorFluidTank tank = new ProcessorFluidTank(this.processor, capacity, insertValidator, extractValidator, onChanged.andThen(this.onFluidChanged));
       this.fluidSlots.add(tank);
       this.fluidOutputSlots.add(tank);
       return this;

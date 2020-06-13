@@ -1,6 +1,5 @@
 package lofimodding.gradient.blocks;
 
-import lofimodding.gradient.recipes.GrindingRecipe;
 import lofimodding.gradient.tileentities.MechanicalGrindstoneTile;
 import lofimodding.gradient.tileentities.pieces.KineticEnergySource;
 import net.minecraft.block.Block;
@@ -19,7 +18,7 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
-public class MechanicalGrindstoneBlock extends ProcessorBlock<GrindingRecipe, KineticEnergySource<GrindingRecipe, MechanicalGrindstoneTile>, MechanicalGrindstoneTile> {
+public class MechanicalGrindstoneBlock extends ProcessorBlock<KineticEnergySource, MechanicalGrindstoneTile> {
   private static final VoxelShape SHAPE_X = Block.makeCuboidShape(0.0d, 0.0d, 2.0d, 16.0d, 4.0d, 14.0d);
   private static final VoxelShape SHAPE_Z = Block.makeCuboidShape(2.0d, 0.0d, 0.0d, 14.0d, 4.0d, 16.0d);
 

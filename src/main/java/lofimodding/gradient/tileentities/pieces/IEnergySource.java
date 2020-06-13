@@ -1,6 +1,5 @@
 package lofimodding.gradient.tileentities.pieces;
 
-import lofimodding.gradient.recipes.IGradientRecipe;
 import lofimodding.gradient.tileentities.ProcessorTile;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,12 +15,12 @@ import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nullable;
 
-public interface IEnergySource<Recipe extends IGradientRecipe, Energy extends IEnergySource<Recipe, Energy, Tile>, Tile extends ProcessorTile<Recipe, Energy, Tile>> {
-  default void onAddToWorld(final Tile tile) {
+public interface IEnergySource<Energy extends IEnergySource<Energy>> {
+  default void onAddToWorld(final ProcessorTile<Energy> tile) {
 
   }
 
-  default void onRemoveFromWorld(final Tile tile) {
+  default void onRemoveFromWorld(final ProcessorTile<Energy> tile) {
 
   }
 
