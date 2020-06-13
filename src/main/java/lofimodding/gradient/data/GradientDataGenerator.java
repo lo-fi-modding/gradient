@@ -825,6 +825,7 @@ public final class GradientDataGenerator {
       this.getBuilder(GradientIds.WOODEN_CRANK).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.WOODEN_CRANK)));
       this.getBuilder(GradientIds.MECHANICAL_GRINDSTONE).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.MECHANICAL_GRINDSTONE)));
       this.getBuilder(GradientIds.MECHANICAL_MIXING_BASIN).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.MECHANICAL_MIXING_BASIN)));
+      this.getBuilder(GradientIds.MECHANICAL_PUMP).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.MECHANICAL_PUMP)));
 
       this.singleTexture(GradientIds.RECIPE_FILTER, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.RECIPE_FILTER));
 
@@ -1011,6 +1012,7 @@ public final class GradientDataGenerator {
       this.directionalBlock(GradientBlocks.WOODEN_CONVEYOR_BELT_DRIVER.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.WOODEN_CONVEYOR_BELT_DRIVER)));
       this.directionalBlock(GradientBlocks.WOODEN_CRANK.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.WOODEN_CRANK)));
       this.horizontalBlock(GradientBlocks.MECHANICAL_GRINDSTONE.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.MECHANICAL_GRINDSTONE)));
+      this.simpleBlock(GradientBlocks.MECHANICAL_PUMP.get());
 
       this.getMultipartBuilder(GradientBlocks.MECHANICAL_MIXING_BASIN.get())
         .part()
@@ -1224,6 +1226,7 @@ public final class GradientDataGenerator {
       this.add(GradientItems.WOODEN_CRANK.get(), "Wooden Crank");
       this.add(GradientItems.MECHANICAL_GRINDSTONE.get(), "Mechanical Grindstone");
       this.add(GradientItems.MECHANICAL_MIXING_BASIN.get(), "Mechanical Mixing Basin");
+      this.add(GradientItems.MECHANICAL_PUMP.get(), "Mechanical Pump");
 
       this.add(GradientItems.RECIPE_FILTER.get(), "Recipe Filter");
       this.add(GradientItems.RECIPE_FILTER.get().getTranslationKey() + ".tooltip", "Shift-right-click on most Gradient machines to lock in the current recipe. Shift-right-click again to unlock.");
@@ -2610,6 +2613,7 @@ public final class GradientDataGenerator {
         this.registerDropSelfLootTable(GradientBlocks.WOODEN_CRANK.get());
         this.registerDropSelfLootTable(GradientBlocks.MECHANICAL_GRINDSTONE.get());
         this.registerDropSelfLootTable(GradientBlocks.MECHANICAL_MIXING_BASIN.get());
+        this.registerDropSelfLootTable(GradientBlocks.MECHANICAL_PUMP.get());
 
         this.registerDropSelfLootTable(GradientBlocks.CREATIVE_GENERATOR.get());
         this.registerDropSelfLootTable(GradientBlocks.CREATIVE_SINKER.get());

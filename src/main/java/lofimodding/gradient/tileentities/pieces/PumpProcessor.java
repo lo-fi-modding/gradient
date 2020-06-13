@@ -6,9 +6,11 @@ import lofimodding.gradient.tileentities.ProcessorTile;
 import lofimodding.gradient.utils.WorldUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.IBucketPickupHandler;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -25,14 +27,12 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 public class PumpProcessor extends Processor {
-  private static final int PUMP_DISTANCE = 4;
-
   private final Map<Direction, LazyOptional<IFluidHandler>> outputs = new EnumMap<>(Direction.class);
   private BlockPos fluidRoot = BlockPos.ZERO;
   private FluidStack fluid = FluidStack.EMPTY;
 
   private int ticks;
-  private static final int MAX_TICKS = 40;
+  private static final int MAX_TICKS = 60;
 
   public PumpProcessor(final ProcessorTile<?> tile, final ProcessorItemHandler.Callback onItemChange, final ProcessorFluidTank.Callback onFluidChange, final Consumer<Builder> builder) {
     super(tile, onItemChange, onFluidChange, builder);
@@ -168,8 +168,13 @@ public class PumpProcessor extends Processor {
       }
 
       // Clear out the fluid
-      //TODO this is wrong
-      world.setBlockState(this.fluidRoot, fluidState.getBlockState());
+      final BlockState state = world.getBlockState(this.fluidRoot);
+
+      if(!(state.getBlock() instanceof IBucketPickupHandler)) {
+        return;
+      }
+
+      final Fluid fluid1 = ((IBucketPickupHandler)state.getBlock()).pickupFluid(world, this.fluidRoot, state);
 
       int remaining = total;
 
@@ -181,7 +186,7 @@ public class PumpProcessor extends Processor {
         while(it.hasNext()) {
           final Object2IntMap.Entry<IFluidHandler> entry = it.next();
           final IFluidHandler handler = entry.getKey();
-          final int filled = handler.fill(new FluidStack(this.fluid, amountToFill), IFluidHandler.FluidAction.EXECUTE);
+          final int filled = handler.fill(new FluidStack(fluid1, amountToFill), IFluidHandler.FluidAction.EXECUTE);
 
           if(filled == 0) {
             it.remove();
@@ -199,5 +204,18 @@ public class PumpProcessor extends Processor {
     }
 
     this.pumpHandlers.clear();
+  }
+
+  @Override
+  public CompoundNBT write(final CompoundNBT compound) {
+    final CompoundNBT nbt = super.write(compound);
+    nbt.putInt("Ticks", this.ticks);
+    return nbt;
+  }
+
+  @Override
+  public void read(final CompoundNBT compound) {
+    this.ticks = compound.getInt("Ticks");
+    super.read(compound);
   }
 }

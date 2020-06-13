@@ -60,6 +60,8 @@ public abstract class ProcessorTile<Energy extends IEnergySource<Energy>> extend
 
   private boolean slotsLocked;
 
+  private boolean firstTick = true;
+
   protected ProcessorTile(final TileEntityType<? extends ProcessorTile<Energy>> type, final Energy energy, final Consumer<Builder> builder) {
     super(type);
     this.energy = energy;
@@ -84,19 +86,6 @@ public abstract class ProcessorTile<Energy extends IEnergySource<Energy>> extend
   }
 
   @Override
-  public void onLoad() {
-    if(this.world.isRemote) {
-      return;
-    }
-
-    this.energy.onAddToWorld(this);
-
-    for(final ProcessorInteractor pi : this.processors) {
-      pi.processor.onAddToWorld();
-    }
-  }
-
-  @Override
   public void remove() {
     if(this.world.isRemote) {
       return;
@@ -117,6 +106,20 @@ public abstract class ProcessorTile<Energy extends IEnergySource<Energy>> extend
 
   @Override
   public void tick() {
+    if(this.firstTick) {
+      this.firstTick = false;
+
+      if(this.world.isRemote) {
+        return;
+      }
+
+      this.energy.onAddToWorld(this);
+
+      for(final ProcessorInteractor pi : this.processors) {
+        pi.processor.onAddToWorld();
+      }
+    }
+
     if(!this.hasWork()) {
       return;
     }
@@ -422,6 +425,10 @@ public abstract class ProcessorTile<Energy extends IEnergySource<Energy>> extend
 
     @Override
     public int fill(final FluidStack resource, final IFluidHandler.FluidAction action) {
+      if(resource.isEmpty()) {
+        return 0;
+      }
+
       final FluidStack remaining = resource.copy();
       int totalFilled = 0;
 
@@ -441,6 +448,10 @@ public abstract class ProcessorTile<Energy extends IEnergySource<Energy>> extend
     @Nonnull
     @Override
     public FluidStack drain(final FluidStack resource, final IFluidHandler.FluidAction action) {
+      if(resource.isEmpty()) {
+        return FluidStack.EMPTY;
+      }
+
       final FluidStack remaining = resource.copy();
       int totalDrained = 0;
 
@@ -464,6 +475,10 @@ public abstract class ProcessorTile<Energy extends IEnergySource<Energy>> extend
     @Nonnull
     @Override
     public FluidStack drain(final int maxDrain, final IFluidHandler.FluidAction action) {
+      if(maxDrain == 0) {
+        return FluidStack.EMPTY;
+      }
+
       FluidStack remaining = FluidStack.EMPTY;
       int totalDrained = 0;
 
