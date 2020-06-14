@@ -5,6 +5,6 @@
   "burn_temp": 2700.0,
   "heat_per_sec": 1.5,
   "ingredient": {
-    "tag": "minecraft:coals"
+    "item": "gradient:coal_nugget"
   }
 }

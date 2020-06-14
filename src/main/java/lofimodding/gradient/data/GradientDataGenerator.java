@@ -1998,7 +1998,7 @@ public final class GradientDataGenerator {
         .ignitionTemp(700.0f)
         .burnTemp(2700.0f)
         .heatPerSecond(1.5f)
-        .ingredient(ItemTags.COALS)
+        .ingredient(GradientItems.COAL_NUGGET.get())
         .addCriterion("has_coal_nugget", this.hasItem(GradientItems.COAL_NUGGET.get()))
         .build(finished, Gradient.loc("fuel/coal_nugget"));
 
