@@ -73,8 +73,8 @@ public class Gradient {
   public static final Logger LOGGER = LogManager.getLogger();
 
   public Gradient() {
-    ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.INTEROP_SPEC);
-    ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.ENET_SPEC);
+    ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.INTEROP_SPEC, MOD_ID + "_interop-server.toml");
+    ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.ENET_SPEC, MOD_ID + "_enet-server.toml");
 
     final IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
     final IEventBus forgeBus = MinecraftForge.EVENT_BUS;
