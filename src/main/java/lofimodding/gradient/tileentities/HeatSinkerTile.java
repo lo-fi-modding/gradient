@@ -86,11 +86,13 @@ public abstract class HeatSinkerTile extends TileEntity implements ITickableTile
 
     this.transferHeat();
 
-    this.heatSyncTicks++;
+    if(!this.world.isRemote) {
+      this.heatSyncTicks++;
 
-    if(this.heatSyncTicks >= 40) {
-      this.heatSyncTicks = 0;
-      this.syncHeat();
+      if(this.heatSyncTicks >= 40) {
+        this.heatSyncTicks = 0;
+        this.syncHeat();
+      }
     }
   }
 
