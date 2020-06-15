@@ -66,6 +66,7 @@ import net.minecraft.world.storage.loot.conditions.RandomChance;
 import net.minecraft.world.storage.loot.functions.ApplyBonus;
 import net.minecraft.world.storage.loot.functions.ExplosionDecay;
 import net.minecraft.world.storage.loot.functions.LootingEnchantBonus;
+import net.minecraft.world.storage.loot.functions.SetCount;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockModelProvider;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
@@ -2547,6 +2548,28 @@ public final class GradientDataGenerator {
           );
       }
 
+      private static LootTable.Builder firepitDrops() {
+        return LootTable.builder().addLootPool(
+          LootPool.builder()
+            .addEntry(
+              withExplosionDecay(
+                Items.STICK,
+                ItemLootEntry
+                  .builder(Items.STICK)
+                  .acceptFunction(SetCount.builder(RandomValueRange.of(2, 5))))
+            )
+        ).addLootPool(
+          LootPool.builder()
+            .addEntry(
+              ItemLootEntry
+                .builder(GradientItems.CLAY_FURNACE.get())
+                .acceptCondition(BlockStateProperty.builder(GradientBlocks.FIREPIT.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withBoolProp(FirepitBlock.HAS_FURNACE, true)))
+                .acceptFunction(SetCount.builder(ConstantRange.of(1)))
+                .acceptFunction(ExplosionDecay.builder())
+            )
+        );
+      }
+
       @Override
       protected void addTables() {
         this.registerLootTable(Blocks.STONE, hammerDrops(Blocks.STONE));
@@ -2572,7 +2595,7 @@ public final class GradientDataGenerator {
         this.registerLootTable(GradientBlocks.HARDENED_LOG_SLAB.get(), BlockLootTables::droppingSlab);
         this.registerLootTable(GradientBlocks.HARDENED_PLANKS_SLAB.get(), BlockLootTables::droppingSlab);
 
-        this.registerLootTable(GradientBlocks.FIREPIT.get(), droppingRandomly(Items.STICK, RandomValueRange.of(2, 5)));
+        this.registerLootTable(GradientBlocks.FIREPIT.get(), firepitDrops());
         this.registerDropSelfLootTable(GradientBlocks.UNLIT_FIBRE_TORCH.get());
         this.registerDropping(GradientBlocks.UNLIT_FIBRE_WALL_TORCH.get(), GradientBlocks.UNLIT_FIBRE_TORCH.get());
         this.registerDropSelfLootTable(GradientBlocks.LIT_FIBRE_TORCH.get());
