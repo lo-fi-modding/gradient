@@ -1,0 +1,16 @@
+{
+  "type": "gradient:melting",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 225,
+  "temperature": 327.5,
+  "ingredient": {
+    "tag": "forge:purified_ores/lead"
+  },
+  "fluid": {
+    "fluid": "gradient:lead",
+    "amount": 1.0,
+    "temperature": 327.5
+  }
+}

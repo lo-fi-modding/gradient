@@ -29,6 +29,12 @@ public final class Minerals {
   public static final Ore PYRITE_ORE      = addOre("pyrite", IRON, m -> m.meltTemp(1188.00f).hardness(6.0f).weight(119.98f).harvestLevel(3).colours(0xFFAFA67F, 0xFFFFF098, 0xFF736C4F, 0xFF5F5941, 0xFF44453F, 0xFF40413C, 0xFF3D3E39));
   public static final Ore SPHALERITE_ORE  = addOre("sphalerite", ZINC, m -> m.meltTemp(1830.00f).hardness(3.5f).weight( 96.98f).harvestLevel(2).colours(0xFF5C615B, 0xFF73736B, 0xFF3B3D28, 0xFF1F2825, 0xFF151108, 0xFF0D0900, 0xFF010101));
 
+  // For interop - not actually used by Gradient
+  // Adds crushed/purified variants and smelting
+  public static final Ore IRON_ORE = addOre(IRON);
+  public static final Ore LEAD_ORE = addOre(LEAD);
+  public static final Ore TIN_ORE = addOre(TIN);
+
   public static Metal addMetal(final String name, final Consumer<MetalBuilder> builder) {
     final MetalBuilder mb = new MetalBuilder();
     builder.accept(mb);

@@ -1,0 +1,16 @@
+{
+  "type": "gradient:melting",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ticks": 225,
+  "temperature": 231.93,
+  "ingredient": {
+    "tag": "forge:crushed_ores/tin"
+  },
+  "fluid": {
+    "fluid": "gradient:tin",
+    "amount": 0.75,
+    "temperature": 231.93
+  }
+}

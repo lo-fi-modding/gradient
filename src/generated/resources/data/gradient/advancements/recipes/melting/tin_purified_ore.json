@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "gradient:melting/tin_purified_ore"
+    ]
+  },
+  "criteria": {
+    "has_purified_ore": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "forge:purified_ores/tin"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "gradient:melting/tin_purified_ore"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_purified_ore",
+      "has_the_recipe"
+    ]
+  ]
+}
