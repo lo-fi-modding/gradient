@@ -3,12 +3,17 @@ package lofimodding.gradient.client;
 import lofimodding.gradient.Gradient;
 import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientCasts;
+import lofimodding.gradient.GradientContainers;
 import lofimodding.gradient.GradientEntities;
 import lofimodding.gradient.GradientIds;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientTileEntities;
 import lofimodding.gradient.blocks.MetalBlock;
 import lofimodding.gradient.blocks.OreBlock;
+import lofimodding.gradient.client.screens.ClayCrucibleScreen;
+import lofimodding.gradient.client.screens.CreativeGeneratorScreen;
+import lofimodding.gradient.client.screens.CreativeSinkerScreen;
+import lofimodding.gradient.client.screens.WoodenHopperScreen;
 import lofimodding.gradient.client.tesr.ClayCrucibleRenderer;
 import lofimodding.gradient.client.tesr.ClayMetalMixerRenderer;
 import lofimodding.gradient.client.tesr.ClayOvenRenderer;
@@ -28,6 +33,7 @@ import lofimodding.gradient.science.Minerals;
 import lofimodding.gradient.science.Ore;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.color.BlockColors;
@@ -39,6 +45,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ILightReader;
 import net.minecraft.world.biome.BiomeColors;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -47,7 +54,7 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
-@Mod.EventBusSubscriber(modid = Gradient.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = Gradient.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class GradientClient {
   private GradientClient() { }
 
@@ -120,6 +127,11 @@ public final class GradientClient {
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.WOODEN_CRANK.get(), WoodenCrankRenderer::new);
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.MECHANICAL_GRINDSTONE.get(), MechanicalGrindstoneRenderer::new);
     ClientRegistry.bindTileEntityRenderer(GradientTileEntities.MECHANICAL_MIXING_BASIN.get(), MechanicalMixingBasinRenderer::new);
+
+    ScreenManager.registerFactory(GradientContainers.CLAY_CRUCIBLE.get(), ClayCrucibleScreen::new);
+    ScreenManager.registerFactory(GradientContainers.WOODEN_HOPPER.get(), WoodenHopperScreen::new);
+    ScreenManager.registerFactory(GradientContainers.CREATIVE_GENERATOR.get(), CreativeGeneratorScreen::new);
+    ScreenManager.registerFactory(GradientContainers.CREATIVE_SINKER.get(), CreativeSinkerScreen::new);
   }
 
   @SubscribeEvent

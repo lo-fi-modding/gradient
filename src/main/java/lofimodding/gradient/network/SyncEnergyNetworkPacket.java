@@ -12,6 +12,8 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -90,42 +92,44 @@ public class SyncEnergyNetworkPacket {
   }
 
   public static boolean handle(final SyncEnergyNetworkPacket packet, final Supplier<NetworkEvent.Context> ctx) {
-    ctx.get().enqueueWork(() -> {
-      for(final Long2FloatMap.Entry entry : packet.state.storageEntries()) {
-        final long serialized = entry.getLongKey();
-        final float energy = entry.getFloatValue();
-
-        final World world = Minecraft.getInstance().world;
-        final BlockPos pos = WorldUtils.getBlockPosFromSerialized(serialized);
-
-        if(world.isBlockLoaded(pos)) {
-          final TileEntity te = world.getTileEntity(pos);
-
-          if(te != null) {
-            final Direction facing = WorldUtils.getFacingFromSerialized(serialized);
-            te.getCapability(packet.state.getStorageCapability(), facing).ifPresent(storage -> storage.setEnergy(energy));
-          }
-        }
-      }
-
-      for(final Long2FloatMap.Entry entry : packet.state.transferEntries()) {
-        final long serialized = entry.getLongKey();
-        final float energy = entry.getFloatValue();
-
-        final World world = Minecraft.getInstance().world;
-        final BlockPos pos = WorldUtils.getBlockPosFromSerialized(serialized);
-
-        if(world.isBlockLoaded(pos)) {
-          final TileEntity te = world.getTileEntity(pos);
-
-          if(te != null) {
-            final Direction facing = WorldUtils.getFacingFromSerialized(serialized);
-            te.getCapability(packet.state.getTransferCapability(), facing).ifPresent(storage -> storage.setEnergyTransferred(energy));
-          }
-        }
-      }
-    });
-
+    ctx.get().enqueueWork(() -> handlePacket(packet));
     return true;
+  }
+
+  @OnlyIn(Dist.CLIENT)
+  private static void handlePacket(final SyncEnergyNetworkPacket packet) {
+    for(final Long2FloatMap.Entry entry : packet.state.storageEntries()) {
+      final long serialized = entry.getLongKey();
+      final float energy = entry.getFloatValue();
+
+      final World world = Minecraft.getInstance().world;
+      final BlockPos pos = WorldUtils.getBlockPosFromSerialized(serialized);
+
+      if(world.isBlockLoaded(pos)) {
+        final TileEntity te = world.getTileEntity(pos);
+
+        if(te != null) {
+          final Direction facing = WorldUtils.getFacingFromSerialized(serialized);
+          te.getCapability(packet.state.getStorageCapability(), facing).ifPresent(storage -> storage.setEnergy(energy));
+        }
+      }
+    }
+
+    for(final Long2FloatMap.Entry entry : packet.state.transferEntries()) {
+      final long serialized = entry.getLongKey();
+      final float energy = entry.getFloatValue();
+
+      final World world = Minecraft.getInstance().world;
+      final BlockPos pos = WorldUtils.getBlockPosFromSerialized(serialized);
+
+      if(world.isBlockLoaded(pos)) {
+        final TileEntity te = world.getTileEntity(pos);
+
+        if(te != null) {
+          final Direction facing = WorldUtils.getFacingFromSerialized(serialized);
+          te.getCapability(packet.state.getTransferCapability(), facing).ifPresent(storage -> storage.setEnergyTransferred(energy));
+        }
+      }
+    }
   }
 }

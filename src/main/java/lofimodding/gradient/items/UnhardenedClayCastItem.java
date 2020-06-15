@@ -12,6 +12,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
 
 import javax.annotation.Nullable;
@@ -35,9 +36,14 @@ public class UnhardenedClayCastItem extends BlockItem {
     final ActionResult<ItemStack> result = super.onItemRightClick(world, player, hand);
 
     if(result.getType() != ActionResultType.SUCCESS) {
-      DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().displayGuiScreen(new UnhardenedClayCastScreen(this.cast)));
+      DistExecutor.runWhenOn(Dist.CLIENT, () -> this::showScreen);
     }
 
     return result;
+  }
+
+  @OnlyIn(Dist.CLIENT)
+  private void showScreen() {
+    Minecraft.getInstance().displayGuiScreen(new UnhardenedClayCastScreen(this.cast));
   }
 }

@@ -5,10 +5,6 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonObject;
 import lofimodding.gradient.advancements.criterion.GradientCriteriaTriggers;
 import lofimodding.gradient.client.GradientClient;
-import lofimodding.gradient.client.screens.ClayCrucibleScreen;
-import lofimodding.gradient.client.screens.CreativeGeneratorScreen;
-import lofimodding.gradient.client.screens.CreativeSinkerScreen;
-import lofimodding.gradient.client.screens.WoodenHopperScreen;
 import lofimodding.gradient.energy.EnergyCapability;
 import lofimodding.gradient.energy.kinetic.IKineticEnergyStorage;
 import lofimodding.gradient.energy.kinetic.IKineticEnergyTransfer;
@@ -24,7 +20,6 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementManager;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.DisplayInfo;
-import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.inventory.container.WorkbenchContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -148,11 +143,6 @@ public class Gradient {
     LOGGER.info("Loading client-only features...");
     MinecraftForge.EVENT_BUS.addListener(this::setRecipeManagerClient);
     GradientClient.clientSetup(event);
-
-    ScreenManager.registerFactory(GradientContainers.CLAY_CRUCIBLE.get(), ClayCrucibleScreen::new);
-    ScreenManager.registerFactory(GradientContainers.WOODEN_HOPPER.get(), WoodenHopperScreen::new);
-    ScreenManager.registerFactory(GradientContainers.CREATIVE_GENERATOR.get(), CreativeGeneratorScreen::new);
-    ScreenManager.registerFactory(GradientContainers.CREATIVE_SINKER.get(), CreativeSinkerScreen::new);
   }
 
   private void enqueueIMC(final InterModEnqueueEvent event) {
