@@ -91,6 +91,28 @@ public class Gradient {
     GradientSounds.init(modBus);
     GradientStages.init(modBus);
     GradientTileEntities.init(modBus);
+  }
+
+  private void setup(final FMLCommonSetupEvent event) {
+    Packets.register();
+
+    GradientFluidHandlerCapability.register();
+
+    EnergyCapability.register(
+      IKineticEnergyStorage.class,
+      IKineticEnergyTransfer.class,
+      () -> new KineticEnergyStorage(10000.0f),
+      KineticEnergyTransfer::new
+    );
+
+    // Trigger loading
+    Gradient.LOGGER.debug(GradientCriteriaTriggers.ADVANCEMENT_UNLOCKED);
+  }
+
+  private void clientSetup(final FMLClientSetupEvent event) {
+    LOGGER.info("Loading client-only features...");
+    MinecraftForge.EVENT_BUS.addListener(this::setRecipeManagerClient);
+    GradientClient.clientSetup(event);
 
     // Take over advancement deserializer to allow custom positioning
     AdvancementManager.GSON = new GsonBuilder().registerTypeHierarchyAdapter(Advancement.Builder.class, (JsonDeserializer<Advancement.Builder>)(p_210124_0_, p_210124_1_, context) -> {
@@ -121,28 +143,6 @@ public class Gradient {
 
       return builder;
     }).registerTypeAdapter(AdvancementRewards.class, new AdvancementRewards.Deserializer()).registerTypeHierarchyAdapter(ITextComponent.class, new ITextComponent.Serializer()).registerTypeHierarchyAdapter(Style.class, new Style.Serializer()).registerTypeAdapterFactory(new EnumTypeAdapterFactory()).create();
-  }
-
-  private void setup(final FMLCommonSetupEvent event) {
-    Packets.register();
-
-    GradientFluidHandlerCapability.register();
-
-    EnergyCapability.register(
-      IKineticEnergyStorage.class,
-      IKineticEnergyTransfer.class,
-      () -> new KineticEnergyStorage(10000.0f),
-      KineticEnergyTransfer::new
-    );
-
-    // Trigger loading
-    Gradient.LOGGER.debug(GradientCriteriaTriggers.ADVANCEMENT_UNLOCKED);
-  }
-
-  private void clientSetup(final FMLClientSetupEvent event) {
-    LOGGER.info("Loading client-only features...");
-    MinecraftForge.EVENT_BUS.addListener(this::setRecipeManagerClient);
-    GradientClient.clientSetup(event);
   }
 
   private void enqueueIMC(final InterModEnqueueEvent event) {
