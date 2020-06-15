@@ -74,6 +74,7 @@ public final class GradientClient {
 
     for(final GradientCasts cast : GradientCasts.values()) {
       RenderTypeLookup.setRenderLayer(GradientBlocks.UNHARDENED_CLAY_CAST(cast).get(), cutoutMipped);
+      RenderTypeLookup.setRenderLayer(GradientBlocks.CLAY_CAST(cast).get(), cutoutMipped);
     }
 
     RenderTypeLookup.setRenderLayer(GradientBlocks.UNLIT_FIBRE_TORCH.get(), cutoutMipped);
