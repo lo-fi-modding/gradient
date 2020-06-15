@@ -181,13 +181,13 @@ public class AdvancementsProvider extends AdvancementProvider {
         .withCriterion("has_mulch", InventoryChangeTrigger.Instance.forItems(GradientItems.MULCH.get()))
         .register(finished, loc("age2/mulch"));
 
-      final Advancement leather = builder(2, Items.LEATHER, "leather", 3.0f, 2.5f, FrameType.GOAL, dryingRack, mulch)
-        .withCriterion("has_leather", InventoryChangeTrigger.Instance.forItems(Items.LEATHER))
-        .register(finished, loc("age2/leather"));
-
-      final Advancement flintKnife = builder(2, GradientItems.FLINT_KNIFE.get(), "flint_knife", 4.0f, 2.5f, FrameType.TASK, leather)
+      final Advancement flintKnife = builder(2, GradientItems.FLINT_KNIFE.get(), "flint_knife", 3.0f, 2.5f, FrameType.TASK, dryingRack, mulch)
         .withCriterion("has_flint_knife", InventoryChangeTrigger.Instance.forItems(GradientItems.FLINT_KNIFE.get()))
         .register(finished, loc("age2/flint_knife"));
+
+      final Advancement leather = builder(2, Items.LEATHER, "leather", 4.0f, 2.5f, FrameType.GOAL, flintKnife)
+        .withCriterion("has_leather", InventoryChangeTrigger.Instance.forItems(Items.LEATHER))
+        .register(finished, loc("age2/leather"));
 
       final Advancement hardenedLog = builder(2, GradientItems.HARDENED_LOG.get(), "hardened_log", 1.0f, 0.5f, FrameType.TASK, root)
         .withCriterion("has_hardened_wood", InventoryChangeTrigger.Instance.forItems(GradientItems.HARDENED_LOG.get()))
@@ -201,7 +201,7 @@ public class AdvancementsProvider extends AdvancementProvider {
         .withCriterion("has_hardened_stick", InventoryChangeTrigger.Instance.forItems(GradientItems.HARDENED_STICK.get()))
         .register(finished, loc("age2/hardened_stick"));
 
-      final Advancement stonePickaxe = builder(2, GradientItems.STONE_PICKAXE.get(), "stone_pickaxe", 5.0f, -0.25f, FrameType.TASK, flintKnife, hardenedStick)
+      final Advancement stonePickaxe = builder(2, GradientItems.STONE_PICKAXE.get(), "stone_pickaxe", 5.0f, -0.25f, FrameType.TASK, leather, hardenedStick)
         .withCriterion("has_stone_pickaxe", InventoryChangeTrigger.Instance.forItems(GradientItems.STONE_PICKAXE.get()))
         .register(finished, loc("age2/stone_pickaxe"));
 
@@ -225,7 +225,7 @@ public class AdvancementsProvider extends AdvancementProvider {
         .withRequirementsStrategy(requirements -> new String[][] {{"has_parent_0"}, {"has_nugget", "has_ore"}})
         .register(finished, loc("age2/coal"));
 
-      final Advancement stoneMattock = builder(2, GradientItems.STONE_MATTOCK.get(), "stone_mattock", 5.0f, 1.25f, FrameType.TASK, flintKnife, hardenedStick)
+      final Advancement stoneMattock = builder(2, GradientItems.STONE_MATTOCK.get(), "stone_mattock", 5.0f, 1.25f, FrameType.TASK, leather, hardenedStick)
         .withCriterion("has_stone_mattock", InventoryChangeTrigger.Instance.forItems(GradientItems.STONE_MATTOCK.get()))
         .register(finished, loc("age2/stone_mattock"));
 
@@ -241,7 +241,7 @@ public class AdvancementsProvider extends AdvancementProvider {
         .withCriterion("has_bread", InventoryChangeTrigger.Instance.forItems(Items.BREAD))
         .register(finished, loc("age2/bread"));
 
-      final Advancement leash = builder(2, Items.LEAD, "leash", 5.0f, 2.75f, FrameType.TASK, flintKnife, hardenedStick)
+      final Advancement leash = builder(2, Items.LEAD, "leash", 5.0f, 2.75f, FrameType.TASK, leather, hardenedStick)
         .withCriterion("has_leash", InventoryChangeTrigger.Instance.forItems(Items.LEAD))
         .register(finished, loc("age2/leash"));
 
@@ -249,11 +249,11 @@ public class AdvancementsProvider extends AdvancementProvider {
         .withCriterion("has_saddle", InventoryChangeTrigger.Instance.forItems(Items.SADDLE))
         .register(finished, loc("age2/saddle"));
 
-      final Advancement woodenAxle = builder(2, GradientItems.WOODEN_AXLE.get(), "wooden_axle", 5.0f, 4.25f, FrameType.TASK, flintKnife, hardenedStick)
+      final Advancement woodenAxle = builder(2, GradientItems.WOODEN_AXLE.get(), "wooden_axle", 5.0f, 4.25f, FrameType.TASK, leather, hardenedStick)
         .withCriterion("has_wooden_axle", InventoryChangeTrigger.Instance.forItems(GradientItems.WOODEN_AXLE.get()))
         .register(finished, loc("age2/wooden_axle"));
 
-      final Advancement woodenGear = builder(2, GradientItems.WOODEN_GEAR.get(), "wooden_gear", 5.0f, 5.25f, FrameType.TASK, flintKnife, hardenedStick)
+      final Advancement woodenGear = builder(2, GradientItems.WOODEN_GEAR.get(), "wooden_gear", 5.0f, 5.25f, FrameType.TASK, leather, hardenedStick)
         .withCriterion("has_wooden_gear", InventoryChangeTrigger.Instance.forItems(GradientItems.WOODEN_GEAR.get()))
         .register(finished, loc("age2/wooden_gear"));
 

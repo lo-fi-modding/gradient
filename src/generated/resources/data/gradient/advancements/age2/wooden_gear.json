@@ -21,7 +21,7 @@
     "has_parent_0": {
       "trigger": "gradient:advancement_unlocked",
       "conditions": {
-        "id": "gradient:age2/flint_knife"
+        "id": "gradient:age2/leather"
       }
     },
     "has_parent_1": {

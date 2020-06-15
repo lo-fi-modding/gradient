@@ -1,5 +1,5 @@
 {
-  "parent": "gradient:age2/mulch",
+  "parent": "gradient:age2/flint_knife",
   "display": {
     "icon": {
       "item": "minecraft:leather"
@@ -14,20 +14,14 @@
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false,
-    "x": 3.0,
+    "x": 4.0,
     "y": 2.5
   },
   "criteria": {
     "has_parent_0": {
       "trigger": "gradient:advancement_unlocked",
       "conditions": {
-        "id": "gradient:age2/drying_rack"
-      }
-    },
-    "has_parent_1": {
-      "trigger": "gradient:advancement_unlocked",
-      "conditions": {
-        "id": "gradient:age2/mulch"
+        "id": "gradient:age2/flint_knife"
       }
     },
     "has_leather": {
@@ -44,9 +38,6 @@
   "requirements": [
     [
       "has_parent_0"
-    ],
-    [
-      "has_parent_1"
     ],
     [
       "has_leather"

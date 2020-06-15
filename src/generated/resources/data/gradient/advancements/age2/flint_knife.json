@@ -1,5 +1,5 @@
 {
-  "parent": "gradient:age2/leather",
+  "parent": "gradient:age2/mulch",
   "display": {
     "icon": {
       "item": "gradient:flint_knife",
@@ -15,14 +15,20 @@
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false,
-    "x": 4.0,
+    "x": 3.0,
     "y": 2.5
   },
   "criteria": {
     "has_parent_0": {
       "trigger": "gradient:advancement_unlocked",
       "conditions": {
-        "id": "gradient:age2/leather"
+        "id": "gradient:age2/drying_rack"
+      }
+    },
+    "has_parent_1": {
+      "trigger": "gradient:advancement_unlocked",
+      "conditions": {
+        "id": "gradient:age2/mulch"
       }
     },
     "has_flint_knife": {
@@ -39,6 +45,9 @@
   "requirements": [
     [
       "has_parent_0"
+    ],
+    [
+      "has_parent_1"
     ],
     [
       "has_flint_knife"
