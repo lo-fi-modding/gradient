@@ -33,7 +33,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -62,7 +61,7 @@ public class FirepitBlock extends HeatSinkerBlock {
   @Deprecated
   public VoxelShape getShape(final BlockState state, final IBlockReader worldIn, final BlockPos pos, final ISelectionContext context) {
     if(state.get(HAS_FURNACE)) {
-      return VoxelShapes.fullCube();
+      return ClayFurnaceBlock.SHAPE;
     }
 
     return SHAPE;
