@@ -118,10 +118,6 @@ public class FirepitBlock extends HeatSinkerBlock {
             world.playSound(null, pos, SoundEvents.BLOCK_STONE_PLACE, SoundCategory.NEUTRAL, 1.0f, world.rand.nextFloat() * 0.1f + 0.9f);
             world.setBlockState(pos, state.with(HAS_FURNACE, true));
 
-            firepit.validate();
-            world.setTileEntity(pos, firepit);
-            firepit.attachFurnace();
-
             if(!player.isCreative()) {
               held.shrink(1);
             }
