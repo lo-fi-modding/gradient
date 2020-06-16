@@ -4,6 +4,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonObject;
 import lofimodding.gradient.advancements.criterion.GradientCriteriaTriggers;
+import lofimodding.gradient.blocks.DisabledCraftingTableBlock;
+import lofimodding.gradient.blocks.DisabledFurnaceBlock;
 import lofimodding.gradient.client.GradientClient;
 import lofimodding.gradient.energy.EnergyCapability;
 import lofimodding.gradient.energy.kinetic.IKineticEnergyStorage;
@@ -12,26 +14,24 @@ import lofimodding.gradient.energy.kinetic.KineticEnergyStorage;
 import lofimodding.gradient.energy.kinetic.KineticEnergyTransfer;
 import lofimodding.gradient.fluids.GradientFluidHandlerCapability;
 import lofimodding.gradient.network.Packets;
-import lofimodding.gradient.recipes.FurnaceRecipeWrapper;
-import lofimodding.gradient.recipes.ShapedRecipeWrapper;
-import lofimodding.gradient.recipes.ShapelessRecipeWrapper;
 import lofimodding.progression.recipes.ShapelessStagedRecipe;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementManager;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.DisplayInfo;
-import net.minecraft.inventory.container.WorkbenchContainer;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.item.crafting.FurnaceRecipe;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.RecipeManager;
-import net.minecraft.item.crafting.ShapedRecipe;
 import net.minecraft.item.crafting.ShapelessRecipe;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tileentity.AbstractFurnaceTileEntity;
 import net.minecraft.util.EnumTypeAdapterFactory;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
@@ -43,8 +43,10 @@ import net.minecraft.util.text.Style;
 import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.world.RegisterDimensionsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -56,6 +58,7 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.registries.ObjectHolder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -91,6 +94,40 @@ public class Gradient {
     GradientSounds.init(modBus);
     GradientStages.init(modBus);
     GradientTileEntities.init(modBus);
+  }
+
+  @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+  public static class RegistryEvents {
+    @ObjectHolder("minecraft:crafting_table")
+    public static final Block CRAFTING_TABLE = null;
+    @ObjectHolder("minecraft:furnace")
+    public static final Block FURNACE = null;
+
+    @SubscribeEvent
+    public static void onBlockRegister(final RegistryEvent.Register<Block> event) {
+      if(Config.INTEROP.DISABLE_VANILLA_CRAFTING_TABLE.get()) {
+        LOGGER.info("Replacing vanilla crafting table block...");
+        event.getRegistry().register(new DisabledCraftingTableBlock().setRegistryName(Blocks.CRAFTING_TABLE.getRegistryName()));
+      }
+
+      if(Config.INTEROP.DISABLE_VANILLA_FURNACE.get()) {
+        LOGGER.info("Replacing vanilla furnace block...");
+        event.getRegistry().register(new DisabledFurnaceBlock().setRegistryName(Blocks.FURNACE.getRegistryName()));
+      }
+    }
+
+    @SubscribeEvent
+    public static void onItemRegister(final RegistryEvent.Register<Item> event) {
+      if(Config.INTEROP.DISABLE_VANILLA_CRAFTING_TABLE.get()) {
+        LOGGER.info("Replacing vanilla crafting table item...");
+        event.getRegistry().register(new BlockItem(CRAFTING_TABLE, new Item.Properties().group(ItemGroup.DECORATIONS)).setRegistryName(CRAFTING_TABLE.getRegistryName()));
+      }
+
+      if(Config.INTEROP.DISABLE_VANILLA_FURNACE.get()) {
+        LOGGER.info("Replacing vanilla furnace item...");
+        event.getRegistry().register(new BlockItem(FURNACE, new Item.Properties().group(ItemGroup.DECORATIONS)).setRegistryName(FURNACE.getRegistryName()));
+      }
+    }
   }
 
   private void setup(final FMLCommonSetupEvent event) {
@@ -184,31 +221,6 @@ public class Gradient {
 
     if(Config.INTEROP.REMOVE_VANILLA_LEASH_RECIPE.get()) {
       InterModComms.sendTo("no-recipes", "remove_recipe", () -> (Predicate<IRecipe<?>>)recipe -> recipe.getId().equals(new ResourceLocation("lead")));
-    }
-
-    if(Config.INTEROP.DISABLE_VANILLA_CRAFTING_TABLE.get()) {
-      // Wraps all crafting recipes in a special IRecipe implementation that delegates all methods to the wrapped IRecipe.
-      // It has special handling to fail matches if the container is the vanilla workbench container.
-
-      InterModComms.sendTo("no-recipes", "replace_recipe", () -> new Tuple<Predicate<IRecipe<?>>, Function<IRecipe<?>, IRecipe<?>>>(
-        recipe -> recipe.getType() == IRecipeType.CRAFTING && recipe instanceof ShapelessRecipe,
-        original -> new ShapelessRecipeWrapper((ShapelessRecipe)original, (inv, world) -> !(inv.eventHandler instanceof WorkbenchContainer)))
-      );
-
-      InterModComms.sendTo("no-recipes", "replace_recipe", () -> new Tuple<Predicate<IRecipe<?>>, Function<IRecipe<?>, IRecipe<?>>>(
-        recipe -> recipe.getType() == IRecipeType.CRAFTING && recipe instanceof ShapedRecipe,
-        original -> new ShapedRecipeWrapper((ShapedRecipe)original, (inv, world) -> !(inv.eventHandler instanceof WorkbenchContainer)))
-      );
-    }
-
-    if(Config.INTEROP.DISABLE_VANILLA_FURNACE.get()) {
-      // Wraps all furnace recipes in a special IRecipe implementation that delegates all methods to the wrapped IRecipe.
-      // It has special handling to fail matches if the inventory is the vanilla furnace TE.
-
-      InterModComms.sendTo("no-recipes", "replace_recipe", () -> new Tuple<Predicate<IRecipe<?>>, Function<IRecipe<?>, IRecipe<?>>>(
-        recipe -> recipe.getType() == IRecipeType.SMELTING && recipe instanceof FurnaceRecipe,
-        original -> new FurnaceRecipeWrapper((FurnaceRecipe)original, (inv, world) -> !(inv instanceof AbstractFurnaceTileEntity)))
-      );
     }
   }
 

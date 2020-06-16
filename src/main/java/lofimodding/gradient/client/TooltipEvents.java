@@ -1,10 +1,8 @@
 package lofimodding.gradient.client;
 
-import lofimodding.gradient.Config;
 import lofimodding.gradient.Gradient;
 import lofimodding.gradient.recipes.MeltingRecipe;
 import lofimodding.gradient.utils.RecipeUtils;
-import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -39,13 +37,5 @@ public final class TooltipEvents {
       tooltip.add(new TranslationTextComponent("meltable.amount", recipe.getFluidOutput().getAmount()));
       tooltip.add(new TranslationTextComponent("meltable.fluid", recipe.getFluidOutput().getName()));
     });
-
-    if(Config.INTEROP.DISABLE_VANILLA_FURNACE.get() && stack.getItem() == Blocks.FURNACE.asItem()) {
-      event.getToolTip().add(new TranslationTextComponent("gradient.furnace_disabled"));
-    }
-
-    if(Config.INTEROP.DISABLE_VANILLA_CRAFTING_TABLE.get() && stack.getItem() == Blocks.CRAFTING_TABLE.asItem()) {
-      event.getToolTip().add(new TranslationTextComponent("gradient.crafting_table_disabled"));
-    }
   }
 }
