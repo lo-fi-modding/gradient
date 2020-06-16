@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "gradient:age3/lead_mattock"
+    ]
+  },
+  "criteria": {
+    "has_casted": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "gradient:lead_mattock_head"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "gradient:age3/lead_mattock"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_casted",
+      "has_the_recipe"
+    ]
+  ]
+}

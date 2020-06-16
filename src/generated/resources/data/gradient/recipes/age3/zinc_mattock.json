@@ -1,0 +1,26 @@
+{
+  "type": "progression:shaped_staged",
+  "stages": [
+    "gradient:age_3"
+  ],
+  "damage_tools": true,
+  "pattern": [
+    "H",
+    "L",
+    "S"
+  ],
+  "key": {
+    "H": {
+      "item": "gradient:zinc_mattock_head"
+    },
+    "L": {
+      "item": "gradient:leather_strip"
+    },
+    "S": {
+      "item": "gradient:hardened_stick"
+    }
+  },
+  "result": {
+    "item": "gradient:zinc_mattock"
+  }
+}

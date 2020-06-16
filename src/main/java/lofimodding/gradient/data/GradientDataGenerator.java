@@ -1112,6 +1112,7 @@ public final class GradientDataGenerator {
     protected void addTranslations() {
       this.add("stage.gradient.age_1", "Age 1 (Nomadic)");
       this.add("stage.gradient.age_2", "Age 2 (Agricultural)");
+      this.add("stage.gradient.age_3", "Age 3 (Bronze)");
 
       this.add("screens.gradient.unhardened_clay_cast", "Cast Selection");
 
@@ -1743,6 +1744,56 @@ public final class GradientDataGenerator {
         .key('A', GradientItems.BONE_AWL.get())
         .addCriterion("has_awl", this.hasItem(GradientItems.BONE_AWL.get()))
         .build(finished, Gradient.loc("age1/" + GradientIds.EMPTY_WATERSKIN));
+
+      for(final Metal metal : Minerals.metals()) {
+        StagedRecipeBuilder
+          .shaped(GradientItems.METAL_MATTOCKS.get(metal).get())
+          .stage(GradientStages.AGE_3.get())
+          .patternLine("H")
+          .patternLine("L")
+          .patternLine("S")
+          .key('H', GradientItems.CASTED(GradientCasts.MATTOCK_HEAD, metal).get())
+          .key('L', GradientItems.LEATHER_STRIP.get())
+          .key('S', GradientItems.HARDENED_STICK.get())
+          .addCriterion("has_casted", this.hasItem(GradientItems.CASTED(GradientCasts.MATTOCK_HEAD, metal).get()))
+          .build(finished, Gradient.loc("age3/" + GradientIds.METAL_MATTOCK(metal)));
+
+        StagedRecipeBuilder
+          .shaped(GradientItems.METAL_PICKAXES.get(metal).get())
+          .stage(GradientStages.AGE_3.get())
+          .patternLine("H")
+          .patternLine("L")
+          .patternLine("S")
+          .key('H', GradientItems.CASTED(GradientCasts.PICKAXE_HEAD, metal).get())
+          .key('L', GradientItems.LEATHER_STRIP.get())
+          .key('S', GradientItems.HARDENED_STICK.get())
+          .addCriterion("has_casted", this.hasItem(GradientItems.CASTED(GradientCasts.PICKAXE_HEAD, metal).get()))
+          .build(finished, Gradient.loc("age3/" + GradientIds.METAL_PICKAXE(metal)));
+
+        StagedRecipeBuilder
+          .shaped(GradientItems.METAL_SWORDS.get(metal).get())
+          .stage(GradientStages.AGE_3.get())
+          .patternLine("H")
+          .patternLine("L")
+          .patternLine("S")
+          .key('H', GradientItems.CASTED(GradientCasts.SWORD_BLADE, metal).get())
+          .key('L', GradientItems.LEATHER_STRIP.get())
+          .key('S', GradientItems.HARDENED_STICK.get())
+          .addCriterion("has_casted", this.hasItem(GradientItems.CASTED(GradientCasts.SWORD_BLADE, metal).get()))
+          .build(finished, Gradient.loc("age3/" + GradientIds.METAL_SWORD(metal)));
+
+        StagedRecipeBuilder
+          .shaped(GradientItems.METAL_HAMMERS.get(metal).get())
+          .stage(GradientStages.AGE_3.get())
+          .patternLine("H")
+          .patternLine("L")
+          .patternLine("S")
+          .key('H', GradientItems.CASTED(GradientCasts.HAMMER_HEAD, metal).get())
+          .key('L', GradientItems.LEATHER_STRIP.get())
+          .key('S', GradientItems.HARDENED_STICK.get())
+          .addCriterion("has_casted", this.hasItem(GradientItems.CASTED(GradientCasts.HAMMER_HEAD, metal).get()))
+          .build(finished, Gradient.loc("age3/" + GradientIds.METAL_HAMMER(metal)));
+      }
 
       StagedRecipeBuilder
         .shaped(GradientItems.HIDE_HAT.get())

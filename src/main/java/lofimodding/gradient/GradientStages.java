@@ -18,6 +18,7 @@ public final class GradientStages {
   });
 
   public static final RegistryObject2<Stage> AGE_2 = REGISTRY.register("age_2", Stage::new);
+  public static final RegistryObject2<Stage> AGE_3 = REGISTRY.register("age_3", Stage::new);
 
   static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering stages...");

@@ -446,5 +446,6 @@
   "meltable.temperature": "%f \u00B0C",
   "screens.gradient.unhardened_clay_cast": "Cast Selection",
   "stage.gradient.age_1": "Age 1 (Nomadic)",
-  "stage.gradient.age_2": "Age 2 (Agricultural)"
+  "stage.gradient.age_2": "Age 2 (Agricultural)",
+  "stage.gradient.age_3": "Age 3 (Bronze)"
 }
