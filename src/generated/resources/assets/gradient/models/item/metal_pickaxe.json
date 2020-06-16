@@ -1,0 +1,13 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "gradient:item/metal_pickaxe/background",
+    "layer1": "gradient:item/metal_pickaxe/diffuse",
+    "layer2": "gradient:item/metal_pickaxe/specular",
+    "layer3": "gradient:item/metal_pickaxe/shadow_1",
+    "layer4": "gradient:item/metal_pickaxe/shadow_2",
+    "layer5": "gradient:item/metal_pickaxe/edge_1",
+    "layer6": "gradient:item/metal_pickaxe/edge_2",
+    "layer7": "gradient:item/metal_pickaxe/edge_3"
+  }
+}

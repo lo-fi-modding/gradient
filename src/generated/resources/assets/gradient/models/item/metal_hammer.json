@@ -1,0 +1,13 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "gradient:item/metal_hammer/background",
+    "layer1": "gradient:item/metal_hammer/diffuse",
+    "layer2": "gradient:item/metal_hammer/specular",
+    "layer3": "gradient:item/metal_hammer/shadow_1",
+    "layer4": "gradient:item/metal_hammer/shadow_2",
+    "layer5": "gradient:item/metal_hammer/edge_1",
+    "layer6": "gradient:item/metal_hammer/edge_2",
+    "layer7": "gradient:item/metal_hammer/edge_3"
+  }
+}

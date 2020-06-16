@@ -700,6 +700,54 @@ public final class GradientDataGenerator {
         .texture("layer7", this.modLoc("item/plate/edge_3"))
       ;
 
+      this.getBuilder("metal_mattock")
+        .parent(new ModelFile.ExistingModelFile(this.mcLoc("item/generated"), this.existingFileHelper))
+        .texture("layer0", this.modLoc("item/metal_mattock/background"))
+        .texture("layer1", this.modLoc("item/metal_mattock/diffuse"))
+        .texture("layer2", this.modLoc("item/metal_mattock/specular"))
+        .texture("layer3", this.modLoc("item/metal_mattock/shadow_1"))
+        .texture("layer4", this.modLoc("item/metal_mattock/shadow_2"))
+        .texture("layer5", this.modLoc("item/metal_mattock/edge_1"))
+        .texture("layer6", this.modLoc("item/metal_mattock/edge_2"))
+        .texture("layer7", this.modLoc("item/metal_mattock/edge_3"))
+      ;
+
+      this.getBuilder("metal_pickaxe")
+        .parent(new ModelFile.ExistingModelFile(this.mcLoc("item/generated"), this.existingFileHelper))
+        .texture("layer0", this.modLoc("item/metal_pickaxe/background"))
+        .texture("layer1", this.modLoc("item/metal_pickaxe/diffuse"))
+        .texture("layer2", this.modLoc("item/metal_pickaxe/specular"))
+        .texture("layer3", this.modLoc("item/metal_pickaxe/shadow_1"))
+        .texture("layer4", this.modLoc("item/metal_pickaxe/shadow_2"))
+        .texture("layer5", this.modLoc("item/metal_pickaxe/edge_1"))
+        .texture("layer6", this.modLoc("item/metal_pickaxe/edge_2"))
+        .texture("layer7", this.modLoc("item/metal_pickaxe/edge_3"))
+      ;
+
+      this.getBuilder("metal_sword")
+        .parent(new ModelFile.ExistingModelFile(this.mcLoc("item/generated"), this.existingFileHelper))
+        .texture("layer0", this.modLoc("item/metal_sword/background"))
+        .texture("layer1", this.modLoc("item/metal_sword/diffuse"))
+        .texture("layer2", this.modLoc("item/metal_sword/specular"))
+        .texture("layer3", this.modLoc("item/metal_sword/shadow_1"))
+        .texture("layer4", this.modLoc("item/metal_sword/shadow_2"))
+        .texture("layer5", this.modLoc("item/metal_sword/edge_1"))
+        .texture("layer6", this.modLoc("item/metal_sword/edge_2"))
+        .texture("layer7", this.modLoc("item/metal_sword/edge_3"))
+      ;
+
+      this.getBuilder("metal_hammer")
+        .parent(new ModelFile.ExistingModelFile(this.mcLoc("item/generated"), this.existingFileHelper))
+        .texture("layer0", this.modLoc("item/metal_hammer/background"))
+        .texture("layer1", this.modLoc("item/metal_hammer/diffuse"))
+        .texture("layer2", this.modLoc("item/metal_hammer/specular"))
+        .texture("layer3", this.modLoc("item/metal_hammer/shadow_1"))
+        .texture("layer4", this.modLoc("item/metal_hammer/shadow_2"))
+        .texture("layer5", this.modLoc("item/metal_hammer/edge_1"))
+        .texture("layer6", this.modLoc("item/metal_hammer/edge_2"))
+        .texture("layer7", this.modLoc("item/metal_hammer/edge_3"))
+      ;
+
       for(final Ore ore : Minerals.ores()) {
         this.getBuilder(GradientIds.ORE(ore)).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.ORE(ore))));
         this.getBuilder(GradientIds.CRUSHED(ore)).parent(this.getExistingFile(this.modLoc("item/crushed")));
@@ -711,6 +759,10 @@ public final class GradientDataGenerator {
         this.getBuilder(GradientIds.INGOT(metal)).parent(this.getExistingFile(this.modLoc("item/ingot")));
         this.getBuilder(GradientIds.NUGGET(metal)).parent(this.getExistingFile(this.modLoc("item/nugget")));
         this.getBuilder(GradientIds.PLATE(metal)).parent(this.getExistingFile(this.modLoc("item/plate")));
+        this.getBuilder(GradientIds.METAL_MATTOCK(metal)).parent(this.getExistingFile(this.modLoc("item/metal_mattock")));
+        this.getBuilder(GradientIds.METAL_PICKAXE(metal)).parent(this.getExistingFile(this.modLoc("item/metal_pickaxe")));
+        this.getBuilder(GradientIds.METAL_SWORD(metal)).parent(this.getExistingFile(this.modLoc("item/metal_sword")));
+        this.getBuilder(GradientIds.METAL_HAMMER(metal)).parent(this.getExistingFile(this.modLoc("item/metal_hammer")));
 
         this.getBuilder(GradientIds.METAL_BLOCK(metal)).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.METAL_BLOCK(metal))));
       }
@@ -1099,6 +1151,12 @@ public final class GradientDataGenerator {
 
         this.add(GradientItems.DUST(metal).get(), metalName + " Dust");
         this.add(GradientItems.PLATE(metal).get(), metalName + " Plate");
+        this.add(GradientItems.METAL_MATTOCKS.get(metal).get(), metalName + " Mattock");
+        this.add(GradientItems.METAL_MATTOCKS.get(metal).get().getTranslationKey() + ".tooltip", "Right click to till soil, strip logs, or shear animals");
+        this.add(GradientItems.METAL_PICKAXES.get(metal).get(), metalName + " Pickaxe");
+        this.add(GradientItems.METAL_SWORDS.get(metal).get(), metalName + " Sword");
+        this.add(GradientItems.METAL_HAMMERS.get(metal).get(), metalName + " Hammer");
+        this.add(GradientItems.METAL_HAMMERS.get(metal).get().getTranslationKey() + ".tooltip", "Use on ores to get metal nuggets");
         this.add(GradientItems.METAL_BLOCK(metal).get(), "Block of " + metalName);
       }
 

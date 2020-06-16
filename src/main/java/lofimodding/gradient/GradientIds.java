@@ -42,6 +42,22 @@ public final class GradientIds {
     return metal.name + "_plate";
   }
 
+  public static String METAL_MATTOCK(final Metal metal) {
+    return metal.name + "_mattock";
+  }
+
+  public static String METAL_PICKAXE(final Metal metal) {
+    return metal.name + "_pickaxe";
+  }
+
+  public static String METAL_SWORD(final Metal metal) {
+    return metal.name + "_sword";
+  }
+
+  public static String METAL_HAMMER(final Metal metal) {
+    return metal.name + "_hammer";
+  }
+
   public static String METAL_BLOCK(final Metal metal) {
     return metal.name + "_block";
   }

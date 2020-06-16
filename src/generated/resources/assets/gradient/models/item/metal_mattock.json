@@ -1,0 +1,13 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "gradient:item/metal_mattock/background",
+    "layer1": "gradient:item/metal_mattock/diffuse",
+    "layer2": "gradient:item/metal_mattock/specular",
+    "layer3": "gradient:item/metal_mattock/shadow_1",
+    "layer4": "gradient:item/metal_mattock/shadow_2",
+    "layer5": "gradient:item/metal_mattock/edge_1",
+    "layer6": "gradient:item/metal_mattock/edge_2",
+    "layer7": "gradient:item/metal_mattock/edge_3"
+  }
+}

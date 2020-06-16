@@ -26,7 +26,11 @@ import lofimodding.gradient.client.tesr.MixingBasinRenderer;
 import lofimodding.gradient.client.tesr.WoodenAxleRenderer;
 import lofimodding.gradient.client.tesr.WoodenConveyorBeltRenderer;
 import lofimodding.gradient.client.tesr.WoodenCrankRenderer;
+import lofimodding.gradient.items.MetalHammerItem;
 import lofimodding.gradient.items.MetalItem;
+import lofimodding.gradient.items.MetalMattockItem;
+import lofimodding.gradient.items.MetalPickaxeItem;
+import lofimodding.gradient.items.MetalSwordItem;
 import lofimodding.gradient.items.OreItem;
 import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.science.Minerals;
@@ -103,6 +107,10 @@ public final class GradientClient {
       itemColors.register(GradientClient::metalItemColour, GradientItems.DUST(metal).get());
       itemColors.register(GradientClient::metalItemColour, GradientItems.NUGGET(metal).get());
       itemColors.register(GradientClient::metalItemColour, GradientItems.PLATE(metal).get());
+      itemColors.register(GradientClient::mattockItemColour, GradientItems.METAL_MATTOCKS.get(metal).get());
+      itemColors.register(GradientClient::pickaxeItemColour, GradientItems.METAL_PICKAXES.get(metal).get());
+      itemColors.register(GradientClient::swordItemColour, GradientItems.METAL_SWORDS.get(metal).get());
+      itemColors.register(GradientClient::hammerItemColour, GradientItems.METAL_HAMMERS.get(metal).get());
       blockColors.register(GradientClient::metalBlockColour, GradientBlocks.METAL_BLOCK(metal).get());
       itemColors.register(GradientClient::metalBlockColour, GradientItems.METAL_BLOCK(metal).get());
 
@@ -157,6 +165,26 @@ public final class GradientClient {
 
   private static int metalItemColour(final ItemStack stack, final int tintIndex) {
     final Metal metal = ((MetalItem)stack.getItem()).metal;
+    return getMetalColour(metal, tintIndex);
+  }
+
+  private static int mattockItemColour(final ItemStack stack, final int tintIndex) {
+    final Metal metal = ((MetalMattockItem)stack.getItem()).metal;
+    return getMetalColour(metal, tintIndex);
+  }
+
+  private static int pickaxeItemColour(final ItemStack stack, final int tintIndex) {
+    final Metal metal = ((MetalPickaxeItem)stack.getItem()).metal;
+    return getMetalColour(metal, tintIndex);
+  }
+
+  private static int swordItemColour(final ItemStack stack, final int tintIndex) {
+    final Metal metal = ((MetalSwordItem)stack.getItem()).metal;
+    return getMetalColour(metal, tintIndex);
+  }
+
+  private static int hammerItemColour(final ItemStack stack, final int tintIndex) {
+    final Metal metal = ((MetalHammerItem)stack.getItem()).metal;
     return getMetalColour(metal, tintIndex);
   }
 

@@ -7,7 +7,11 @@ import lofimodding.gradient.items.FilledClayBucketItem;
 import lofimodding.gradient.items.FilledWaterskinItem;
 import lofimodding.gradient.items.FlintKnifeItem;
 import lofimodding.gradient.items.HideBeddingItem;
+import lofimodding.gradient.items.MetalHammerItem;
 import lofimodding.gradient.items.MetalItem;
+import lofimodding.gradient.items.MetalMattockItem;
+import lofimodding.gradient.items.MetalPickaxeItem;
+import lofimodding.gradient.items.MetalSwordItem;
 import lofimodding.gradient.items.MulchItem;
 import lofimodding.gradient.items.OreItem;
 import lofimodding.gradient.items.PebbleItem;
@@ -27,11 +31,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.WallOrFloorItem;
+import net.minecraft.util.Util;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
@@ -152,6 +158,11 @@ public final class GradientItems {
   public static final RegistryObject<HideBeddingItem> HIDE_BEDDING = REGISTRY.register(GradientIds.HIDE_BEDDING, HideBeddingItem::new);
   public static final RegistryObject<EmptyWaterskinItem> EMPTY_WATERSKIN = REGISTRY.register(GradientIds.EMPTY_WATERSKIN, EmptyWaterskinItem::new);
   public static final RegistryObject<FilledWaterskinItem> FILLED_WATERSKIN = REGISTRY.register(GradientIds.FILLED_WATERSKIN, FilledWaterskinItem::new);
+
+  public static final Map<Metal, RegistryObject<MetalMattockItem>> METAL_MATTOCKS = Collections.unmodifiableMap(Util.make(new HashMap<>(), mattocks -> Minerals.metals().forEach(metal -> mattocks.put(metal, REGISTRY.register(GradientIds.METAL_MATTOCK(metal), () -> new MetalMattockItem(metal))))));
+  public static final Map<Metal, RegistryObject<MetalPickaxeItem>> METAL_PICKAXES = Collections.unmodifiableMap(Util.make(new HashMap<>(), pickaxes -> Minerals.metals().forEach(metal -> pickaxes.put(metal, REGISTRY.register(GradientIds.METAL_PICKAXE(metal), () -> new MetalPickaxeItem(metal))))));
+  public static final Map<Metal, RegistryObject<MetalSwordItem>> METAL_SWORDS = Collections.unmodifiableMap(Util.make(new HashMap<>(), swords -> Minerals.metals().forEach(metal -> swords.put(metal, REGISTRY.register(GradientIds.METAL_SWORD(metal), () -> new MetalSwordItem(metal))))));
+  public static final Map<Metal, RegistryObject<MetalHammerItem>> METAL_HAMMERS = Collections.unmodifiableMap(Util.make(new HashMap<>(), hammers -> Minerals.metals().forEach(metal -> hammers.put(metal, REGISTRY.register(GradientIds.METAL_HAMMER(metal), () -> new MetalHammerItem(metal))))));
 
   public static final RegistryObject<ArmorItem> HIDE_HAT = REGISTRY.register(GradientIds.HIDE_HAT, () -> new ArmorItem(GradientMaterials.Armour.HIDE, EquipmentSlotType.HEAD, new Item.Properties().group(GROUP)));
   public static final RegistryObject<ArmorItem> HIDE_SHIRT = REGISTRY.register(GradientIds.HIDE_SHIRT, () -> new ArmorItem(GradientMaterials.Armour.HIDE, EquipmentSlotType.CHEST, new Item.Properties().group(GROUP)));
