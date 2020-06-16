@@ -22,7 +22,7 @@ public class StoneHammerItem extends ToolItem {
   private static final Set<Block> EFFECTIVE_BLOCKS = Sets.newHashSet(Blocks.STONE, Blocks.ANDESITE, Blocks.DIORITE, Blocks.GRANITE, Blocks.COBBLESTONE);
 
   public StoneHammerItem() {
-    super(1.0f, -2.4f, GradientItemTiers.PEBBLE, EFFECTIVE_BLOCKS, new Properties().group(GradientItems.GROUP).addToolType(GradientToolTypes.HAMMER, 1));
+    super(0.5f, -3.0f, GradientItemTiers.PEBBLE, EFFECTIVE_BLOCKS, new Properties().group(GradientItems.GROUP).addToolType(GradientToolTypes.HAMMER, 1));
   }
 
   @Override

@@ -10,7 +10,7 @@ public class MetalSwordItem extends SwordItem {
   public final Metal metal;
 
   public MetalSwordItem(final Metal metal) {
-    super(GradientItemTiers.METALS.get(metal), 3, -3.5f + 50.0f / metal.weight, new Item.Properties().group(GradientItems.GROUP));
+    super(GradientItemTiers.METALS.get(metal), 0, -3.5f + 50.0f / metal.weight, new Item.Properties().group(GradientItems.GROUP));
     this.metal = metal;
   }
 }

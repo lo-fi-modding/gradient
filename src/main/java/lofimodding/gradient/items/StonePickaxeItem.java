@@ -8,6 +8,6 @@ import net.minecraftforge.common.ToolType;
 
 public class StonePickaxeItem extends PickaxeItem {
   public StonePickaxeItem() {
-    super(GradientItemTiers.STONE, 3, -2.4f, new Item.Properties().group(GradientItems.GROUP).addToolType(ToolType.PICKAXE, 1));
+    super(GradientItemTiers.STONE, 1, -3.0f, new Item.Properties().group(GradientItems.GROUP).addToolType(ToolType.PICKAXE, 1));
   }
 }

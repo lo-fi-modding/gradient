@@ -28,7 +28,7 @@ import java.util.Random;
 
 public class StoneMattockItem extends AxeItem {
   public StoneMattockItem() {
-    super(GradientItemTiers.STONE, 3.0f, -2.4f, new Item.Properties().group(GradientItems.GROUP).addToolType(ToolType.AXE, 1).addToolType(ToolType.SHOVEL, 1));
+    super(GradientItemTiers.STONE, 3.0f, -3.2f, new Item.Properties().group(GradientItems.GROUP).addToolType(ToolType.AXE, 1).addToolType(ToolType.SHOVEL, 1));
   }
 
   @Override

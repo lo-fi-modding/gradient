@@ -11,7 +11,7 @@ public class MetalPickaxeItem extends PickaxeItem {
   public final Metal metal;
 
   public MetalPickaxeItem(final Metal metal) {
-    super(GradientItemTiers.METALS.get(metal), 2, -3.5f + 50.0f / metal.weight, new Item.Properties().group(GradientItems.GROUP).addToolType(ToolType.PICKAXE, metal.harvestLevel));
+    super(GradientItemTiers.METALS.get(metal), (int)(-GradientItemTiers.METALS.get(metal).getAttackDamage() * 0.5f), -3.6f + 33.0f / metal.weight, new Item.Properties().group(GradientItems.GROUP).addToolType(ToolType.PICKAXE, metal.harvestLevel));
     this.metal = metal;
   }
 }

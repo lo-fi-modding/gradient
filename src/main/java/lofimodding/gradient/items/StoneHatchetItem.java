@@ -16,7 +16,7 @@ import java.util.List;
 
 public class StoneHatchetItem extends AxeItem {
   public StoneHatchetItem() {
-    super(GradientItemTiers.PEBBLE, 3.0f, -2.4f, new Item.Properties().group(GradientItems.GROUP).addToolType(ToolType.AXE, 0));
+    super(GradientItemTiers.PEBBLE, 2.5f, -3.2f, new Item.Properties().group(GradientItems.GROUP).addToolType(ToolType.AXE, 0));
   }
 
   @Override

@@ -16,13 +16,13 @@ import java.util.function.Supplier;
 public final class GradientItemTiers {
   private GradientItemTiers() { }
 
-  public static final IItemTier PEBBLE = new ItemTier(0, 20, 0.5f, 1.0f, 5, () -> Ingredient.fromItems(GradientItems.PEBBLE.get()));
+  public static final IItemTier PEBBLE = new ItemTier(0, 20, 0.5f, 0.5f, 5, () -> Ingredient.fromItems(GradientItems.PEBBLE.get()));
   public static final IItemTier STONE = new ItemTier(1, 50, 0.5f, 1.0f, 5, () -> Ingredient.fromItems(GradientItems.PEBBLE.get()));
   public static final IItemTier FLINT = new ItemTier(1, 50, 1.0f, 2.0f, 5, () -> Ingredient.fromItems(Items.FLINT));
 
   public static final Map<Metal, IItemTier> METALS = Collections.unmodifiableMap(Util.make(new HashMap<>(), metals -> {
     for(final Metal metal : Minerals.metals()) {
-      metals.put(metal, new ItemTier(metal.harvestLevel, Math.round(metal.hardness * 35), 1 / metal.weight * 130, metal.hardness / 2 * metal.weight / 100, 10, () -> Ingredient.fromTag(GradientTags.Items.INGOT.get(metal))));
+      metals.put(metal, new ItemTier(metal.harvestLevel, Math.round(metal.hardness * 40), 1 / metal.weight * 130, 3 + metal.hardness / 2 * metal.weight / 100, 10, () -> Ingredient.fromTag(GradientTags.Items.INGOT.get(metal))));
     }
   }));
 

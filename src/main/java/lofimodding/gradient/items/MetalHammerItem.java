@@ -26,7 +26,7 @@ public class MetalHammerItem extends ToolItem {
   public final Metal metal;
 
   public MetalHammerItem(final Metal metal) {
-    super(1.0f, -3.5f + 50.0f / metal.weight, GradientItemTiers.METALS.get(metal), EFFECTIVE_BLOCKS, new Item.Properties().group(GradientItems.GROUP).addToolType(GradientToolTypes.HAMMER, metal.harvestLevel));
+    super(-GradientItemTiers.METALS.get(metal).getAttackDamage() * 0.5f, -3.5f + 25.0f / metal.weight, GradientItemTiers.METALS.get(metal), EFFECTIVE_BLOCKS, new Item.Properties().group(GradientItems.GROUP).addToolType(GradientToolTypes.HAMMER, metal.harvestLevel));
     this.metal = metal;
   }
 

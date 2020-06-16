@@ -31,7 +31,7 @@ public class MetalMattockItem extends AxeItem {
   public final Metal metal;
 
   public MetalMattockItem(final Metal metal) {
-    super(GradientItemTiers.METALS.get(metal), 2.0f, -3.5f + 25.0f / (metal.weight / 2.0f), new Item.Properties().group(GradientItems.GROUP).addToolType(ToolType.AXE, metal.harvestLevel).addToolType(ToolType.SHOVEL, metal.harvestLevel));
+    super(GradientItemTiers.METALS.get(metal), GradientItemTiers.METALS.get(metal).getAttackDamage() * 0.5f, -3.7f + 25.0f / metal.weight, new Item.Properties().group(GradientItems.GROUP).addToolType(ToolType.AXE, metal.harvestLevel).addToolType(ToolType.SHOVEL, metal.harvestLevel));
     this.metal = metal;
   }
 
