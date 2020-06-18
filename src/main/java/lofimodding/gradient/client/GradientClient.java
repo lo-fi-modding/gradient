@@ -13,6 +13,7 @@ import lofimodding.gradient.blocks.OreBlock;
 import lofimodding.gradient.client.screens.ClayCrucibleScreen;
 import lofimodding.gradient.client.screens.CreativeGeneratorScreen;
 import lofimodding.gradient.client.screens.CreativeSinkerScreen;
+import lofimodding.gradient.client.screens.ToolStationScreen;
 import lofimodding.gradient.client.screens.WoodenHopperScreen;
 import lofimodding.gradient.client.tesr.ClayCrucibleRenderer;
 import lofimodding.gradient.client.tesr.ClayMetalMixerRenderer;
@@ -139,6 +140,7 @@ public final class GradientClient {
 
     ScreenManager.registerFactory(GradientContainers.CLAY_CRUCIBLE.get(), ClayCrucibleScreen::new);
     ScreenManager.registerFactory(GradientContainers.WOODEN_HOPPER.get(), WoodenHopperScreen::new);
+    ScreenManager.registerFactory(GradientContainers.TOOL_STATION.get(), ToolStationScreen::new);
     ScreenManager.registerFactory(GradientContainers.CREATIVE_GENERATOR.get(), CreativeGeneratorScreen::new);
     ScreenManager.registerFactory(GradientContainers.CREATIVE_SINKER.get(), CreativeSinkerScreen::new);
   }

@@ -4,10 +4,11 @@ import lofimodding.gradient.GradientContainers;
 import lofimodding.gradient.network.ChangeCreativeSinkerEnergyPacket;
 import lofimodding.gradient.tileentities.CreativeSinkerTile;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.IntArray;
 
-public class CreativeSinkerContainer extends GradientContainer {
+public class CreativeSinkerContainer extends GradientContainer<TileEntity> {
   public final CreativeSinkerTile generator;
   private final IIntArray syncedData;
 

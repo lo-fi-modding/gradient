@@ -166,6 +166,7 @@ public final class GradientIds {
   public static final String MECHANICAL_GRINDSTONE = "mechanical_grindstone";
   public static final String MECHANICAL_MIXING_BASIN = "mechanical_mixing_basin";
   public static final String MECHANICAL_PUMP = "mechanical_pump";
+  public static final String TOOL_STATION = "tool_station";
 
   public static final String RECIPE_FILTER = "recipe_filter";
 

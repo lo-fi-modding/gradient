@@ -7,7 +7,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Slot;
 
-public class WoodenHopperContainer extends GradientContainer {
+public class WoodenHopperContainer extends GradientContainer<WoodenHopperTile> {
   private final IInventory hopperInventory;
 
   public WoodenHopperContainer(final int id, final PlayerInventory playerInv, final WoodenHopperTile te) {
@@ -37,8 +37,8 @@ public class WoodenHopperContainer extends GradientContainer {
   }
 
   @Override
-  public void onContainerClosed(final PlayerEntity playerIn) {
-    super.onContainerClosed(playerIn);
-    this.hopperInventory.closeInventory(playerIn);
+  public void onContainerClosed(final PlayerEntity player) {
+    super.onContainerClosed(player);
+    this.hopperInventory.closeInventory(player);
   }
 }

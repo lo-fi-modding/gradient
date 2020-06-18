@@ -11,7 +11,7 @@ import net.minecraft.util.Direction;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class GradientContainer extends Container {
+public class GradientContainer<Tile extends TileEntity> extends Container {
   public static final int SLOT_X_SPACING = 18;
   public static final int SLOT_Y_SPACING = 18;
 
@@ -20,18 +20,21 @@ public class GradientContainer extends Container {
   public static final int HOT_SLOTS_Y = 142;
 
   public final PlayerInventory playerInv;
+  public final Tile tile;
   protected final IItemHandler inventory;
 
   public GradientContainer(final ContainerType<? extends Container> type, final int id, final PlayerInventory playerInv) {
     super(type, id);
     this.playerInv = playerInv;
+    this.tile = null;
     this.inventory = null;
   }
 
-  public GradientContainer(final ContainerType<? extends Container> type, final int id, final PlayerInventory playerInv, final TileEntity te) {
+  public GradientContainer(final ContainerType<? extends Container> type, final int id, final PlayerInventory playerInv, final Tile tile) {
     super(type, id);
     this.playerInv = playerInv;
-    this.inventory = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.NORTH).orElseThrow(() -> new RuntimeException("TE wasn't an item handler"));
+    this.tile = tile;
+    this.inventory = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.NORTH).orElseThrow(() -> new RuntimeException("TE wasn't an item handler"));
   }
 
   protected void addPlayerSlots(final PlayerInventory invPlayer) {
