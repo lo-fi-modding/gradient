@@ -1,6 +1,5 @@
 package lofimodding.gradient.blocks;
 
-import lofimodding.gradient.tileentities.ClayCrucibleTile;
 import lofimodding.gradient.tileentities.ToolStationTile;
 import lofimodding.gradient.utils.WorldUtils;
 import net.minecraft.block.Block;

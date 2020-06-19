@@ -37,17 +37,21 @@ public class GradientContainer<Tile extends TileEntity> extends Container {
     this.inventory = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.NORTH).orElseThrow(() -> new RuntimeException("TE wasn't an item handler"));
   }
 
-  protected void addPlayerSlots(final PlayerInventory invPlayer) {
+  protected void addPlayerSlots(final PlayerInventory playerInv) {
+    this.addPlayerSlots(INV_SLOTS_Y, playerInv);
+  }
+
+  protected void addPlayerSlots(final int yOffset, final PlayerInventory playerInv) {
     // Player inv
     for(int y = 0; y < 3; ++y) {
       for(int x = 0; x < 9; ++x) {
-        this.addSlot(new Slot(invPlayer, x + y * 9 + 9, INV_SLOTS_X + x * SLOT_X_SPACING, INV_SLOTS_Y + y * SLOT_Y_SPACING));
+        this.addSlot(new Slot(playerInv, x + y * 9 + 9, INV_SLOTS_X + x * SLOT_X_SPACING, yOffset + y * SLOT_Y_SPACING));
       }
     }
 
     // Player hotbar
     for(int i = 0; i < 9; ++i) {
-      this.addSlot(new Slot(invPlayer, i, INV_SLOTS_X + i * SLOT_X_SPACING, HOT_SLOTS_Y));
+      this.addSlot(new Slot(playerInv, i, INV_SLOTS_X + i * SLOT_X_SPACING, HOT_SLOTS_Y - INV_SLOTS_Y + yOffset));
     }
   }
 
@@ -136,15 +140,18 @@ public class GradientContainer<Tile extends TileEntity> extends Container {
 
       while(reverseDirection ? i >= startIndex : i < endIndex) {
         final Slot slot = this.inventorySlots.get(i);
-        final ItemStack itemstack = slot.getStack();
 
-        if(itemstack.isEmpty() && slot.isItemValid(stack)) { // Forge: Make sure to respect isItemValid in the slot.
-          slot.putStack(stack.split(slot.getItemStackLimit(stack)));
-          slot.onSlotChanged();
-          flag = true;
+        if(!(slot instanceof HoloSlot)) {
+          final ItemStack itemstack = slot.getStack();
 
-          if(stack.isEmpty()) {
-            break;
+          if(itemstack.isEmpty() && slot.isItemValid(stack)) { // Forge: Make sure to respect isItemValid in the slot.
+            slot.putStack(stack.split(slot.getItemStackLimit(stack)));
+            slot.onSlotChanged();
+            flag = true;
+
+            if(stack.isEmpty()) {
+              break;
+            }
           }
         }
 

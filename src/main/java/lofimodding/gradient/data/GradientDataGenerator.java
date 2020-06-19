@@ -1287,6 +1287,9 @@ public final class GradientDataGenerator {
       this.add(GradientItems.MECHANICAL_GRINDSTONE.get(), "Mechanical Grindstone");
       this.add(GradientItems.MECHANICAL_MIXING_BASIN.get(), "Mechanical Mixing Basin");
       this.add(GradientItems.MECHANICAL_PUMP.get(), "Mechanical Pump");
+      this.add(GradientItems.TOOL_STATION.get(), "Tool Station");
+      this.add(GradientItems.TOOL_STATION.get().getTranslationKey() + ".tools", "Tools");
+      this.add(GradientItems.TOOL_STATION.get().getTranslationKey() + ".storage", "Ingredients");
 
       this.add(GradientItems.RECIPE_FILTER.get(), "Recipe Filter");
       this.add(GradientItems.RECIPE_FILTER.get().getTranslationKey() + ".tooltip", "Shift-right-click on most Gradient machines to lock in the current recipe. Shift-right-click again to unlock.");
@@ -2746,6 +2749,7 @@ public final class GradientDataGenerator {
         this.registerDropSelfLootTable(GradientBlocks.MECHANICAL_GRINDSTONE.get());
         this.registerDropSelfLootTable(GradientBlocks.MECHANICAL_MIXING_BASIN.get());
         this.registerDropSelfLootTable(GradientBlocks.MECHANICAL_PUMP.get());
+        this.registerDropSelfLootTable(GradientBlocks.TOOL_STATION.get());
 
         this.registerDropSelfLootTable(GradientBlocks.CREATIVE_GENERATOR.get());
         this.registerDropSelfLootTable(GradientBlocks.CREATIVE_SINKER.get());

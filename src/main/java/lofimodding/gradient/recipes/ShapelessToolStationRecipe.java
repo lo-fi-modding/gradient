@@ -4,9 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import lofimodding.gradient.GradientRecipeSerializers;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
@@ -16,7 +14,6 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import net.minecraftforge.common.util.RecipeMatcher;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.registries.ForgeRegistryEntry;
@@ -24,7 +21,7 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShapelessToolStationRecipe implements IRecipe<IInventory> {
+public class ShapelessToolStationRecipe implements IToolStationRecipe {
   public static final IRecipeType<ShapelessToolStationRecipe> TYPE = IRecipeType.register("shapeless_tool_station");
 
   private static final RecipeItemHelper RECIPE_ITEM_HELPER = new RecipeItemHelper();
@@ -46,6 +43,7 @@ public class ShapelessToolStationRecipe implements IRecipe<IInventory> {
     this.simple = ingredients.stream().allMatch(Ingredient::isSimple) && tools.stream().allMatch(Ingredient::isSimple);
   }
 
+  @Override
   public boolean recipeMatches(final IItemHandler recipe) {
     return this.handlerContainsIngredients(recipe, this.ingredients);
   }
@@ -85,10 +83,12 @@ public class ShapelessToolStationRecipe implements IRecipe<IInventory> {
     return this.ingredients;
   }
 
+  @Override
   public NonNullList<Ingredient> getTools() {
     return this.tools;
   }
 
+  @Override
   public NonNullList<ItemStack> getOutputs() {
     return this.outputs;
   }
@@ -106,29 +106,6 @@ public class ShapelessToolStationRecipe implements IRecipe<IInventory> {
   @Override
   public ItemStack getIcon() {
     return null; //TODO
-  }
-
-  @Override
-  @Deprecated
-  public boolean matches(final IInventory inv, final World world) {
-    return false;
-  }
-
-  @Override
-  @Deprecated
-  public ItemStack getCraftingResult(final IInventory inv) {
-    return this.getRecipeOutput();
-  }
-
-  @Override
-  @Deprecated
-  public boolean canFit(final int width, final int height) {
-    return false;
-  }
-
-  @Override
-  public ItemStack getRecipeOutput() {
-    return this.outputs.get(0);
   }
 
   @Override
