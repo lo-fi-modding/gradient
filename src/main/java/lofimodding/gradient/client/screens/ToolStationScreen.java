@@ -12,10 +12,15 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ToolStationScreen extends ContainerScreen<ToolStationContainer> {
   private static final ResourceLocation BG_TEXTURE = Gradient.loc("textures/gui/tool_station.png");
   private final ToolStationContainer container;
   private final ToolStationTile tile;
+
+  private final List<String> problems = new ArrayList<>();
 
   public ToolStationScreen(final ToolStationContainer container, final PlayerInventory inv, final ITextComponent title) {
     super(container, inv, title);
@@ -26,6 +31,24 @@ public class ToolStationScreen extends ContainerScreen<ToolStationContainer> {
 
   @Override
   public void render(final int mouseX, final int mouseY, final float partialTicks) {
+    this.problems.clear();
+
+    final ToolStationTile tile = this.container.tile;
+
+    if(tile.hasRecipe()) {
+      if(!tile.canFit()) {
+        this.problems.add(I18n.format(GradientBlocks.TOOL_STATION.get().getTranslationKey() + ".too_small"));
+      }
+
+      if(!tile.hasRequiredTools()) {
+        this.problems.add(I18n.format(GradientBlocks.TOOL_STATION.get().getTranslationKey() + ".missing_tools"));
+      }
+
+      if(tile.hasRequiredIngredients(1) == 0) {
+        this.problems.add(I18n.format(GradientBlocks.TOOL_STATION.get().getTranslationKey() + ".missing_ingredients"));
+      }
+    }
+
     this.renderBackground();
     super.render(mouseX, mouseY, partialTicks);
     this.renderHoveredToolTip(mouseX, mouseY);
@@ -62,6 +85,10 @@ public class ToolStationScreen extends ContainerScreen<ToolStationContainer> {
     for(int slot = 0; slot < this.tile.getMergedStorageInv().getSlots(); slot++) {
       this.blit(x + GradientContainer.INV_SLOTS_X + slot % 9 * GradientContainer.SLOT_X_SPACING - 1, y + this.container.storageY - 1, 176, 0, GradientContainer.SLOT_X_SPACING, GradientContainer.SLOT_Y_SPACING);
     }
+
+    if(!this.problems.isEmpty()) {
+      this.blit(x + this.xSize - 14, y + 4, 176, 18, 10, 10);
+    }
   }
 
   @Override
@@ -73,5 +100,21 @@ public class ToolStationScreen extends ContainerScreen<ToolStationContainer> {
     this.font.drawString(I18n.format(GradientBlocks.TOOL_STATION.get().getTranslationKey() + ".tools"), 8.0f, this.container.toolsY - 10, 0x404040);
     this.font.drawString(I18n.format(GradientBlocks.TOOL_STATION.get().getTranslationKey() + ".storage"), 8.0f, this.container.storageY - 10, 0x404040);
     this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8.0f, this.ySize - 96 + 3, 0x404040);
+  }
+
+  @Override
+  protected void renderHoveredToolTip(final int mouseX, final int mouseY) {
+    if(!this.problems.isEmpty()) {
+      final int x = (this.width  - this.xSize) / 2;
+      final int y = (this.height - this.ySize) / 2;
+
+      if(mouseX >= x + this.xSize - 14 && mouseX <  x + this.xSize - 4) {
+        if(mouseY >= y + 4 && mouseY < y + 14) {
+          this.renderTooltip(this.problems, mouseX, mouseY);
+        }
+      }
+    }
+
+    super.renderHoveredToolTip(mouseX, mouseY);
   }
 }

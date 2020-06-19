@@ -1290,6 +1290,9 @@ public final class GradientDataGenerator {
       this.add(GradientItems.TOOL_STATION.get(), "Tool Station");
       this.add(GradientItems.TOOL_STATION.get().getTranslationKey() + ".tools", "Tools");
       this.add(GradientItems.TOOL_STATION.get().getTranslationKey() + ".storage", "Ingredients");
+      this.add(GradientItems.TOOL_STATION.get().getTranslationKey() + ".too_small", "Requires more output slots");
+      this.add(GradientItems.TOOL_STATION.get().getTranslationKey() + ".missing_tools", "Missing tools");
+      this.add(GradientItems.TOOL_STATION.get().getTranslationKey() + ".missing_ingredients", "Missing ingredients");
 
       this.add(GradientItems.RECIPE_FILTER.get(), "Recipe Filter");
       this.add(GradientItems.RECIPE_FILTER.get().getTranslationKey() + ".tooltip", "Shift-right-click on most Gradient machines to lock in the current recipe. Shift-right-click again to unlock.");

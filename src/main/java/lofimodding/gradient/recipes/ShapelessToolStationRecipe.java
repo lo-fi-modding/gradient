@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShapelessToolStationRecipe implements IToolStationRecipe {
-  public static final IRecipeType<ShapelessToolStationRecipe> TYPE = IRecipeType.register("shapeless_tool_station");
-
   private static final RecipeItemHelper RECIPE_ITEM_HELPER = new RecipeItemHelper();
   private static final List<ItemStack> INPUT_STACKS = new ArrayList<>();
 

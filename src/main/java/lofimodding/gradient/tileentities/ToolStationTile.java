@@ -4,7 +4,6 @@ import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientTileEntities;
 import lofimodding.gradient.containers.ToolStationContainer;
 import lofimodding.gradient.recipes.IToolStationRecipe;
-import lofimodding.gradient.recipes.ShapelessToolStationRecipe;
 import lofimodding.gradient.utils.RecipeUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,6 +15,7 @@ import net.minecraft.inventory.container.WorkbenchContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
@@ -72,6 +72,36 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
     public ItemStack insertItem(final int slot, @Nonnull final ItemStack stack, final boolean simulate) {
       return stack;
     }
+
+    @Nonnull
+    @Override
+    public ItemStack extractItem(final int slot, final int amount, final boolean simulate) {
+      // Some recipes output more than one item, but we still only want to do one craft cycle per craft
+      // i.e. doors output 3. We don't want to consume the planks 3 times.
+      final int outputCount = ToolStationTile.this.getOutput(slot).getCount();
+      final int scaledAmount = Math.max(1, amount / outputCount);
+      final int newAmount = ToolStationTile.this.getAmountCraftable(scaledAmount);
+
+      if(!simulate) {
+        ToolStationTile.this.consumeIngredients(newAmount);
+      }
+
+      return super.extractItem(slot, newAmount * outputCount, simulate);
+    }
+
+    @Override
+    protected void onContentsChanged(final int slot) {
+      super.onContentsChanged(slot);
+
+      // If any output slots still have something in them, don't try to set the outputs again
+      for(int i = 0; i < ToolStationTile.this.mergedOutput.getSlots(); i++) {
+        if(!ToolStationTile.this.mergedOutput.getStackInSlot(i).isEmpty()) {
+          return;
+        }
+      }
+
+      ToolStationTile.this.updateOutput();
+    }
   };
 
   private final ItemStackHandler toolsInv = new ItemHandler(3) {
@@ -125,47 +155,170 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
     return this.mergedOutput;
   }
 
-  public IRecipe<?> getRecipe() {
+  public boolean hasRecipe() {
+    return this.recipe != null;
+  }
+
+  public IRecipe<CraftingInventory> getRecipe() {
     return this.recipe;
+  }
+
+  public int getAmountCraftable(final int amount) {
+    if(this.recipe == null) {
+      return 0;
+    }
+
+    if(this.canFit() && this.hasRequiredTools()) {
+      return this.hasRequiredIngredients(amount);
+    }
+
+    return 0;
+  }
+
+  public boolean canFit() {
+    if(this.recipe == null) {
+      return false;
+    }
+
+    if(this.recipe instanceof IToolStationRecipe) {
+      if(((IToolStationRecipe)this.recipe).getOutputs().size() > this.mergedOutput.getSlots()) {
+        return false;
+      }
+    }
+
+    return this.recipe.canFit(this.getCraftingSize(), this.getCraftingSize());
+  }
+
+  public boolean hasRequiredTools() {
+    if(this.recipe == null) {
+      return false;
+    }
+
+    if(this.recipe.getType() == IRecipeType.CRAFTING) {
+      return true;
+    }
+
+    if(this.recipe.getType() == IToolStationRecipe.TYPE) {
+      final IToolStationRecipe recipe = (IToolStationRecipe)this.recipe;
+
+      outer:
+      for(final Ingredient tool : recipe.getTools()) {
+        for(int slot = 0; slot < this.mergedTools.getSlots(); slot++) {
+          if(tool.test(this.mergedTools.getStackInSlot(slot))) {
+            continue outer;
+          }
+        }
+
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  public int hasRequiredIngredients(final int amount) {
+    if(this.recipe == null) {
+      return 0;
+    }
+
+    final IItemHandlerModifiable temp = new ItemStackHandler(this.mergedStorage.getSlots());
+    for(int slot = 0; slot < temp.getSlots(); slot++) {
+      temp.setStackInSlot(slot, this.mergedStorage.getStackInSlot(slot).copy());
+    }
+
+    for(int i = 0; i < amount; i++) {
+      outer:
+      for(final Ingredient ingredient : this.recipe.getIngredients()) {
+        for(int slot = 0; slot < temp.getSlots(); slot++) {
+          final ItemStack stack = temp.getStackInSlot(slot);
+
+          if(ingredient.test(stack)) {
+            final ItemStack newStack = stack.copy();
+            newStack.shrink(1);
+            temp.setStackInSlot(slot, newStack);
+            continue outer;
+          }
+        }
+
+        return i;
+      }
+    }
+
+    return amount;
+  }
+
+  private void consumeIngredients(final int amount) {
+    for(int i = 0; i < amount; i++) {
+      for(final Ingredient ingredient : this.recipe.getIngredients()) {
+        for(int slot = 0; slot < this.mergedStorage.getSlots(); slot++) {
+          final ItemStack stack = this.mergedStorage.getStackInSlot(slot);
+
+          if(ingredient.test(stack)) {
+            final ItemStack newStack = stack.copy();
+            newStack.shrink(1);
+            this.mergedStorage.setStackInSlot(slot, newStack);
+            break;
+          }
+        }
+      }
+    }
   }
 
   private void updateRecipe() {
     this.recipe = this.findRecipe();
+    this.updateOutput();
+  }
 
-    for(int slot = 0; slot < this.mergedOutput.getSlots(); slot++) {
-      this.mergedOutput.setStackInSlot(slot, ItemStack.EMPTY);
-    }
+  private boolean reentryProtection;
 
-    if(this.recipe == null) {
+  private void updateOutput() {
+    if(this.reentryProtection) {
       return;
     }
 
-    if(this.recipe instanceof IToolStationRecipe) {
-      for(int slot = 0; slot < Math.min(this.mergedOutput.getSlots(), ((IToolStationRecipe)this.recipe).getOutputs().size()); slot++) {
-        this.mergedOutput.setStackInSlot(slot, ((IToolStationRecipe)this.recipe).getOutputs().get(slot));
-      }
-    } else {
-      //TODO refactor this crafting stuff
+    this.reentryProtection = true;
 
-      final PlayerEntity player;
-      if(this.world.isRemote) {
-        player = Minecraft.getInstance().player;
-      } else {
-        player = FakePlayerFactory.getMinecraft((ServerWorld)this.world);
-      }
-
-      final CraftingInventory crafting = new CraftingInventory(new WorkbenchContainer(0, player.inventory), this.getCraftingSize(), this.getCraftingSize());
-      for(int slot = 0; slot < this.mergedRecipe.getSlots(); slot++) {
-        crafting.setInventorySlotContents(slot, this.mergedRecipe.getStackInSlot(slot));
-      }
-
-      this.mergedOutput.setStackInSlot(0, this.recipe.getCraftingResult(crafting));
+    for(int slot = 0; slot < this.mergedOutput.getSlots(); slot++) {
+      this.mergedOutput.setStackInSlot(slot, this.getOutput(slot));
     }
+
+    this.reentryProtection = false;
+  }
+
+  private ItemStack getOutput(final int slot) {
+    if(this.recipe == null) {
+      return ItemStack.EMPTY;
+    }
+
+    if(this.recipe.getType() == IToolStationRecipe.TYPE) {
+      return ((IToolStationRecipe)this.recipe).getOutputs().get(slot);
+    }
+
+    // Regular recipes only have one output
+    if(slot != 0) {
+      return ItemStack.EMPTY;
+    }
+
+    //TODO refactor this crafting stuff
+
+    final PlayerEntity player;
+    if(this.world.isRemote) {
+      player = Minecraft.getInstance().player;
+    } else {
+      player = FakePlayerFactory.getMinecraft((ServerWorld)this.world);
+    }
+
+    final CraftingInventory crafting = new CraftingInventory(new WorkbenchContainer(0, player.inventory), this.getCraftingSize(), this.getCraftingSize());
+    for(int i = 0; i < this.mergedRecipe.getSlots(); i++) {
+      crafting.setInventorySlotContents(i, this.mergedRecipe.getStackInSlot(i));
+    }
+
+    return this.recipe.getCraftingResult(crafting);
   }
 
   @Nullable
   private IRecipe<CraftingInventory> findRecipe() {
-    final IRecipe<CraftingInventory> shapelessToolStation = RecipeUtils.getRecipe(ShapelessToolStationRecipe.TYPE, recipe -> recipe.recipeMatches(this.mergedRecipe)).orElse(null);
+    final IRecipe<CraftingInventory> shapelessToolStation = RecipeUtils.getRecipe(IToolStationRecipe.TYPE, recipe -> recipe.recipeMatches(this.mergedRecipe)).orElse(null);
 
     if(shapelessToolStation != null) {
       return shapelessToolStation;
