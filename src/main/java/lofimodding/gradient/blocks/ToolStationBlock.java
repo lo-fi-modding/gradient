@@ -1,5 +1,6 @@
 package lofimodding.gradient.blocks;
 
+import lofimodding.gradient.Gradient;
 import lofimodding.gradient.tileentities.ToolStationTile;
 import lofimodding.gradient.utils.WorldUtils;
 import net.minecraft.block.Block;
@@ -54,5 +55,24 @@ public class ToolStationBlock extends Block {
     }
 
     return ActionResultType.SUCCESS;
+  }
+
+  @SuppressWarnings("deprecation")
+  @Override
+  @Deprecated
+  public void onBlockAdded(final BlockState state, final World world, final BlockPos pos, final BlockState oldState, final boolean isMoving) {
+    super.onBlockAdded(state, world, pos, oldState, isMoving);
+    //TODO: connect to other tool stations
+    Gradient.LOGGER.info("ADDING");
+
+    WorldUtils.getTileEntity(world, pos, ToolStationTile.class).updateNeighbours();
+  }
+
+  @SuppressWarnings("deprecation")
+  @Override
+  @Deprecated
+  public void onReplaced(final BlockState state, final World world, final BlockPos pos, final BlockState newState, final boolean isMoving) {
+    super.onReplaced(state, world, pos, newState, isMoving);
+    //TODO: drop items, disconnect from other tool stations
   }
 }

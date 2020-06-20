@@ -5,6 +5,7 @@ import lofimodding.gradient.GradientTileEntities;
 import lofimodding.gradient.containers.ToolStationContainer;
 import lofimodding.gradient.recipes.IToolStationRecipe;
 import lofimodding.gradient.utils.RecipeUtils;
+import lofimodding.gradient.utils.WorldUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -31,6 +32,9 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 public class ToolStationTile extends TileEntity implements INamedContainerProvider {
   @CapabilityInject(IItemHandler.class)
@@ -120,12 +124,11 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
     }
   };
 
-  //TODO: I think this should probably all be changed to just have one master with an inventory
-  private final IItemHandlerModifiable mergedRecipe = new CombinedInvWrapper(this.recipeInv);
-  private final IItemHandlerModifiable mergedOutput = new CombinedInvWrapper(this.outputInv);
-  private final IItemHandlerModifiable mergedTools = new CombinedInvWrapper(this.toolsInv);
-  private final IItemHandlerModifiable mergedStorage = new CombinedInvWrapper(this.storageInv);
-  private final IItemHandlerModifiable mergedInventory = new CombinedInvWrapper(this.mergedRecipe, this.mergedOutput, this.mergedTools, this.mergedStorage);
+  private IItemHandlerModifiable mergedRecipe = this.recipeInv;
+  private IItemHandlerModifiable mergedOutput = this.outputInv;
+  private IItemHandlerModifiable mergedTools = this.toolsInv;
+  private IItemHandlerModifiable mergedStorage = this.storageInv;
+  private IItemHandlerModifiable mergedInventory = new CombinedInvWrapper(this.mergedRecipe, this.mergedOutput, this.mergedTools, this.mergedStorage);
 
   private final LazyOptional<IItemHandler> lazyInv = LazyOptional.of(() -> this.mergedInventory);
 
@@ -340,6 +343,46 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
     }
 
     return RecipeUtils.getRecipe(IRecipeType.CRAFTING, recipe -> recipe.matches(crafting, this.world)).orElse(null);
+  }
+
+  public void setMain(final ToolStationTile main) {
+    if(main == this) {
+      this.mergedRecipe = this.recipeInv;
+      this.mergedOutput = this.outputInv;
+      this.mergedTools = this.toolsInv;
+      this.mergedStorage = this.storageInv;
+      this.mergedInventory = new CombinedInvWrapper(this.mergedRecipe, this.mergedOutput, this.mergedTools, this.mergedStorage);
+    } else {
+      this.mergedRecipe = main.mergedRecipe;
+      this.mergedOutput = main.mergedOutput;
+      this.mergedTools = main.mergedTools;
+      this.mergedStorage = main.mergedStorage;
+      this.mergedInventory = main.mergedInventory;
+    }
+  }
+
+  public void updateNeighbours() {
+    final List<ToolStationTile> tiles = new ArrayList<>();
+    this.addNeighbours(tiles, this);
+    tiles.sort(Comparator.comparingLong(value -> value.pos.toLong()));
+
+    final ToolStationTile first = tiles.get(0);
+
+    for(final ToolStationTile tile : tiles) {
+      tile.setMain(first);
+    }
+  }
+
+  private void addNeighbours(final List<ToolStationTile> tiles, final ToolStationTile centre) {
+    tiles.add(centre);
+
+    for(final Direction direction : Direction.Plane.HORIZONTAL) {
+      final ToolStationTile tile = WorldUtils.getTileEntity(centre.world, centre.pos.offset(direction), ToolStationTile.class);
+
+      if(tile != null && !tiles.contains(tile)) {
+        this.addNeighbours(tiles, tile);
+      }
+    }
   }
 
   @Override
