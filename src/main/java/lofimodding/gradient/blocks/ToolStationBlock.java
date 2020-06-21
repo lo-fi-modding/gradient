@@ -1,6 +1,5 @@
 package lofimodding.gradient.blocks;
 
-import lofimodding.gradient.Gradient;
 import lofimodding.gradient.tileentities.ToolStationTile;
 import lofimodding.gradient.utils.WorldUtils;
 import net.minecraft.block.Block;
@@ -11,6 +10,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -62,10 +62,8 @@ public class ToolStationBlock extends Block {
   @Deprecated
   public void onBlockAdded(final BlockState state, final World world, final BlockPos pos, final BlockState oldState, final boolean isMoving) {
     super.onBlockAdded(state, world, pos, oldState, isMoving);
-    //TODO: connect to other tool stations
-    Gradient.LOGGER.info("ADDING");
-
     WorldUtils.getTileEntity(world, pos, ToolStationTile.class).updateNeighbours();
+//    UpdateToolStationNeighboursPacket.send(world.dimension.getType(), pos);
   }
 
   @SuppressWarnings("deprecation")
@@ -73,6 +71,16 @@ public class ToolStationBlock extends Block {
   @Deprecated
   public void onReplaced(final BlockState state, final World world, final BlockPos pos, final BlockState newState, final boolean isMoving) {
     super.onReplaced(state, world, pos, newState, isMoving);
-    //TODO: drop items, disconnect from other tool stations
+
+    for(final Direction direction : Direction.Plane.HORIZONTAL) {
+      final ToolStationTile tile = WorldUtils.getTileEntity(world, pos.offset(direction), ToolStationTile.class);
+
+      if(tile != null) {
+        tile.updateNeighbours();
+//        UpdateToolStationNeighboursPacket.send(world.dimension.getType(), pos.offset(direction));
+      }
+    }
+
+    //TODO drop items
   }
 }

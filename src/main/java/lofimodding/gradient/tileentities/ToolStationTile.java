@@ -10,6 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.inventory.container.WorkbenchContainer;
@@ -17,8 +18,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
@@ -124,37 +127,59 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
     }
   };
 
-  private IItemHandlerModifiable mergedRecipe = this.recipeInv;
-  private IItemHandlerModifiable mergedOutput = this.outputInv;
-  private IItemHandlerModifiable mergedTools = this.toolsInv;
-  private IItemHandlerModifiable mergedStorage = this.storageInv;
-  private IItemHandlerModifiable mergedInventory = new CombinedInvWrapper(this.mergedRecipe, this.mergedOutput, this.mergedTools, this.mergedStorage);
+  private IItemHandlerModifiable mergedRecipe;
+  private IItemHandlerModifiable mergedOutput;
+  private IItemHandlerModifiable mergedTools;
+  private IItemHandlerModifiable mergedStorage;
+  private IItemHandlerModifiable mergedInventory;
 
   private final LazyOptional<IItemHandler> lazyInv = LazyOptional.of(() -> this.mergedInventory);
 
   private IRecipe<CraftingInventory> recipe;
+  private int craftingSize = 3;
+  private int neighbourCount; //TODO actually resize
 
   public ToolStationTile() {
     super(GradientTileEntities.TOOL_STATION.get());
   }
 
   public int getCraftingSize() {
-    return 3; //TODO
+    if(this.mergedInventory == null) {
+      this.updateNeighbours();
+    }
+
+    return this.craftingSize;
   }
 
   public IItemHandler getMergedRecipeInv() {
+    if(this.mergedInventory == null) {
+      this.updateNeighbours();
+    }
+
     return this.mergedRecipe;
   }
 
   public IItemHandler getMergedToolsInv() {
+    if(this.mergedInventory == null) {
+      this.updateNeighbours();
+    }
+
     return this.mergedTools;
   }
 
   public IItemHandler getMergedStorageInv() {
+    if(this.mergedInventory == null) {
+      this.updateNeighbours();
+    }
+
     return this.mergedStorage;
   }
 
   public IItemHandler getMergedOutputInv() {
+    if(this.mergedInventory == null) {
+      this.updateNeighbours();
+    }
+
     return this.mergedOutput;
   }
 
@@ -171,6 +196,10 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
       return 0;
     }
 
+    if(this.mergedInventory == null) {
+      this.updateNeighbours();
+    }
+
     if(this.canFit() && this.hasRequiredTools()) {
       return this.hasRequiredIngredients(amount);
     }
@@ -181,6 +210,10 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
   public boolean canFit() {
     if(this.recipe == null) {
       return false;
+    }
+
+    if(this.mergedInventory == null) {
+      this.updateNeighbours();
     }
 
     if(this.recipe instanceof IToolStationRecipe) {
@@ -195,6 +228,10 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
   public boolean hasRequiredTools() {
     if(this.recipe == null) {
       return false;
+    }
+
+    if(this.mergedInventory == null) {
+      this.updateNeighbours();
     }
 
     if(this.recipe.getType() == IRecipeType.CRAFTING) {
@@ -222,6 +259,10 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
   public int hasRequiredIngredients(final int amount) {
     if(this.recipe == null) {
       return 0;
+    }
+
+    if(this.mergedInventory == null) {
+      this.updateNeighbours();
     }
 
     final IItemHandlerModifiable temp = new ItemStackHandler(this.mergedStorage.getSlots());
@@ -280,6 +321,10 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
     }
 
     this.reentryProtection = true;
+
+    if(this.mergedInventory == null) {
+      this.updateNeighbours();
+    }
 
     for(int slot = 0; slot < this.mergedOutput.getSlots(); slot++) {
       this.mergedOutput.setStackInSlot(slot, this.getOutput(slot));
@@ -371,6 +416,8 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
     for(final ToolStationTile tile : tiles) {
       tile.setMain(first);
     }
+
+    this.resize(tiles.size() - 1);
   }
 
   private void addNeighbours(final List<ToolStationTile> tiles, final ToolStationTile centre) {
@@ -385,9 +432,80 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
     }
   }
 
+  private void resize(final int size) {
+    final int oldCraftingWidth = this.getCraftingSize();
+
+    this.craftingSize = size + 3;
+    this.neighbourCount = size;
+    this.resizeHandler(this.recipeInv, this.getCraftingSize() * this.getCraftingSize(), oldCraftingWidth, this.getCraftingSize());
+    this.resizeHandler(this.outputInv, 1 + this.neighbourCount, 1, 1);
+    this.resizeHandler(this.toolsInv, 3 + this.neighbourCount, 100, 100);
+    this.resizeHandler(this.storageInv, 9 * (this.neighbourCount + 1), 9, 9);
+  }
+
+  private void resizeHandler(final ItemStackHandler handler, final int newSize, final int oldWidth, final int newWidth) {
+    final int oldSize = handler.getSlots();
+
+    final NonNullList<ItemStack> stacks = NonNullList.withSize(newSize, ItemStack.EMPTY);
+
+    for(int slot = 0; slot < oldSize; slot++) {
+      final ItemStack stack = handler.getStackInSlot(slot);
+
+      final int oldX = slot % oldWidth;
+      final int oldY = slot / oldWidth;
+      final int newSlot = oldY * newWidth + oldX;
+
+      if(newSlot < stacks.size()) {
+        stacks.set(newSlot, stack);
+      } else {
+        InventoryHelper.spawnItemStack(this.world, this.pos.getX(), this.pos.getY(), this.pos.getZ(), stack);
+      }
+    }
+
+    handler.setSize(newSize);
+
+    for(int slot = 0; slot < newSize; slot++) {
+      handler.setStackInSlot(slot, stacks.get(slot));
+    }
+  }
+
+  @Override
+  public CompoundNBT write(final CompoundNBT compound) {
+    compound.putInt("CraftingSize", this.craftingSize);
+    compound.put("RecipeInv", this.recipeInv.serializeNBT());
+    compound.put("OutputInv", this.outputInv.serializeNBT());
+    compound.put("ToolsInv", this.toolsInv.serializeNBT());
+    compound.put("StorageInv", this.storageInv.serializeNBT());
+    return super.write(compound);
+  }
+
+  @Override
+  public void read(final CompoundNBT compound) {
+    this.craftingSize = compound.getInt("CraftingSize");
+    this.recipeInv.deserializeNBT(compound.getCompound("RecipeInv"));
+    this.outputInv.deserializeNBT(compound.getCompound("OutputInv"));
+    this.toolsInv.deserializeNBT(compound.getCompound("ToolsInv"));
+    this.storageInv.deserializeNBT(compound.getCompound("StorageInv"));
+
+    if(this.mergedInventory == null) {
+      this.setMain(this);
+    }
+
+    super.read(compound);
+  }
+
+  @Override
+  public CompoundNBT getUpdateTag() {
+    return this.write(new CompoundNBT());
+  }
+
   @Override
   public <T> LazyOptional<T> getCapability(final Capability<T> capability, @Nullable final Direction facing) {
     if(capability == ITEM_HANDLER_CAPABILITY) {
+      if(this.mergedInventory == null) {
+        this.updateNeighbours();
+      }
+
       return this.lazyInv.cast();
     }
 
