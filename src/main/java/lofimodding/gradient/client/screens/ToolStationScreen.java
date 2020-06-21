@@ -67,23 +67,23 @@ public class ToolStationScreen extends ContainerScreen<ToolStationContainer> {
     final int size = this.tile.getCraftingSize();
 
     // Recipe input
-    for(int slot = 0; slot < this.tile.getMergedRecipeInv().getSlots(); slot++) {
+    for(int slot = 0; slot < this.tile.getRecipeInv().getSlots(); slot++) {
       this.blit(x + GradientContainer.INV_SLOTS_X + slot % size * GradientContainer.SLOT_X_SPACING - 1, y + this.container.recipeY + slot / size * GradientContainer.SLOT_Y_SPACING - 1, 176, 0, GradientContainer.SLOT_X_SPACING, GradientContainer.SLOT_Y_SPACING);
     }
 
     // Output
-    for(int slot = 0; slot < this.tile.getMergedOutputInv().getSlots(); slot++) {
+    for(int slot = 0; slot < this.tile.getOutputInv().getSlots(); slot++) {
       this.blit(x + GradientContainer.INV_SLOTS_X + (size + 1) * GradientContainer.SLOT_X_SPACING - 1, y + this.container.recipeY + (size - 1) * GradientContainer.SLOT_Y_SPACING / 2 - 1, 176, 0, GradientContainer.SLOT_X_SPACING, GradientContainer.SLOT_Y_SPACING);
     }
 
     // Tools
-    for(int slot = 0; slot < this.tile.getMergedToolsInv().getSlots(); slot++) {
+    for(int slot = 0; slot < this.tile.getToolsInv().getSlots(); slot++) {
       this.blit(x + GradientContainer.INV_SLOTS_X + slot * GradientContainer.SLOT_X_SPACING - 1, y + this.container.toolsY - 1, 176, 0, GradientContainer.SLOT_X_SPACING, GradientContainer.SLOT_Y_SPACING);
     }
 
     // Storage
-    for(int slot = 0; slot < this.tile.getMergedStorageInv().getSlots(); slot++) {
-      this.blit(x + GradientContainer.INV_SLOTS_X + slot % 9 * GradientContainer.SLOT_X_SPACING - 1, y + this.container.storageY - 1, 176, 0, GradientContainer.SLOT_X_SPACING, GradientContainer.SLOT_Y_SPACING);
+    for(int slot = 0; slot < this.tile.getStorageInv().getSlots(); slot++) {
+      this.blit(x + GradientContainer.INV_SLOTS_X + slot % 9 * GradientContainer.SLOT_X_SPACING - 1, y + this.container.storageY + slot / 9 * GradientContainer.SLOT_X_SPACING - 1, 176, 0, GradientContainer.SLOT_X_SPACING, GradientContainer.SLOT_Y_SPACING);
     }
 
     if(!this.problems.isEmpty()) {

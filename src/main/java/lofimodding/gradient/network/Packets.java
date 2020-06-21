@@ -25,7 +25,6 @@ public final class Packets {
     CHANNEL.messageBuilder(SyncHeatSinkerHeatPacket.class, id++).encoder(SyncHeatSinkerHeatPacket::encode).decoder(SyncHeatSinkerHeatPacket::decode).consumer(SyncHeatSinkerHeatPacket::handle).add();
     CHANNEL.messageBuilder(UpdateHeatNeighboursPacket.class, id++).encoder(UpdateHeatNeighboursPacket::encode).decoder(UpdateHeatNeighboursPacket::decode).consumer(UpdateHeatNeighboursPacket::handle).add();
     CHANNEL.messageBuilder(UpdateClayMetalMixerNeighboursPacket.class, id++).encoder(UpdateClayMetalMixerNeighboursPacket::encode).decoder(UpdateClayMetalMixerNeighboursPacket::decode).consumer(UpdateClayMetalMixerNeighboursPacket::handle).add();
-    CHANNEL.messageBuilder(UpdateToolStationNeighboursPacket.class, id++).encoder(UpdateToolStationNeighboursPacket::encode).decoder(UpdateToolStationNeighboursPacket::decode).consumer(UpdateToolStationNeighboursPacket::handle).add();
 
     CHANNEL.messageBuilder(ChangeCreativeGeneratorEnergyPacket.class, id++).encoder(ChangeCreativeGeneratorEnergyPacket::encode).decoder(ChangeCreativeGeneratorEnergyPacket::decode).consumer(ChangeCreativeGeneratorEnergyPacket::handle).add();
     CHANNEL.messageBuilder(ChangeCreativeSinkerEnergyPacket.class, id++).encoder(ChangeCreativeSinkerEnergyPacket::encode).decoder(ChangeCreativeSinkerEnergyPacket::decode).consumer(ChangeCreativeSinkerEnergyPacket::handle).add();

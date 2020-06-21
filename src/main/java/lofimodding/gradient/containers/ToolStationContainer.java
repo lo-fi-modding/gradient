@@ -28,32 +28,32 @@ public class ToolStationContainer extends GradientContainer<ToolStationTile> {
     this.recipeY = y;
 
     // Recipe input
-    for(int slot = 0; slot < tile.getMergedRecipeInv().getSlots(); slot++) {
-      this.addSlot(new HoloSlot(tile.getMergedRecipeInv(), slot, INV_SLOTS_X + slot % size * SLOT_X_SPACING, y + slot / size * SLOT_Y_SPACING));
+    for(int slot = 0; slot < tile.getRecipeInv().getSlots(); slot++) {
+      this.addSlot(new HoloSlot(tile.getRecipeInv(), slot, INV_SLOTS_X + slot % size * SLOT_X_SPACING, y + slot / size * SLOT_Y_SPACING));
     }
 
     // Output
-    for(int slot = 0; slot < tile.getMergedOutputInv().getSlots(); slot++) {
-      this.addSlot(new SlotItemHandler(tile.getMergedOutputInv(), slot, INV_SLOTS_X + (size + 1) * SLOT_X_SPACING, y + (size - 1) * SLOT_Y_SPACING / 2));
+    for(int slot = 0; slot < tile.getOutputInv().getSlots(); slot++) {
+      this.addSlot(new SlotItemHandler(tile.getOutputInv(), slot, INV_SLOTS_X + (size + 1) * SLOT_X_SPACING, y + (size - 1) * SLOT_Y_SPACING / 2));
     }
 
     y += size * SLOT_Y_SPACING + 13;
     this.toolsY = y;
 
     // Tools
-    for(int slot = 0; slot < tile.getMergedToolsInv().getSlots(); slot++) {
-      this.addSlot(new ExtractableSlot(tile.getMergedToolsInv(), slot, INV_SLOTS_X + slot * SLOT_X_SPACING, y));
+    for(int slot = 0; slot < tile.getToolsInv().getSlots(); slot++) {
+      this.addSlot(new ExtractableSlot(tile.getToolsInv(), slot, INV_SLOTS_X + slot * SLOT_X_SPACING, y));
     }
 
     y += SLOT_Y_SPACING + 13;
     this.storageY = y;
 
     // Storage
-    for(int slot = 0; slot < tile.getMergedStorageInv().getSlots(); slot++) {
-      this.addSlot(new ExtractableSlot(tile.getMergedStorageInv(), slot, INV_SLOTS_X + slot % 9 * SLOT_X_SPACING, y));
+    for(int slot = 0; slot < tile.getStorageInv().getSlots(); slot++) {
+      this.addSlot(new ExtractableSlot(tile.getStorageInv(), slot, INV_SLOTS_X + slot % 9 * SLOT_X_SPACING, y + slot / 9 * SLOT_Y_SPACING));
     }
 
-    y += tile.getMergedStorageInv().getSlots() / 9 * SLOT_Y_SPACING + 13;
+    y += tile.getStorageInv().getSlots() / 9 * SLOT_Y_SPACING + 13;
 
     this.addPlayerSlots(y, playerInv);
 

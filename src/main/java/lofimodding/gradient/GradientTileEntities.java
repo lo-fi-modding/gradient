@@ -12,6 +12,7 @@ import lofimodding.gradient.tileentities.MechanicalGrindstoneTile;
 import lofimodding.gradient.tileentities.MechanicalMixingBasinTile;
 import lofimodding.gradient.tileentities.MechanicalPumpTile;
 import lofimodding.gradient.tileentities.MixingBasinTile;
+import lofimodding.gradient.tileentities.ToolStationSecondaryTile;
 import lofimodding.gradient.tileentities.ToolStationTile;
 import lofimodding.gradient.tileentities.WoodenAxleTile;
 import lofimodding.gradient.tileentities.WoodenConveyorBeltDriverTile;
@@ -49,6 +50,7 @@ public final class GradientTileEntities {
   public static final RegistryObject<TileEntityType<MechanicalMixingBasinTile>> MECHANICAL_MIXING_BASIN = REGISTRY.register(GradientIds.MECHANICAL_MIXING_BASIN, () -> TileEntityType.Builder.create(MechanicalMixingBasinTile::new, GradientBlocks.MECHANICAL_MIXING_BASIN.get()).build(null));
   public static final RegistryObject<TileEntityType<MechanicalPumpTile>> MECHANICAL_PUMP = REGISTRY.register(GradientIds.MECHANICAL_PUMP, () -> TileEntityType.Builder.create(MechanicalPumpTile::new, GradientBlocks.MECHANICAL_PUMP.get()).build(null));
   public static final RegistryObject<TileEntityType<ToolStationTile>> TOOL_STATION = REGISTRY.register(GradientIds.TOOL_STATION, () -> TileEntityType.Builder.create(ToolStationTile::new, GradientBlocks.TOOL_STATION.get()).build(null));
+  public static final RegistryObject<TileEntityType<ToolStationSecondaryTile>> TOOL_STATION_SECONDARY = REGISTRY.register(GradientIds.TOOL_STATION_SECONDARY, () -> TileEntityType.Builder.create(ToolStationSecondaryTile::new, GradientBlocks.TOOL_STATION.get()).build(null));
 
   public static final RegistryObject<TileEntityType<CreativeGeneratorTile>> CREATIVE_GENERATOR = REGISTRY.register(GradientIds.CREATIVE_GENERATOR, () -> TileEntityType.Builder.create(CreativeGeneratorTile::new, GradientBlocks.CREATIVE_GENERATOR.get()).build(null));
   public static final RegistryObject<TileEntityType<CreativeSinkerTile>> CREATIVE_SINKER = REGISTRY.register(GradientIds.CREATIVE_SINKER, () -> TileEntityType.Builder.create(CreativeSinkerTile::new, GradientBlocks.CREATIVE_SINKER.get()).build(null));
