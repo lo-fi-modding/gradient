@@ -106,17 +106,31 @@ public class ToolStationBlock extends Block {
     return super.getStateForPlacement(context);
   }
 
+  private boolean onBlockAddedReentryProtection;
+
   @SuppressWarnings("deprecation")
   @Override
   @Deprecated
   public void onBlockAdded(final BlockState state, final World world, final BlockPos pos, final BlockState oldState, final boolean isMoving) {
     super.onBlockAdded(state, world, pos, oldState, isMoving);
 
-    if(!state.get(PRIMARY)) {
-      final BlockPos primary = WorldUtils.findControllerBlock(pos, p -> world.getBlockState(p).getBlock() == this, p -> world.getBlockState(p).get(PRIMARY));
+    if(this.onBlockAddedReentryProtection) {
+      return;
+    }
+ 
+    this.onBlockAddedReentryProtection = true;
 
-      if(primary != BlockPos.ZERO) {
-        final ToolStationTile tile = WorldUtils.getTileEntity(world, primary, ToolStationTile.class);
+    if(!state.get(PRIMARY)) {
+      final NonNullList<BlockPos> primary = WorldUtils.findControllerBlocks(pos, p -> world.getBlockState(p).getBlock() == this, p -> world.getBlockState(p).get(PRIMARY));
+
+      if(!primary.isEmpty()) {
+        primary.sort(Comparator.comparingLong(BlockPos::toLong));
+
+        for(int i = 1; i < primary.size(); i++) {
+          world.setBlockState(primary.get(i), this.getDefaultState().with(PRIMARY, Boolean.FALSE));
+        }
+
+        final ToolStationTile tile = WorldUtils.getTileEntity(world, primary.get(0), ToolStationTile.class);
 
         if(tile != null) {
           tile.updateNeighbours();
@@ -124,7 +138,7 @@ public class ToolStationBlock extends Block {
       }
     }
 
-    //TODO: handle placing one in between two others
+    this.onBlockAddedReentryProtection = false;
   }
 
   @SuppressWarnings("deprecation")
@@ -141,13 +155,11 @@ public class ToolStationBlock extends Block {
           for(int i = 1; i < blob.size(); i++) {
             final BlockState existing = world.getBlockState(blob.get(i));
             if(existing.get(PRIMARY)) {
-              world.removeBlock(blob.get(i), false);
               world.setBlockState(blob.get(i), this.getDefaultState().with(PRIMARY, Boolean.FALSE));
             }
           }
 
           blob.sort(Comparator.comparingLong(BlockPos::toLong));
-          world.removeBlock(blob.get(0), false);
           world.setBlockState(blob.get(0), this.getDefaultState().with(PRIMARY, Boolean.TRUE));
         }
       }
@@ -160,6 +172,13 @@ public class ToolStationBlock extends Block {
 
           if(tile != null) {
             tile.updateNeighbours();
+          }
+        } else {
+          final NonNullList<BlockPos> blocks = WorldUtils.getBlockCluster(pos.offset(direction), p -> world.getBlockState(p).getBlock() == this);
+
+          if(!blocks.isEmpty()) {
+            blocks.sort(Comparator.comparingLong(BlockPos::toLong));
+            world.setBlockState(blocks.get(0), this.getDefaultState().with(PRIMARY, Boolean.TRUE));
           }
         }
       }

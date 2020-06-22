@@ -327,8 +327,8 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
       return shapelessToolStation;
     }
 
-    //TODO save what's in the item handlers
     //TODO refactor this crafting stuff
+    //TODO breaking the controller doesn't copy the inv into the newly-selected controller
 
     final PlayerEntity player;
     if(this.world.isRemote) {
@@ -358,13 +358,13 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
     final int oldCraftingWidth = this.getCraftingSize();
 
     this.craftingSize = size + 3;
-    this.resizeHandler(this.recipeInv, this.getCraftingSize() * this.getCraftingSize(), oldCraftingWidth, this.getCraftingSize());
-    this.resizeHandler(this.outputInv, 1 + size, 1, 1);
-    this.resizeHandler(this.toolsInv, 3 + size, 100, 100);
-    this.resizeHandler(this.storageInv, 9 * (size + 1), 9, 9);
+    this.resizeHandler(this.recipeInv, this.getCraftingSize() * this.getCraftingSize(), oldCraftingWidth, this.getCraftingSize(), false);
+    this.resizeHandler(this.outputInv, 1 + size, 1, 1, false);
+    this.resizeHandler(this.toolsInv, 3 + size, 100, 100, true);
+    this.resizeHandler(this.storageInv, 9 * (size + 1), 9, 9, true);
   }
 
-  private void resizeHandler(final ItemStackHandler handler, final int newSize, final int oldWidth, final int newWidth) {
+  private void resizeHandler(final ItemStackHandler handler, final int newSize, final int oldWidth, final int newWidth, final boolean dropExtra) {
     final int oldSize = handler.getSlots();
 
     final NonNullList<ItemStack> stacks = NonNullList.withSize(newSize, ItemStack.EMPTY);
@@ -379,7 +379,9 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
       if(newSlot < stacks.size()) {
         stacks.set(newSlot, stack);
       } else {
-        InventoryHelper.spawnItemStack(this.world, this.pos.getX(), this.pos.getY(), this.pos.getZ(), stack);
+        if(dropExtra) {
+          InventoryHelper.spawnItemStack(this.world, this.pos.getX(), this.pos.getY(), this.pos.getZ(), stack);
+        }
       }
     }
 

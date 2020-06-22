@@ -151,6 +151,19 @@ public final class WorldUtils {
     return BlockPos.ZERO;
   }
 
+  public static NonNullList<BlockPos> findControllerBlocks(final BlockPos start, final Predicate<BlockPos> test, final Predicate<BlockPos> finish) {
+    final NonNullList<BlockPos> positions = getBlockCluster(start, test);
+    final NonNullList<BlockPos> controllers = NonNullList.create();
+
+    for(final BlockPos pos : positions) {
+      if(finish.test(pos)) {
+        controllers.add(pos);
+      }
+    }
+
+    return controllers;
+  }
+
   public static NonNullList<BlockPos> getBlockCluster(final BlockPos start, final Predicate<BlockPos> test) {
     final NonNullList<BlockPos> found = NonNullList.create();
 
