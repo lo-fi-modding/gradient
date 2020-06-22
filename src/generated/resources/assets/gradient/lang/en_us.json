@@ -160,7 +160,6 @@
   "block.gradient.tool_station.missing_tools": "Missing tools",
   "block.gradient.tool_station.storage": "Ingredients",
   "block.gradient.tool_station.too_small": "Requires more output slots",
-  "block.gradient.tool_station.tools": "Tools",
   "block.gradient.torch_stand": "Torch Stand",
   "block.gradient.unhardened_clay_bucket": "Unhardened Clay Bucket",
   "block.gradient.unhardened_clay_bucket.tooltip": "Place next to a fire pit to harden",

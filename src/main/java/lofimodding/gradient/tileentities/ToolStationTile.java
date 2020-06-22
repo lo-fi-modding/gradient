@@ -348,7 +348,7 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
   public void updateNeighbours() {
     final NonNullList<BlockPos> tiles = WorldUtils.getBlockCluster(this.pos, pos -> this.world.getBlockState(pos).getBlock() == GradientBlocks.TOOL_STATION.get());
     tiles.sort(Comparator.comparingLong(BlockPos::toLong));
-    this.resize(tiles.size() - 1);
+    this.resize(Math.min(3, tiles.size()) - 1);
 
     this.markDirty();
     WorldUtils.notifyUpdate(this.world, this.pos);

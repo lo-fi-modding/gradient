@@ -16,7 +16,6 @@ import javax.annotation.Nonnull;
 public class ToolStationContainer extends GradientContainer<ToolStationTile> {
   public final int height;
   public final int recipeY;
-  public final int toolsY;
   public final int storageY;
 
   public ToolStationContainer(final int id, final PlayerInventory playerInv, final ToolStationTile tile) {
@@ -24,28 +23,25 @@ public class ToolStationContainer extends GradientContainer<ToolStationTile> {
 
     final int size = tile.getCraftingSize();
 
-    int y = INV_SLOTS_X + 13;
+    int y = INV_SLOTS_X + 11;
     this.recipeY = y;
 
     // Recipe input
     for(int slot = 0; slot < tile.getRecipeInv().getSlots(); slot++) {
-      this.addSlot(new HoloSlot(tile.getRecipeInv(), slot, INV_SLOTS_X + slot % size * SLOT_X_SPACING, y + slot / size * SLOT_Y_SPACING));
+      this.addSlot(new HoloSlot(tile.getRecipeInv(), slot, INV_SLOTS_X + SLOT_X_SPACING + 4 + slot % size * SLOT_X_SPACING, y + slot / size * SLOT_Y_SPACING));
     }
 
     // Output
     for(int slot = 0; slot < tile.getOutputInv().getSlots(); slot++) {
-      this.addSlot(new SlotItemHandler(tile.getOutputInv(), slot, INV_SLOTS_X + (size + 1) * SLOT_X_SPACING, y + (size - 1) * SLOT_Y_SPACING / 2));
+      this.addSlot(new SlotItemHandler(tile.getOutputInv(), slot, INV_SLOTS_X + SLOT_X_SPACING + 4 + (size + 1) * SLOT_X_SPACING, y + (size - tile.getOutputInv().getSlots()) * SLOT_Y_SPACING / 2 + slot * SLOT_Y_SPACING));
     }
-
-    y += size * SLOT_Y_SPACING + 13;
-    this.toolsY = y;
 
     // Tools
     for(int slot = 0; slot < tile.getToolsInv().getSlots(); slot++) {
-      this.addSlot(new ExtractableSlot(tile.getToolsInv(), slot, INV_SLOTS_X + slot * SLOT_X_SPACING, y));
+      this.addSlot(new ExtractableSlot(tile.getToolsInv(), slot, INV_SLOTS_X, y + slot * SLOT_Y_SPACING));
     }
 
-    y += SLOT_Y_SPACING + 13;
+    y += size * SLOT_Y_SPACING + 13;
     this.storageY = y;
 
     // Storage

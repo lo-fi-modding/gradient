@@ -1288,7 +1288,6 @@ public final class GradientDataGenerator {
       this.add(GradientItems.MECHANICAL_MIXING_BASIN.get(), "Mechanical Mixing Basin");
       this.add(GradientItems.MECHANICAL_PUMP.get(), "Mechanical Pump");
       this.add(GradientItems.TOOL_STATION.get(), "Tool Station");
-      this.add(GradientItems.TOOL_STATION.get().getTranslationKey() + ".tools", "Tools");
       this.add(GradientItems.TOOL_STATION.get().getTranslationKey() + ".storage", "Ingredients");
       this.add(GradientItems.TOOL_STATION.get().getTranslationKey() + ".too_small", "Requires more output slots");
       this.add(GradientItems.TOOL_STATION.get().getTranslationKey() + ".missing_tools", "Missing tools");

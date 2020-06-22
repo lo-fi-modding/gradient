@@ -68,17 +68,23 @@ public class ToolStationScreen extends ContainerScreen<ToolStationContainer> {
 
     // Recipe input
     for(int slot = 0; slot < this.tile.getRecipeInv().getSlots(); slot++) {
-      this.blit(x + GradientContainer.INV_SLOTS_X + slot % size * GradientContainer.SLOT_X_SPACING - 1, y + this.container.recipeY + slot / size * GradientContainer.SLOT_Y_SPACING - 1, 176, 0, GradientContainer.SLOT_X_SPACING, GradientContainer.SLOT_Y_SPACING);
+      this.blit(x + GradientContainer.INV_SLOTS_X + GradientContainer.SLOT_X_SPACING + 4 + slot % size * GradientContainer.SLOT_X_SPACING - 1, y + this.container.recipeY + slot / size * GradientContainer.SLOT_Y_SPACING - 1, 176, 0, GradientContainer.SLOT_X_SPACING, GradientContainer.SLOT_Y_SPACING);
     }
+
+    this.blit(x + GradientContainer.INV_SLOTS_X + GradientContainer.SLOT_X_SPACING + 4 + size * GradientContainer.SLOT_X_SPACING, y + this.container.recipeY + (size - 1) * GradientContainer.SLOT_Y_SPACING / 2 + 2, 176, 28, 16, 13);
 
     // Output
     for(int slot = 0; slot < this.tile.getOutputInv().getSlots(); slot++) {
-      this.blit(x + GradientContainer.INV_SLOTS_X + (size + 1) * GradientContainer.SLOT_X_SPACING - 1, y + this.container.recipeY + (size - 1) * GradientContainer.SLOT_Y_SPACING / 2 - 1, 176, 0, GradientContainer.SLOT_X_SPACING, GradientContainer.SLOT_Y_SPACING);
+      this.blit(x + GradientContainer.INV_SLOTS_X + GradientContainer.SLOT_X_SPACING + 4 + (size + 1) * GradientContainer.SLOT_X_SPACING - 1, y + this.container.recipeY + (size - this.tile.getOutputInv().getSlots()) * GradientContainer.SLOT_Y_SPACING / 2 + slot * GradientContainer.SLOT_Y_SPACING - 1, 176, 0, GradientContainer.SLOT_X_SPACING, GradientContainer.SLOT_Y_SPACING);
     }
 
     // Tools
     for(int slot = 0; slot < this.tile.getToolsInv().getSlots(); slot++) {
-      this.blit(x + GradientContainer.INV_SLOTS_X + slot * GradientContainer.SLOT_X_SPACING - 1, y + this.container.toolsY - 1, 176, 0, GradientContainer.SLOT_X_SPACING, GradientContainer.SLOT_Y_SPACING);
+      this.blit(x + GradientContainer.INV_SLOTS_X - 1, y + this.container.recipeY + slot * GradientContainer.SLOT_Y_SPACING - 1, 176, 0, GradientContainer.SLOT_X_SPACING, GradientContainer.SLOT_Y_SPACING);
+
+      if(this.tile.getToolsInv().getStackInSlot(slot).isEmpty()) {
+        this.blit(x + GradientContainer.INV_SLOTS_X - 1, y + this.container.recipeY + slot * GradientContainer.SLOT_Y_SPACING - 1, 194, 0, GradientContainer.SLOT_X_SPACING, GradientContainer.SLOT_Y_SPACING);
+      }
     }
 
     // Storage
@@ -97,7 +103,6 @@ public class ToolStationScreen extends ContainerScreen<ToolStationContainer> {
 
     final String text = this.getTitle().getFormattedText();
     this.font.drawString(text, (this.xSize - this.font.getStringWidth(text)) / 2.0f, 7.0f, 0x404040);
-    this.font.drawString(I18n.format(GradientBlocks.TOOL_STATION.get().getTranslationKey() + ".tools"), 8.0f, this.container.toolsY - 10, 0x404040);
     this.font.drawString(I18n.format(GradientBlocks.TOOL_STATION.get().getTranslationKey() + ".storage"), 8.0f, this.container.storageY - 10, 0x404040);
     this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8.0f, this.ySize - 96 + 3, 0x404040);
   }
