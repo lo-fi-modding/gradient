@@ -70,7 +70,11 @@ public class ToolStationBlock extends Block {
       }
 
       if(te instanceof ToolStationSecondaryTile) {
-        NetworkHooks.openGui((ServerPlayerEntity)player, (ToolStationSecondaryTile)te, ((ToolStationSecondaryTile)te).getPrimary());
+        final BlockPos primary = WorldUtils.findControllerBlock(pos, p -> world.getBlockState(p).getBlock() == this, p -> world.getBlockState(p).get(PRIMARY));
+
+        if(primary != BlockPos.ZERO) {
+          NetworkHooks.openGui((ServerPlayerEntity)player, (ToolStationSecondaryTile)te, primary);
+        }
       }
     }
 
@@ -100,23 +104,14 @@ public class ToolStationBlock extends Block {
   public void onBlockAdded(final BlockState state, final World world, final BlockPos pos, final BlockState oldState, final boolean isMoving) {
     super.onBlockAdded(state, world, pos, oldState, isMoving);
 
-    //TODO tile entities not getting swapped with blockstate
-
     if(!state.get(PRIMARY)) {
-      for(final Direction direction : Direction.Plane.HORIZONTAL) {
-        final ToolStationTile primary = WorldUtils.getTileEntity(world, pos.offset(direction), ToolStationTile.class);
+      final BlockPos primary = WorldUtils.findControllerBlock(pos, p -> world.getBlockState(p).getBlock() == this, p -> world.getBlockState(p).get(PRIMARY));
 
-        if(primary != null) {
-          WorldUtils.getTileEntity(world, pos, ToolStationSecondaryTile.class).setPrimary(primary.getPos());
-          primary.updateNeighbours();
-          continue;
-        }
+      if(primary != BlockPos.ZERO) {
+        final ToolStationTile tile = WorldUtils.getTileEntity(world, primary, ToolStationTile.class);
 
-        final ToolStationSecondaryTile secondary = WorldUtils.getTileEntity(world, pos.offset(direction), ToolStationSecondaryTile.class);
-
-        if(secondary != null) {
-          WorldUtils.getTileEntity(world, pos, ToolStationSecondaryTile.class).setPrimary(secondary.getPrimary());
-          WorldUtils.getTileEntity(world, secondary.getPrimary(), ToolStationTile.class).updateNeighbours();
+        if(tile != null) {
+          tile.updateNeighbours();
         }
       }
     }
@@ -140,7 +135,6 @@ public class ToolStationBlock extends Block {
             if(existing.get(PRIMARY)) {
               world.removeBlock(blob.get(i), false);
               world.setBlockState(blob.get(i), this.getDefaultState().with(PRIMARY, Boolean.FALSE));
-              WorldUtils.getTileEntity(world, blob.get(i), ToolStationSecondaryTile.class).setPrimary(blob.get(0));
             }
           }
 
@@ -150,22 +144,16 @@ public class ToolStationBlock extends Block {
         }
       }
     } else {
-      final ToolStationSecondaryTile secondary = WorldUtils.getTileEntity(world, pos, ToolStationSecondaryTile.class);
+      for(final Direction direction : Direction.Plane.HORIZONTAL) {
+        final BlockPos secondary = WorldUtils.findControllerBlock(pos.offset(direction), p -> world.getBlockState(p).getBlock() == this, p -> world.getBlockState(p).get(PRIMARY));
 
-      if(secondary != null) {
-        final ToolStationTile primary = WorldUtils.getTileEntity(world, secondary.getPrimary(), ToolStationTile.class);
+        if(secondary != BlockPos.ZERO) {
+          final ToolStationTile tile = WorldUtils.getTileEntity(world, secondary, ToolStationTile.class);
 
-        if(primary != null) {
-          primary.updateNeighbours();
+          if(tile != null) {
+            tile.updateNeighbours();
+          }
         }
-      }
-    }
-
-    for(final Direction direction : Direction.Plane.HORIZONTAL) {
-      final ToolStationTile tile = WorldUtils.getTileEntity(world, pos.offset(direction), ToolStationTile.class);
-
-      if(tile != null) {
-        tile.updateNeighbours();
       }
     }
 
