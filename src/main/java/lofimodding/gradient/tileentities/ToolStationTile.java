@@ -33,6 +33,7 @@ import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
@@ -65,7 +66,10 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
     @Override
     protected void onContentsChanged(final int slot) {
       super.onContentsChanged(slot);
-      ToolStationTile.this.updateRecipe();
+
+      if(!ToolStationTile.this.pauseRecipeLookup) {
+        ToolStationTile.this.updateRecipe();
+      }
     }
   };
 
@@ -133,6 +137,7 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
 
   private IRecipe<CraftingInventory> recipe;
   private int craftingSize = 3;
+  private boolean pauseRecipeLookup;
 
   public ToolStationTile() {
     super(GradientTileEntities.TOOL_STATION.get());
@@ -142,19 +147,19 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
     return this.craftingSize;
   }
 
-  public IItemHandler getRecipeInv() {
+  public IItemHandlerModifiable getRecipeInv() {
     return this.recipeInv;
   }
 
-  public IItemHandler getToolsInv() {
+  public IItemHandlerModifiable getToolsInv() {
     return this.toolsInv;
   }
 
-  public IItemHandler getStorageInv() {
+  public IItemHandlerModifiable getStorageInv() {
     return this.storageInv;
   }
 
-  public IItemHandler getOutputInv() {
+  public IItemHandlerModifiable getOutputInv() {
     return this.outputInv;
   }
 
@@ -357,11 +362,15 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
   private void resize(final int size) {
     final int oldCraftingWidth = this.getCraftingSize();
 
+    this.pauseRecipeLookup = true;
     this.craftingSize = size + 3;
     this.resizeHandler(this.recipeInv, this.getCraftingSize() * this.getCraftingSize(), oldCraftingWidth, this.getCraftingSize(), false);
     this.resizeHandler(this.outputInv, 1 + size, 1, 1, false);
     this.resizeHandler(this.toolsInv, 3 + size, 100, 100, true);
     this.resizeHandler(this.storageInv, 9 * (size + 1), 9, 9, true);
+    this.pauseRecipeLookup = false;
+
+    this.updateRecipe();
   }
 
   private void resizeHandler(final ItemStackHandler handler, final int newSize, final int oldWidth, final int newWidth, final boolean dropExtra) {
@@ -389,6 +398,18 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
 
     for(int slot = 0; slot < newSize; slot++) {
       handler.setStackInSlot(slot, stacks.get(slot));
+    }
+  }
+
+  public void addToInv(final IItemHandlerModifiable tools, final IItemHandlerModifiable storage) {
+    for(int slot = 0; slot < tools.getSlots(); slot++) {
+      final ItemStack remaining = ItemHandlerHelper.insertItem(this.toolsInv, tools.getStackInSlot(slot), false);
+      tools.setStackInSlot(slot, remaining);
+    }
+
+    for(int slot = 0; slot < storage.getSlots(); slot++) {
+      final ItemStack remaining = ItemHandlerHelper.insertItem(this.storageInv, storage.getStackInSlot(slot), false);
+      storage.setStackInSlot(slot, remaining);
     }
   }
 

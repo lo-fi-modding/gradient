@@ -10,9 +10,11 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
@@ -26,6 +28,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.items.IItemHandlerModifiable;
 
 import javax.annotation.Nullable;
 import java.util.Comparator;
@@ -117,7 +120,7 @@ public class ToolStationBlock extends Block {
     if(this.onBlockAddedReentryProtection) {
       return;
     }
- 
+
     this.onBlockAddedReentryProtection = true;
 
     if(!state.get(PRIMARY)) {
@@ -145,9 +148,15 @@ public class ToolStationBlock extends Block {
   @Override
   @Deprecated
   public void onReplaced(final BlockState state, final World world, final BlockPos pos, final BlockState newState, final boolean isMoving) {
-    super.onReplaced(state, world, pos, newState, isMoving);
+    // super calls are weird because we may need to grab the inv before removing the TE
 
     if(state.get(PRIMARY)) {
+      final ToolStationTile primary = WorldUtils.getTileEntity(world, pos, ToolStationTile.class);
+      final IItemHandlerModifiable tools = primary.getToolsInv();
+      final IItemHandlerModifiable storage = primary.getStorageInv();
+
+      super.onReplaced(state, world, pos, newState, isMoving);
+
       for(final Direction direction : Direction.Plane.HORIZONTAL) {
         final NonNullList<BlockPos> blob = WorldUtils.getBlockCluster(pos.offset(direction), p -> world.getBlockState(p).getBlock() == this);
 
@@ -161,9 +170,29 @@ public class ToolStationBlock extends Block {
 
           blob.sort(Comparator.comparingLong(BlockPos::toLong));
           world.setBlockState(blob.get(0), this.getDefaultState().with(PRIMARY, Boolean.TRUE));
+
+          WorldUtils.getTileEntity(world, blob.get(0), ToolStationTile.class).addToInv(tools, storage);
+        }
+      }
+
+      for(int slot = 0; slot < tools.getSlots(); slot++) {
+        final ItemStack stack = tools.getStackInSlot(slot);
+
+        if(!stack.isEmpty()) {
+          InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+        }
+      }
+
+      for(int slot = 0; slot < storage.getSlots(); slot++) {
+        final ItemStack stack = storage.getStackInSlot(slot);
+
+        if(!stack.isEmpty()) {
+          InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
         }
       }
     } else {
+      super.onReplaced(state, world, pos, newState, isMoving);
+
       for(final Direction direction : Direction.Plane.HORIZONTAL) {
         final BlockPos secondary = WorldUtils.findControllerBlock(pos.offset(direction), p -> world.getBlockState(p).getBlock() == this, p -> world.getBlockState(p).get(PRIMARY));
 
@@ -185,5 +214,6 @@ public class ToolStationBlock extends Block {
     }
 
     //TODO drop items
+    //TODO stack overflow when placing 5 blocks in an L shape
   }
 }
