@@ -1,6 +1,6 @@
 package lofimodding.gradient.blocks;
 
-import lofimodding.gradient.tileentities.ToolStationSecondaryTile;
+import lofimodding.gradient.containers.ToolStationContainer;
 import lofimodding.gradient.tileentities.ToolStationTile;
 import lofimodding.gradient.utils.WorldUtils;
 import net.minecraft.block.Block;
@@ -8,7 +8,10 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
@@ -19,6 +22,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -42,16 +46,12 @@ public class ToolStationBlock extends Block {
   @Nullable
   @Override
   public TileEntity createTileEntity(final BlockState state, final IBlockReader world) {
-    if(!state.get(PRIMARY)) {
-      return new ToolStationSecondaryTile();
-    }
-
     return new ToolStationTile();
   }
 
   @Override
   public boolean hasTileEntity(final BlockState state) {
-    return true;
+    return state.get(PRIMARY);
   }
 
   @SuppressWarnings("deprecation")
@@ -62,18 +62,26 @@ public class ToolStationBlock extends Block {
       return ActionResultType.SUCCESS;
     }
 
-    if(!player.isSneaking()) {
-      final TileEntity te = world.getTileEntity(pos);
+    if(!player.isSneaking() && state.getBlock() == this) {
+      final ToolStationTile te = WorldUtils.getTileEntity(world, pos, ToolStationTile.class);
 
-      if(te instanceof ToolStationTile) {
-        NetworkHooks.openGui((ServerPlayerEntity)player, (ToolStationTile)te, pos);
-      }
-
-      if(te instanceof ToolStationSecondaryTile) {
+      if(te != null) {
+        NetworkHooks.openGui((ServerPlayerEntity)player, te, pos);
+      } else {
         final BlockPos primary = WorldUtils.findControllerBlock(pos, p -> world.getBlockState(p).getBlock() == this, p -> world.getBlockState(p).get(PRIMARY));
 
         if(primary != BlockPos.ZERO) {
-          NetworkHooks.openGui((ServerPlayerEntity)player, (ToolStationSecondaryTile)te, primary);
+          NetworkHooks.openGui((ServerPlayerEntity)player, new INamedContainerProvider() {
+            @Override
+            public ITextComponent getDisplayName() {
+              return ToolStationBlock.this.getNameTextComponent();
+            }
+
+            @Override
+            public Container createMenu(final int id, final PlayerInventory inv, final PlayerEntity player) {
+              return new ToolStationContainer(id, inv, WorldUtils.getTileEntity(world, primary, ToolStationTile.class));
+            }
+          }, primary);
         }
       }
     }
