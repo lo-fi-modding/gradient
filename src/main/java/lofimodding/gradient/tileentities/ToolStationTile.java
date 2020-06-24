@@ -39,7 +39,6 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Comparator;
 
 public class ToolStationTile extends TileEntity implements INamedContainerProvider {
   @CapabilityInject(IItemHandler.class)
@@ -333,7 +332,6 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
     }
 
     //TODO refactor this crafting stuff
-    //TODO breaking the controller doesn't copy the inv into the newly-selected controller
 
     final PlayerEntity player;
     if(this.world.isRemote) {
@@ -352,7 +350,6 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
 
   public void updateNeighbours() {
     final NonNullList<BlockPos> tiles = WorldUtils.getBlockCluster(this.pos, pos -> this.world.getBlockState(pos).getBlock() == GradientBlocks.TOOL_STATION.get());
-    tiles.sort(Comparator.comparingLong(BlockPos::toLong));
     this.resize(Math.min(3, tiles.size()) - 1);
 
     this.markDirty();

@@ -129,11 +129,18 @@ public class ToolStationBlock extends Block {
       if(!primary.isEmpty()) {
         primary.sort(Comparator.comparingLong(BlockPos::toLong));
 
+        final ToolStationTile tile = WorldUtils.getTileEntity(world, primary.get(0), ToolStationTile.class);
+
         for(int i = 1; i < primary.size(); i++) {
+          if(tile != null) {
+            final ToolStationTile oldPrimary = WorldUtils.getTileEntity(world, primary.get(i), ToolStationTile.class);
+            final IItemHandlerModifiable tools = oldPrimary.getToolsInv();
+            final IItemHandlerModifiable storage = oldPrimary.getStorageInv();
+            tile.addToInv(tools, storage);
+          }
+
           world.setBlockState(primary.get(i), this.getDefaultState().with(PRIMARY, Boolean.FALSE));
         }
-
-        final ToolStationTile tile = WorldUtils.getTileEntity(world, primary.get(0), ToolStationTile.class);
 
         if(tile != null) {
           tile.updateNeighbours();
@@ -149,6 +156,12 @@ public class ToolStationBlock extends Block {
   @Deprecated
   public void onReplaced(final BlockState state, final World world, final BlockPos pos, final BlockState newState, final boolean isMoving) {
     // super calls are weird because we may need to grab the inv before removing the TE
+
+    // Don't do all this stuff if adding a block is what's triggering the removal (replacement)
+    if(this.onBlockAddedReentryProtection) {
+      super.onReplaced(state, world, pos, newState, isMoving);
+      return;
+    }
 
     if(state.get(PRIMARY)) {
       final ToolStationTile primary = WorldUtils.getTileEntity(world, pos, ToolStationTile.class);
@@ -212,8 +225,5 @@ public class ToolStationBlock extends Block {
         }
       }
     }
-
-    //TODO drop items
-    //TODO stack overflow when placing 5 blocks in an L shape
   }
 }
