@@ -3,6 +3,7 @@ package lofimodding.gradient.recipes;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonSyntaxException;
 import lofimodding.gradient.GradientRecipeSerializers;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -14,6 +15,7 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.util.RecipeMatcher;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.registries.ForgeRegistryEntry;
@@ -28,17 +30,17 @@ public class ShapelessToolStationRecipe implements IToolStationRecipe {
   private final ResourceLocation id;
   private final String group;
   private final NonNullList<Ingredient> ingredients;
-  private final NonNullList<Ingredient> tools;
+  private final NonNullList<ToolType> tools;
   private final NonNullList<ItemStack> outputs;
   private final boolean simple;
 
-  public ShapelessToolStationRecipe(final ResourceLocation id, final String group, final NonNullList<Ingredient> ingredients, final NonNullList<Ingredient> tools, final NonNullList<ItemStack> outputs) {
+  public ShapelessToolStationRecipe(final ResourceLocation id, final String group, final NonNullList<Ingredient> ingredients, final NonNullList<ToolType> tools, final NonNullList<ItemStack> outputs) {
     this.id = id;
     this.group = group;
     this.ingredients = ingredients;
     this.tools = tools;
     this.outputs = outputs;
-    this.simple = ingredients.stream().allMatch(Ingredient::isSimple) && tools.stream().allMatch(Ingredient::isSimple);
+    this.simple = ingredients.stream().allMatch(Ingredient::isSimple);
   }
 
   @Override
@@ -51,7 +53,7 @@ public class ShapelessToolStationRecipe implements IToolStationRecipe {
     INPUT_STACKS.clear();
 
     int ingredientCount = 0;
-    for(int slot = 0; slot <= tools.getSlots(); ++slot) {
+    for(int slot = 0; slot < tools.getSlots(); ++slot) {
       final ItemStack stack = tools.getStackInSlot(slot);
 
       if(!stack.isEmpty()) {
@@ -82,7 +84,7 @@ public class ShapelessToolStationRecipe implements IToolStationRecipe {
   }
 
   @Override
-  public NonNullList<Ingredient> getTools() {
+  public NonNullList<ToolType> getTools() {
     return this.tools;
   }
 
@@ -126,13 +128,13 @@ public class ShapelessToolStationRecipe implements IToolStationRecipe {
         throw new JsonParseException("No ingredients for shapeless tool station recipe");
       }
 
-      final NonNullList<Ingredient> tools = readIngredients(JSONUtils.getJsonArray(json, "tools"));
+      final NonNullList<ToolType> tools = readToolTypes(JSONUtils.getJsonArray(json, "tools"));
 
       final JsonArray outputsJson = JSONUtils.getJsonArray(json, "outputs");
       final NonNullList<ItemStack> outputs = NonNullList.create();
 
       for(int i = 0; i < outputsJson.size(); i++) {
-        outputs.add(ShapedRecipe.deserializeItem(outputsJson.getAsJsonObject()));
+        outputs.add(ShapedRecipe.deserializeItem(outputsJson.get(i).getAsJsonObject()));
       }
 
       if(outputs.isEmpty()) {
@@ -155,6 +157,25 @@ public class ShapelessToolStationRecipe implements IToolStationRecipe {
       return ingredients;
     }
 
+    private static NonNullList<ToolType> readToolTypes(final JsonArray json) {
+      final NonNullList<ToolType> types = NonNullList.create();
+
+      for(int i = 0; i < json.size(); ++i) {
+        final String typeStr = json.getAsString();
+        final ToolType type;
+
+        try {
+          type = ToolType.get(typeStr);
+        } catch(final IllegalArgumentException e) {
+          throw new JsonSyntaxException("Invalid tool type " + typeStr, e);
+        }
+
+        types.add(type);
+      }
+
+      return types;
+    }
+
     @Override
     public ShapelessToolStationRecipe read(final ResourceLocation id, final PacketBuffer buffer) {
       final String group = buffer.readString(32767);
@@ -165,10 +186,10 @@ public class ShapelessToolStationRecipe implements IToolStationRecipe {
         ingredients.set(i, Ingredient.read(buffer));
       }
 
-      final NonNullList<Ingredient> tools = NonNullList.withSize(buffer.readVarInt(), Ingredient.EMPTY);
+      final NonNullList<ToolType> tools = NonNullList.withSize(buffer.readVarInt(), ToolType.PICKAXE);
 
       for(int i = 0; i < tools.size(); ++i) {
-        tools.set(i, Ingredient.read(buffer));
+        tools.set(i, ToolType.get(buffer.readString(100)));
       }
 
       final NonNullList<ItemStack> outputs = NonNullList.withSize(buffer.readVarInt(), ItemStack.EMPTY);
@@ -190,8 +211,8 @@ public class ShapelessToolStationRecipe implements IToolStationRecipe {
       }
 
       buffer.writeVarInt(recipe.tools.size());
-      for(final Ingredient tool : recipe.tools) {
-        tool.write(buffer);
+      for(final ToolType tool : recipe.tools) {
+        buffer.writeString(tool.getName(), 100);
       }
 
       buffer.writeVarInt(recipe.outputs.size());

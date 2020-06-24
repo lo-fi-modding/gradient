@@ -43,6 +43,7 @@ import net.minecraft.data.loot.BlockLootTables;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.BlockTags;
@@ -75,6 +76,7 @@ import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelBuilder;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.FluidStack;
@@ -1528,6 +1530,7 @@ public final class GradientDataGenerator {
       this.registerDryingRecipes(finished);
       this.registerMeltingRecipes(finished);
       this.registerAlloyRecipes(finished);
+      this.registerShapelessToolStationRecipes(finished);
 
       ShapedRecipeBuilder
         .shapedRecipe(GradientItems.SALT_BLOCK.get())
@@ -2444,6 +2447,26 @@ public final class GradientDataGenerator {
         .addInput(new GradientFluidStack(GradientFluids.METAL(Minerals.TIN).get(), 0.001f))
         .addCriterion("impossible", new ImpossibleTrigger.Instance())
         .build(finished, Gradient.loc("alloy/bronze_from_copper_and_tin"));
+    }
+
+    private void registerShapelessToolStationRecipes(final Consumer<IFinishedRecipe> finished) {
+      GradientRecipeBuilder
+        .shapelessToolStation()
+        .stage(GradientStages.AGE_2.get())
+        .addIngredient(GradientItems.HARDENED_LOG.get())
+        .addToolType(ToolType.AXE)
+        .addOutput(new ItemStack(GradientItems.HARDENED_PLANKS.get(), 2))
+        .addCriterion("has_hardened_log", this.hasItem(GradientItems.HARDENED_LOG.get()))
+        .build(finished, Gradient.loc("tool_station/age2/" + GradientIds.HARDENED_PLANKS));
+
+      GradientRecipeBuilder
+        .shapelessToolStation()
+        .stage(GradientStages.AGE_2.get())
+        .addIngredient(GradientItems.HARDENED_PLANKS.get())
+        .addToolType(ToolType.AXE)
+        .addOutput(new ItemStack(GradientItems.HARDENED_STICK.get(), 2))
+        .addCriterion("has_hardened_planks", this.hasItem(GradientItems.HARDENED_PLANKS.get()))
+        .build(finished, Gradient.loc("tool_station/age2/" + GradientIds.HARDENED_STICK));
     }
   }
 

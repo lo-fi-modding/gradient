@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "gradient:tool_station/age2/hardened_stick"
+    ]
+  },
+  "criteria": {
+    "has_hardened_planks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "gradient:hardened_planks"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "gradient:tool_station/age2/hardened_stick"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_hardened_planks",
+      "has_the_recipe"
+    ]
+  ]
+}

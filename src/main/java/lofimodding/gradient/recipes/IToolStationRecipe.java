@@ -4,16 +4,16 @@ import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.items.IItemHandler;
 
 public interface IToolStationRecipe extends IRecipe<CraftingInventory> {
   IRecipeType<IToolStationRecipe> TYPE = IRecipeType.register("tool_station");
 
   boolean recipeMatches(final IItemHandler recipe);
-  NonNullList<Ingredient> getTools();
+  NonNullList<ToolType> getTools();
   NonNullList<ItemStack> getOutputs();
 
   @Override

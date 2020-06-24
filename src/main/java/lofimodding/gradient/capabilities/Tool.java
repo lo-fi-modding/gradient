@@ -1,10 +1,10 @@
 package lofimodding.gradient.capabilities;
 
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.NonNullList;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.ToolType;
 
 public class Tool {
-  public NonNullList<Ingredient> getRequiredItems() {
-    return NonNullList.create();
+  public boolean hasToolType(final ItemStack stack, final ToolType type) {
+    return stack.getToolTypes().contains(type);
   }
 }

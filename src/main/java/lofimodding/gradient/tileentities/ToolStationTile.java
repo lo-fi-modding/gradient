@@ -2,6 +2,7 @@ package lofimodding.gradient.tileentities;
 
 import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientTileEntities;
+import lofimodding.gradient.capabilities.Tool;
 import lofimodding.gradient.containers.ToolStationContainer;
 import lofimodding.gradient.recipes.IToolStationRecipe;
 import lofimodding.gradient.utils.RecipeUtils;
@@ -27,6 +28,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.util.FakePlayerFactory;
@@ -40,9 +42,15 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+//TODO stages
+//TODO can't craft if recipe is already set at world load (and shift-click results in div by 0)
+
 public class ToolStationTile extends TileEntity implements INamedContainerProvider {
   @CapabilityInject(IItemHandler.class)
   private static Capability<IItemHandler> ITEM_HANDLER_CAPABILITY;
+
+  @CapabilityInject(Tool.class)
+  private static Capability<Tool> TOOL_CAPABILITY;
 
   private final ItemStackHandler recipeInv = new ItemHandler(9) {
     @Override
@@ -116,6 +124,11 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
   };
 
   private final ItemStackHandler toolsInv = new ItemHandler(3) {
+    @Override
+    public boolean isItemValid(final int slot, @Nonnull final ItemStack stack) {
+      return stack.getCapability(TOOL_CAPABILITY).isPresent();
+    }
+
     @Nonnull
     @Override
     public ItemStack extractItem(final int slot, final int amount, final boolean simulate) {
@@ -209,9 +222,11 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
       final IToolStationRecipe recipe = (IToolStationRecipe)this.recipe;
 
       outer:
-      for(final Ingredient tool : recipe.getTools()) {
+      for(final ToolType toolType : recipe.getTools()) {
         for(int slot = 0; slot < this.toolsInv.getSlots(); slot++) {
-          if(tool.test(this.toolsInv.getStackInSlot(slot))) {
+          final ItemStack toolStack = this.toolsInv.getStackInSlot(slot);
+
+          if(toolStack.getCapability(TOOL_CAPABILITY).map(tool -> tool.hasToolType(toolStack, toolType)).orElse(Boolean.FALSE)) {
             continue outer;
           }
         }
@@ -298,6 +313,10 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
     }
 
     if(this.recipe.getType() == IToolStationRecipe.TYPE) {
+      if(slot >= ((IToolStationRecipe)this.recipe).getOutputs().size()) {
+        return ItemStack.EMPTY;
+      }
+
       return ((IToolStationRecipe)this.recipe).getOutputs().get(slot);
     }
 

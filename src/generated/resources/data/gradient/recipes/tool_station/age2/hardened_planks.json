@@ -1,0 +1,20 @@
+{
+  "type": "gradient:shapeless_tool_station",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ingredients": [
+    {
+      "item": "gradient:hardened_log"
+    }
+  ],
+  "tools": [
+    "axe"
+  ],
+  "outputs": [
+    {
+      "item": "gradient:hardened_planks",
+      "count": 2
+    }
+  ]
+}
