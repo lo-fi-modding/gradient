@@ -43,7 +43,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 //TODO stages
-//TODO can't craft if recipe is already set at world load (and shift-click results in div by 0)
+//TODO weird shift-click stacking
 
 public class ToolStationTile extends TileEntity implements INamedContainerProvider {
   @CapabilityInject(IItemHandler.class)
@@ -95,9 +95,15 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
     @Nonnull
     @Override
     public ItemStack extractItem(final int slot, final int amount, final boolean simulate) {
+      final ItemStack recipeOutput = ToolStationTile.this.getOutput(slot);
+
+      if(recipeOutput.isEmpty()) {
+        return ItemStack.EMPTY;
+      }
+
       // Some recipes output more than one item, but we still only want to do one craft cycle per craft
       // i.e. doors output 3. We don't want to consume the planks 3 times.
-      final int outputCount = ToolStationTile.this.getOutput(slot).getCount();
+      final int outputCount = recipeOutput.getCount();
       final int scaledAmount = Math.max(1, amount / outputCount);
       final int newAmount = ToolStationTile.this.getAmountCraftable(scaledAmount);
 
@@ -105,7 +111,9 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
         ToolStationTile.this.consumeIngredients(newAmount);
       }
 
-      return super.extractItem(slot, newAmount * outputCount, simulate);
+      final ItemStack output = super.extractItem(slot, newAmount * outputCount, simulate).copy();
+      output.setCount(newAmount * outputCount);
+      return output;
     }
 
     @Override
@@ -301,7 +309,7 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
     this.reentryProtection = true;
 
     for(int slot = 0; slot < this.outputInv.getSlots(); slot++) {
-      this.outputInv.setStackInSlot(slot, this.getOutput(slot));
+      this.outputInv.setStackInSlot(slot, this.getOutput(slot).copy());
     }
 
     this.reentryProtection = false;
@@ -446,6 +454,8 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
     this.outputInv.deserializeNBT(compound.getCompound("OutputInv"));
     this.toolsInv.deserializeNBT(compound.getCompound("ToolsInv"));
     this.storageInv.deserializeNBT(compound.getCompound("StorageInv"));
+
+    this.updateRecipe();
 
     super.read(compound);
   }
