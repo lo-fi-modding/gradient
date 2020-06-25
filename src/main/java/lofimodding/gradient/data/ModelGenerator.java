@@ -1129,4 +1129,48 @@ public final class ModelGenerator {
       .end()
     ;
   }
+
+  public static void toolStation(final GradientDataGenerator.BlockModels generator, final String id, final ResourceLocation particle, final ResourceLocation side, final ResourceLocation bottom, final ResourceLocation top, final ResourceLocation drawer) {
+    generator.getBuilder(id)
+      .parent(generator.getExistingFile(generator.mcLoc("block/block")))
+      .texture("particle", particle)
+      .texture("side", side)
+      .texture("bottom", bottom)
+      .texture("top", top)
+      .texture("drawer", drawer)
+
+      .element() // base
+      .from(1.0f, 0.0f, 1.0f)
+      .to(15.0f, 11.0f, 15.0f)
+      .face(Direction.NORTH).uvs(1.0f, 5.0f, 15.0f, 16.0f).texture("side").end()
+      .face(Direction.EAST).uvs(1.0f, 5.0f, 15.0f, 16.0f).texture("side").end()
+      .face(Direction.SOUTH).uvs(1.0f, 5.0f, 15.0f, 16.0f).texture("side").end()
+      .face(Direction.WEST).uvs(1.0f, 5.0f, 15.0f, 16.0f).texture("side").end()
+      .face(Direction.UP).uvs(1.0f, 1.0f, 15.0f, 15.0f).texture("bottom").end()
+      .face(Direction.DOWN).uvs(1.0f, 1.0f, 15.0f, 15.0f).texture("bottom").end()
+      .end()
+
+      .element() // top
+      .from(0.0f, 11.0f, 0.0f)
+      .to(16.0f, 16.0f, 16.0f)
+      .face(Direction.NORTH).uvs(0.0f, 0.0f, 16.0f, 5.0f).texture("side").end()
+      .face(Direction.EAST).uvs(0.0f, 0.0f, 16.0f, 5.0f).texture("side").end()
+      .face(Direction.SOUTH).uvs(0.0f, 0.0f, 16.0f, 5.0f).texture("side").end()
+      .face(Direction.WEST).uvs(0.0f, 0.0f, 16.0f, 5.0f).texture("side").end()
+      .face(Direction.UP).uvs(0.0f, 0.0f, 16.0f, 16.0f).texture("top").end()
+      .face(Direction.DOWN).uvs(0.0f, 0.0f, 16.0f, 16.0f).texture("top").end()
+      .end()
+
+      .element() // drawer
+      .from(2.0f, 4.0f, 0.0f)
+      .to(14.0f, 10.0f, 1.0f)
+      .face(Direction.NORTH).uvs(2.0f, 5.0f, 14.0f, 11.0f).texture("drawer").end()
+      .face(Direction.EAST).uvs(2.0f, 5.0f, 3.0f, 11.0f).texture("drawer").end()
+      .face(Direction.SOUTH).uvs(2.0f, 5.0f, 14.0f, 11.0f).texture("drawer").end()
+      .face(Direction.WEST).uvs(13.0f, 5.0f, 14.0f, 11.0f).texture("drawer").end()
+      .face(Direction.UP).uvs(2.0f, 5.0f, 14.0f, 6.0f).texture("drawer").end()
+      .face(Direction.DOWN).uvs(2.0f, 10.0f, 14.0f, 11.0f).texture("drawer").end()
+      .end()
+    ;
+  }
 }

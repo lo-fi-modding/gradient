@@ -16,14 +16,22 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Mirror;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.IBooleanFunction;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -35,15 +43,28 @@ import java.util.Comparator;
 
 public class ToolStationBlock extends Block {
   public static final BooleanProperty PRIMARY = BooleanProperty.create("primary");
+  public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+
+  private static final VoxelShape BASE_SHAPE = makeCuboidShape(1.0d, 0.0d, 1.0d, 15.0d, 11.0d, 15.0d);
+  private static final VoxelShape TOP_SHAPE = makeCuboidShape(0.0d, 11.0d, 0.0d, 16.0d, 16.0d, 16.0d);
+  private static final VoxelShape SHAPE = VoxelShapes.combineAndSimplify(BASE_SHAPE, TOP_SHAPE, IBooleanFunction.OR);
 
   public ToolStationBlock() {
     super(Properties.create(Material.WOOD).hardnessAndResistance(1.0f, 5.0f).sound(SoundType.WOOD));
-    this.setDefaultState(this.stateContainer.getBaseState().with(PRIMARY, Boolean.TRUE));
+    this.setDefaultState(this.stateContainer.getBaseState().with(PRIMARY, Boolean.TRUE).with(FACING, Direction.NORTH));
   }
 
   @Override
   protected void fillStateContainer(final StateContainer.Builder<Block, BlockState> builder) {
-    builder.add(PRIMARY);
+    super.fillStateContainer(builder);
+    builder.add(PRIMARY, FACING);
+  }
+
+  @SuppressWarnings("deprecation")
+  @Override
+  @Deprecated
+  public VoxelShape getShape(final BlockState state, final IBlockReader world, final BlockPos pos, final ISelectionContext context) {
+    return SHAPE;
   }
 
   @Nullable
@@ -102,11 +123,11 @@ public class ToolStationBlock extends Block {
       final BlockState state = world.getBlockState(pos.offset(direction));
 
       if(state.getBlock() == this) {
-        return super.getStateForPlacement(context).with(PRIMARY, Boolean.FALSE);
+        return super.getStateForPlacement(context).with(PRIMARY, Boolean.FALSE).with(FACING, context.getPlacementHorizontalFacing().getOpposite());
       }
     }
 
-    return super.getStateForPlacement(context);
+    return super.getStateForPlacement(context).with(FACING, context.getPlacementHorizontalFacing().getOpposite());
   }
 
   private boolean onBlockAddedReentryProtection;
@@ -139,7 +160,7 @@ public class ToolStationBlock extends Block {
             tile.addToInv(tools, storage);
           }
 
-          world.setBlockState(primary.get(i), this.getDefaultState().with(PRIMARY, Boolean.FALSE));
+          world.setBlockState(primary.get(i), world.getBlockState(primary.get(i)).with(PRIMARY, Boolean.FALSE));
         }
 
         if(tile != null) {
@@ -177,12 +198,12 @@ public class ToolStationBlock extends Block {
           for(int i = 1; i < blob.size(); i++) {
             final BlockState existing = world.getBlockState(blob.get(i));
             if(existing.get(PRIMARY)) {
-              world.setBlockState(blob.get(i), this.getDefaultState().with(PRIMARY, Boolean.FALSE));
+              world.setBlockState(blob.get(i), existing.with(PRIMARY, Boolean.FALSE));
             }
           }
 
           blob.sort(Comparator.comparingLong(BlockPos::toLong));
-          world.setBlockState(blob.get(0), this.getDefaultState().with(PRIMARY, Boolean.TRUE));
+          world.setBlockState(blob.get(0), world.getBlockState(blob.get(0)).with(PRIMARY, Boolean.TRUE));
 
           WorldUtils.getTileEntity(world, blob.get(0), ToolStationTile.class).addToInv(tools, storage);
         }
@@ -220,10 +241,22 @@ public class ToolStationBlock extends Block {
 
           if(!blocks.isEmpty()) {
             blocks.sort(Comparator.comparingLong(BlockPos::toLong));
-            world.setBlockState(blocks.get(0), this.getDefaultState().with(PRIMARY, Boolean.TRUE));
+            world.setBlockState(blocks.get(0), world.getBlockState(blocks.get(0)).with(PRIMARY, Boolean.TRUE));
           }
         }
       }
     }
+  }
+
+  @SuppressWarnings("deprecation")
+  @Override
+  public BlockState rotate(final BlockState state, final Rotation rot) {
+    return state.with(FACING, rot.rotate(state.get(FACING)));
+  }
+
+  @SuppressWarnings("deprecation")
+  @Override
+  public BlockState mirror(final BlockState state, final Mirror mirror) {
+    return state.rotate(mirror.toRotation(state.get(FACING)));
   }
 }

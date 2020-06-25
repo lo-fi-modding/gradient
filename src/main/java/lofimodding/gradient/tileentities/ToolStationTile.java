@@ -1,5 +1,6 @@
 package lofimodding.gradient.tileentities;
 
+import lofimodding.gradient.Gradient;
 import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientTileEntities;
 import lofimodding.gradient.capabilities.Tool;
@@ -16,6 +17,7 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.inventory.container.WorkbenchContainer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.ICraftingRecipe;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
@@ -25,6 +27,7 @@ import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.server.ServerWorld;
@@ -155,6 +158,7 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
   private final IItemHandlerModifiable mergedInventory = new CombinedInvWrapper(this.recipeInv, this.outputInv, this.toolsInv, this.storageInv);
   private final LazyOptional<IItemHandler> lazyInv = LazyOptional.of(() -> this.mergedInventory);
 
+  @Nullable
   private IRecipe<CraftingInventory> recipe;
   private int craftingSize = 3;
   private boolean pauseRecipeLookup;
@@ -444,6 +448,11 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
     compound.put("OutputInv", this.outputInv.serializeNBT());
     compound.put("ToolsInv", this.toolsInv.serializeNBT());
     compound.put("StorageInv", this.storageInv.serializeNBT());
+
+    if(this.hasRecipe()) {
+      compound.putString("RecipeId", this.recipe.getId().toString());
+    }
+
     return super.write(compound);
   }
 
@@ -455,7 +464,18 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
     this.toolsInv.deserializeNBT(compound.getCompound("ToolsInv"));
     this.storageInv.deserializeNBT(compound.getCompound("StorageInv"));
 
-    this.updateRecipe();
+    if(compound.contains("RecipeId")) {
+      final ResourceLocation recipeId = new ResourceLocation(compound.getString("RecipeId"));
+
+      this.recipe = null;
+      Gradient.getRecipeManager().getRecipe(recipeId).ifPresent(recipe -> {
+        if(recipe instanceof ICraftingRecipe) {
+          this.recipe = (ICraftingRecipe)recipe;
+        } else if(recipe instanceof IToolStationRecipe) {
+          this.recipe = (IToolStationRecipe)recipe;
+        }
+      });
+    }
 
     super.read(compound);
   }

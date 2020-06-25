@@ -607,6 +607,8 @@ public final class GradientDataGenerator {
         .face(Direction.UP).texture("water").tintindex(0).cullface(Direction.UP)
         .end();
 
+      ModelGenerator.toolStation(this, GradientIds.TOOL_STATION, this.modLoc("block/tool_station"), this.modLoc("block/tool_station"), this.modLoc("block/hardened_log_top"), this.mcLoc("block/cobblestone"), this.modLoc("block/tool_station_drawer"));
+
       this.cubeAll(GradientIds.CREATIVE_GENERATOR, this.modLoc("block/" + GradientIds.CREATIVE_GENERATOR));
       this.cubeAll(GradientIds.CREATIVE_SINKER, this.modLoc("block/" + GradientIds.CREATIVE_SINKER));
     }
@@ -881,6 +883,7 @@ public final class GradientDataGenerator {
       this.getBuilder(GradientIds.MECHANICAL_GRINDSTONE).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.MECHANICAL_GRINDSTONE)));
       this.getBuilder(GradientIds.MECHANICAL_MIXING_BASIN).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.MECHANICAL_MIXING_BASIN)));
       this.getBuilder(GradientIds.MECHANICAL_PUMP).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.MECHANICAL_PUMP)));
+      this.getBuilder(GradientIds.TOOL_STATION).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.TOOL_STATION)));
 
       this.singleTexture(GradientIds.RECIPE_FILTER, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.RECIPE_FILTER));
 
@@ -1099,6 +1102,8 @@ public final class GradientDataGenerator {
         .addModel()
         .condition(MechanicalMixingBasinBlock.HAS_WATER, true)
         .end();
+
+      this.horizontalBlock(GradientBlocks.TOOL_STATION.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.TOOL_STATION)));
 
       this.simpleBlock(GradientBlocks.CREATIVE_GENERATOR.get());
       this.simpleBlock(GradientBlocks.CREATIVE_SINKER.get());
