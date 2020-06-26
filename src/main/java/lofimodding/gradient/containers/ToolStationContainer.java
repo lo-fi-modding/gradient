@@ -40,6 +40,7 @@ public class ToolStationContainer extends GradientContainer<ToolStationTile> {
           ((ToolStationTile.ItemHandler)this.getItemHandler()).setPlayer(playerInv.player);
           final ItemStack stack = super.decrStackSize(amount);
           ((ToolStationTile.ItemHandler)this.getItemHandler()).setPlayer(null);
+          ToolStationContainer.this.detectAndSendChanges();
           return stack;
         }
       });
