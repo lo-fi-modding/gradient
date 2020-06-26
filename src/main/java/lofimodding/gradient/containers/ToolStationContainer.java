@@ -33,7 +33,16 @@ public class ToolStationContainer extends GradientContainer<ToolStationTile> {
 
     // Output
     for(int slot = 0; slot < tile.getOutputInv().getSlots(); slot++) {
-      this.addSlot(new SlotItemHandler(tile.getOutputInv(), slot, INV_SLOTS_X + SLOT_X_SPACING + 4 + (size + 1) * SLOT_X_SPACING, y + (size - tile.getOutputInv().getSlots()) * SLOT_Y_SPACING / 2 + slot * SLOT_Y_SPACING));
+      this.addSlot(new SlotItemHandler(tile.getOutputInv(), slot, INV_SLOTS_X + SLOT_X_SPACING + 4 + (size + 1) * SLOT_X_SPACING, y + (size - tile.getOutputInv().getSlots()) * SLOT_Y_SPACING / 2 + slot * SLOT_Y_SPACING) {
+        @Nonnull
+        @Override
+        public ItemStack decrStackSize(final int amount) {
+          ((ToolStationTile.ItemHandler)this.getItemHandler()).setPlayer(playerInv.player);
+          final ItemStack stack = super.decrStackSize(amount);
+          ((ToolStationTile.ItemHandler)this.getItemHandler()).setPlayer(null);
+          return stack;
+        }
+      });
     }
 
     // Tools

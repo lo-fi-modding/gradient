@@ -110,8 +110,8 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
       final int scaledAmount = Math.max(1, amount / outputCount);
       final int newAmount = ToolStationTile.this.getAmountCraftable(scaledAmount);
 
-      if(!simulate) {
-        ToolStationTile.this.consumeIngredients(newAmount);
+      if(!simulate && !ToolStationTile.this.world.isRemote) { //TODO why does this not work when only run on client? Don't item handlers sync autmoatically?
+        ToolStationTile.this.consumeIngredients(newAmount, this.player);
       }
 
       final ItemStack output = super.extractItem(slot, newAmount * outputCount, simulate).copy();
@@ -281,7 +281,7 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
     return amount;
   }
 
-  private void consumeIngredients(final int amount) {
+  private void consumeIngredients(final int amount, final PlayerEntity player) {
     for(int i = 0; i < amount; i++) {
       for(final Ingredient ingredient : this.recipe.getIngredients()) {
         for(int slot = 0; slot < this.storageInv.getSlots(); slot++) {
@@ -514,9 +514,16 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
     return new ToolStationContainer(id, playerInv, this);
   }
 
-  private class ItemHandler extends ItemStackHandler {
+  public class ItemHandler extends ItemStackHandler {
+    @Nullable
+    protected PlayerEntity player;
+
     private ItemHandler(final int size) {
       super(size);
+    }
+
+    public void setPlayer(@Nullable final PlayerEntity player) {
+      this.player = player;
     }
 
     @Override
