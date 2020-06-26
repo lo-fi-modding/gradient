@@ -21,6 +21,9 @@ public class ToolStationScreen extends ContainerScreen<ToolStationContainer> {
   private final ToolStationTile tile;
 
   private final List<String> problems = new ArrayList<>();
+  private boolean tooSmall;
+  private boolean missingTools;
+  private boolean missingIngredients;
 
   public ToolStationScreen(final ToolStationContainer container, final PlayerInventory inv, final ITextComponent title) {
     super(container, inv, title);
@@ -35,17 +38,24 @@ public class ToolStationScreen extends ContainerScreen<ToolStationContainer> {
 
     final ToolStationTile tile = this.container.tile;
 
+    this.tooSmall = false;
+    this.missingTools = false;
+    this.missingIngredients = false;
+
     if(tile.hasRecipe()) {
       if(!tile.canFit()) {
         this.problems.add(I18n.format(GradientBlocks.TOOL_STATION.get().getTranslationKey() + ".too_small"));
+        this.tooSmall = true;
       }
 
       if(!tile.hasRequiredTools()) {
         this.problems.add(I18n.format(GradientBlocks.TOOL_STATION.get().getTranslationKey() + ".missing_tools"));
+        this.missingTools = true;
       }
 
       if(tile.hasRequiredIngredients(1) == 0) {
         this.problems.add(I18n.format(GradientBlocks.TOOL_STATION.get().getTranslationKey() + ".missing_ingredients"));
+        this.missingIngredients = true;
       }
     }
 
@@ -73,9 +83,19 @@ public class ToolStationScreen extends ContainerScreen<ToolStationContainer> {
 
     this.blit(x + GradientContainer.INV_SLOTS_X + GradientContainer.SLOT_X_SPACING + 4 + size * GradientContainer.SLOT_X_SPACING, y + this.container.recipeY + (size - 1) * GradientContainer.SLOT_Y_SPACING / 2 + 2, 176, 28, 16, 13);
 
+    if(this.tooSmall) {
+      RenderSystem.color3f(1.0f, 0.7f, 0.7f);
+    }
+
     // Output
     for(int slot = 0; slot < this.tile.getOutputInv().getSlots(); slot++) {
       this.blit(x + GradientContainer.INV_SLOTS_X + GradientContainer.SLOT_X_SPACING + 4 + (size + 1) * GradientContainer.SLOT_X_SPACING - 1, y + this.container.recipeY + (size - this.tile.getOutputInv().getSlots()) * GradientContainer.SLOT_Y_SPACING / 2 + slot * GradientContainer.SLOT_Y_SPACING - 1, 176, 0, GradientContainer.SLOT_X_SPACING, GradientContainer.SLOT_Y_SPACING);
+    }
+
+    RenderSystem.color3f(1.0f, 1.0f, 1.0f);
+
+    if(this.missingTools) {
+      RenderSystem.color3f(1.0f, 0.7f, 0.7f);
     }
 
     // Tools
@@ -87,10 +107,18 @@ public class ToolStationScreen extends ContainerScreen<ToolStationContainer> {
       }
     }
 
+    RenderSystem.color3f(1.0f, 1.0f, 1.0f);
+
+    if(this.missingIngredients) {
+      RenderSystem.color3f(1.0f, 0.7f, 0.7f);
+    }
+
     // Storage
     for(int slot = 0; slot < this.tile.getStorageInv().getSlots(); slot++) {
       this.blit(x + GradientContainer.INV_SLOTS_X + slot % 9 * GradientContainer.SLOT_X_SPACING - 1, y + this.container.storageY + slot / 9 * GradientContainer.SLOT_X_SPACING - 1, 176, 0, GradientContainer.SLOT_X_SPACING, GradientContainer.SLOT_Y_SPACING);
     }
+
+    RenderSystem.color3f(1.0f, 1.0f, 1.0f);
 
     if(!this.problems.isEmpty()) {
       this.blit(x + this.xSize - 14, y + 4, 176, 18, 10, 10);
