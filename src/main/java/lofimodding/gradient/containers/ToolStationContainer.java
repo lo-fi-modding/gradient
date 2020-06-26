@@ -23,7 +23,7 @@ public class ToolStationContainer extends GradientContainer<ToolStationTile> {
 
     final int size = tile.getCraftingSize();
 
-    int y = INV_SLOTS_X + 11;
+    int y = INV_SLOTS_X;
     this.recipeY = y;
 
     // Recipe input
@@ -41,7 +41,7 @@ public class ToolStationContainer extends GradientContainer<ToolStationTile> {
       this.addSlot(new ExtractableSlot(tile.getToolsInv(), slot, INV_SLOTS_X, y + slot * SLOT_Y_SPACING));
     }
 
-    y += size * SLOT_Y_SPACING + 13;
+    y += size * SLOT_Y_SPACING + 12;
     this.storageY = y;
 
     // Storage
@@ -49,7 +49,7 @@ public class ToolStationContainer extends GradientContainer<ToolStationTile> {
       this.addSlot(new ExtractableSlot(tile.getStorageInv(), slot, INV_SLOTS_X + slot % 9 * SLOT_X_SPACING, y + slot / 9 * SLOT_Y_SPACING));
     }
 
-    y += tile.getStorageInv().getSlots() / 9 * SLOT_Y_SPACING + 13;
+    y += tile.getStorageInv().getSlots() / 9 * SLOT_Y_SPACING + 12;
 
     this.addPlayerSlots(y, playerInv);
 

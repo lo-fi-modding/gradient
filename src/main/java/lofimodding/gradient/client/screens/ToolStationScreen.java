@@ -102,7 +102,6 @@ public class ToolStationScreen extends ContainerScreen<ToolStationContainer> {
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 
     final String text = this.getTitle().getFormattedText();
-    this.font.drawString(text, (this.xSize - this.font.getStringWidth(text)) / 2.0f, 7.0f, 0x404040);
     this.font.drawString(I18n.format(GradientBlocks.TOOL_STATION.get().getTranslationKey() + ".storage"), 8.0f, this.container.storageY - 10, 0x404040);
     this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8.0f, this.ySize - 96 + 3, 0x404040);
   }
