@@ -2102,6 +2102,17 @@ public final class GradientDataGenerator {
         .addCriterion("has_wooden_gear", this.hasItem(GradientItems.WOODEN_GEAR.get()))
         .addCriterion("has_hardened_planks", this.hasItem(GradientItems.HARDENED_PLANKS.get()))
         .build(finished, Gradient.loc("age2/" + GradientIds.WOODEN_CRANK));
+
+      StagedRecipeBuilder
+        .shaped(GradientItems.TOOL_STATION.get())
+        .stage(GradientStages.AGE_2.get())
+        .patternLine("SSS")
+        .patternLine("P P")
+        .patternLine("PPP")
+        .key('S', Items.COBBLESTONE_SLAB)
+        .key('P', GradientItems.HARDENED_PLANKS.get())
+        .addCriterion("has_hardened_planks", this.hasItem(GradientItems.HARDENED_PLANKS.get()))
+        .build(finished, Gradient.loc("age2/" + GradientIds.TOOL_STATION));
     }
 
     private void registerFuelRecipes(final Consumer<IFinishedRecipe> finished) {
