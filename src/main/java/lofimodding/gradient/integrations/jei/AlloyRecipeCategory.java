@@ -7,7 +7,7 @@ import lofimodding.gradient.recipes.AlloyRecipe;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.ingredient.IGuiIngredientGroup;
+import mezz.jei.api.gui.ingredient.IGuiFluidStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
@@ -60,10 +60,10 @@ public class AlloyRecipeCategory implements IRecipeCategory<AlloyRecipe> {
 
   @Override
   public void setRecipe(final IRecipeLayout recipeLayout, final AlloyRecipe recipe, final IIngredients ingredients) {
-    final IGuiIngredientGroup<FluidStack> guiFluidStacks = recipeLayout.getIngredientsGroup(VanillaTypes.FLUID);
+    final IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
     final List<List<FluidStack>> inputs = ingredients.getInputs(VanillaTypes.FLUID);
 
-    float largestSize = 0.0f;
+    int largestSize = 0;
     for(final FluidStack stack : recipe.getFluidInputs()) {
       if(stack.getAmount() > largestSize) {
         largestSize = stack.getAmount();
@@ -74,14 +74,12 @@ public class AlloyRecipeCategory implements IRecipeCategory<AlloyRecipe> {
       largestSize = recipe.getFluidOutput().getAmount();
     }
 
-//TODO    final IIngredientRenderer<FluidStack> fluidStackRenderer = new FluidStackRenderer(largestSize, false, 16, 16, null);
-
     for(int i = 0; i < recipe.getFluidInputs().size(); i++) {
-//TODO      guiFluidStacks.init(i, true, fluidStackRenderer, i * 20, 0, 18, 18, 1, 1);
+      guiFluidStacks.init(i, true, i * 20 + 1, 1, 16, 16, largestSize, false, null);
       guiFluidStacks.set(i, inputs.get(i));
     }
 
-//TODO    guiFluidStacks.init(4, true, fluidStackRenderer, 98, 0, 18, 18, 1, 1);
+    guiFluidStacks.init(4, false, 99, 1, 16, 16, largestSize, false, null);
     guiFluidStacks.set(4, ingredients.getOutputs(VanillaTypes.FLUID).get(0));
   }
 }

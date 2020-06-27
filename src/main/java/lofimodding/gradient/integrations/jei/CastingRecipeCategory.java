@@ -6,7 +6,7 @@ import lofimodding.gradient.GradientItems;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.ingredient.IGuiIngredientGroup;
+import mezz.jei.api.gui.ingredient.IGuiFluidStackGroup;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
@@ -61,14 +61,14 @@ public class CastingRecipeCategory implements IRecipeCategory<JeiIntegration.Cas
   @Override
   public void setRecipe(final IRecipeLayout recipeLayout, final JeiIntegration.CastingRecipe recipe, final IIngredients ingredients) {
     final IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-    final IGuiIngredientGroup<FluidStack> guiFluidStacks = recipeLayout.getFluidStacks();
+    final IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
     final List<List<ItemStack>> inputItems = ingredients.getInputs(VanillaTypes.ITEM);
     final List<List<FluidStack>> inputFluids = ingredients.getInputs(VanillaTypes.FLUID);
 
     guiItemStacks.init(0, true, 0, 0);
     guiItemStacks.set(0, inputItems.get(0));
 
-    guiFluidStacks.init(1, true, 21, 1);
+    guiFluidStacks.init(1, true, 21, 1, 16, 16, recipe.cast.metalAmount, false, null);
     guiFluidStacks.set(1, inputFluids.get(0));
 
     guiItemStacks.init(2, true, 58, 0);
