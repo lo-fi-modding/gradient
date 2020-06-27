@@ -9,8 +9,7 @@
     "tag": "forge:dusts/lead"
   },
   "fluid": {
-    "fluid": "gradient:lead",
-    "amount": 1.0,
-    "temperature": 327.5
+    "Fluid": "gradient:lead",
+    "Amount": 144
   }
 }

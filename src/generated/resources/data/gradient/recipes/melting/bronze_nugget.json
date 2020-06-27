@@ -3,14 +3,13 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 58,
+  "ticks": 8400,
   "temperature": 950.0,
   "ingredient": {
     "tag": "forge:nuggets/bronze"
   },
   "fluid": {
-    "fluid": "gradient:bronze",
-    "amount": 0.11111111,
-    "temperature": 950.0
+    "Fluid": "gradient:bronze",
+    "Amount": 16
   }
 }

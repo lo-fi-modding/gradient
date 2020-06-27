@@ -3,14 +3,13 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 525,
+  "ticks": 75600,
   "temperature": 950.0,
   "ingredient": {
     "item": "gradient:bronze_pickaxe_head"
   },
   "fluid": {
-    "fluid": "gradient:bronze",
-    "amount": 1.0,
-    "temperature": 950.0
+    "Fluid": "gradient:bronze",
+    "Amount": 144
   }
 }

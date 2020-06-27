@@ -1122,7 +1122,7 @@ public final class GradientDataGenerator {
 
       this.add("screens.gradient.unhardened_clay_cast", "Cast Selection");
 
-      this.add("fluids.gradient.air", "Air");
+      this.add(GradientFluids.AIR.get(), "Air");
 
       for(final Metal metal : Minerals.metals()) {
         final String metalName = StringUtils.capitalize(metal.name);
@@ -1421,7 +1421,7 @@ public final class GradientDataGenerator {
     }
 
     private void add(final Fluid fluid, final String translation) {
-      this.add("fluids." + fluid.getRegistryName().getNamespace() + '.' + fluid.getRegistryName().getPath(), translation);
+      this.add("fluid." + fluid.getRegistryName().getNamespace() + '.' + fluid.getRegistryName().getPath(), translation);
     }
   }
 

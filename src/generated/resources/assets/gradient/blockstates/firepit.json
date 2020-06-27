@@ -37,8 +37,8 @@
     },
     {
       "when": {
-        "has_furnace": "true",
-        "facing": "north"
+        "facing": "north",
+        "has_furnace": "true"
       },
       "apply": {
         "model": "gradient:block/clay_furnace_used"
@@ -46,8 +46,8 @@
     },
     {
       "when": {
-        "has_furnace": "true",
-        "facing": "east"
+        "facing": "east",
+        "has_furnace": "true"
       },
       "apply": {
         "model": "gradient:block/clay_furnace_used",
@@ -56,8 +56,8 @@
     },
     {
       "when": {
-        "has_furnace": "true",
-        "facing": "south"
+        "facing": "south",
+        "has_furnace": "true"
       },
       "apply": {
         "model": "gradient:block/clay_furnace_used",
@@ -66,8 +66,8 @@
     },
     {
       "when": {
-        "has_furnace": "true",
-        "facing": "west"
+        "facing": "west",
+        "has_furnace": "true"
       },
       "apply": {
         "model": "gradient:block/clay_furnace_used",

@@ -9,8 +9,7 @@
     "tag": "forge:purified_ores/azurite"
   },
   "fluid": {
-    "fluid": "gradient:copper",
-    "amount": 1.0,
-    "temperature": 1165.0
+    "Fluid": "gradient:copper",
+    "Amount": 108
   }
 }

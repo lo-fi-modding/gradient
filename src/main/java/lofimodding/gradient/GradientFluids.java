@@ -39,7 +39,7 @@ public final class GradientFluids {
 
   private static final Map<Metal, RegistryObject<MetalFlowingFluid>> FLOWING_METALS = Util.make(new HashMap<>(), metals -> {
     for(final Metal metal : Minerals.metals()) {
-      metals.put(metal, REGISTRY.register(metal.name, () -> new MetalFlowingFluid(metal, metalProperties(metal))));
+      metals.put(metal, REGISTRY.register(metal.name + "_flowing", () -> new MetalFlowingFluid(metal, metalProperties(metal))));
     }
   });
 
@@ -52,7 +52,7 @@ public final class GradientFluids {
       .builder(Gradient.loc("fluid/metal_still"), Gradient.loc("fluid/metal_flowing"))
       .viscosity(5000) //TODO
       .density(3000) //TODO
-      .color(metal.colourSpecular)
+      .color(metal.colourDiffuse)
       .temperature((int)(metal.meltTemp + 273.15f))
       .luminosity(9)
     );

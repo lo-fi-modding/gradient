@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientRecipeSerializers;
+import lofimodding.gradient.utils.RecipeUtils;
 import lofimodding.progression.Stage;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -140,7 +141,7 @@ public class MeltingRecipe implements IRecipe<IInventory> {
       final float temperature = JSONUtils.getFloat(json, "temperature");
 
       final Ingredient ingredient = Ingredient.deserialize(JSONUtils.getJsonObject(json, "ingredient"));
-      final FluidStack fluid = FluidStack.read(JSONUtils.getJsonObject(json, "fluid"));
+      final FluidStack fluid = RecipeUtils.readFluidStackFromJson(JSONUtils.getJsonObject(json, "fluid"));
       return new MeltingRecipe(id, group, stages, ticks, temperature, ingredient, fluid);
     }
 

@@ -76,7 +76,7 @@ public class MeltingRecipeCategory implements IRecipeCategory<MeltingRecipe> {
     guiItemStacks.init(0, true, 0, 0);
     guiItemStacks.set(0, inputs.get(0));
 
-    guiFluidStacks.init(1, true, new FluidStackRenderer(1.0f, false, 16, 16, null), 38, 0, 18, 18, 1, 1);
+    guiFluidStacks.init(1, true, 39, 1);
     guiFluidStacks.set(1, ingredients.getOutputs(VanillaTypes.FLUID).get(0));
   }
 

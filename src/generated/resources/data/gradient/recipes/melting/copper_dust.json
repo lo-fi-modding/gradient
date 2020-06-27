@@ -9,8 +9,7 @@
     "tag": "forge:dusts/copper"
   },
   "fluid": {
-    "fluid": "gradient:copper",
-    "amount": 1.0,
-    "temperature": 1085.0
+    "Fluid": "gradient:copper",
+    "Amount": 144
   }
 }

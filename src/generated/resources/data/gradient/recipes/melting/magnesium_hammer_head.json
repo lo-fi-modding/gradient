@@ -3,14 +3,13 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 375,
+  "ticks": 54000,
   "temperature": 650.0,
   "ingredient": {
     "item": "gradient:magnesium_hammer_head"
   },
   "fluid": {
-    "fluid": "gradient:magnesium",
-    "amount": 1.0,
-    "temperature": 650.0
+    "Fluid": "gradient:magnesium",
+    "Amount": 144
   }
 }

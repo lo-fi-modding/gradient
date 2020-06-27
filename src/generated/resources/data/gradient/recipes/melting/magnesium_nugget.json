@@ -3,14 +3,13 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 41,
+  "ticks": 6000,
   "temperature": 650.0,
   "ingredient": {
     "tag": "forge:nuggets/magnesium"
   },
   "fluid": {
-    "fluid": "gradient:magnesium",
-    "amount": 0.11111111,
-    "temperature": 650.0
+    "Fluid": "gradient:magnesium",
+    "Amount": 16
   }
 }

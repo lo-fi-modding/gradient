@@ -9,8 +9,7 @@
     "tag": "forge:storage_blocks/copper"
   },
   "fluid": {
-    "fluid": "gradient:copper",
-    "amount": 9.0,
-    "temperature": 1085.0
+    "Fluid": "gradient:copper",
+    "Amount": 1296
   }
 }

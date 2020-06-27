@@ -3,14 +3,13 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 450,
+  "ticks": 64800,
   "temperature": 1085.0,
   "ingredient": {
     "item": "gradient:copper_hammer_head"
   },
   "fluid": {
-    "fluid": "gradient:copper",
-    "amount": 1.0,
-    "temperature": 1085.0
+    "Fluid": "gradient:copper",
+    "Amount": 144
   }
 }

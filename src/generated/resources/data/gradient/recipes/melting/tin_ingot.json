@@ -3,14 +3,13 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 225,
+  "ticks": 32400,
   "temperature": 231.93,
   "ingredient": {
     "tag": "forge:ingots/tin"
   },
   "fluid": {
-    "fluid": "gradient:tin",
-    "amount": 1.0,
-    "temperature": 231.93
+    "Fluid": "gradient:tin",
+    "Amount": 144
   }
 }

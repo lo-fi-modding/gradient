@@ -9,8 +9,7 @@
     "tag": "forge:crushed_ores/gold"
   },
   "fluid": {
-    "fluid": "gradient:gold",
-    "amount": 0.75,
-    "temperature": 1064.0
+    "Fluid": "gradient:gold",
+    "Amount": 72
   }
 }

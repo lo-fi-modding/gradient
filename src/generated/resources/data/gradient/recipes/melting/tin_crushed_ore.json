@@ -9,8 +9,7 @@
     "tag": "forge:crushed_ores/tin"
   },
   "fluid": {
-    "fluid": "gradient:tin",
-    "amount": 0.75,
-    "temperature": 231.93
+    "Fluid": "gradient:tin",
+    "Amount": 72
   }
 }

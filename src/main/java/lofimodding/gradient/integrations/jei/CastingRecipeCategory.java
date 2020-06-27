@@ -9,7 +9,6 @@ import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IGuiIngredientGroup;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.ingredients.IIngredientRenderer;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.resources.I18n;
@@ -66,12 +65,10 @@ public class CastingRecipeCategory implements IRecipeCategory<JeiIntegration.Cas
     final List<List<ItemStack>> inputItems = ingredients.getInputs(VanillaTypes.ITEM);
     final List<List<FluidStack>> inputFluids = ingredients.getInputs(VanillaTypes.FLUID);
 
-    final IIngredientRenderer<FluidStack> fluidStackRenderer = new FluidStackRenderer(1.0f, false, 16, 16, null);
-
     guiItemStacks.init(0, true, 0, 0);
     guiItemStacks.set(0, inputItems.get(0));
 
-    guiFluidStacks.init(1, true, fluidStackRenderer, 20, 0, 18, 18, 1, 1);
+    guiFluidStacks.init(1, true, 21, 1);
     guiFluidStacks.set(1, inputFluids.get(0));
 
     guiItemStacks.init(2, true, 58, 0);

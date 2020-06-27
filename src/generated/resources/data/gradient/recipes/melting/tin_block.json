@@ -9,8 +9,7 @@
     "tag": "forge:storage_blocks/tin"
   },
   "fluid": {
-    "fluid": "gradient:tin",
-    "amount": 9.0,
-    "temperature": 231.93
+    "Fluid": "gradient:tin",
+    "Amount": 1296
   }
 }

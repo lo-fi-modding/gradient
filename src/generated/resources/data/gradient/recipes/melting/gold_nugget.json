@@ -3,14 +3,13 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 33,
+  "ticks": 4800,
   "temperature": 1064.0,
   "ingredient": {
     "tag": "forge:nuggets/gold"
   },
   "fluid": {
-    "fluid": "gradient:gold",
-    "amount": 0.11111111,
-    "temperature": 1064.0
+    "Fluid": "gradient:gold",
+    "Amount": 16
   }
 }

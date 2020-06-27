@@ -9,8 +9,7 @@
     "tag": "forge:plates/magnesium"
   },
   "fluid": {
-    "fluid": "gradient:magnesium",
-    "amount": 1.0,
-    "temperature": 650.0
+    "Fluid": "gradient:magnesium",
+    "Amount": 144
   }
 }

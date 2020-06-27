@@ -3,14 +3,13 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 225,
+  "ticks": 32400,
   "temperature": 327.5,
   "ingredient": {
     "item": "gradient:lead_sword_blade"
   },
   "fluid": {
-    "fluid": "gradient:lead",
-    "amount": 1.0,
-    "temperature": 327.5
+    "Fluid": "gradient:lead",
+    "Amount": 144
   }
 }

@@ -3,14 +3,13 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 375,
+  "ticks": 54000,
   "temperature": 419.53,
   "ingredient": {
     "item": "gradient:zinc_hammer_head"
   },
   "fluid": {
-    "fluid": "gradient:zinc",
-    "amount": 1.0,
-    "temperature": 419.53
+    "Fluid": "gradient:zinc",
+    "Amount": 144
   }
 }

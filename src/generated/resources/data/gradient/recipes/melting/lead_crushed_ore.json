@@ -9,8 +9,7 @@
     "tag": "forge:crushed_ores/lead"
   },
   "fluid": {
-    "fluid": "gradient:lead",
-    "amount": 0.75,
-    "temperature": 327.5
+    "Fluid": "gradient:lead",
+    "Amount": 72
   }
 }

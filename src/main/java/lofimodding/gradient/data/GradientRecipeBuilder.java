@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lofimodding.gradient.GradientRecipeSerializers;
+import lofimodding.gradient.utils.RecipeUtils;
 import lofimodding.progression.Stage;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRewards;
@@ -1172,7 +1173,7 @@ public final class GradientRecipeBuilder {
         json.addProperty("ticks", this.ticks);
         json.addProperty("temperature", this.temperature);
         json.add("ingredient", this.ingredient.serialize());
-        json.add("fluid", this.output.write(new JsonObject()));
+        json.add("fluid", RecipeUtils.writeFluidStackToJson(new JsonObject(), this.output));
       }
 
       @Override
@@ -1263,11 +1264,11 @@ public final class GradientRecipeBuilder {
           json.addProperty("group", this.group);
         }
 
-        json.add("output", this.output.write(new JsonObject()));
+        json.add("output", RecipeUtils.writeFluidStackToJson(new JsonObject(), this.output));
 
         final JsonArray inputs = new JsonArray();
         for(final FluidStack input : this.inputs) {
-          inputs.add(input.write(new JsonObject()));
+          inputs.add(RecipeUtils.writeFluidStackToJson(new JsonObject(), input));
         }
         json.add("inputs", inputs);
       }

@@ -3,14 +3,13 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 300,
+  "ticks": 43200,
   "temperature": 1064.0,
   "ingredient": {
     "item": "gradient:gold_mattock_head"
   },
   "fluid": {
-    "fluid": "gradient:gold",
-    "amount": 1.0,
-    "temperature": 1064.0
+    "Fluid": "gradient:gold",
+    "Amount": 144
   }
 }

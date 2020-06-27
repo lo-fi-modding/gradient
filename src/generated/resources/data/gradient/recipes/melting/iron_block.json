@@ -9,8 +9,7 @@
     "tag": "forge:storage_blocks/iron"
   },
   "fluid": {
-    "fluid": "gradient:iron",
-    "amount": 9.0,
-    "temperature": 1538.0
+    "Fluid": "gradient:iron",
+    "Amount": 1296
   }
 }

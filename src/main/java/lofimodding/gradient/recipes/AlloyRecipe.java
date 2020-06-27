@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientRecipeSerializers;
+import lofimodding.gradient.utils.RecipeUtils;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -134,11 +135,11 @@ public class AlloyRecipe implements IRecipe<IInventory> {
     @Override
     public AlloyRecipe read(final ResourceLocation id, final JsonObject json) {
       final String group = JSONUtils.getString(json, "group", "");
-      final FluidStack output = FluidStack.read(JSONUtils.getJsonObject(json, "output"));
+      final FluidStack output = RecipeUtils.readFluidStackFromJson(JSONUtils.getJsonObject(json, "output"));
 
       final NonNullList<FluidStack> inputs = NonNullList.create();
       for(final JsonElement element : JSONUtils.getJsonArray(json, "inputs", new JsonArray())) {
-        inputs.add(FluidStack.read(element.getAsJsonObject()));
+        inputs.add(RecipeUtils.readFluidStackFromJson(element.getAsJsonObject()));
       }
 
       return new AlloyRecipe(id, group, output, inputs);

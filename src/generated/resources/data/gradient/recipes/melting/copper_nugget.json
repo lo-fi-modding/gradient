@@ -3,14 +3,13 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 50,
+  "ticks": 7200,
   "temperature": 1085.0,
   "ingredient": {
     "tag": "forge:nuggets/copper"
   },
   "fluid": {
-    "fluid": "gradient:copper",
-    "amount": 0.11111111,
-    "temperature": 1085.0
+    "Fluid": "gradient:copper",
+    "Amount": 16
   }
 }
