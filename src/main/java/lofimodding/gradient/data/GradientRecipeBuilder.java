@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lofimodding.gradient.GradientRecipeSerializers;
-import lofimodding.gradient.fluids.GradientFluidStack;
 import lofimodding.progression.Stage;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRewards;
@@ -81,7 +80,7 @@ public final class GradientRecipeBuilder {
     return new Melting();
   }
 
-  public static Alloy alloy(final GradientFluidStack stack) {
+  public static Alloy alloy(final FluidStack stack) {
     return new Alloy(stack);
   }
 
@@ -1071,7 +1070,7 @@ public final class GradientRecipeBuilder {
     private int ticks;
     private float temperature;
     private Ingredient ingredient;
-    private GradientFluidStack fluid = GradientFluidStack.EMPTY;
+    private FluidStack fluid = FluidStack.EMPTY;
     private final Advancement.Builder advancementBuilder = Advancement.Builder.builder();
     private String group;
 
@@ -1104,7 +1103,7 @@ public final class GradientRecipeBuilder {
       return this;
     }
 
-    public Melting fluid(final GradientFluidStack fluid) {
+    public Melting fluid(final FluidStack fluid) {
       this.fluid = fluid;
       return this;
     }
@@ -1142,11 +1141,11 @@ public final class GradientRecipeBuilder {
       private final float temperature;
       private final String group;
       private final Ingredient ingredient;
-      private final GradientFluidStack output;
+      private final FluidStack output;
       private final Advancement.Builder advancementBuilder;
       private final ResourceLocation advancementId;
 
-      protected Result(final ResourceLocation id, final Set<Stage> stages, final int ticks, final float temperature, final String group, final Ingredient ingredient, final GradientFluidStack output, final Advancement.Builder advancementBuilder, final ResourceLocation advancementId) {
+      protected Result(final ResourceLocation id, final Set<Stage> stages, final int ticks, final float temperature, final String group, final Ingredient ingredient, final FluidStack output, final Advancement.Builder advancementBuilder, final ResourceLocation advancementId) {
         this.id = id;
         this.stages = stages;
         this.ticks = ticks;
@@ -1201,16 +1200,16 @@ public final class GradientRecipeBuilder {
   }
 
   public static class Alloy {
-    private final GradientFluidStack output;
-    private final NonNullList<GradientFluidStack> inputs = NonNullList.create();
+    private final FluidStack output;
+    private final NonNullList<FluidStack> inputs = NonNullList.create();
     private final Advancement.Builder advancementBuilder = Advancement.Builder.builder();
     private String group;
 
-    public Alloy(final GradientFluidStack output) {
+    public Alloy(final FluidStack output) {
       this.output = output;
     }
 
-    public Alloy addInput(final GradientFluidStack stack) {
+    public Alloy addInput(final FluidStack stack) {
       this.inputs.add(stack);
       return this;
     }
@@ -1244,12 +1243,12 @@ public final class GradientRecipeBuilder {
     public static class Result implements IFinishedRecipe {
       private final ResourceLocation id;
       private final String group;
-      private final GradientFluidStack output;
-      private final NonNullList<GradientFluidStack> inputs;
+      private final FluidStack output;
+      private final NonNullList<FluidStack> inputs;
       private final Advancement.Builder advancementBuilder;
       private final ResourceLocation advancementId;
 
-      protected Result(final ResourceLocation id, final String group, final GradientFluidStack output, final NonNullList<GradientFluidStack> inputs, final Advancement.Builder advancementBuilder, final ResourceLocation advancementId) {
+      protected Result(final ResourceLocation id, final String group, final FluidStack output, final NonNullList<FluidStack> inputs, final Advancement.Builder advancementBuilder, final ResourceLocation advancementId) {
         this.id = id;
         this.group = group;
         this.output = output;
@@ -1267,7 +1266,7 @@ public final class GradientRecipeBuilder {
         json.add("output", this.output.write(new JsonObject()));
 
         final JsonArray inputs = new JsonArray();
-        for(final GradientFluidStack input : this.inputs) {
+        for(final FluidStack input : this.inputs) {
           inputs.add(input.write(new JsonObject()));
         }
         json.add("inputs", inputs);

@@ -1,13 +1,12 @@
 package lofimodding.gradient.tileentities;
 
+import lofimodding.gradient.GradientFluids;
 import lofimodding.gradient.GradientTileEntities;
-import lofimodding.gradient.fluids.GradientFluid;
-import lofimodding.gradient.fluids.GradientFluidStack;
-import lofimodding.gradient.fluids.IGradientFluidHandler;
 import lofimodding.gradient.network.UpdateClayMetalMixerNeighboursPacket;
 import lofimodding.gradient.recipes.AlloyRecipe;
 import lofimodding.gradient.utils.RecipeUtils;
 import net.minecraft.block.BlockState;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -18,6 +17,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -28,16 +30,16 @@ import java.util.Map;
 import java.util.Random;
 
 public class ClayMetalMixerTile extends HeatSinkerTile {
-  @CapabilityInject(IGradientFluidHandler.class)
-  private static Capability<IGradientFluidHandler> FLUID_HANDLER_CAPABILITY;
+  @CapabilityInject(IFluidHandler.class)
+  private static Capability<IFluidHandler> FLUID_HANDLER_CAPABILITY;
 
-  private final Map<Direction, IGradientFluidHandler> inputs = new EnumMap<>(Direction.class);
-  private final Map<Direction, GradientFluidStack> flowing = new EnumMap<>(Direction.class);
-  private final Map<Direction, GradientFluidStack> lastFlowing = new EnumMap<>(Direction.class);
-  private final Map<GradientFluid, List<Direction>> fluidSideMap = new HashMap<>();
+  private final Map<Direction, IFluidHandler> inputs = new EnumMap<>(Direction.class);
+  private final Map<Direction, FluidStack> flowing = new EnumMap<>(Direction.class);
+  private final Map<Direction, FluidStack> lastFlowing = new EnumMap<>(Direction.class);
+  private final Map<Fluid, List<Direction>> fluidSideMap = new HashMap<>();
 
   @Nullable
-  private IGradientFluidHandler output;
+  private IFluidHandler output;
 
   @Nullable
   private AlloyRecipe recipe;
@@ -58,8 +60,8 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
     return this.inputs.get(side) != null;
   }
 
-  public GradientFluidStack getFlowingFluid(final Direction side) {
-    return this.flowing.getOrDefault(side, GradientFluidStack.EMPTY);
+  public FluidStack getFlowingFluid(final Direction side) {
+    return this.flowing.getOrDefault(side, FluidStack.EMPTY);
   }
 
   public void inputUpdated(final Direction side) {
@@ -72,13 +74,13 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
 
   }
 
-  public void inputChanged(final Direction side, @Nullable final IGradientFluidHandler fluidHandler) {
+  public void inputChanged(final Direction side, @Nullable final IFluidHandler fluidHandler) {
     this.inputs.put(side, fluidHandler);
 
     UpdateClayMetalMixerNeighboursPacket.send(this.world.getDimension().getType(), this.pos);
   }
 
-  public void outputChanged(@Nullable final IGradientFluidHandler fluidHandler) {
+  public void outputChanged(@Nullable final IFluidHandler fluidHandler) {
     this.output = fluidHandler;
 
     UpdateClayMetalMixerNeighboursPacket.send(this.world.getDimension().getType(), this.pos);
@@ -95,13 +97,13 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
   private void updateRecipe() {
     this.fluidSideMap.clear();
 
-    final NonNullList<GradientFluidStack> fluids = NonNullList.create();
+    final NonNullList<FluidStack> fluids = NonNullList.create();
 
     for(final Direction side : Direction.Plane.HORIZONTAL) {
-      final IGradientFluidHandler handler = this.inputs.get(side);
+      final IFluidHandler handler = this.inputs.get(side);
 
       if(handler != null) {
-        final GradientFluidStack fluidStack = handler.drain(Float.MAX_VALUE, IGradientFluidHandler.FluidAction.SIMULATE);
+        final FluidStack fluidStack = handler.drain(Integer.MAX_VALUE, IFluidHandler.FluidAction.SIMULATE);
 
         if(!fluidStack.isEmpty()) {
           fluids.add(fluidStack);
@@ -146,32 +148,28 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
     if(this.recipe != null && this.output != null) {
       if(this.recipeTicks == 0) {
         // Only mix if there's room
-        if(this.output.fill(this.recipe.getFluidOutput(), IGradientFluidHandler.FluidAction.SIMULATE) < this.recipe.getFluidOutput().getAmount()) {
+        if(this.output.fill(this.recipe.getFluidOutput(), IFluidHandler.FluidAction.SIMULATE) < this.recipe.getFluidOutput().getAmount()) {
           this.flowing.clear();
           return;
         }
 
         // Copy ref to recipe - it can be updated inside of the for loop by block updates
         final AlloyRecipe recipe = this.recipe;
-        float temperature = 0.0f;
-        float total = 0.0f;
 
-        for(final GradientFluidStack recipeFluid : recipe.getFluidInputs()) {
-          float remaining = recipeFluid.getAmount();
+        for(final FluidStack recipeFluid : recipe.getFluidInputs()) {
+          int remaining = recipeFluid.getAmount();
           int failed = 0;
 
           final List<Direction> sides = this.fluidSideMap.get(recipeFluid.getFluid());
 
-          while(remaining > 0.0f || failed >= 10) {
+          while(remaining > 0 || failed >= 10) {
             final int sideIndex = this.rand.nextInt(sides.size());
             final Direction side = sides.get(sideIndex);
 
-            final IGradientFluidHandler fluidHandler = this.inputs.get(side);
-            final GradientFluidStack drained = fluidHandler.drain(Math.min(0.001f, remaining), IGradientFluidHandler.FluidAction.EXECUTE);
+            final IFluidHandler fluidHandler = this.inputs.get(side);
+            final FluidStack drained = fluidHandler.drain(Math.min(1, remaining), IFluidHandler.FluidAction.EXECUTE);
 
             if(!drained.isEmpty()) {
-              temperature += drained.getTemperature() * drained.getAmount();
-              total += drained.getAmount();
               remaining -= drained.getAmount();
               this.flowing.put(side, drained);
             } else {
@@ -180,8 +178,8 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
           }
         }
 
-        final GradientFluidStack output = new GradientFluidStack(recipe.getFluidOutput().getFluid(), recipe.getFluidOutput().getAmount(), temperature / total);
-        this.output.fill(output, IGradientFluidHandler.FluidAction.EXECUTE);
+        final FluidStack output = new FluidStack(recipe.getFluidOutput().getFluid(), recipe.getFluidOutput().getAmount());
+        this.output.fill(output, IFluidHandler.FluidAction.EXECUTE);
 
         this.recipeTicks = this.getTicksForRecipe(recipe);
       } else {
@@ -194,7 +192,7 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
     boolean different = false;
 
     for(final Direction side : Direction.Plane.HORIZONTAL) {
-      if(this.flowing.getOrDefault(side, GradientFluidStack.EMPTY).getFluid() != this.lastFlowing.getOrDefault(side, GradientFluidStack.EMPTY).getFluid()) {
+      if(this.flowing.getOrDefault(side, FluidStack.EMPTY).getFluid() != this.lastFlowing.getOrDefault(side, FluidStack.EMPTY).getFluid()) {
         different = true;
         break;
       }
@@ -219,7 +217,7 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
   }
 
   @Nullable
-  private IGradientFluidHandler getFluidHandler(final IBlockReader world, final BlockPos pos, final Direction side) {
+  private IFluidHandler getFluidHandler(final IBlockReader world, final BlockPos pos, final Direction side) {
     final TileEntity output = world.getTileEntity(pos);
 
     if(output == null) {
@@ -233,7 +231,7 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
   public CompoundNBT write(final CompoundNBT tag) {
     final CompoundNBT flowing = new CompoundNBT();
 
-    for(final Map.Entry<Direction, GradientFluidStack> entry : this.flowing.entrySet()) {
+    for(final Map.Entry<Direction, FluidStack> entry : this.flowing.entrySet()) {
       flowing.putString(entry.getKey().getName(), entry.getValue().getFluid().getRegistryName().toString());
     }
 
@@ -252,7 +250,7 @@ public class ClayMetalMixerTile extends HeatSinkerTile {
 
     for(final Direction side : Direction.Plane.HORIZONTAL) {
       if(flowing.contains(side.getName())) {
-        this.flowing.put(side, new GradientFluidStack(GradientFluid.REGISTRY.get().getValue(new ResourceLocation(flowing.getString(side.getName()))), 1.0f, this.getHeat()));
+        this.flowing.put(side, new FluidStack(ForgeRegistries.FLUIDS.getValue(new ResourceLocation(flowing.getString(side.getName()))), GradientFluids.INGOT_AMOUNT));
       }
     }
   }

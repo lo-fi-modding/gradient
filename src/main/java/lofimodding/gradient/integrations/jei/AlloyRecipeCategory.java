@@ -3,8 +3,8 @@ package lofimodding.gradient.integrations.jei;
 import lofimodding.gradient.Gradient;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientRecipeSerializers;
-import lofimodding.gradient.fluids.GradientFluidStack;
 import lofimodding.gradient.recipes.AlloyRecipe;
+import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IGuiIngredientGroup;
@@ -15,6 +15,7 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,17 +55,17 @@ public class AlloyRecipeCategory implements IRecipeCategory<AlloyRecipe> {
 
   @Override
   public void setIngredients(final AlloyRecipe recipe, final IIngredients ingredients) {
-    ingredients.setInputs(IngredientTypes.GRADIENT_FLUID, new ArrayList<>(recipe.getFluidInputs()));
-    ingredients.setOutput(IngredientTypes.GRADIENT_FLUID, recipe.getFluidOutput());
+    ingredients.setInputs(VanillaTypes.FLUID, new ArrayList<>(recipe.getFluidInputs()));
+    ingredients.setOutput(VanillaTypes.FLUID, recipe.getFluidOutput());
   }
 
   @Override
   public void setRecipe(final IRecipeLayout recipeLayout, final AlloyRecipe recipe, final IIngredients ingredients) {
-    final IGuiIngredientGroup<GradientFluidStack> guiFluidStacks = recipeLayout.getIngredientsGroup(IngredientTypes.GRADIENT_FLUID);
-    final List<List<GradientFluidStack>> inputs = ingredients.getInputs(IngredientTypes.GRADIENT_FLUID);
+    final IGuiIngredientGroup<FluidStack> guiFluidStacks = recipeLayout.getIngredientsGroup(VanillaTypes.FLUID);
+    final List<List<FluidStack>> inputs = ingredients.getInputs(VanillaTypes.FLUID);
 
     float largestSize = 0.0f;
-    for(final GradientFluidStack stack : recipe.getFluidInputs()) {
+    for(final FluidStack stack : recipe.getFluidInputs()) {
       if(stack.getAmount() > largestSize) {
         largestSize = stack.getAmount();
       }
@@ -74,7 +75,7 @@ public class AlloyRecipeCategory implements IRecipeCategory<AlloyRecipe> {
       largestSize = recipe.getFluidOutput().getAmount();
     }
 
-    final IIngredientRenderer<GradientFluidStack> fluidStackRenderer = new GradientFluidStackRenderer(largestSize, false, 16, 16, null);
+    final IIngredientRenderer<FluidStack> fluidStackRenderer = new FluidStackRenderer(largestSize, false, 16, 16, null);
 
     for(int i = 0; i < recipe.getFluidInputs().size(); i++) {
       guiFluidStacks.init(i, true, fluidStackRenderer, i * 20, 0, 18, 18, 1, 1);
@@ -82,6 +83,6 @@ public class AlloyRecipeCategory implements IRecipeCategory<AlloyRecipe> {
     }
 
     guiFluidStacks.init(4, true, fluidStackRenderer, 98, 0, 18, 18, 1, 1);
-    guiFluidStacks.set(4, ingredients.getOutputs(IngredientTypes.GRADIENT_FLUID).get(0));
+    guiFluidStacks.set(4, ingredients.getOutputs(VanillaTypes.FLUID).get(0));
   }
 }

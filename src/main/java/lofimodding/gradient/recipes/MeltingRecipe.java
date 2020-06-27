@@ -5,7 +5,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientRecipeSerializers;
-import lofimodding.gradient.fluids.GradientFluidStack;
 import lofimodding.progression.Stage;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -18,6 +17,7 @@ import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import java.util.Set;
@@ -32,9 +32,9 @@ public class MeltingRecipe implements IRecipe<IInventory> {
   private final float temperature;
   private final Ingredient ingredient;
   private final NonNullList<Ingredient> ingredients;
-  private final GradientFluidStack output;
+  private final FluidStack output;
 
-  public MeltingRecipe(final ResourceLocation id, final String group, final NonNullList<Stage> stages, final int ticks, final float temperature, final Ingredient ingredient, final GradientFluidStack output) {
+  public MeltingRecipe(final ResourceLocation id, final String group, final NonNullList<Stage> stages, final int ticks, final float temperature, final Ingredient ingredient, final FluidStack output) {
     this.id = id;
     this.group = group;
     this.stages = stages;
@@ -77,7 +77,7 @@ public class MeltingRecipe implements IRecipe<IInventory> {
     return this.ingredients;
   }
 
-  public GradientFluidStack getFluidOutput() {
+  public FluidStack getFluidOutput() {
     return this.output;
   }
 
@@ -140,7 +140,7 @@ public class MeltingRecipe implements IRecipe<IInventory> {
       final float temperature = JSONUtils.getFloat(json, "temperature");
 
       final Ingredient ingredient = Ingredient.deserialize(JSONUtils.getJsonObject(json, "ingredient"));
-      final GradientFluidStack fluid = GradientFluidStack.read(JSONUtils.getJsonObject(json, "fluid"));
+      final FluidStack fluid = FluidStack.read(JSONUtils.getJsonObject(json, "fluid"));
       return new MeltingRecipe(id, group, stages, ticks, temperature, ingredient, fluid);
     }
 
@@ -158,7 +158,7 @@ public class MeltingRecipe implements IRecipe<IInventory> {
       final int ticks = buffer.readVarInt();
       final float temperature = buffer.readFloat();
       final Ingredient ingredient = Ingredient.read(buffer);
-      final GradientFluidStack fluid = GradientFluidStack.read(buffer);
+      final FluidStack fluid = FluidStack.readFromPacket(buffer);
 
       return new MeltingRecipe(id, group, stages, ticks, temperature, ingredient, fluid);
     }
@@ -175,7 +175,7 @@ public class MeltingRecipe implements IRecipe<IInventory> {
       buffer.writeVarInt(recipe.ticks);
       buffer.writeFloat(recipe.temperature);
       recipe.ingredient.write(buffer);
-      recipe.output.write(buffer);
+      recipe.output.writeToPacket(buffer);
     }
   }
 }

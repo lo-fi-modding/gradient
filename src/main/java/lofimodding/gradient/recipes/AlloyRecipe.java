@@ -5,8 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientRecipeSerializers;
-import lofimodding.gradient.fluids.GradientFluid;
-import lofimodding.gradient.fluids.GradientFluidStack;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -18,6 +17,7 @@ import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import java.util.Collection;
@@ -29,11 +29,11 @@ public class AlloyRecipe implements IRecipe<IInventory> {
 
   private final ResourceLocation id;
   private final String group;
-  private final GradientFluidStack output;
-  private final NonNullList<GradientFluidStack> inputs;
-  private final Map<GradientFluid, GradientFluidStack> inputMap;
+  private final FluidStack output;
+  private final NonNullList<FluidStack> inputs;
+  private final Map<Fluid, FluidStack> inputMap;
 
-  public AlloyRecipe(final ResourceLocation id, final String group, final GradientFluidStack output, final NonNullList<GradientFluidStack> inputs) {
+  public AlloyRecipe(final ResourceLocation id, final String group, final FluidStack output, final NonNullList<FluidStack> inputs) {
     this.id = id;
     this.group = group;
     this.output = output;
@@ -61,11 +61,11 @@ public class AlloyRecipe implements IRecipe<IInventory> {
     return NonNullList.create();
   }
 
-  public Collection<GradientFluidStack> getFluidInputs() {
+  public Collection<FluidStack> getFluidInputs() {
     return this.inputMap.values();
   }
 
-  public GradientFluidStack getFluidOutput() {
+  public FluidStack getFluidOutput() {
     return this.output;
   }
 
@@ -75,18 +75,18 @@ public class AlloyRecipe implements IRecipe<IInventory> {
     return false;
   }
 
-  public boolean matches(final NonNullList<GradientFluidStack> inputs) {
-    final Map<GradientFluid, GradientFluidStack> inputMap = this.unifyFluids(inputs);
+  public boolean matches(final NonNullList<FluidStack> inputs) {
+    final Map<Fluid, FluidStack> inputMap = this.unifyFluids(inputs);
 
     // Make sure we have all required fluids
-    for(final GradientFluidStack required : this.inputs) {
+    for(final FluidStack required : this.inputs) {
       if(!inputMap.containsKey(required.getFluid()) || inputMap.get(required.getFluid()).getAmount() < required.getAmount()) {
         return false;
       }
     }
 
     // Make sure there are no extra fluids
-    for(final GradientFluidStack required : inputs) {
+    for(final FluidStack required : inputs) {
       if(!this.inputMap.containsKey(required.getFluid())) {
         return false;
       }
@@ -110,11 +110,11 @@ public class AlloyRecipe implements IRecipe<IInventory> {
     return new ItemStack(GradientBlocks.CLAY_METAL_MIXER.get());
   }
 
-  private Map<GradientFluid, GradientFluidStack> unifyFluids(final NonNullList<GradientFluidStack> inputs) {
-    final Map<GradientFluid, GradientFluidStack> outputs = new HashMap<>();
+  private Map<Fluid, FluidStack> unifyFluids(final NonNullList<FluidStack> inputs) {
+    final Map<Fluid, FluidStack> outputs = new HashMap<>();
 
-    for(final GradientFluidStack fluidStack : inputs) {
-      outputs.computeIfAbsent(fluidStack.getFluid(), fluid -> new GradientFluidStack(fluid, 0)).mix(fluidStack);
+    for(final FluidStack fluidStack : inputs) {
+      outputs.computeIfAbsent(fluidStack.getFluid(), fluid -> new FluidStack(fluid, 0)).grow(fluidStack.getAmount());
     }
 
     return outputs;
@@ -134,11 +134,11 @@ public class AlloyRecipe implements IRecipe<IInventory> {
     @Override
     public AlloyRecipe read(final ResourceLocation id, final JsonObject json) {
       final String group = JSONUtils.getString(json, "group", "");
-      final GradientFluidStack output = GradientFluidStack.read(JSONUtils.getJsonObject(json, "output"));
+      final FluidStack output = FluidStack.read(JSONUtils.getJsonObject(json, "output"));
 
-      final NonNullList<GradientFluidStack> inputs = NonNullList.create();
+      final NonNullList<FluidStack> inputs = NonNullList.create();
       for(final JsonElement element : JSONUtils.getJsonArray(json, "inputs", new JsonArray())) {
-        inputs.add(GradientFluidStack.read(element.getAsJsonObject()));
+        inputs.add(FluidStack.read(element.getAsJsonObject()));
       }
 
       return new AlloyRecipe(id, group, output, inputs);
@@ -147,13 +147,13 @@ public class AlloyRecipe implements IRecipe<IInventory> {
     @Override
     public AlloyRecipe read(final ResourceLocation id, final PacketBuffer buffer) {
       final String group = buffer.readString(32767);
-      final GradientFluidStack output = GradientFluidStack.read(buffer);
+      final FluidStack output = FluidStack.readFromPacket(buffer);
 
-      final NonNullList<GradientFluidStack> inputs = NonNullList.create();
+      final NonNullList<FluidStack> inputs = NonNullList.create();
 
       final int inputCount = buffer.readVarInt();
       for(int i = 0; i < inputCount; i++) {
-        inputs.add(GradientFluidStack.read(buffer));
+        inputs.add(FluidStack.readFromPacket(buffer));
       }
 
       return new AlloyRecipe(id, group, output, inputs);
@@ -162,11 +162,11 @@ public class AlloyRecipe implements IRecipe<IInventory> {
     @Override
     public void write(final PacketBuffer buffer, final AlloyRecipe recipe) {
       buffer.writeString(recipe.group);
-      recipe.output.write(buffer);
+      recipe.output.writeToPacket(buffer);
 
       buffer.writeVarInt(recipe.inputs.size());
-      for(final GradientFluidStack input : recipe.inputs) {
-        input.write(buffer);
+      for(final FluidStack input : recipe.inputs) {
+        input.writeToPacket(buffer);
       }
     }
   }

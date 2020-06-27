@@ -3,8 +3,6 @@ package lofimodding.gradient.client.screens.widgets;
 import com.mojang.blaze3d.systems.RenderSystem;
 import lofimodding.gradient.Gradient;
 import lofimodding.gradient.client.RenderUtils;
-import lofimodding.gradient.fluids.GradientFluidStack;
-import lofimodding.gradient.fluids.GradientFluidTank;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.Widget;
@@ -17,22 +15,23 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import org.lwjgl.opengl.GL11;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GradientFluidWidget extends Widget {
+public class FluidWidget extends Widget {
   private static final ResourceLocation WIDGETS = Gradient.loc("textures/gui/widgets.png");
 
   private static final DecimalFormat FLUID_FORMAT = new DecimalFormat("#.###");
-  private static final DecimalFormat TEMPERATURE_FORMAT = new DecimalFormat("#.#");
 
   private final Screen screen;
-  private final GradientFluidTank tank;
+  private final FluidTank tank;
 
-  public GradientFluidWidget(final Screen screen, final GradientFluidTank tank, final int x, final int y, final int width, final int height) {
+  public FluidWidget(final Screen screen, final FluidTank tank, final int x, final int y, final int width, final int height) {
     super(x, y, width, height, "");
     this.screen = screen;
     this.tank = tank;
@@ -42,13 +41,13 @@ public class GradientFluidWidget extends Widget {
   public void renderButton(final int mouseX, final int mouseY, final float partialTicks) {
     final Minecraft mc = Minecraft.getInstance();
 
-    final GradientFluidStack stack = this.tank.getFluidStack();
+    final FluidStack stack = this.tank.getFluid();
 
     if(!stack.isEmpty()) {
-      final ResourceLocation textureLoc = stack.getStillTexture();
+      final ResourceLocation textureLoc = stack.getFluid().getAttributes().getStillTexture(stack);
       final TextureAtlasSprite sprite = mc.getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(textureLoc);
       final float renderHeight = this.height * MathHelper.clamp(this.tank.getFluidAmount() / this.tank.getCapacity(), 0.0f, 1.0f);
-      final int color = stack.getColour();
+      final int color = stack.getFluid().getAttributes().getColor(stack);
 
       mc.textureManager.bindTexture(new ResourceLocation(textureLoc.getNamespace(), "textures/" + textureLoc.getPath() + ".png"));
       final BufferBuilder buffer = Tessellator.getInstance().getBuffer();
@@ -67,13 +66,11 @@ public class GradientFluidWidget extends Widget {
   public void renderToolTip(final int mouseX, final int mouseY) {
     super.renderToolTip(mouseX, mouseY);
 
-    final List<String> tooltip = new ArrayList<>();
-    tooltip.add(this.tank.getFluidStack().getName().getFormattedText());
-    tooltip.add(I18n.format("meltable.capacity", FLUID_FORMAT.format(this.tank.getFluidAmount()), FLUID_FORMAT.format(this.tank.getCapacity())));
+    final FluidStack stack = this.tank.getFluid();
 
-    if(!Float.isNaN(this.tank.getFluidStack().getTemperature())) {
-      tooltip.add(I18n.format("meltable.temperature", TEMPERATURE_FORMAT.format(this.tank.getFluidStack().getTemperature())));
-    }
+    final List<String> tooltip = new ArrayList<>();
+    tooltip.add(stack.getFluid().getAttributes().getDisplayName(stack).getFormattedText());
+    tooltip.add(I18n.format("meltable.capacity", FLUID_FORMAT.format(stack.getAmount()), FLUID_FORMAT.format(this.tank.getCapacity())));
 
     this.screen.renderTooltip(tooltip, mouseX, mouseY);
   }

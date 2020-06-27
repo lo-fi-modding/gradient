@@ -4,9 +4,6 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import lofimodding.gradient.Gradient;
 import lofimodding.gradient.GradientIds;
-import lofimodding.gradient.fluids.GradientFluidHandlerCapability;
-import lofimodding.gradient.fluids.GradientFluidStack;
-import lofimodding.gradient.fluids.IGradientFluidHandler;
 import lofimodding.gradient.tileentities.ClayMetalMixerTile;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
@@ -29,6 +26,9 @@ import net.minecraft.world.ILightReader;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.model.ModelDataManager;
 import net.minecraftforge.client.model.data.IModelData;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import java.util.Random;
 
@@ -45,8 +45,8 @@ public class ClayMetalMixerRenderer extends TileEntityRenderer<ClayMetalMixerTil
 
     matrixStack.push();
     if(output != null) {
-      output.getCapability(GradientFluidHandlerCapability.CAPABILITY, Direction.UP).ifPresent(handler -> {
-        if(!handler.drain(0.001f, IGradientFluidHandler.FluidAction.SIMULATE).isEmpty()) {
+      output.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, Direction.UP).ifPresent(handler -> {
+        if(!handler.drain(1, IFluidHandler.FluidAction.SIMULATE).isEmpty()) {
           matrixStack.translate(0.5f, 0.5f, 0.5f);
           matrixStack.rotate(Vector3f.YP.rotationDegrees((Minecraft.getInstance().player.ticksExisted % 60) / 60.0f * 360.0f));
           matrixStack.translate(-0.5f, -0.5f, -0.5f);
@@ -58,7 +58,7 @@ public class ClayMetalMixerRenderer extends TileEntityRenderer<ClayMetalMixerTil
     matrixStack.pop();
 
     for(final Direction side : Direction.Plane.HORIZONTAL) {
-      final GradientFluidStack stack = te.getFlowingFluid(side);
+      final FluidStack stack = te.getFlowingFluid(side);
 
       if(!stack.isEmpty()) {
         matrixStack.push();
@@ -101,15 +101,16 @@ public class ClayMetalMixerRenderer extends TileEntityRenderer<ClayMetalMixerTil
     }
   }
 
-  public void renderFluid(final GradientFluidStack stack, final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final int combinedLight) {
+  public void renderFluid(final FluidStack stack, final MatrixStack matrixStack, final IRenderTypeBuffer buffer, final int combinedLight) {
     if(!stack.isEmpty()) {
-      final ResourceLocation textureLoc = stack.getFlowingTexture();
+      final ResourceLocation textureLoc = stack.getFluid().getAttributes().getFlowingTexture(stack);
       final TextureAtlasSprite sprite = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(textureLoc);
 
-      final float a = (stack.getColour() >>> 24 & 255) / 255.0f;
-      final float r = (stack.getColour() >>> 16 & 255) / 255.0f;
-      final float g = (stack.getColour() >>> 8 & 255) / 255.0f;
-      final float b = (stack.getColour() & 255) / 255.0f;
+      final int colour = stack.getFluid().getAttributes().getColor(stack);
+      final float a = (colour >>> 24 & 255) / 255.0f;
+      final float r = (colour >>> 16 & 255) / 255.0f;
+      final float g = (colour >>> 8 & 255) / 255.0f;
+      final float b = (colour & 255) / 255.0f;
 
       final float minV = sprite.getInterpolatedV(1.0d);
       final float maxV = sprite.getInterpolatedV(14.0d);

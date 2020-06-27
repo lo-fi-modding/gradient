@@ -3,7 +3,6 @@ package lofimodding.gradient.integrations.jei;
 import lofimodding.gradient.Gradient;
 import lofimodding.gradient.GradientCasts;
 import lofimodding.gradient.GradientItems;
-import lofimodding.gradient.fluids.GradientFluidStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -16,6 +15,7 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.List;
 
@@ -54,7 +54,7 @@ public class CastingRecipeCategory implements IRecipeCategory<JeiIntegration.Cas
 
   @Override
   public void setIngredients(final JeiIntegration.CastingRecipe recipe, final IIngredients ingredients) {
-    ingredients.setInput(IngredientTypes.GRADIENT_FLUID, recipe.fluid);
+    ingredients.setInput(VanillaTypes.FLUID, recipe.fluid);
     ingredients.setInputIngredients(recipe.getIngredients());
     ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
   }
@@ -62,11 +62,11 @@ public class CastingRecipeCategory implements IRecipeCategory<JeiIntegration.Cas
   @Override
   public void setRecipe(final IRecipeLayout recipeLayout, final JeiIntegration.CastingRecipe recipe, final IIngredients ingredients) {
     final IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-    final IGuiIngredientGroup<GradientFluidStack> guiFluidStacks = recipeLayout.getIngredientsGroup(IngredientTypes.GRADIENT_FLUID);
+    final IGuiIngredientGroup<FluidStack> guiFluidStacks = recipeLayout.getFluidStacks();
     final List<List<ItemStack>> inputItems = ingredients.getInputs(VanillaTypes.ITEM);
-    final List<List<GradientFluidStack>> inputFluids = ingredients.getInputs(IngredientTypes.GRADIENT_FLUID);
+    final List<List<FluidStack>> inputFluids = ingredients.getInputs(VanillaTypes.FLUID);
 
-    final IIngredientRenderer<GradientFluidStack> fluidStackRenderer = new GradientFluidStackRenderer(1.0f, false, 16, 16, null);
+    final IIngredientRenderer<FluidStack> fluidStackRenderer = new FluidStackRenderer(1.0f, false, 16, 16, null);
 
     guiItemStacks.init(0, true, 0, 0);
     guiItemStacks.set(0, inputItems.get(0));

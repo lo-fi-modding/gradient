@@ -5,7 +5,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import lofimodding.gradient.Gradient;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientRecipeSerializers;
-import lofimodding.gradient.fluids.GradientFluidStack;
 import lofimodding.gradient.recipes.MeltingRecipe;
 import lofimodding.progression.Stage;
 import mezz.jei.api.constants.VanillaTypes;
@@ -24,6 +23,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.Collections;
 import java.util.List;
@@ -64,20 +64,20 @@ public class MeltingRecipeCategory implements IRecipeCategory<MeltingRecipe> {
   @Override
   public void setIngredients(final MeltingRecipe recipe, final IIngredients ingredients) {
     ingredients.setInputIngredients(recipe.getIngredients());
-    ingredients.setOutput(IngredientTypes.GRADIENT_FLUID, recipe.getFluidOutput());
+    ingredients.setOutput(VanillaTypes.FLUID, recipe.getFluidOutput());
   }
 
   @Override
   public void setRecipe(final IRecipeLayout recipeLayout, final MeltingRecipe recipe, final IIngredients ingredients) {
     final IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-    final IGuiIngredientGroup<GradientFluidStack> guiFluidStacks = recipeLayout.getIngredientsGroup(IngredientTypes.GRADIENT_FLUID);
+    final IGuiIngredientGroup<FluidStack> guiFluidStacks = recipeLayout.getFluidStacks();
     final List<List<ItemStack>> inputs = ingredients.getInputs(VanillaTypes.ITEM);
 
     guiItemStacks.init(0, true, 0, 0);
     guiItemStacks.set(0, inputs.get(0));
 
-    guiFluidStacks.init(1, true, new GradientFluidStackRenderer(1.0f, false, 16, 16, null), 38, 0, 18, 18, 1, 1);
-    guiFluidStacks.set(1, ingredients.getOutputs(IngredientTypes.GRADIENT_FLUID).get(0));
+    guiFluidStacks.init(1, true, new FluidStackRenderer(1.0f, false, 16, 16, null), 38, 0, 18, 18, 1, 1);
+    guiFluidStacks.set(1, ingredients.getOutputs(VanillaTypes.FLUID).get(0));
   }
 
   @Override
