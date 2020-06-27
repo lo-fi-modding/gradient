@@ -11,7 +11,7 @@ import net.minecraft.util.Direction;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class GradientContainer extends Container {
+public class GradientContainer<Tile extends TileEntity> extends Container {
   public static final int SLOT_X_SPACING = 18;
   public static final int SLOT_Y_SPACING = 18;
 
@@ -20,31 +20,38 @@ public class GradientContainer extends Container {
   public static final int HOT_SLOTS_Y = 142;
 
   public final PlayerInventory playerInv;
+  public final Tile tile;
   protected final IItemHandler inventory;
 
   public GradientContainer(final ContainerType<? extends Container> type, final int id, final PlayerInventory playerInv) {
     super(type, id);
     this.playerInv = playerInv;
+    this.tile = null;
     this.inventory = null;
   }
 
-  public GradientContainer(final ContainerType<? extends Container> type, final int id, final PlayerInventory playerInv, final TileEntity te) {
+  public GradientContainer(final ContainerType<? extends Container> type, final int id, final PlayerInventory playerInv, final Tile tile) {
     super(type, id);
     this.playerInv = playerInv;
-    this.inventory = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.NORTH).orElseThrow(() -> new RuntimeException("TE wasn't an item handler"));
+    this.tile = tile;
+    this.inventory = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.NORTH).orElseThrow(() -> new RuntimeException("TE wasn't an item handler"));
   }
 
-  protected void addPlayerSlots(final PlayerInventory invPlayer) {
+  protected void addPlayerSlots(final PlayerInventory playerInv) {
+    this.addPlayerSlots(INV_SLOTS_Y, playerInv);
+  }
+
+  protected void addPlayerSlots(final int yOffset, final PlayerInventory playerInv) {
     // Player inv
     for(int y = 0; y < 3; ++y) {
       for(int x = 0; x < 9; ++x) {
-        this.addSlot(new Slot(invPlayer, x + y * 9 + 9, INV_SLOTS_X + x * SLOT_X_SPACING, INV_SLOTS_Y + y * SLOT_Y_SPACING));
+        this.addSlot(new Slot(playerInv, x + y * 9 + 9, INV_SLOTS_X + x * SLOT_X_SPACING, yOffset + y * SLOT_Y_SPACING));
       }
     }
 
     // Player hotbar
     for(int i = 0; i < 9; ++i) {
-      this.addSlot(new Slot(invPlayer, i, INV_SLOTS_X + i * SLOT_X_SPACING, HOT_SLOTS_Y));
+      this.addSlot(new Slot(playerInv, i, INV_SLOTS_X + i * SLOT_X_SPACING, HOT_SLOTS_Y - INV_SLOTS_Y + yOffset));
     }
   }
 
@@ -67,14 +74,14 @@ public class GradientContainer extends Container {
     final int containerSlots = this.inventorySlots.size() - player.inventory.mainInventory.size();
 
     if(index < containerSlots) {
-      if(!this.mergeItemStack(itemstack1, containerSlots, this.inventorySlots.size(), true)) {
+      if(!this.mergeItemStack(slot, containerSlots, this.inventorySlots.size(), true)) {
         return ItemStack.EMPTY;
       }
-    } else if(!this.mergeItemStack(itemstack1, 0, containerSlots, false)) {
+    } else if(!this.mergeItemStack(slot, 0, containerSlots, false)) {
       return ItemStack.EMPTY;
     }
 
-    if(itemstack1.isEmpty()) {
+    if(!slot.getHasStack()) {
       slot.putStack(ItemStack.EMPTY);
     } else {
       slot.onSlotChanged();
@@ -90,32 +97,31 @@ public class GradientContainer extends Container {
   }
 
   /**
-   * This is an exact copy-and-paste but fixes shift-clicking ignoring stack limits
+   * This is an exact copy-and-paste but fixes shift-clicking ignoring stack limits and also respects item handler restrictions
    */
-  @Override
-  protected boolean mergeItemStack(final ItemStack stack, final int startIndex, final int endIndex, final boolean reverseDirection) {
+  protected boolean mergeItemStack(final Slot slot, final int startIndex, final int endIndex, final boolean reverseDirection) {
     boolean flag = false;
 
-    if(stack.isStackable()) {
+    if(slot.getStack().isStackable()) {
       int i = reverseDirection ? endIndex - 1 : startIndex;
 
-      while(!stack.isEmpty() && (reverseDirection ? i >= startIndex : i < endIndex)) {
-        final Slot slot = this.inventorySlots.get(i);
-        final ItemStack itemstack = slot.getStack();
+      while(slot.getHasStack() && (reverseDirection ? i >= startIndex : i < endIndex)) {
+        final Slot dest = this.inventorySlots.get(i);
+        final ItemStack itemstack = dest.getStack();
 
-        if(areItemStacksEqual(stack, itemstack)) {
-          final int j = itemstack.getCount() + stack.getCount();
-          final int maxSize = Math.min(slot.getSlotStackLimit(), stack.getMaxStackSize());
+        if(dest.isItemValid(slot.getStack()) && areItemStacksEqual(slot.getStack(), itemstack)) {
+          final int j = itemstack.getCount() + slot.getStack().getCount();
+          final int maxSize = Math.min(dest.getSlotStackLimit(), slot.getStack().getMaxStackSize());
 
           if(j <= maxSize) {
-            stack.setCount(0);
+            slot.decrStackSize(slot.getStack().getCount());
             itemstack.setCount(j);
-            slot.onSlotChanged();
+            dest.onSlotChanged();
             flag = true;
           } else if(itemstack.getCount() < maxSize) {
-            stack.setCount(stack.getCount() - (maxSize - itemstack.getCount()));
+            slot.decrStackSize(maxSize - itemstack.getCount());
             itemstack.setCount(maxSize);
-            slot.onSlotChanged();
+            dest.onSlotChanged();
             flag = true;
           }
         }
@@ -128,20 +134,24 @@ public class GradientContainer extends Container {
       }
     }
 
-    if(!stack.isEmpty()) {
+    if(slot.getHasStack()) {
       int i = reverseDirection ? endIndex - 1 : startIndex;
 
       while(reverseDirection ? i >= startIndex : i < endIndex) {
-        final Slot slot = this.inventorySlots.get(i);
-        final ItemStack itemstack = slot.getStack();
+        final Slot dest = this.inventorySlots.get(i);
 
-        if(itemstack.isEmpty() && slot.isItemValid(stack)) { // Forge: Make sure to respect isItemValid in the slot.
-          slot.putStack(stack.split(slot.getItemStackLimit(stack)));
-          slot.onSlotChanged();
-          flag = true;
+        if(!(dest instanceof HoloSlot)) {
+          final ItemStack itemstack = dest.getStack();
 
-          if(stack.isEmpty()) {
-            break;
+          if(itemstack.isEmpty() && dest.isItemValid(slot.getStack())) { // Forge: Make sure to respect isItemValid in the slot.
+            final ItemStack split = slot.decrStackSize(dest.getItemStackLimit(slot.getStack()));
+            dest.putStack(split);
+            dest.onSlotChanged();
+            flag = true;
+
+            if(!slot.getHasStack()) {
+              break;
+            }
           }
         }
 

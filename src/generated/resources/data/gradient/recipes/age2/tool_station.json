@@ -1,0 +1,23 @@
+{
+  "type": "progression:shaped_staged",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "damage_tools": true,
+  "pattern": [
+    "SSS",
+    "P P",
+    "PPP"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:cobblestone_slab"
+    },
+    "P": {
+      "item": "gradient:hardened_planks"
+    }
+  },
+  "result": {
+    "item": "gradient:tool_station"
+  }
+}

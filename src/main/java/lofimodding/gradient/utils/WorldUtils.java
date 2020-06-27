@@ -7,6 +7,7 @@ import net.minecraft.state.IProperty;
 import net.minecraft.state.IStateHolder;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockReader;
@@ -18,6 +19,7 @@ import net.minecraftforge.items.IItemHandler;
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public final class WorldUtils {
   private WorldUtils() { }
@@ -135,5 +137,52 @@ public final class WorldUtils {
   // Avoids generics issues
   private static <T extends Comparable<T>> String getName(final IProperty<T> property, final Comparable<?> value) {
     return property.getName((T)value);
+  }
+
+  public static BlockPos findControllerBlock(final BlockPos start, final Predicate<BlockPos> test, final Predicate<BlockPos> finish) {
+    final NonNullList<BlockPos> positions = getBlockCluster(start, test);
+
+    for(final BlockPos pos : positions) {
+      if(finish.test(pos)) {
+        return pos;
+      }
+    }
+
+    return BlockPos.ZERO;
+  }
+
+  public static NonNullList<BlockPos> findControllerBlocks(final BlockPos start, final Predicate<BlockPos> test, final Predicate<BlockPos> finish) {
+    final NonNullList<BlockPos> positions = getBlockCluster(start, test);
+    final NonNullList<BlockPos> controllers = NonNullList.create();
+
+    for(final BlockPos pos : positions) {
+      if(finish.test(pos)) {
+        controllers.add(pos);
+      }
+    }
+
+    return controllers;
+  }
+
+  public static NonNullList<BlockPos> getBlockCluster(final BlockPos start, final Predicate<BlockPos> test) {
+    final NonNullList<BlockPos> found = NonNullList.create();
+
+    if(test.test(start)) {
+      addNeighbours(found, start, test);
+    }
+
+    return found;
+  }
+
+  private static void addNeighbours(final NonNullList<BlockPos> found, final BlockPos start, final Predicate<BlockPos> test) {
+    found.add(start);
+
+    for(final Direction direction : Direction.Plane.HORIZONTAL) {
+      final BlockPos pos = start.offset(direction);
+
+      if(test.test(pos) && !found.contains(pos)) {
+        addNeighbours(found, pos, test);
+      }
+    }
   }
 }

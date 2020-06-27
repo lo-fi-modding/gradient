@@ -43,6 +43,7 @@ import net.minecraft.data.loot.BlockLootTables;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.BlockTags;
@@ -75,6 +76,7 @@ import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelBuilder;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.FluidStack;
@@ -605,6 +607,8 @@ public final class GradientDataGenerator {
         .face(Direction.UP).texture("water").tintindex(0).cullface(Direction.UP)
         .end();
 
+      ModelGenerator.toolStation(this, GradientIds.TOOL_STATION, this.modLoc("block/tool_station"), this.modLoc("block/tool_station"), this.modLoc("block/hardened_log_top"), this.mcLoc("block/cobblestone"), this.modLoc("block/tool_station_drawer"));
+
       this.cubeAll(GradientIds.CREATIVE_GENERATOR, this.modLoc("block/" + GradientIds.CREATIVE_GENERATOR));
       this.cubeAll(GradientIds.CREATIVE_SINKER, this.modLoc("block/" + GradientIds.CREATIVE_SINKER));
     }
@@ -879,6 +883,7 @@ public final class GradientDataGenerator {
       this.getBuilder(GradientIds.MECHANICAL_GRINDSTONE).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.MECHANICAL_GRINDSTONE)));
       this.getBuilder(GradientIds.MECHANICAL_MIXING_BASIN).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.MECHANICAL_MIXING_BASIN)));
       this.getBuilder(GradientIds.MECHANICAL_PUMP).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.MECHANICAL_PUMP)));
+      this.getBuilder(GradientIds.TOOL_STATION).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.TOOL_STATION)));
 
       this.singleTexture(GradientIds.RECIPE_FILTER, this.mcLoc("item/generated"), "layer0", this.modLoc("item/" + GradientIds.RECIPE_FILTER));
 
@@ -1098,6 +1103,8 @@ public final class GradientDataGenerator {
         .condition(MechanicalMixingBasinBlock.HAS_WATER, true)
         .end();
 
+      this.horizontalBlock(GradientBlocks.TOOL_STATION.get(), new ModelFile.UncheckedModelFile(this.modLoc("block/" + GradientIds.TOOL_STATION)));
+
       this.simpleBlock(GradientBlocks.CREATIVE_GENERATOR.get());
       this.simpleBlock(GradientBlocks.CREATIVE_SINKER.get());
     }
@@ -1287,6 +1294,11 @@ public final class GradientDataGenerator {
       this.add(GradientItems.MECHANICAL_GRINDSTONE.get(), "Mechanical Grindstone");
       this.add(GradientItems.MECHANICAL_MIXING_BASIN.get(), "Mechanical Mixing Basin");
       this.add(GradientItems.MECHANICAL_PUMP.get(), "Mechanical Pump");
+      this.add(GradientItems.TOOL_STATION.get(), "Tool Station");
+      this.add(GradientItems.TOOL_STATION.get().getTranslationKey() + ".storage", "Ingredients");
+      this.add(GradientItems.TOOL_STATION.get().getTranslationKey() + ".too_small", "Requires more output slots");
+      this.add(GradientItems.TOOL_STATION.get().getTranslationKey() + ".missing_tools", "Missing tools");
+      this.add(GradientItems.TOOL_STATION.get().getTranslationKey() + ".missing_ingredients", "Missing ingredients");
 
       this.add(GradientItems.RECIPE_FILTER.get(), "Recipe Filter");
       this.add(GradientItems.RECIPE_FILTER.get().getTranslationKey() + ".tooltip", "Shift-right-click on most Gradient machines to lock in the current recipe. Shift-right-click again to unlock.");
@@ -1523,6 +1535,7 @@ public final class GradientDataGenerator {
       this.registerDryingRecipes(finished);
       this.registerMeltingRecipes(finished);
       this.registerAlloyRecipes(finished);
+      this.registerShapelessToolStationRecipes(finished);
 
       ShapedRecipeBuilder
         .shapedRecipe(GradientItems.SALT_BLOCK.get())
@@ -2089,6 +2102,17 @@ public final class GradientDataGenerator {
         .addCriterion("has_wooden_gear", this.hasItem(GradientItems.WOODEN_GEAR.get()))
         .addCriterion("has_hardened_planks", this.hasItem(GradientItems.HARDENED_PLANKS.get()))
         .build(finished, Gradient.loc("age2/" + GradientIds.WOODEN_CRANK));
+
+      StagedRecipeBuilder
+        .shaped(GradientItems.TOOL_STATION.get())
+        .stage(GradientStages.AGE_2.get())
+        .patternLine("SSS")
+        .patternLine("P P")
+        .patternLine("PPP")
+        .key('S', Items.COBBLESTONE_SLAB)
+        .key('P', GradientItems.HARDENED_PLANKS.get())
+        .addCriterion("has_hardened_planks", this.hasItem(GradientItems.HARDENED_PLANKS.get()))
+        .build(finished, Gradient.loc("age2/" + GradientIds.TOOL_STATION));
     }
 
     private void registerFuelRecipes(final Consumer<IFinishedRecipe> finished) {
@@ -2440,6 +2464,26 @@ public final class GradientDataGenerator {
         .addCriterion("impossible", new ImpossibleTrigger.Instance())
         .build(finished, Gradient.loc("alloy/bronze_from_copper_and_tin"));
     }
+
+    private void registerShapelessToolStationRecipes(final Consumer<IFinishedRecipe> finished) {
+      GradientRecipeBuilder
+        .shapelessToolStation()
+        .stage(GradientStages.AGE_2.get())
+        .addIngredient(GradientItems.HARDENED_LOG.get())
+        .addToolType(ToolType.AXE)
+        .addOutput(new ItemStack(GradientItems.HARDENED_PLANKS.get(), 2))
+        .addCriterion("has_hardened_log", this.hasItem(GradientItems.HARDENED_LOG.get()))
+        .build(finished, Gradient.loc("tool_station/age2/" + GradientIds.HARDENED_PLANKS));
+
+      GradientRecipeBuilder
+        .shapelessToolStation()
+        .stage(GradientStages.AGE_2.get())
+        .addIngredient(GradientItems.HARDENED_PLANKS.get())
+        .addToolType(ToolType.AXE)
+        .addOutput(new ItemStack(GradientItems.HARDENED_STICK.get(), 2))
+        .addCriterion("has_hardened_planks", this.hasItem(GradientItems.HARDENED_PLANKS.get()))
+        .build(finished, Gradient.loc("tool_station/age2/" + GradientIds.HARDENED_STICK));
+    }
   }
 
   public static class Loot extends LootTableProvider {
@@ -2746,6 +2790,7 @@ public final class GradientDataGenerator {
         this.registerDropSelfLootTable(GradientBlocks.MECHANICAL_GRINDSTONE.get());
         this.registerDropSelfLootTable(GradientBlocks.MECHANICAL_MIXING_BASIN.get());
         this.registerDropSelfLootTable(GradientBlocks.MECHANICAL_PUMP.get());
+        this.registerDropSelfLootTable(GradientBlocks.TOOL_STATION.get());
 
         this.registerDropSelfLootTable(GradientBlocks.CREATIVE_GENERATOR.get());
         this.registerDropSelfLootTable(GradientBlocks.CREATIVE_SINKER.get());
