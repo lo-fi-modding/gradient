@@ -3,7 +3,7 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 7200,
+  "ticks": 50,
   "temperature": 1085.0,
   "ingredient": {
     "tag": "forge:nuggets/copper"

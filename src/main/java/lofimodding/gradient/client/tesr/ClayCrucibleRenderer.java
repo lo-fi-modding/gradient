@@ -30,7 +30,7 @@ public class ClayCrucibleRenderer extends TileEntityRenderer<ClayCrucibleTile> {
       final ResourceLocation textureLoc = stack.getFluid().getAttributes().getStillTexture(stack);
       final TextureAtlasSprite sprite = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(textureLoc);
 
-      final float height = (1.0f + stack.getAmount() / ClayCrucibleTile.FLUID_CAPACITY * 11.5f) / 16.0f;
+      final float height = (1.0f + stack.getAmount() / (float)ClayCrucibleTile.FLUID_CAPACITY * 11.5f) / 16.0f;
       final int colour = stack.getFluid().getAttributes().getColor(stack);
       final float a = (colour >>> 24 & 255) / 255.0f;
       final float r = (colour >>> 16 & 255) / 255.0f;

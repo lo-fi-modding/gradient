@@ -2432,7 +2432,7 @@ public final class GradientDataGenerator {
           GradientRecipeBuilder
             .melting()
             .stage(GradientStages.AGE_2.get())
-            .ticks(metal.meltTime * cast.metalAmount)
+            .ticks(metal.meltTime * cast.metalAmount / GradientFluids.INGOT_AMOUNT)
             .temperature(metal.meltTemp)
             .fluid(new FluidStack(GradientFluids.METAL(metal).get(), cast.metalAmount))
             .ingredient(cast.getIngredient(metal))

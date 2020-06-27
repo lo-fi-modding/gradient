@@ -3,7 +3,7 @@
   "stages": [
     "gradient:age_2"
   ],
-  "ticks": 54000,
+  "ticks": 375,
   "temperature": 419.53,
   "ingredient": {
     "tag": "forge:ingots/zinc"

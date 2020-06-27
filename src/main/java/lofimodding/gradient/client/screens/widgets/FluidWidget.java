@@ -46,7 +46,7 @@ public class FluidWidget extends Widget {
     if(!stack.isEmpty()) {
       final ResourceLocation textureLoc = stack.getFluid().getAttributes().getStillTexture(stack);
       final TextureAtlasSprite sprite = mc.getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(textureLoc);
-      final float renderHeight = this.height * MathHelper.clamp(this.tank.getFluidAmount() / this.tank.getCapacity(), 0.0f, 1.0f);
+      final float renderHeight = this.height * MathHelper.clamp((float)this.tank.getFluidAmount() / this.tank.getCapacity(), 0.0f, 1.0f);
       final int color = stack.getFluid().getAttributes().getColor(stack);
 
       mc.textureManager.bindTexture(new ResourceLocation(textureLoc.getNamespace(), "textures/" + textureLoc.getPath() + ".png"));
