@@ -9,8 +9,7 @@
     "item": "gradient:bronze_hammer_head"
   },
   "fluid": {
-    "fluid": "gradient:bronze",
-    "amount": 1.0,
-    "temperature": 950.0
+    "Fluid": "gradient:bronze",
+    "Amount": 144
   }
 }

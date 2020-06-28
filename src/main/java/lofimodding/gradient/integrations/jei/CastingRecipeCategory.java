@@ -3,19 +3,18 @@ package lofimodding.gradient.integrations.jei;
 import lofimodding.gradient.Gradient;
 import lofimodding.gradient.GradientCasts;
 import lofimodding.gradient.GradientItems;
-import lofimodding.gradient.fluids.GradientFluidStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.ingredient.IGuiIngredientGroup;
+import mezz.jei.api.gui.ingredient.IGuiFluidStackGroup;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.ingredients.IIngredientRenderer;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.List;
 
@@ -54,7 +53,7 @@ public class CastingRecipeCategory implements IRecipeCategory<JeiIntegration.Cas
 
   @Override
   public void setIngredients(final JeiIntegration.CastingRecipe recipe, final IIngredients ingredients) {
-    ingredients.setInput(IngredientTypes.GRADIENT_FLUID, recipe.fluid);
+    ingredients.setInput(VanillaTypes.FLUID, recipe.fluid);
     ingredients.setInputIngredients(recipe.getIngredients());
     ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
   }
@@ -62,16 +61,14 @@ public class CastingRecipeCategory implements IRecipeCategory<JeiIntegration.Cas
   @Override
   public void setRecipe(final IRecipeLayout recipeLayout, final JeiIntegration.CastingRecipe recipe, final IIngredients ingredients) {
     final IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-    final IGuiIngredientGroup<GradientFluidStack> guiFluidStacks = recipeLayout.getIngredientsGroup(IngredientTypes.GRADIENT_FLUID);
+    final IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
     final List<List<ItemStack>> inputItems = ingredients.getInputs(VanillaTypes.ITEM);
-    final List<List<GradientFluidStack>> inputFluids = ingredients.getInputs(IngredientTypes.GRADIENT_FLUID);
-
-    final IIngredientRenderer<GradientFluidStack> fluidStackRenderer = new GradientFluidStackRenderer(1.0f, false, 16, 16, null);
+    final List<List<FluidStack>> inputFluids = ingredients.getInputs(VanillaTypes.FLUID);
 
     guiItemStacks.init(0, true, 0, 0);
     guiItemStacks.set(0, inputItems.get(0));
 
-    guiFluidStacks.init(1, true, fluidStackRenderer, 20, 0, 18, 18, 1, 1);
+    guiFluidStacks.init(1, true, 21, 1, 16, 16, recipe.cast.metalAmount, false, null);
     guiFluidStacks.set(1, inputFluids.get(0));
 
     guiItemStacks.init(2, true, 58, 0);

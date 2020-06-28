@@ -9,8 +9,7 @@
     "tag": "forge:crushed_ores/sphalerite"
   },
   "fluid": {
-    "fluid": "gradient:zinc",
-    "amount": 0.75,
-    "temperature": 1830.0
+    "Fluid": "gradient:zinc",
+    "Amount": 72
   }
 }

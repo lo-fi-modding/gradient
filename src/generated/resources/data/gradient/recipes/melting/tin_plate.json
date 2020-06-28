@@ -9,8 +9,7 @@
     "tag": "forge:plates/tin"
   },
   "fluid": {
-    "fluid": "gradient:tin",
-    "amount": 1.0,
-    "temperature": 231.93
+    "Fluid": "gradient:tin",
+    "Amount": 144
   }
 }

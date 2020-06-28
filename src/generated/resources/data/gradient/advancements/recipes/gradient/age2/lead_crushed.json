@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "gradient:melting/cassiterite_ore"
+      "gradient:age2/lead_crushed"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ores/cassiterite"
+            "tag": "forge:ores/lead"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "gradient:melting/cassiterite_ore"
+        "recipe": "gradient:age2/lead_crushed"
       }
     }
   },

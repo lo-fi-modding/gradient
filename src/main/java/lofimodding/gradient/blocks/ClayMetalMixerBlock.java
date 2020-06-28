@@ -1,7 +1,6 @@
 package lofimodding.gradient.blocks;
 
 import lofimodding.gradient.GradientMaterials;
-import lofimodding.gradient.fluids.IGradientFluidHandler;
 import lofimodding.gradient.tileentities.ClayMetalMixerTile;
 import lofimodding.gradient.utils.WorldUtils;
 import net.minecraft.block.Block;
@@ -24,6 +23,7 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 import javax.annotation.Nullable;
 import java.util.EnumMap;
@@ -31,8 +31,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ClayMetalMixerBlock extends HeatSinkerBlock {
-  @CapabilityInject(IGradientFluidHandler.class)
-  private static Capability<IGradientFluidHandler> FLUID_HANDLER_CAPABILITY;
+  @CapabilityInject(IFluidHandler.class)
+  private static Capability<IFluidHandler> FLUID_HANDLER_CAPABILITY;
 
   private static final VoxelShape SHAPE = makeCuboidShape(0.0d, 0.0d, 0.0d, 16.0d, 2.0d, 16.0d);
 
@@ -146,7 +146,7 @@ public class ClayMetalMixerBlock extends HeatSinkerBlock {
   }
 
   @Nullable
-  private IGradientFluidHandler getFluidHandler(final IBlockReader world, final BlockPos pos) {
+  private IFluidHandler getFluidHandler(final IBlockReader world, final BlockPos pos) {
     final TileEntity te = world.getTileEntity(pos);
 
     if(te == null) {

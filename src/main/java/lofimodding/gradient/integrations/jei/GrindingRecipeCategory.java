@@ -81,6 +81,7 @@ public class GrindingRecipeCategory implements IRecipeCategory<GrindingRecipe> {
   public void draw(final GrindingRecipe recipe, final double mouseX, final double mouseY) {
     final FontRenderer font = Minecraft.getInstance().fontRenderer;
 
+    font.drawString(I18n.format("jei.grinding.tier", recipe.getTier()), 1, 23, 0x404040);
     font.drawString(I18n.format("jei.grinding.ticks", recipe.getTicks()), 1, 35, 0x404040);
 
     RenderSystem.pushMatrix();

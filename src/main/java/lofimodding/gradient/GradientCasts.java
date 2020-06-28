@@ -12,12 +12,12 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 public enum GradientCasts {
-  MATTOCK_HEAD(1.0f),
-  PICKAXE_HEAD(1.0f),
-  HAMMER_HEAD(1.0f),
-  SWORD_BLADE(1.0f),
-  INGOT(1.0f, metal -> GradientItems.INGOT(metal).get(), GradientTags.Items.INGOT::get),
-  NUGGET(1.0f / 9.0f, metal -> GradientItems.NUGGET(metal).get(), GradientTags.Items.NUGGET::get),
+  MATTOCK_HEAD(GradientFluids.INGOT_AMOUNT),
+  PICKAXE_HEAD(GradientFluids.INGOT_AMOUNT),
+  HAMMER_HEAD(GradientFluids.INGOT_AMOUNT),
+  SWORD_BLADE(GradientFluids.INGOT_AMOUNT),
+  INGOT(GradientFluids.INGOT_AMOUNT, metal -> GradientItems.INGOT(metal).get(), GradientTags.Items.INGOT::get),
+  NUGGET(GradientFluids.NUGGET_AMOUNT, metal -> GradientItems.NUGGET(metal).get(), GradientTags.Items.NUGGET::get),
   ;
 
   public static Stream<GradientCasts> stream() {
@@ -25,19 +25,19 @@ public enum GradientCasts {
   }
 
   public final String name;
-  public final float metalAmount;
+  public final int metalAmount;
   @Nullable
   private final Function<Metal, Item> itemGetter;
   private final Function<Metal, Tag<Item>> tagGetter;
 
-  GradientCasts(final float metalAmount, @Nullable final Function<Metal, Item> itemGetter, final Function<Metal, Tag<Item>> tagGetter) {
+  GradientCasts(final int metalAmount, @Nullable final Function<Metal, Item> itemGetter, final Function<Metal, Tag<Item>> tagGetter) {
     this.name = this.name().toLowerCase();
     this.metalAmount = metalAmount;
     this.itemGetter = itemGetter;
     this.tagGetter = tagGetter;
   }
 
-  GradientCasts(final float metalAmount) {
+  GradientCasts(final int metalAmount) {
     this(metalAmount, null, metal -> null);
   }
 

@@ -1,11 +1,9 @@
 package lofimodding.gradient.tileentities;
 
+import lofimodding.gradient.GradientFluids;
 import lofimodding.gradient.GradientTileEntities;
 import lofimodding.gradient.containers.ClayCrucibleContainer;
-import lofimodding.gradient.fluids.GradientFluidStack;
-import lofimodding.gradient.fluids.GradientFluidTank;
-import lofimodding.gradient.fluids.IGradientFluidHandler;
-import lofimodding.gradient.fluids.MetalFluid;
+import lofimodding.gradient.fluids.MetalSourceFluid;
 import lofimodding.gradient.recipes.MeltingRecipe;
 import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.utils.MathHelper;
@@ -32,6 +30,9 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -45,10 +46,10 @@ public class ClayCrucibleTile extends HeatSinkerTile implements INamedContainerP
   @CapabilityInject(IItemHandler.class)
   private static Capability<IItemHandler> ITEM_HANDLER_CAPABILITY;
 
-  @CapabilityInject(IGradientFluidHandler.class)
-  private static Capability<IGradientFluidHandler> FLUID_HANDLER_CAPABILITY;
+  @CapabilityInject(IFluidHandler.class)
+  private static Capability<IFluidHandler> FLUID_HANDLER_CAPABILITY;
 
-  public static final float FLUID_CAPACITY = 8.0f;
+  public static final int FLUID_CAPACITY = GradientFluids.INGOT_AMOUNT * 16;
 
   public static final int FIRST_METAL_SLOT = 0;
   public static final int METAL_SLOTS_COUNT = 1;
@@ -89,7 +90,7 @@ public class ClayCrucibleTile extends HeatSinkerTile implements INamedContainerP
     }
   };
 
-  public final GradientFluidTank tank = new GradientFluidTank(FLUID_CAPACITY, stack -> stack.getFluid() instanceof MetalFluid) {
+  public final FluidTank tank = new FluidTank(FLUID_CAPACITY, stack -> stack.getFluid() instanceof MetalSourceFluid) {
     @Override
     protected void onContentsChanged() {
       super.onContentsChanged();
@@ -98,7 +99,7 @@ public class ClayCrucibleTile extends HeatSinkerTile implements INamedContainerP
   };
 
   private final LazyOptional<IItemHandler> lazyInv = LazyOptional.of(() -> this.inventory);
-  private final LazyOptional<IGradientFluidHandler> lazyTank = LazyOptional.of(() -> this.tank);
+  private final LazyOptional<IFluidHandler> lazyTank = LazyOptional.of(() -> this.tank);
 
   private final Set<Stage> stages = new HashSet<>();
   private final MeltingMetal[] melting = new MeltingMetal[METAL_SLOTS_COUNT];
@@ -118,8 +119,8 @@ public class ClayCrucibleTile extends HeatSinkerTile implements INamedContainerP
   }
 
   @Nullable
-  public GradientFluidStack getMoltenMetal() {
-    return this.tank.getFluidStack();
+  public FluidStack getMoltenMetal() {
+    return this.tank.getFluid();
   }
 
   public void updateStages(final LivingEntity player) {
@@ -136,8 +137,8 @@ public class ClayCrucibleTile extends HeatSinkerTile implements INamedContainerP
     return Math.min((int)(this.getHeat() / 800 * 11) + 4, 15);
   }
 
-  public void consumeMetal(final float amount) {
-    this.tank.drain(amount, IGradientFluidHandler.FluidAction.EXECUTE);
+  public void consumeMetal(final int amount) {
+    this.tank.drain(amount, IFluidHandler.FluidAction.EXECUTE);
   }
 
   @Override
@@ -147,10 +148,6 @@ public class ClayCrucibleTile extends HeatSinkerTile implements INamedContainerP
     }
 
     this.checkForMoltenMetal();
-
-    if(!this.tank.getFluidStack().isEmpty()) {
-      this.tank.getFluidStack().setTemperature(this.getHeat());
-    }
   }
 
   @Override
@@ -189,11 +186,11 @@ public class ClayCrucibleTile extends HeatSinkerTile implements INamedContainerP
 
         if(!this.world.isRemote) {
           if(melting.isMelted()) {
-            final GradientFluidStack fluid = melting.meltable.getFluidOutput();
+            final FluidStack fluid = melting.meltable.getFluidOutput();
 
             if(this.hasRoom(fluid)) {
               this.setMetalSlot(slot, ItemStack.EMPTY);
-              this.tank.fill(fluid.copy(), IGradientFluidHandler.FluidAction.EXECUTE);
+              this.tank.fill(fluid.copy(), IFluidHandler.FluidAction.EXECUTE);
             }
           }
         }
@@ -201,8 +198,8 @@ public class ClayCrucibleTile extends HeatSinkerTile implements INamedContainerP
     }
   }
 
-  private boolean hasRoom(final GradientFluidStack fluid) {
-    return MathHelper.flEq(this.tank.fill(fluid, IGradientFluidHandler.FluidAction.SIMULATE), fluid.getAmount());
+  private boolean hasRoom(final FluidStack fluid) {
+    return MathHelper.flEq(this.tank.fill(fluid, IFluidHandler.FluidAction.SIMULATE), fluid.getAmount());
   }
 
   private ItemStack getMetalSlot(final int slot) {
@@ -214,7 +211,7 @@ public class ClayCrucibleTile extends HeatSinkerTile implements INamedContainerP
   }
 
   private boolean canMelt(final MeltingRecipe meltable) {
-    return (this.tank.getFluidStack().isEmpty() || this.tank.getFluidStack().isFluidEqual(meltable.getFluidOutput())) && this.getHeat() >= meltable.getTemperature();
+    return (this.tank.getFluid().isEmpty() || this.tank.getFluid().isFluidEqual(meltable.getFluidOutput())) && this.getHeat() >= meltable.getTemperature();
   }
 
   @Override
@@ -237,7 +234,7 @@ public class ClayCrucibleTile extends HeatSinkerTile implements INamedContainerP
   @Override
   public CompoundNBT write(final CompoundNBT compound) {
     compound.put("inventory", this.inventory.serializeNBT());
-    this.tank.write(compound);
+    this.tank.writeToNBT(compound);
 
     final ListNBT stagesNbt = new ListNBT();
     for(final Stage stage : this.stages) {
@@ -274,7 +271,7 @@ public class ClayCrucibleTile extends HeatSinkerTile implements INamedContainerP
     inv.remove("Size");
     this.inventory.deserializeNBT(inv);
 
-    this.tank.read(compound);
+    this.tank.readFromNBT(compound);
 
     final ListNBT stagesNbt = compound.getList("stages", Constants.NBT.TAG_STRING);
     this.stages.clear();
@@ -345,16 +342,16 @@ public class ClayCrucibleTile extends HeatSinkerTile implements INamedContainerP
       return melting;
     }
 
-    public static MeltingMetal fromNbt(final MeltingRecipe meltable, final GradientFluidStack stack, final CompoundNBT tag) {
-      return fromNbt(meltable, ((MetalFluid)stack.getFluid()).metal, tag);
+    public static MeltingMetal fromNbt(final MeltingRecipe meltable, final FluidStack stack, final CompoundNBT tag) {
+      return fromNbt(meltable, ((MetalSourceFluid)stack.getFluid()).metal, tag);
     }
 
     private MeltingMetal(final MeltingRecipe meltable, final Metal metal) {
       this(meltable, metal, meltable.getTicks());
     }
 
-    private MeltingMetal(final MeltingRecipe meltable, final GradientFluidStack stack) {
-      this(meltable, ((MetalFluid)stack.getFluid()).metal);
+    private MeltingMetal(final MeltingRecipe meltable, final FluidStack stack) {
+      this(meltable, ((MetalSourceFluid)stack.getFluid()).metal);
     }
 
     private MeltingMetal(final MeltingRecipe meltable, final Metal metal, final int meltTicksTotal) {

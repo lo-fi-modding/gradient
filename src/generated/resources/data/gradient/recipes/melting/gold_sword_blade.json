@@ -9,8 +9,7 @@
     "item": "gradient:gold_sword_blade"
   },
   "fluid": {
-    "fluid": "gradient:gold",
-    "amount": 1.0,
-    "temperature": 1064.0
+    "Fluid": "gradient:gold",
+    "Amount": 144
   }
 }

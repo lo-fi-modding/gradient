@@ -1,17 +1,17 @@
 {
   "type": "gradient:alloy",
   "output": {
-    "fluid": "gradient:bronze",
-    "amount": 0.004
+    "Fluid": "gradient:bronze",
+    "Amount": 4
   },
   "inputs": [
     {
-      "fluid": "gradient:copper",
-      "amount": 0.003
+      "Fluid": "gradient:copper",
+      "Amount": 3
     },
     {
-      "fluid": "gradient:tin",
-      "amount": 0.001
+      "Fluid": "gradient:tin",
+      "Amount": 1
     }
   ]
 }

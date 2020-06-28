@@ -9,8 +9,7 @@
     "tag": "forge:ingots/iron"
   },
   "fluid": {
-    "fluid": "gradient:iron",
-    "amount": 1.0,
-    "temperature": 1538.0
+    "Fluid": "gradient:iron",
+    "Amount": 144
   }
 }

@@ -2,6 +2,7 @@ package lofimodding.gradient.blocks;
 
 import lofimodding.gradient.tileentities.MixingBasinTile;
 import lofimodding.gradient.tileentities.pieces.ManualEnergySource;
+import lofimodding.gradient.tileentities.pieces.ProcessorTier;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
@@ -25,7 +26,7 @@ public class MixingBasinBlock extends ProcessorBlock<ManualEnergySource, MixingB
   private static final VoxelShape SHAPE = makeCuboidShape(2.0d, 0.0d, 2.0d, 14.0d, 8.0d, 14.0d);
 
   public MixingBasinBlock() {
-    super(MixingBasinTile.class, Properties.create(Material.WOOD).hardnessAndResistance(1.0f, 5.0f).notSolid());
+    super(MixingBasinTile.class, ProcessorTier.BASIC, Properties.create(Material.WOOD).hardnessAndResistance(1.0f, 5.0f).notSolid());
     this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(HAS_WATER, Boolean.FALSE));
   }
 

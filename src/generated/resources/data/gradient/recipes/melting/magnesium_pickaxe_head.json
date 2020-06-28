@@ -9,8 +9,7 @@
     "item": "gradient:magnesium_pickaxe_head"
   },
   "fluid": {
-    "fluid": "gradient:magnesium",
-    "amount": 1.0,
-    "temperature": 650.0
+    "Fluid": "gradient:magnesium",
+    "Amount": 144
   }
 }

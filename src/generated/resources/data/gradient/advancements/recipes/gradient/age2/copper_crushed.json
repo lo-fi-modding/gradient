@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "gradient:melting/hematite_ore"
+      "gradient:age2/copper_crushed"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ores/hematite"
+            "tag": "forge:ores/copper"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "gradient:melting/hematite_ore"
+        "recipe": "gradient:age2/copper_crushed"
       }
     }
   },

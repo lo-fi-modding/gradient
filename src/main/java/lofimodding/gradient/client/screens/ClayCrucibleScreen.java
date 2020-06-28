@@ -3,7 +3,7 @@ package lofimodding.gradient.client.screens;
 import com.mojang.blaze3d.systems.RenderSystem;
 import lofimodding.gradient.Gradient;
 import lofimodding.gradient.GradientBlocks;
-import lofimodding.gradient.client.screens.widgets.GradientFluidWidget;
+import lofimodding.gradient.client.screens.widgets.FluidWidget;
 import lofimodding.gradient.containers.ClayCrucibleContainer;
 import lofimodding.gradient.containers.GradientContainer;
 import lofimodding.gradient.tileentities.ClayCrucibleTile;
@@ -32,7 +32,7 @@ public class ClayCrucibleScreen extends ContainerScreen<ClayCrucibleContainer> {
 
     final int x = (this.width  - this.xSize) / 2;
     final int y = (this.height - this.ySize) / 2;
-    this.addButton(new GradientFluidWidget(this, this.te.tank, x + 148, y + 19, 12, 47));
+    this.addButton(new FluidWidget(this, this.te.tank, x + 148, y + 19, 12, 47));
   }
 
   @Override

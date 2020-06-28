@@ -3,15 +3,15 @@ package lofimodding.gradient.integrations.jei;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 import lofimodding.gradient.Gradient;
+import lofimodding.gradient.GradientFluids;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientRecipeSerializers;
-import lofimodding.gradient.fluids.GradientFluidStack;
 import lofimodding.gradient.recipes.MeltingRecipe;
 import lofimodding.progression.Stage;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.ingredient.IGuiIngredientGroup;
+import mezz.jei.api.gui.ingredient.IGuiFluidStackGroup;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
@@ -64,20 +64,20 @@ public class MeltingRecipeCategory implements IRecipeCategory<MeltingRecipe> {
   @Override
   public void setIngredients(final MeltingRecipe recipe, final IIngredients ingredients) {
     ingredients.setInputIngredients(recipe.getIngredients());
-    ingredients.setOutput(IngredientTypes.GRADIENT_FLUID, recipe.getFluidOutput());
+    ingredients.setOutput(VanillaTypes.FLUID, recipe.getFluidOutput());
   }
 
   @Override
   public void setRecipe(final IRecipeLayout recipeLayout, final MeltingRecipe recipe, final IIngredients ingredients) {
     final IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-    final IGuiIngredientGroup<GradientFluidStack> guiFluidStacks = recipeLayout.getIngredientsGroup(IngredientTypes.GRADIENT_FLUID);
+    final IGuiFluidStackGroup guiFluidStacks = recipeLayout.getFluidStacks();
     final List<List<ItemStack>> inputs = ingredients.getInputs(VanillaTypes.ITEM);
 
     guiItemStacks.init(0, true, 0, 0);
     guiItemStacks.set(0, inputs.get(0));
 
-    guiFluidStacks.init(1, true, new GradientFluidStackRenderer(1.0f, false, 16, 16, null), 38, 0, 18, 18, 1, 1);
-    guiFluidStacks.set(1, ingredients.getOutputs(IngredientTypes.GRADIENT_FLUID).get(0));
+    guiFluidStacks.init(1, false, 39, 1, 16, 16, GradientFluids.INGOT_AMOUNT, false, null);
+    guiFluidStacks.set(1, ingredients.getOutputs(VanillaTypes.FLUID).get(0));
   }
 
   @Override

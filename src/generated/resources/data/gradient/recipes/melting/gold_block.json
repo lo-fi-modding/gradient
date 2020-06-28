@@ -9,8 +9,7 @@
     "tag": "forge:storage_blocks/gold"
   },
   "fluid": {
-    "fluid": "gradient:gold",
-    "amount": 9.0,
-    "temperature": 1064.0
+    "Fluid": "gradient:gold",
+    "Amount": 1296
   }
 }

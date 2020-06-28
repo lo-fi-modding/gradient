@@ -2,7 +2,7 @@ package lofimodding.gradient.blocks;
 
 import lofimodding.gradient.GradientCasts;
 import lofimodding.gradient.GradientMaterials;
-import lofimodding.gradient.fluids.MetalFluid;
+import lofimodding.gradient.fluids.MetalSourceFluid;
 import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.tileentities.ClayCrucibleTile;
 import lofimodding.gradient.utils.WorldUtils;
@@ -94,7 +94,7 @@ public class ClayCrucibleBlock extends HeatSinkerBlock {
           return ActionResultType.SUCCESS;
         }
 
-        final Metal metal = ((MetalFluid)te.getMoltenMetal().getFluid()).metal;
+        final Metal metal = ((MetalSourceFluid)te.getMoltenMetal().getFluid()).metal;
         if(te.getMoltenMetal().getAmount() < cast.metalAmount) {
           player.sendMessage(new TranslationTextComponent(this.getTranslationKey() + ".not_enough_metal", cast.metalAmount).applyTextStyle(TextFormatting.RED));
           return ActionResultType.SUCCESS;

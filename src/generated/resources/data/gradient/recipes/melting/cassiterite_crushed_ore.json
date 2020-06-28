@@ -9,8 +9,7 @@
     "tag": "forge:crushed_ores/cassiterite"
   },
   "fluid": {
-    "fluid": "gradient:tin",
-    "amount": 0.75,
-    "temperature": 1127.0
+    "Fluid": "gradient:tin",
+    "Amount": 72
   }
 }

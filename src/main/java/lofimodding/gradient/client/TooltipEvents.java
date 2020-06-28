@@ -35,7 +35,7 @@ public final class TooltipEvents {
       tooltip.add(new TranslationTextComponent("meltable.melt_temp", recipe.getTemperature()));
       tooltip.add(new TranslationTextComponent("meltable.melt_time", recipe.getTicks()));
       tooltip.add(new TranslationTextComponent("meltable.amount", recipe.getFluidOutput().getAmount()));
-      tooltip.add(new TranslationTextComponent("meltable.fluid", recipe.getFluidOutput().getName()));
+      tooltip.add(new TranslationTextComponent("meltable.fluid", recipe.getFluidOutput().getFluid().getAttributes().getDisplayName(recipe.getFluidOutput())));
     });
   }
 }

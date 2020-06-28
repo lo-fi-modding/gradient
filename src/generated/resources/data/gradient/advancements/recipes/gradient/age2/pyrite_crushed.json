@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "gradient:melting/pyrite_ore"
+      "gradient:age2/pyrite_crushed"
     ]
   },
   "criteria": {
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "gradient:melting/pyrite_ore"
+        "recipe": "gradient:age2/pyrite_crushed"
       }
     }
   },

@@ -9,8 +9,7 @@
     "tag": "forge:nuggets/magnesium"
   },
   "fluid": {
-    "fluid": "gradient:magnesium",
-    "amount": 0.11111111,
-    "temperature": 650.0
+    "Fluid": "gradient:magnesium",
+    "Amount": 16
   }
 }

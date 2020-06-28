@@ -20,7 +20,7 @@ public class MechanicalGrindstoneTile extends ProcessorTile<KineticEnergySource>
       builder -> builder.addRecipeProcessor(
         GrindingRecipe.TYPE,
         processor -> processor
-          .tier(ProcessorTier.BASIC)
+          .tier(ProcessorTier.MECHANICAL)
           .addInputItem()
           .addOutputItem(),
         new ManualInteractor()

@@ -9,8 +9,7 @@
     "tag": "forge:storage_blocks/magnesium"
   },
   "fluid": {
-    "fluid": "gradient:magnesium",
-    "amount": 9.0,
-    "temperature": 650.0
+    "Fluid": "gradient:magnesium",
+    "Amount": 1296
   }
 }

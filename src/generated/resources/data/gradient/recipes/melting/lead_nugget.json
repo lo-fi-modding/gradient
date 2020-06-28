@@ -9,8 +9,7 @@
     "tag": "forge:nuggets/lead"
   },
   "fluid": {
-    "fluid": "gradient:lead",
-    "amount": 0.11111111,
-    "temperature": 327.5
+    "Fluid": "gradient:lead",
+    "Amount": 16
   }
 }

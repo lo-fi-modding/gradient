@@ -9,8 +9,7 @@
     "tag": "forge:crushed_ores/iron"
   },
   "fluid": {
-    "fluid": "gradient:iron",
-    "amount": 0.75,
-    "temperature": 1538.0
+    "Fluid": "gradient:iron",
+    "Amount": 72
   }
 }

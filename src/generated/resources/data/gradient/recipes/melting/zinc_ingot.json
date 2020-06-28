@@ -9,8 +9,7 @@
     "tag": "forge:ingots/zinc"
   },
   "fluid": {
-    "fluid": "gradient:zinc",
-    "amount": 1.0,
-    "temperature": 419.53
+    "Fluid": "gradient:zinc",
+    "Amount": 144
   }
 }

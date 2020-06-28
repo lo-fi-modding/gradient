@@ -6,6 +6,7 @@ import com.mojang.datafixers.util.Pair;
 import lofimodding.gradient.Gradient;
 import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientCasts;
+import lofimodding.gradient.GradientFluids;
 import lofimodding.gradient.GradientIds;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientLoot;
@@ -17,13 +18,11 @@ import lofimodding.gradient.blocks.FirepitBlock;
 import lofimodding.gradient.blocks.MechanicalMixingBasinBlock;
 import lofimodding.gradient.blocks.MixingBasinBlock;
 import lofimodding.gradient.blocks.OreBlock;
-import lofimodding.gradient.fluids.GradientFluid;
-import lofimodding.gradient.fluids.GradientFluidStack;
-import lofimodding.gradient.fluids.GradientFluids;
 import lofimodding.gradient.items.PebbleItem;
 import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.science.Minerals;
 import lofimodding.gradient.science.Ore;
+import lofimodding.gradient.tileentities.pieces.ProcessorTier;
 import lofimodding.progression.recipes.StagedRecipeBuilder;
 import net.minecraft.advancements.criterion.ImpossibleTrigger;
 import net.minecraft.advancements.criterion.ItemPredicate;
@@ -41,6 +40,7 @@ import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.data.loot.BlockLootTables;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -1123,9 +1123,7 @@ public final class GradientDataGenerator {
 
       this.add("screens.gradient.unhardened_clay_cast", "Cast Selection");
 
-      this.add("fluids.gradient.air", "Air");
-
-      this.add(GradientFluids.EMPTY.get(), "Empty");
+      this.add(GradientFluids.AIR.get(), "Air");
 
       for(final Metal metal : Minerals.metals()) {
         final String metalName = StringUtils.capitalize(metal.name);
@@ -1137,10 +1135,13 @@ public final class GradientDataGenerator {
       this.add("meltable.amount", "Amount: %f B");
       this.add("meltable.fluid", "Fluid: %s");
       this.add("meltable.capacity", "%f/%f B");
-      this.add("meltable.temperature", "%f °C");
 
       this.add("gradient.furnace_disabled", "The furnace has been disabled by Gradient and will not function. Its remains only for use in other crafting recipes.");
       this.add("gradient.crafting_table_disabled", "The crafting table has been disabled by Gradient and will not function. Its remains only for use in other crafting recipes.");
+
+      this.add("tier.gradient.basic", "Basic");
+      this.add("tier.gradient.mechanical", "Mechanical");
+      this.add("gradient.processor.tooltip", "%s (tier %d)");
 
       this.add(GradientBlocks.PEBBLE.get(), "Pebble");
       this.add(GradientItems.PEBBLE.get(), "Pebble");
@@ -1343,6 +1344,7 @@ public final class GradientDataGenerator {
       this.add("jei.fuel.heat_per_sec", "Heat: %d °C/s");
 
       this.add("jei.grinding.name", "Grinding");
+      this.add("jei.grinding.tier", "Tier %s");
       this.add("jei.grinding.ticks", "%d ticks");
 
       this.add("jei.hardening.name", "Hardening");
@@ -1354,6 +1356,7 @@ public final class GradientDataGenerator {
       this.add("jei.melting.ticks", "%d ticks");
 
       this.add("jei.mixing.name", "Mixing");
+      this.add("jei.mixing.tier", "Tier %s");
       this.add("jei.mixing.ticks", "%d ticks");
 
       this.add("jei.alloy.name", "Alloying");
@@ -1424,8 +1427,8 @@ public final class GradientDataGenerator {
       this.add("advancements.gradient.age2." + key + ".description", description);
     }
 
-    private void add(final GradientFluid fluid, final String translation) {
-      this.add(fluid.getTranslationKey(), translation);
+    private void add(final Fluid fluid, final String translation) {
+      this.add("fluid." + fluid.getRegistryName().getNamespace() + '.' + fluid.getRegistryName().getPath(), translation);
     }
   }
 
@@ -2017,6 +2020,17 @@ public final class GradientDataGenerator {
         .addCriterion("has_clay_ball", this.hasItem(Items.CLAY_BALL))
         .build(finished, Gradient.loc("age2/" + GradientIds.UNHARDENED_CLAY_CAST_BLANK));
 
+      for(final Ore ore : Minerals.ores()) {
+        GradientRecipeBuilder
+          .grinding(GradientItems.CRUSHED(ore).get())
+          .stage(GradientStages.AGE_2.get())
+          .tier(ProcessorTier.MECHANICAL)
+          .ticks((int)(ore.hardness * 2.0f * 20.0f))
+          .addIngredient(GradientTags.Items.ORE.get(ore))
+          .addCriterion("has_ore", this.hasItem(GradientTags.Items.ORE.get(ore)))
+          .build(finished, Gradient.loc("age2/" + GradientIds.CRUSHED(ore)));
+      }
+
       StagedRecipeBuilder
         .shaped(GradientItems.WOODEN_GEAR.get())
         .stage(GradientStages.AGE_2.get())
@@ -2381,19 +2395,9 @@ public final class GradientDataGenerator {
         GradientRecipeBuilder
           .melting()
           .stage(GradientStages.AGE_2.get())
-          .ticks((int)(ore.meltTime * 1.2f))
-          .temperature(ore.meltTemp)
-          .fluid(new GradientFluidStack(GradientFluids.METAL(ore.metal).get(), 0.5f, ore.meltTemp))
-          .ingredient(GradientTags.Items.ORE.get(ore))
-          .addCriterion("has_ore", this.hasItem(GradientTags.Items.ORE.get(ore)))
-          .build(finished, Gradient.loc("melting/" + ore.name + "_ore"));
-
-        GradientRecipeBuilder
-          .melting()
-          .stage(GradientStages.AGE_2.get())
           .ticks(ore.meltTime)
           .temperature(ore.meltTemp)
-          .fluid(new GradientFluidStack(GradientFluids.METAL(ore.metal).get(), 0.75f, ore.meltTemp))
+          .fluid(new FluidStack(GradientFluids.METAL(ore.metal).get(), GradientFluids.CRUSHED_AMOUNT))
           .ingredient(GradientTags.Items.CRUSHED_ORE.get(ore))
           .addCriterion("has_crushed_ore", this.hasItem(GradientTags.Items.CRUSHED_ORE.get(ore)))
           .build(finished, Gradient.loc("melting/" + ore.name + "_crushed_ore"));
@@ -2403,7 +2407,7 @@ public final class GradientDataGenerator {
           .stage(GradientStages.AGE_2.get())
           .ticks(ore.meltTime)
           .temperature(ore.meltTemp)
-          .fluid(new GradientFluidStack(GradientFluids.METAL(ore.metal).get(), 1.0f, ore.meltTemp))
+          .fluid(new FluidStack(GradientFluids.METAL(ore.metal).get(), GradientFluids.PURIFIED_AMOUNT))
           .ingredient(GradientTags.Items.PURIFIED_ORE.get(ore))
           .addCriterion("has_purified_ore", this.hasItem(GradientTags.Items.PURIFIED_ORE.get(ore)))
           .build(finished, Gradient.loc("melting/" + ore.name + "_purified_ore"));
@@ -2415,7 +2419,7 @@ public final class GradientDataGenerator {
           .stage(GradientStages.AGE_2.get())
           .ticks(metal.meltTime)
           .temperature(metal.meltTemp)
-          .fluid(new GradientFluidStack(GradientFluids.METAL(metal).get(), 1.0f, metal.meltTemp))
+          .fluid(new FluidStack(GradientFluids.METAL(metal).get(), GradientFluids.INGOT_AMOUNT))
           .ingredient(GradientTags.Items.DUST.get(metal))
           .addCriterion("has_dust", this.hasItem(GradientTags.Items.DUST.get(metal)))
           .build(finished, Gradient.loc("melting/" + metal.name + "_dust"));
@@ -2425,7 +2429,7 @@ public final class GradientDataGenerator {
           .stage(GradientStages.AGE_2.get())
           .ticks(metal.meltTime)
           .temperature(metal.meltTemp)
-          .fluid(new GradientFluidStack(GradientFluids.METAL(metal).get(), 1.0f, metal.meltTemp))
+          .fluid(new FluidStack(GradientFluids.METAL(metal).get(), GradientFluids.INGOT_AMOUNT))
           .ingredient(GradientTags.Items.PLATE.get(metal))
           .addCriterion("has_plate", this.hasItem(GradientTags.Items.PLATE.get(metal)))
           .build(finished, Gradient.loc("melting/" + metal.name + "_plate"));
@@ -2435,7 +2439,7 @@ public final class GradientDataGenerator {
           .stage(GradientStages.AGE_2.get())
           .ticks(metal.meltTime * 9)
           .temperature(metal.meltTemp)
-          .fluid(new GradientFluidStack(GradientFluids.METAL(metal).get(), 9.0f, metal.meltTemp))
+          .fluid(new FluidStack(GradientFluids.METAL(metal).get(), GradientFluids.BLOCK_AMOUNT))
           .ingredient(GradientTags.Items.STORAGE_BLOCK.get(metal))
           .addCriterion("has_block", this.hasItem(GradientTags.Items.STORAGE_BLOCK.get(metal)))
           .build(finished, Gradient.loc("melting/" + metal.name + "_block"));
@@ -2446,9 +2450,9 @@ public final class GradientDataGenerator {
           GradientRecipeBuilder
             .melting()
             .stage(GradientStages.AGE_2.get())
-            .ticks((int)(metal.meltTime * cast.metalAmount))
+            .ticks(metal.meltTime * cast.metalAmount / GradientFluids.INGOT_AMOUNT)
             .temperature(metal.meltTemp)
-            .fluid(new GradientFluidStack(GradientFluids.METAL(metal).get(), cast.metalAmount, metal.meltTemp))
+            .fluid(new FluidStack(GradientFluids.METAL(metal).get(), cast.metalAmount))
             .ingredient(cast.getIngredient(metal))
             .addCriterion("has_" + cast.name, tag != null ? this.hasItem(tag) : this.hasItem(cast.getItem(metal)))
             .build(finished, Gradient.loc("melting/" + metal.name + '_' + cast.name));
@@ -2458,9 +2462,9 @@ public final class GradientDataGenerator {
 
     private void registerAlloyRecipes(final Consumer<IFinishedRecipe> finished) {
       GradientRecipeBuilder
-        .alloy(new GradientFluidStack(GradientFluids.METAL(Minerals.BRONZE).get(), 0.004f))
-        .addInput(new GradientFluidStack(GradientFluids.METAL(Minerals.COPPER).get(), 0.003f))
-        .addInput(new GradientFluidStack(GradientFluids.METAL(Minerals.TIN).get(), 0.001f))
+        .alloy(new FluidStack(GradientFluids.METAL(Minerals.BRONZE).get(), 4))
+        .addInput(new FluidStack(GradientFluids.METAL(Minerals.COPPER).get(), 3))
+        .addInput(new FluidStack(GradientFluids.METAL(Minerals.TIN).get(), 1))
         .addCriterion("impossible", new ImpossibleTrigger.Instance())
         .build(finished, Gradient.loc("alloy/bronze_from_copper_and_tin"));
     }
@@ -2670,7 +2674,7 @@ public final class GradientDataGenerator {
             withSurvivesExplosion(
               block,
               LootPool.builder()
-                .rolls(RandomValueRange.of(3, 7))
+                .rolls(RandomValueRange.of(1, 4))
                 .addEntry(ItemLootEntry.builder(nugget))
             )
             .acceptCondition(STONE_HAMMER)

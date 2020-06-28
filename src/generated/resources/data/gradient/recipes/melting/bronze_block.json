@@ -9,8 +9,7 @@
     "tag": "forge:storage_blocks/bronze"
   },
   "fluid": {
-    "fluid": "gradient:bronze",
-    "amount": 9.0,
-    "temperature": 950.0
+    "Fluid": "gradient:bronze",
+    "Amount": 1296
   }
 }

@@ -3,12 +3,10 @@ package lofimodding.gradient.integrations.jei;
 import lofimodding.gradient.Gradient;
 import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientCasts;
+import lofimodding.gradient.GradientFluids;
 import lofimodding.gradient.GradientIds;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientRecipeSerializers;
-import lofimodding.gradient.fluids.GradientFluid;
-import lofimodding.gradient.fluids.GradientFluidStack;
-import lofimodding.gradient.fluids.GradientFluids;
 import lofimodding.gradient.recipes.AlloyRecipe;
 import lofimodding.gradient.recipes.CookingRecipe;
 import lofimodding.gradient.recipes.DryingRecipe;
@@ -25,7 +23,6 @@ import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.transfer.IRecipeTransferInfo;
 import mezz.jei.api.registration.IGuiHandlerRegistration;
-import mezz.jei.api.registration.IModIngredientRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
@@ -44,6 +41,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -52,7 +50,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @JeiPlugin
@@ -116,16 +113,6 @@ public class JeiIntegration implements IModPlugin {
     registration.addRecipeCatalyst(new ItemStack(GradientBlocks.FIREPIT.get()), GradientRecipeSerializers.HARDENING.getId());
     registration.addRecipeCatalyst(new ItemStack(GradientBlocks.CLAY_CRUCIBLE.get()), GradientRecipeSerializers.MELTING.getId());
     registration.addRecipeCatalyst(new ItemStack(GradientBlocks.MIXING_BASIN.get()), GradientRecipeSerializers.MIXING.getId());
-  }
-
-  @Override
-  public void registerIngredients(final IModIngredientRegistration registration) {
-    registration.register(
-      IngredientTypes.GRADIENT_FLUID,
-      GradientFluid.REGISTRY.get().getValues().stream().map(fluid -> new GradientFluidStack(fluid, 1.0f, Float.NaN)).filter(((Predicate<GradientFluidStack>)GradientFluidStack::isEmpty).negate()).collect(Collectors.toList()),
-      new GradientFluidStackHelper(),
-      new GradientFluidStackRenderer()
-    );
   }
 
   @Override
@@ -201,14 +188,14 @@ public class JeiIntegration implements IModPlugin {
   protected static class CastingRecipe implements IRecipe<IInventory> {
     public final GradientCasts cast;
     public final Metal metal;
-    public final GradientFluidStack fluid;
+    public final FluidStack fluid;
     private final NonNullList<Ingredient> ingredients;
     private final ItemStack output;
 
     public CastingRecipe(final GradientCasts cast, final Metal metal) {
       this.cast = cast;
       this.metal = metal;
-      this.fluid = new GradientFluidStack(GradientFluids.METAL(metal).get(), 1.0f, Float.NaN);
+      this.fluid = new FluidStack(GradientFluids.METAL(metal).get(), GradientFluids.INGOT_AMOUNT);
       this.ingredients = NonNullList.withSize(1, Ingredient.fromItems(GradientItems.CLAY_CAST(cast).get()));
       this.output = new ItemStack(cast.getItem(metal));
     }

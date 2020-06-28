@@ -9,8 +9,7 @@
     "tag": "forge:storage_blocks/lead"
   },
   "fluid": {
-    "fluid": "gradient:lead",
-    "amount": 9.0,
-    "temperature": 327.5
+    "Fluid": "gradient:lead",
+    "Amount": 1296
   }
 }

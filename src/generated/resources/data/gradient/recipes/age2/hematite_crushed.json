@@ -1,0 +1,16 @@
+{
+  "type": "gradient:grinding",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "tier": 1,
+  "ticks": 160,
+  "ingredients": [
+    {
+      "tag": "forge:ores/hematite"
+    }
+  ],
+  "result": {
+    "item": "gradient:hematite_crushed"
+  }
+}

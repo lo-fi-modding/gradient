@@ -23,7 +23,7 @@ public class MechanicalMixingBasinTile extends ProcessorTile<KineticEnergySource
       builder -> builder.addRecipeProcessor(
         MixingRecipe.TYPE,
         processor -> processor
-          .tier(ProcessorTier.BASIC)
+          .tier(ProcessorTier.MECHANICAL)
           .addInputItem(1)
           .addInputItem(1)
           .addInputItem(1)

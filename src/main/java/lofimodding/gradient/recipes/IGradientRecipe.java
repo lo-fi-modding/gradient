@@ -1,5 +1,6 @@
 package lofimodding.gradient.recipes;
 
+import lofimodding.gradient.tileentities.pieces.ProcessorTier;
 import lofimodding.progression.Stage;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -12,10 +13,13 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import java.util.Set;
 
 public interface IGradientRecipe extends IRecipe<IInventory> {
+  int getTier();
   int getTicks();
   int getItemInputCount();
   int getItemOutputCount();
   boolean matchesStages(final Set<Stage> stages);
+  default boolean matchesTier(final int tier) { return this.getTier() >= tier; }
+  default boolean matchesTier(final ProcessorTier tier) { return this.matchesTier(tier.getTier()); }
   boolean matchesItems(final NonNullList<ItemStack> stacks);
   ItemStack getItemOutput(final int slot);
 

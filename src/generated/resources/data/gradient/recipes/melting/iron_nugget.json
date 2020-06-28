@@ -9,8 +9,7 @@
     "tag": "forge:nuggets/iron"
   },
   "fluid": {
-    "fluid": "gradient:iron",
-    "amount": 0.11111111,
-    "temperature": 1538.0
+    "Fluid": "gradient:iron",
+    "Amount": 16
   }
 }

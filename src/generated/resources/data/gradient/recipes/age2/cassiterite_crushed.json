@@ -1,0 +1,16 @@
+{
+  "type": "gradient:grinding",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "tier": 1,
+  "ticks": 260,
+  "ingredients": [
+    {
+      "tag": "forge:ores/cassiterite"
+    }
+  ],
+  "result": {
+    "item": "gradient:cassiterite_crushed"
+  }
+}

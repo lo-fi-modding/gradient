@@ -12,7 +12,6 @@ import lofimodding.gradient.energy.kinetic.IKineticEnergyStorage;
 import lofimodding.gradient.energy.kinetic.IKineticEnergyTransfer;
 import lofimodding.gradient.energy.kinetic.KineticEnergyStorage;
 import lofimodding.gradient.energy.kinetic.KineticEnergyTransfer;
-import lofimodding.gradient.fluids.GradientFluidHandlerCapability;
 import lofimodding.gradient.network.Packets;
 import lofimodding.progression.recipes.ShapelessStagedRecipe;
 import net.minecraft.advancements.Advancement;
@@ -86,7 +85,6 @@ public class Gradient {
     GradientBlocks.init(modBus);
     GradientContainers.init(modBus);
     GradientFluids.init(modBus);
-    lofimodding.gradient.fluids.GradientFluids.init(modBus);
     GradientItems.init(modBus);
     GradientEntities.init(modBus);
     GradientLoot.init(modBus);
@@ -132,8 +130,6 @@ public class Gradient {
 
   private void setup(final FMLCommonSetupEvent event) {
     Packets.register();
-
-    GradientFluidHandlerCapability.register();
 
     EnergyCapability.register(
       IKineticEnergyStorage.class,
