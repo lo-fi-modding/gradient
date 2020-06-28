@@ -12,6 +12,7 @@ import net.minecraftforge.items.IItemHandler;
 public interface IToolStationRecipe extends IRecipe<CraftingInventory> {
   IRecipeType<IToolStationRecipe> TYPE = IRecipeType.register("tool_station");
 
+  int getWidth();
   boolean recipeMatches(final IItemHandler recipe);
   NonNullList<ToolType> getTools();
   NonNullList<ItemStack> getOutputs();

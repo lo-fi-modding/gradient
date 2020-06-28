@@ -1361,6 +1361,12 @@ public final class GradientDataGenerator {
 
       this.add("jei.alloy.name", "Alloying");
 
+      this.add("jei.tool_station.name", "Tool Station");
+      this.add("jei.tool_station.tool.axe", "Axe");
+      this.add("jei.tool_station.tool.pickaxe", "Pickaxe");
+      this.add("jei.tool_station.tool.shovel", "Shovel");
+      this.add("jei.tool_station.tool.hammer", "Hammer");
+
       this.add("jei.casting.name", "Casting");
 
       this.add("jei.gradient_fluid.amount", "Amount: %d B");

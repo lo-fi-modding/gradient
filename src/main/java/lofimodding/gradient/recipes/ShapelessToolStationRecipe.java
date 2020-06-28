@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
+import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientRecipeSerializers;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -29,18 +30,36 @@ public class ShapelessToolStationRecipe implements IToolStationRecipe {
 
   private final ResourceLocation id;
   private final String group;
+  private final int width;
   private final NonNullList<Ingredient> ingredients;
   private final NonNullList<ToolType> tools;
   private final NonNullList<ItemStack> outputs;
   private final boolean simple;
 
   public ShapelessToolStationRecipe(final ResourceLocation id, final String group, final NonNullList<Ingredient> ingredients, final NonNullList<ToolType> tools, final NonNullList<ItemStack> outputs) {
+    if(ingredients.size() > 5 * 5) {
+      throw new JsonSyntaxException("Recipe has too many ingredients");
+    }
+
+    if(ingredients.size() > 4 * 4) {
+      this.width = 5;
+    } else if(ingredients.size() > 3 * 3) {
+      this.width = 4;
+    } else {
+      this.width = 3;
+    }
+
     this.id = id;
     this.group = group;
     this.ingredients = ingredients;
     this.tools = tools;
     this.outputs = outputs;
     this.simple = ingredients.stream().allMatch(Ingredient::isSimple);
+  }
+
+  @Override
+  public int getWidth() {
+    return this.width;
   }
 
   @Override
@@ -105,7 +124,7 @@ public class ShapelessToolStationRecipe implements IToolStationRecipe {
 
   @Override
   public ItemStack getIcon() {
-    return null; //TODO
+    return new ItemStack(GradientItems.TOOL_STATION.get());
   }
 
   @Override

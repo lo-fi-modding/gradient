@@ -72,7 +72,7 @@ public class HardeningRecipeCategory implements IRecipeCategory<HardeningRecipe>
     guiItemStacks.init(0, true, 0, 0);
     guiItemStacks.set(0, inputs.get(0));
 
-    guiItemStacks.init(1, true, 38, 0);
+    guiItemStacks.init(1, false, 38, 0);
     guiItemStacks.set(1, ingredients.getOutputs(VanillaTypes.ITEM).get(0));
   }
 

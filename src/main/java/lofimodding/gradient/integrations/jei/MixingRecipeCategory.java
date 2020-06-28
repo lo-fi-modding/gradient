@@ -82,7 +82,7 @@ public class MixingRecipeCategory implements IRecipeCategory<MixingRecipe> {
     guiFluidStacks.init(MixingBasinTile.INPUT_SIZE + 1, true, 101, 1);
     guiFluidStacks.set(MixingBasinTile.INPUT_SIZE + 1, ingredients.getInputs(VanillaTypes.FLUID).get(0));
 
-    guiItemStacks.init(MixingBasinTile.INPUT_SIZE + 2, true, 138, 0);
+    guiItemStacks.init(MixingBasinTile.INPUT_SIZE + 2, false, 138, 0);
     guiItemStacks.set(MixingBasinTile.INPUT_SIZE + 2, ingredients.getOutputs(VanillaTypes.ITEM).get(0));
   }
 

@@ -71,7 +71,7 @@ public class CastingRecipeCategory implements IRecipeCategory<JeiIntegration.Cas
     guiFluidStacks.init(1, true, 21, 1, 16, 16, recipe.cast.metalAmount, false, null);
     guiFluidStacks.set(1, inputFluids.get(0));
 
-    guiItemStacks.init(2, true, 58, 0);
+    guiItemStacks.init(2, false, 58, 0);
     guiItemStacks.set(2, ingredients.getOutputs(VanillaTypes.ITEM).get(0));
   }
 }

@@ -15,6 +15,7 @@ import lofimodding.gradient.recipes.GrindingRecipe;
 import lofimodding.gradient.recipes.HardeningRecipe;
 import lofimodding.gradient.recipes.MeltingRecipe;
 import lofimodding.gradient.recipes.MixingRecipe;
+import lofimodding.gradient.recipes.ShapelessToolStationRecipe;
 import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.science.Minerals;
 import mezz.jei.api.IModPlugin;
@@ -70,6 +71,7 @@ public class JeiIntegration implements IModPlugin {
     registration.addRecipeCategories(new HardeningRecipeCategory(guiHelper));
     registration.addRecipeCategories(new MeltingRecipeCategory(guiHelper));
     registration.addRecipeCategories(new MixingRecipeCategory(guiHelper));
+    registration.addRecipeCategories(new ToolStationRecipeCategory(guiHelper));
 
     registration.addRecipeCategories(new CastingRecipeCategory(guiHelper));
   }
@@ -97,6 +99,7 @@ public class JeiIntegration implements IModPlugin {
     registration.addRecipes(filterRecipes(HardeningRecipe.class), GradientRecipeSerializers.HARDENING.getId());
     registration.addRecipes(filterRecipes(MeltingRecipe.class), GradientRecipeSerializers.MELTING.getId());
     registration.addRecipes(filterRecipes(MixingRecipe.class), GradientRecipeSerializers.MIXING.getId());
+    registration.addRecipes(filterRecipes(ShapelessToolStationRecipe.class), GradientRecipeSerializers.SHAPELESS_TOOL_STATION.getId());
 
     registration.addRecipes(getCastingRecipes(), Gradient.loc("casting"));
 
@@ -113,6 +116,7 @@ public class JeiIntegration implements IModPlugin {
     registration.addRecipeCatalyst(new ItemStack(GradientBlocks.FIREPIT.get()), GradientRecipeSerializers.HARDENING.getId());
     registration.addRecipeCatalyst(new ItemStack(GradientBlocks.CLAY_CRUCIBLE.get()), GradientRecipeSerializers.MELTING.getId());
     registration.addRecipeCatalyst(new ItemStack(GradientBlocks.MIXING_BASIN.get()), GradientRecipeSerializers.MIXING.getId());
+    registration.addRecipeCatalyst(new ItemStack(GradientBlocks.TOOL_STATION.get()), GradientRecipeSerializers.SHAPELESS_TOOL_STATION.getId());
   }
 
   @Override
