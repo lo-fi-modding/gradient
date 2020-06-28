@@ -1132,9 +1132,9 @@ public final class GradientDataGenerator {
 
       this.add("meltable.melt_temp", "Melting Point: %f °C");
       this.add("meltable.melt_time", "Melting Time: %d ticks");
-      this.add("meltable.amount", "Amount: %f B");
+      this.add("meltable.amount", "Amount: %f mB");
       this.add("meltable.fluid", "Fluid: %s");
-      this.add("meltable.capacity", "%f/%f B");
+      this.add("meltable.capacity", "%f/%f mB");
 
       this.add("gradient.furnace_disabled", "The furnace has been disabled by Gradient and will not function. Its remains only for use in other crafting recipes.");
       this.add("gradient.crafting_table_disabled", "The crafting table has been disabled by Gradient and will not function. Its remains only for use in other crafting recipes.");
@@ -1369,8 +1369,8 @@ public final class GradientDataGenerator {
 
       this.add("jei.casting.name", "Casting");
 
-      this.add("jei.gradient_fluid.amount", "Amount: %d B");
-      this.add("jei.gradient_fluid.amount_with_capacity", "Amount: %d/%d B");
+      this.add("jei.gradient_fluid.amount", "Amount: %d mB");
+      this.add("jei.gradient_fluid.amount_with_capacity", "Amount: %d/%d mB");
 
       this.add("jei.information." + GradientIds.FIREPIT + ".1", "The firepit is one of the most important fixtures of an early civilisation. Provided with fuel to burn, it can both cook food and produce heat.");
       this.add("jei.information." + GradientIds.FIREPIT + ".2", "To light a firepit, fill it with fuel and right-click on it with a fire starter. Each fuel has a minimum temperature required to ignite. The easiest way to get it up to heat is with a cycle of fibre, then a cycle of sticks, then a few cycles of planks until it's hot enough to ignite coal. Experimentation is encouraged.");
