@@ -225,6 +225,7 @@
   "fluid.gradient.zinc": "Molten Zinc",
   "gradient.crafting_table_disabled": "The crafting table has been disabled by Gradient and will not function. Its remains only for use in other crafting recipes.",
   "gradient.furnace_disabled": "The furnace has been disabled by Gradient and will not function. Its remains only for use in other crafting recipes.",
+  "gradient.processor.tooltip": "%s (tier %d)",
   "item.gradient.azurite_crushed": "Crushed Azurite Ore",
   "item.gradient.azurite_purified": "Purified Azurite Ore",
   "item.gradient.bark": "Bark",
@@ -452,5 +453,7 @@
   "screens.gradient.unhardened_clay_cast": "Cast Selection",
   "stage.gradient.age_1": "Age 1 (Nomadic)",
   "stage.gradient.age_2": "Age 2 (Agricultural)",
-  "stage.gradient.age_3": "Age 3 (Bronze)"
+  "stage.gradient.age_3": "Age 3 (Bronze)",
+  "tier.gradient.basic": "Basic",
+  "tier.gradient.mechanical": "Mechanical"
 }

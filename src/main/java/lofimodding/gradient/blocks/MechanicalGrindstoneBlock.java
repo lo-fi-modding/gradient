@@ -2,6 +2,7 @@ package lofimodding.gradient.blocks;
 
 import lofimodding.gradient.tileentities.MechanicalGrindstoneTile;
 import lofimodding.gradient.tileentities.pieces.KineticEnergySource;
+import lofimodding.gradient.tileentities.pieces.ProcessorTier;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
@@ -25,7 +26,7 @@ public class MechanicalGrindstoneBlock extends ProcessorBlock<KineticEnergySourc
   public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
 
   public MechanicalGrindstoneBlock() {
-    super(MechanicalGrindstoneTile.class, Properties.create(Material.ROCK).hardnessAndResistance(1.0f, 5.0f).notSolid());
+    super(MechanicalGrindstoneTile.class, ProcessorTier.MECHANICAL, Properties.create(Material.ROCK).hardnessAndResistance(1.0f, 5.0f).notSolid());
     this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
   }
 

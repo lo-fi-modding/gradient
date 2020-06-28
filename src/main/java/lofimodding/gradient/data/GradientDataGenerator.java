@@ -1139,6 +1139,10 @@ public final class GradientDataGenerator {
       this.add("gradient.furnace_disabled", "The furnace has been disabled by Gradient and will not function. Its remains only for use in other crafting recipes.");
       this.add("gradient.crafting_table_disabled", "The crafting table has been disabled by Gradient and will not function. Its remains only for use in other crafting recipes.");
 
+      this.add("tier.gradient.basic", "Basic");
+      this.add("tier.gradient.mechanical", "Mechanical");
+      this.add("gradient.processor.tooltip", "%s (tier %d)");
+
       this.add(GradientBlocks.PEBBLE.get(), "Pebble");
       this.add(GradientItems.PEBBLE.get(), "Pebble");
 
