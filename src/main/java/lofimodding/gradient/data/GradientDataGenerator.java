@@ -1264,7 +1264,8 @@ public final class GradientDataGenerator {
         this.add(GradientItems.UNHARDENED_CLAY_CAST(cast).get(), "Unhardened Clay Cast (" + text + ')');
         this.add(GradientItems.UNHARDENED_CLAY_CAST(cast).get().getTranslationKey() + ".tooltip", "Place next to a fire pit to harden, right click to switch cast");
         this.add(GradientItems.CLAY_CAST(cast).get(), "Clay Cast (" + text + ')');
-        this.add(GradientItems.CLAY_CAST(cast).get().getTranslationKey() + ".tooltip", "Right click on a crucible to cast");
+        this.add(GradientItems.CLAY_CAST(cast).get().getTranslationKey() + ".tooltip.1", "Right click on a crucible to cast");
+        this.add(GradientItems.CLAY_CAST(cast).get().getTranslationKey() + ".tooltip.2", "Requires %d mB");
 
         for(final Metal metal : Minerals.metals()) {
           final String metalName = StringUtils.capitalize(metal.name);

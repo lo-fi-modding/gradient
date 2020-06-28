@@ -39,7 +39,8 @@ public class ClayCastBlock extends Block {
   @Override
   public void addInformation(final ItemStack stack, @Nullable final IBlockReader world, final List<ITextComponent> tooltip, final ITooltipFlag flag) {
     super.addInformation(stack, world, tooltip, flag);
-    tooltip.add(new TranslationTextComponent(this.getTranslationKey() + ".tooltip"));
+    tooltip.add(new TranslationTextComponent(this.getTranslationKey() + ".tooltip.1"));
+    tooltip.add(new TranslationTextComponent(this.getTranslationKey() + ".tooltip.2", this.cast.metalAmount));
   }
 
   @SuppressWarnings("deprecation")
