@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientRecipeSerializers;
+import lofimodding.gradient.tileentities.pieces.ProcessorTier;
 import lofimodding.progression.Stage;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -33,15 +34,17 @@ public class GrindingRecipe implements IGradientRecipe {
   private final ResourceLocation id;
   private final String group;
   private final NonNullList<Stage> stages;
+  private final ProcessorTier tier;
   private final int ticks;
   private final ItemStack result;
   private final NonNullList<Ingredient> ingredients;
   private final boolean simple;
 
-  public GrindingRecipe(final ResourceLocation id, final String group, final NonNullList<Stage> stages, final int ticks, final ItemStack result, final NonNullList<Ingredient> ingredients) {
+  public GrindingRecipe(final ResourceLocation id, final String group, final NonNullList<Stage> stages, final ProcessorTier tier, final int ticks, final ItemStack result, final NonNullList<Ingredient> ingredients) {
     this.id = id;
     this.group = group;
     this.stages = stages;
+    this.tier = tier;
     this.ticks = ticks;
     this.result = result;
     this.ingredients = ingredients;
@@ -60,6 +63,11 @@ public class GrindingRecipe implements IGradientRecipe {
 
   public NonNullList<Stage> getStages() {
     return this.stages;
+  }
+
+  @Override
+  public ProcessorTier getTier() {
+    return this.tier;
   }
 
   @Override
@@ -161,6 +169,7 @@ public class GrindingRecipe implements IGradientRecipe {
         stages.add(Stage.REGISTRY.get().getValue(new ResourceLocation(element.getAsString())));
       }
 
+      final ProcessorTier tier = ProcessorTier.valueOf(JSONUtils.getString(json, "tier"));
       final int ticks = JSONUtils.getInt(json, "ticks");
 
       final NonNullList<Ingredient> ingredients = readIngredients(JSONUtils.getJsonArray(json, "ingredients"));
@@ -169,7 +178,7 @@ public class GrindingRecipe implements IGradientRecipe {
       }
 
       final ItemStack result = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
-      return new GrindingRecipe(id, group, stages, ticks, result, ingredients);
+      return new GrindingRecipe(id, group, stages, tier, ticks, result, ingredients);
     }
 
     private static NonNullList<Ingredient> readIngredients(final JsonArray json) {
@@ -197,6 +206,7 @@ public class GrindingRecipe implements IGradientRecipe {
         stages.add(buffer.readRegistryIdSafe(Stage.class));
       }
 
+      final ProcessorTier tier = buffer.readEnumValue(ProcessorTier.class);
       final int ticks = buffer.readVarInt();
 
       final int ingredientCount = buffer.readVarInt();
@@ -206,7 +216,7 @@ public class GrindingRecipe implements IGradientRecipe {
       }
 
       final ItemStack result = buffer.readItemStack();
-      return new GrindingRecipe(id, group, stages, ticks, result, ingredients);
+      return new GrindingRecipe(id, group, stages, tier, ticks, result, ingredients);
     }
 
     @Override
@@ -218,6 +228,7 @@ public class GrindingRecipe implements IGradientRecipe {
         buffer.writeRegistryId(stage);
       }
 
+      buffer.writeEnumValue(recipe.tier);
       buffer.writeVarInt(recipe.ticks);
 
       buffer.writeVarInt(recipe.ingredients.size());

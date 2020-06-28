@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lofimodding.gradient.GradientRecipeSerializers;
+import lofimodding.gradient.tileentities.pieces.ProcessorTier;
 import lofimodding.gradient.utils.RecipeUtils;
 import lofimodding.progression.Stage;
 import net.minecraft.advancements.Advancement;
@@ -93,6 +94,7 @@ public final class GradientRecipeBuilder {
     private final Item result;
     private final int count;
     private final Set<Stage> stages = new HashSet<>();
+    private ProcessorTier tier = ProcessorTier.BASIC;
     private int ticks;
     private final List<Ingredient> ingredients = Lists.newArrayList();
     private final Advancement.Builder advancementBuilder = Advancement.Builder.builder();
@@ -105,6 +107,11 @@ public final class GradientRecipeBuilder {
 
     public Grinding stage(final Stage stage) {
       this.stages.add(stage);
+      return this;
+    }
+
+    public Grinding tier(final ProcessorTier tier) {
+      this.tier = tier;
       return this;
     }
 
@@ -167,7 +174,7 @@ public final class GradientRecipeBuilder {
     public void build(final Consumer<IFinishedRecipe> finished, final ResourceLocation save) {
       this.validate(save);
       this.advancementBuilder.withParentId(new ResourceLocation("recipes/root")).withCriterion("has_the_recipe", new RecipeUnlockedTrigger.Instance(save)).withRewards(AdvancementRewards.Builder.recipe(save)).withRequirementsStrategy(IRequirementsStrategy.OR);
-      finished.accept(new Grinding.Result(save, this.stages, this.ticks, this.result, this.count, this.group == null ? "" : this.group, this.ingredients, this.advancementBuilder, new ResourceLocation(save.getNamespace(), "recipes/" + this.result.getGroup().getPath() + '/' + save.getPath())));
+      finished.accept(new Grinding.Result(save, this.stages, this.tier, this.ticks, this.result, this.count, this.group == null ? "" : this.group, this.ingredients, this.advancementBuilder, new ResourceLocation(save.getNamespace(), "recipes/" + this.result.getGroup().getPath() + '/' + save.getPath())));
     }
 
     private void validate(final ResourceLocation name) {
@@ -179,6 +186,7 @@ public final class GradientRecipeBuilder {
     public static class Result implements IFinishedRecipe {
       private final ResourceLocation id;
       private final Set<Stage> stages;
+      private final ProcessorTier tier;
       private final int ticks;
       private final Item result;
       private final int count;
@@ -187,9 +195,10 @@ public final class GradientRecipeBuilder {
       private final Advancement.Builder advancementBuilder;
       private final ResourceLocation advancementId;
 
-      protected Result(final ResourceLocation id, final Set<Stage> stages, final int ticks, final Item result, final int count, final String group, final List<Ingredient> ingredients, final Advancement.Builder advancementBuilder, final ResourceLocation advancementId) {
+      protected Result(final ResourceLocation id, final Set<Stage> stages, final ProcessorTier tier, final int ticks, final Item result, final int count, final String group, final List<Ingredient> ingredients, final Advancement.Builder advancementBuilder, final ResourceLocation advancementId) {
         this.id = id;
         this.stages = stages;
+        this.tier = tier;
         this.ticks = ticks;
         this.result = result;
         this.count = count;
@@ -211,6 +220,7 @@ public final class GradientRecipeBuilder {
         }
         json.add("stages", stages);
 
+        json.addProperty("tier", this.tier.name());
         json.addProperty("ticks", this.ticks);
 
         final JsonArray array = new JsonArray();
@@ -727,6 +737,7 @@ public final class GradientRecipeBuilder {
     private final Item result;
     private final int count;
     private final Set<Stage> stages = new HashSet<>();
+    private ProcessorTier tier = ProcessorTier.BASIC;
     private int ticks;
     private final List<Ingredient> ingredients = Lists.newArrayList();
     private FluidStack fluid = FluidStack.EMPTY;
@@ -740,6 +751,11 @@ public final class GradientRecipeBuilder {
 
     public Mixing stage(final Stage stage) {
       this.stages.add(stage);
+      return this;
+    }
+
+    public Mixing tier(final ProcessorTier tier) {
+      this.tier = tier;
       return this;
     }
 
@@ -807,7 +823,7 @@ public final class GradientRecipeBuilder {
     public void build(final Consumer<IFinishedRecipe> finished, final ResourceLocation save) {
       this.validate(save);
       this.advancementBuilder.withParentId(new ResourceLocation("recipes/root")).withCriterion("has_the_recipe", new RecipeUnlockedTrigger.Instance(save)).withRewards(AdvancementRewards.Builder.recipe(save)).withRequirementsStrategy(IRequirementsStrategy.OR);
-      finished.accept(new Result(save, this.stages, this.ticks, this.result, this.count, this.group == null ? "" : this.group, this.ingredients, this.fluid, this.advancementBuilder, new ResourceLocation(save.getNamespace(), "recipes/" + this.result.getGroup().getPath() + '/' + save.getPath())));
+      finished.accept(new Result(save, this.stages, this.tier, this.ticks, this.result, this.count, this.group == null ? "" : this.group, this.ingredients, this.fluid, this.advancementBuilder, new ResourceLocation(save.getNamespace(), "recipes/" + this.result.getGroup().getPath() + '/' + save.getPath())));
     }
 
     private void validate(final ResourceLocation name) {
@@ -819,6 +835,7 @@ public final class GradientRecipeBuilder {
     public static class Result implements IFinishedRecipe {
       private final ResourceLocation id;
       private final Set<Stage> stages;
+      private final ProcessorTier tier;
       private final int ticks;
       private final Item result;
       private final int count;
@@ -828,9 +845,10 @@ public final class GradientRecipeBuilder {
       private final Advancement.Builder advancementBuilder;
       private final ResourceLocation advancementId;
 
-      protected Result(final ResourceLocation id, final Set<Stage> stages, final int ticks, final Item result, final int count, final String group, final List<Ingredient> ingredients, final FluidStack fluid, final Advancement.Builder advancementBuilder, final ResourceLocation advancementId) {
+      protected Result(final ResourceLocation id, final Set<Stage> stages, final ProcessorTier tier, final int ticks, final Item result, final int count, final String group, final List<Ingredient> ingredients, final FluidStack fluid, final Advancement.Builder advancementBuilder, final ResourceLocation advancementId) {
         this.id = id;
         this.stages = stages;
+        this.tier = tier;
         this.ticks = ticks;
         this.result = result;
         this.count = count;
@@ -853,6 +871,7 @@ public final class GradientRecipeBuilder {
         }
         json.add("stages", stages);
 
+        json.addProperty("tier", this.tier.name().toLowerCase());
         json.addProperty("ticks", this.ticks);
 
         final JsonArray array = new JsonArray();

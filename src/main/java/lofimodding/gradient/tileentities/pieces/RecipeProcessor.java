@@ -106,6 +106,7 @@ public class RecipeProcessor<Recipe extends IGradientRecipe> extends Processor {
     this.tanksLocked = false;
     final boolean matches =
       recipe.matchesStages(this.stages) &&
+      recipe.matchesTier(this.tier) &&
       recipe.matchesItems(items) &&
       recipe.matchesFluids(this.fluids);
     this.tanksLocked = true;

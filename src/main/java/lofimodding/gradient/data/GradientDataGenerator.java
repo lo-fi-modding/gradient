@@ -22,6 +22,7 @@ import lofimodding.gradient.items.PebbleItem;
 import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.science.Minerals;
 import lofimodding.gradient.science.Ore;
+import lofimodding.gradient.tileentities.pieces.ProcessorTier;
 import lofimodding.progression.recipes.StagedRecipeBuilder;
 import net.minecraft.advancements.criterion.ImpossibleTrigger;
 import net.minecraft.advancements.criterion.ItemPredicate;
@@ -2012,6 +2013,17 @@ public final class GradientDataGenerator {
         .addIngredient(ItemTags.SAND)
         .addCriterion("has_clay_ball", this.hasItem(Items.CLAY_BALL))
         .build(finished, Gradient.loc("age2/" + GradientIds.UNHARDENED_CLAY_CAST_BLANK));
+
+      for(final Ore ore : Minerals.ores()) {
+        GradientRecipeBuilder
+          .grinding(GradientItems.CRUSHED(ore).get())
+          .stage(GradientStages.AGE_2.get())
+          .tier(ProcessorTier.MECHANICAL)
+          .ticks((int)(ore.hardness * 2.0f * 20.0f))
+          .addIngredient(GradientTags.Items.ORE.get(ore))
+          .addCriterion("has_ore", this.hasItem(GradientTags.Items.ORE.get(ore)))
+          .build(finished, Gradient.loc("age2/" + GradientIds.CRUSHED(ore)));
+      }
 
       StagedRecipeBuilder
         .shaped(GradientItems.WOODEN_GEAR.get())

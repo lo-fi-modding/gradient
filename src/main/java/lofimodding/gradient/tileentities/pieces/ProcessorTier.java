@@ -1,7 +1,8 @@
 package lofimodding.gradient.tileentities.pieces;
 
-public enum ProcessorTier implements IProcessorTier {
+public enum ProcessorTier {
   BASIC(3.0f),
+  MECHANICAL(3.0f),
   ;
 
   private final float recipeTimeMultiplier;
@@ -10,7 +11,6 @@ public enum ProcessorTier implements IProcessorTier {
     this.recipeTimeMultiplier = recipeTimeMultiplier;
   }
 
-  @Override
   public float getRecipeTimeMultiplier() {
     return this.recipeTimeMultiplier;
   }

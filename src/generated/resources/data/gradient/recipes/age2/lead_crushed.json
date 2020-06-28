@@ -3,15 +3,14 @@
   "stages": [
     "gradient:age_2"
   ],
-  "tier": "BASIC",
-  "ticks": 80,
+  "tier": "MECHANICAL",
+  "ticks": 60,
   "ingredients": [
     {
-      "item": "minecraft:sugar_cane"
+      "tag": "forge:ores/lead"
     }
   ],
   "result": {
-    "item": "gradient:sugar_cane_paste",
-    "count": 2
+    "item": "gradient:lead_crushed"
   }
 }

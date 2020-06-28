@@ -34,7 +34,7 @@ import java.util.stream.Stream;
 public abstract class Processor {
   protected final ProcessorTile<?> tile;
 
-  protected final IProcessorTier tier;
+  protected final ProcessorTier tier;
 
   protected final List<ItemSlot> itemSlots;
   protected final List<ItemSlot> itemInputSlots;
@@ -486,7 +486,7 @@ public abstract class Processor {
     private final ProcessorItemHandler.Callback onItemChanged;
     private final ProcessorFluidTank.Callback onFluidChanged;
 
-    private IProcessorTier tier = ProcessorTier.BASIC;
+    private ProcessorTier tier = ProcessorTier.BASIC;
 
     private final List<ItemSlot> itemSlots = new ArrayList<>();
     private final List<ItemSlot> itemInputSlots = new ArrayList<>();
@@ -503,7 +503,7 @@ public abstract class Processor {
       this.onFluidChanged = onFluidChanged;
     }
 
-    public Builder tier(final IProcessorTier tier) {
+    public Builder tier(final ProcessorTier tier) {
       this.tier = tier;
       return this;
     }
