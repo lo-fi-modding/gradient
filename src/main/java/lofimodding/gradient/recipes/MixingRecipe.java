@@ -7,7 +7,6 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 import lofimodding.gradient.GradientBlocks;
 import lofimodding.gradient.GradientRecipeSerializers;
-import lofimodding.gradient.tileentities.pieces.ProcessorTier;
 import lofimodding.progression.Stage;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
@@ -39,14 +38,14 @@ public class MixingRecipe implements IGradientRecipe {
   private final ResourceLocation id;
   private final String group;
   private final NonNullList<Stage> stages;
-  private final ProcessorTier tier;
+  private final int tier;
   private final int ticks;
   private final ItemStack result;
   private final NonNullList<Ingredient> ingredients;
   private final FluidStack fluid;
   private final boolean simple;
 
-  public MixingRecipe(final ResourceLocation id, final String group, final NonNullList<Stage> stages, final ProcessorTier tier, final int ticks, final ItemStack result, final NonNullList<Ingredient> ingredients, final FluidStack fluid) {
+  public MixingRecipe(final ResourceLocation id, final String group, final NonNullList<Stage> stages, final int tier, final int ticks, final ItemStack result, final NonNullList<Ingredient> ingredients, final FluidStack fluid) {
     this.id = id;
     this.group = group;
     this.stages = stages;
@@ -73,7 +72,7 @@ public class MixingRecipe implements IGradientRecipe {
   }
 
   @Override
-  public ProcessorTier getTier() {
+  public int getTier() {
     return this.tier;
   }
 
@@ -195,7 +194,7 @@ public class MixingRecipe implements IGradientRecipe {
         stages.add(Stage.REGISTRY.get().getValue(new ResourceLocation(element.getAsString())));
       }
 
-      final ProcessorTier tier = ProcessorTier.valueOf(JSONUtils.getString(json, "tier"));
+      final int tier = JSONUtils.getInt(json, "tier", 0);
       final int ticks = JSONUtils.getInt(json, "ticks");
 
       final NonNullList<Ingredient> ingredients = readIngredients(JSONUtils.getJsonArray(json, "ingredients"));
@@ -245,7 +244,7 @@ public class MixingRecipe implements IGradientRecipe {
         stages.add(buffer.readRegistryIdSafe(Stage.class));
       }
 
-      final ProcessorTier tier = buffer.readEnumValue(ProcessorTier.class);
+      final int tier = buffer.readVarInt();
       final int ticks = buffer.readVarInt();
 
       final int ingredientCount = buffer.readVarInt();
@@ -269,7 +268,7 @@ public class MixingRecipe implements IGradientRecipe {
         buffer.writeRegistryId(stage);
       }
 
-      buffer.writeEnumValue(recipe.tier);
+      buffer.writeVarInt(recipe.tier);
       buffer.writeVarInt(recipe.ticks);
 
       buffer.writeVarInt(recipe.ingredients.size());

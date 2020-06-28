@@ -94,7 +94,7 @@ public final class GradientRecipeBuilder {
     private final Item result;
     private final int count;
     private final Set<Stage> stages = new HashSet<>();
-    private ProcessorTier tier = ProcessorTier.BASIC;
+    private int tier;
     private int ticks;
     private final List<Ingredient> ingredients = Lists.newArrayList();
     private final Advancement.Builder advancementBuilder = Advancement.Builder.builder();
@@ -111,6 +111,11 @@ public final class GradientRecipeBuilder {
     }
 
     public Grinding tier(final ProcessorTier tier) {
+      this.tier = tier.getTier();
+      return this;
+    }
+
+    public Grinding tier(final int tier) {
       this.tier = tier;
       return this;
     }
@@ -186,7 +191,7 @@ public final class GradientRecipeBuilder {
     public static class Result implements IFinishedRecipe {
       private final ResourceLocation id;
       private final Set<Stage> stages;
-      private final ProcessorTier tier;
+      private final int tier;
       private final int ticks;
       private final Item result;
       private final int count;
@@ -195,7 +200,7 @@ public final class GradientRecipeBuilder {
       private final Advancement.Builder advancementBuilder;
       private final ResourceLocation advancementId;
 
-      protected Result(final ResourceLocation id, final Set<Stage> stages, final ProcessorTier tier, final int ticks, final Item result, final int count, final String group, final List<Ingredient> ingredients, final Advancement.Builder advancementBuilder, final ResourceLocation advancementId) {
+      protected Result(final ResourceLocation id, final Set<Stage> stages, final int tier, final int ticks, final Item result, final int count, final String group, final List<Ingredient> ingredients, final Advancement.Builder advancementBuilder, final ResourceLocation advancementId) {
         this.id = id;
         this.stages = stages;
         this.tier = tier;
@@ -220,7 +225,7 @@ public final class GradientRecipeBuilder {
         }
         json.add("stages", stages);
 
-        json.addProperty("tier", this.tier.name());
+        json.addProperty("tier", this.tier);
         json.addProperty("ticks", this.ticks);
 
         final JsonArray array = new JsonArray();
@@ -737,7 +742,7 @@ public final class GradientRecipeBuilder {
     private final Item result;
     private final int count;
     private final Set<Stage> stages = new HashSet<>();
-    private ProcessorTier tier = ProcessorTier.BASIC;
+    private int tier;
     private int ticks;
     private final List<Ingredient> ingredients = Lists.newArrayList();
     private FluidStack fluid = FluidStack.EMPTY;
@@ -754,8 +759,13 @@ public final class GradientRecipeBuilder {
       return this;
     }
 
-    public Mixing tier(final ProcessorTier tier) {
+    public Mixing tier(final int tier) {
       this.tier = tier;
+      return this;
+    }
+
+    public Mixing tier(final ProcessorTier tier) {
+      this.tier = tier.getTier();
       return this;
     }
 
@@ -835,7 +845,7 @@ public final class GradientRecipeBuilder {
     public static class Result implements IFinishedRecipe {
       private final ResourceLocation id;
       private final Set<Stage> stages;
-      private final ProcessorTier tier;
+      private final int tier;
       private final int ticks;
       private final Item result;
       private final int count;
@@ -845,7 +855,7 @@ public final class GradientRecipeBuilder {
       private final Advancement.Builder advancementBuilder;
       private final ResourceLocation advancementId;
 
-      protected Result(final ResourceLocation id, final Set<Stage> stages, final ProcessorTier tier, final int ticks, final Item result, final int count, final String group, final List<Ingredient> ingredients, final FluidStack fluid, final Advancement.Builder advancementBuilder, final ResourceLocation advancementId) {
+      protected Result(final ResourceLocation id, final Set<Stage> stages, final int tier, final int ticks, final Item result, final int count, final String group, final List<Ingredient> ingredients, final FluidStack fluid, final Advancement.Builder advancementBuilder, final ResourceLocation advancementId) {
         this.id = id;
         this.stages = stages;
         this.tier = tier;
@@ -871,7 +881,7 @@ public final class GradientRecipeBuilder {
         }
         json.add("stages", stages);
 
-        json.addProperty("tier", this.tier.name().toLowerCase());
+        json.addProperty("tier", this.tier);
         json.addProperty("ticks", this.ticks);
 
         final JsonArray array = new JsonArray();

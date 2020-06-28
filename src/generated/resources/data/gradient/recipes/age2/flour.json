@@ -3,7 +3,7 @@
   "stages": [
     "gradient:age_2"
   ],
-  "tier": "BASIC",
+  "tier": 0,
   "ticks": 80,
   "ingredients": [
     {

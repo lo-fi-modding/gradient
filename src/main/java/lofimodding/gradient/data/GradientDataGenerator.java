@@ -1340,6 +1340,7 @@ public final class GradientDataGenerator {
       this.add("jei.fuel.heat_per_sec", "Heat: %d °C/s");
 
       this.add("jei.grinding.name", "Grinding");
+      this.add("jei.grinding.tier", "Tier %s");
       this.add("jei.grinding.ticks", "%d ticks");
 
       this.add("jei.hardening.name", "Hardening");
@@ -1351,6 +1352,7 @@ public final class GradientDataGenerator {
       this.add("jei.melting.ticks", "%d ticks");
 
       this.add("jei.mixing.name", "Mixing");
+      this.add("jei.mixing.tier", "Tier %s");
       this.add("jei.mixing.ticks", "%d ticks");
 
       this.add("jei.alloy.name", "Alloying");

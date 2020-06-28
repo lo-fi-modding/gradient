@@ -13,12 +13,13 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import java.util.Set;
 
 public interface IGradientRecipe extends IRecipe<IInventory> {
-  ProcessorTier getTier();
+  int getTier();
   int getTicks();
   int getItemInputCount();
   int getItemOutputCount();
   boolean matchesStages(final Set<Stage> stages);
-  default boolean matchesTier(final ProcessorTier tier) { return this.getTier().compareTo(tier) >= 0; }
+  default boolean matchesTier(final int tier) { return this.getTier() >= tier; }
+  default boolean matchesTier(final ProcessorTier tier) { return this.matchesTier(tier.getTier()); }
   boolean matchesItems(final NonNullList<ItemStack> stacks);
   ItemStack getItemOutput(final int slot);
 
