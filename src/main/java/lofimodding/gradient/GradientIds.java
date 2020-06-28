@@ -144,6 +144,7 @@ public final class GradientIds {
   public static final String CLAY_OVEN = "clay_oven";
   public static final String CLAY_CRUCIBLE = "clay_crucible";
   public static final String CLAY_METAL_MIXER = "clay_metal_mixer";
+  public static final String CLAY_BUCKET = "clay_bucket";
   public static final String EMPTY_CLAY_BUCKET = "empty_clay_bucket";
 
   public static final String FILLED_CLAY_BUCKET = "filled_clay_bucket";

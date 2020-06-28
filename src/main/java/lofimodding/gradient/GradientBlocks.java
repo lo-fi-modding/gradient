@@ -1,5 +1,6 @@
 package lofimodding.gradient;
 
+import lofimodding.gradient.blocks.ClayBucketBlock;
 import lofimodding.gradient.blocks.ClayCastBlock;
 import lofimodding.gradient.blocks.ClayCrucibleBlock;
 import lofimodding.gradient.blocks.ClayFurnaceBlock;
@@ -120,6 +121,7 @@ public final class GradientBlocks {
   public static final RegistryObject<ClayOvenBlock> CLAY_OVEN = REGISTRY.register(GradientIds.CLAY_OVEN, ClayOvenBlock::new);
   public static final RegistryObject<ClayCrucibleBlock> CLAY_CRUCIBLE = REGISTRY.register(GradientIds.CLAY_CRUCIBLE, ClayCrucibleBlock::new);
   public static final RegistryObject<ClayMetalMixerBlock> CLAY_METAL_MIXER = REGISTRY.register(GradientIds.CLAY_METAL_MIXER, ClayMetalMixerBlock::new);
+  public static final RegistryObject<ClayBucketBlock> CLAY_BUCKET = REGISTRY.register(GradientIds.CLAY_BUCKET, ClayBucketBlock::new);
   private static final Map<GradientCasts, RegistryObject<ClayCastBlock>> CLAY_CASTS = new EnumMap<>(GradientCasts.class);
 
   static {

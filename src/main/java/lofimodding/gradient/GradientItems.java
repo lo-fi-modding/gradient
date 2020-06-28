@@ -200,6 +200,7 @@ public final class GradientItems {
   public static final RegistryObject<BlockItem> CLAY_OVEN = REGISTRY.register(GradientIds.CLAY_OVEN, () -> new BlockItem(GradientBlocks.CLAY_OVEN.get(), new Item.Properties().group(GROUP)));
   public static final RegistryObject<BlockItem> CLAY_CRUCIBLE = REGISTRY.register(GradientIds.CLAY_CRUCIBLE, () -> new BlockItem(GradientBlocks.CLAY_CRUCIBLE.get(), new Item.Properties().group(GROUP)));
   public static final RegistryObject<BlockItem> CLAY_METAL_MIXER = REGISTRY.register(GradientIds.CLAY_METAL_MIXER, () -> new BlockItem(GradientBlocks.CLAY_METAL_MIXER.get(), new Item.Properties().group(GROUP)));
+  public static final RegistryObject<BlockItem> CLAY_BUCKET = REGISTRY.register(GradientIds.CLAY_BUCKET, () -> new BlockItem(GradientBlocks.CLAY_BUCKET.get(), new Item.Properties().group(GROUP)));
   public static final RegistryObject<EmptyClayBucketItem> EMPTY_CLAY_BUCKET = REGISTRY.register(GradientIds.EMPTY_CLAY_BUCKET, EmptyClayBucketItem::new);
   public static final RegistryObject<FilledClayBucketItem> FILLED_CLAY_BUCKET = REGISTRY.register(GradientIds.FILLED_CLAY_BUCKET, FilledClayBucketItem::new);
 

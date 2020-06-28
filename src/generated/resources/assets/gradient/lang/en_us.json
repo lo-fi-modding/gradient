@@ -92,6 +92,7 @@
   "block.gradient.bronze_block": "Block of Bronze",
   "block.gradient.cassiterite_ore": "Cassiterite Ore",
   "block.gradient.cassiterite_pebble": "Cassiterite Pebble",
+  "block.gradient.clay_bucket": "Clay Bucket",
   "block.gradient.clay_cast_hammer_head": "Clay Cast (Hammer Head)",
   "block.gradient.clay_cast_hammer_head.tooltip.1": "Right click on a crucible to cast",
   "block.gradient.clay_cast_hammer_head.tooltip.2": "Requires %d mB",
