@@ -2656,7 +2656,7 @@ public final class GradientDataGenerator {
             withSurvivesExplosion(
               block,
               LootPool.builder()
-                .rolls(RandomValueRange.of(3, 7))
+                .rolls(RandomValueRange.of(1, 4))
                 .addEntry(ItemLootEntry.builder(nugget))
             )
             .acceptCondition(STONE_HAMMER)
