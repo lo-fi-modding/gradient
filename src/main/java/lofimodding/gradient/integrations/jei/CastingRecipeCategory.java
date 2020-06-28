@@ -2,6 +2,7 @@ package lofimodding.gradient.integrations.jei;
 
 import lofimodding.gradient.Gradient;
 import lofimodding.gradient.GradientCasts;
+import lofimodding.gradient.GradientFluids;
 import lofimodding.gradient.GradientItems;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
@@ -68,7 +69,7 @@ public class CastingRecipeCategory implements IRecipeCategory<JeiIntegration.Cas
     guiItemStacks.init(0, true, 0, 0);
     guiItemStacks.set(0, inputItems.get(0));
 
-    guiFluidStacks.init(1, true, 21, 1, 16, 16, recipe.cast.metalAmount, false, null);
+    guiFluidStacks.init(1, true, 21, 1, 16, 16, GradientFluids.INGOT_AMOUNT, false, null);
     guiFluidStacks.set(1, inputFluids.get(0));
 
     guiItemStacks.init(2, false, 58, 0);

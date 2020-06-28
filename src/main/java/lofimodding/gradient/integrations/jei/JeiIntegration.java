@@ -199,7 +199,7 @@ public class JeiIntegration implements IModPlugin {
     public CastingRecipe(final GradientCasts cast, final Metal metal) {
       this.cast = cast;
       this.metal = metal;
-      this.fluid = new FluidStack(GradientFluids.METAL(metal).get(), GradientFluids.INGOT_AMOUNT);
+      this.fluid = new FluidStack(GradientFluids.METAL(metal).get(), cast.metalAmount);
       this.ingredients = NonNullList.withSize(1, Ingredient.fromItems(GradientItems.CLAY_CAST(cast).get()));
       this.output = new ItemStack(cast.getItem(metal));
     }
