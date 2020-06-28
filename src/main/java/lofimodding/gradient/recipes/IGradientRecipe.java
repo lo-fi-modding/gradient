@@ -18,7 +18,7 @@ public interface IGradientRecipe extends IRecipe<IInventory> {
   int getItemInputCount();
   int getItemOutputCount();
   boolean matchesStages(final Set<Stage> stages);
-  default boolean matchesTier(final int tier) { return this.getTier() >= tier; }
+  default boolean matchesTier(final int tier) { return tier >= this.getTier(); }
   default boolean matchesTier(final ProcessorTier tier) { return this.matchesTier(tier.getTier()); }
   boolean matchesItems(final NonNullList<ItemStack> stacks);
   ItemStack getItemOutput(final int slot);
