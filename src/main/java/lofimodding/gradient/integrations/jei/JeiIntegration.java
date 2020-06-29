@@ -101,6 +101,7 @@ public class JeiIntegration implements IModPlugin {
     registration.addRecipes(getCastingRecipes(), Gradient.loc("casting"));
 
     registration.addIngredientInfo(new ItemStack(GradientItems.FIREPIT.get()), VanillaTypes.ITEM, I18n.format("jei.information." + GradientIds.FIREPIT + ".1"), I18n.format("jei.information." + GradientIds.FIREPIT + ".2"), I18n.format("jei.information." + GradientIds.FIREPIT + ".3"));
+    registration.addIngredientInfo(new ItemStack(GradientItems.RECIPE_FILTER.get()), VanillaTypes.ITEM, I18n.format("jei.information." + GradientIds.RECIPE_FILTER + ".1"));
   }
 
   @Override

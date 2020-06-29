@@ -1141,7 +1141,8 @@ public final class GradientDataGenerator {
 
       this.add("tier.gradient.basic", "Basic");
       this.add("tier.gradient.mechanical", "Mechanical");
-      this.add("gradient.processor.tooltip", "%s (tier %d)");
+      this.add("gradient.processor.tooltip.1", "%s (tier %d)");
+      this.add("gradient.processor.tooltip.2", "Supports recipe filter");
 
       this.add(GradientBlocks.PEBBLE.get(), "Pebble");
       this.add(GradientItems.PEBBLE.get(), "Pebble");
@@ -1369,6 +1370,7 @@ public final class GradientDataGenerator {
       this.add("jei.information." + GradientIds.FIREPIT + ".1", "The firepit is one of the most important fixtures of an early civilisation. Provided with fuel to burn, it can both cook food and produce heat.");
       this.add("jei.information." + GradientIds.FIREPIT + ".2", "To light a firepit, fill it with fuel and right-click on it with a fire starter. Each fuel has a minimum temperature required to ignite. The easiest way to get it up to heat is with a cycle of fibre, then a cycle of sticks, then a few cycles of planks until it's hot enough to ignite coal. Experimentation is encouraged.");
       this.add("jei.information." + GradientIds.FIREPIT + ".3", "Placing a clay furnace on a firepit will insulate it, helping it maintain its heat and achieve higher temperatures. Multiple firepits/furnaces adjacent to each other will share heat.");
+      this.add("jei.information." + GradientIds.RECIPE_FILTER + ".1", "The recipe filter can be used to lock many of Gradient's machines to a specific set of ingredients. This can be very useful (and sometimes necessary) for automation. For example, the mixing basin has multiple input slots that require different ingredients, but a hopper would fill up all of its slots with the first item it contains. By shift-right-clicking on a mixing basin with a recipe filter, its item and fluid slots will be locked to their current contents and won't accept anything else until unlocked.");
 
       this.age1("root", "Age 1: Stone Age", "Humankind's first steps");
       this.age1("basic_materials", "Basic Materials", "Gather sticks from leaves, fibre from grass, and pebbles from the ground");
