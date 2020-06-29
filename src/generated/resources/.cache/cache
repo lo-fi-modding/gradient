@@ -1096,10 +1096,10 @@ fdc53956b155fb154c20739b94d59431ffc203ac data/gradient/recipes/mixing/salted_hid
 e09a94e04f19da0b3a1602935de04843ad498d20 data/gradient/recipes/tool_station/age2/hardened_stick.json
 49ce2c9c3ffe8fb1aac89563a6fcedfb1342e478 data/gradient/tags/blocks/fibre_sources.json
 e7cd8ed9065b30a836c0fce53939ef05cd486b13 data/gradient/tags/blocks/pebble_sources.json
-894d32506001745409f938d3230927ec1dcbc0b4 data/gradient/tags/items/axes.json
+34980151285c86bf160d6353717cd07725053a39 data/gradient/tags/items/axes.json
 1f54cca1986a6f3b01df409687d43e49a61f6e29 data/gradient/tags/items/casts.json
 149fbf8fa7cd80664f258d0035d183f78f5388fd data/gradient/tags/items/fibre_torch_lighters.json
-1163b6e270d01e04dac07775f5ddcc0bdf900752 data/gradient/tags/items/hammers.json
+38966ba74d63d5387feff80a138d43a80f83afa5 data/gradient/tags/items/hammers.json
 24401b423446f329ad1e274d194dec2af500803f data/gradient/tags/items/pelts.json
 17b861d2f2f65fab1a8b8f42c4a6344fade1825a data/gradient/tags/items/pelts/cat.json
 9b7f1834ab0d375542598b40ee8b60a2c51bbbcd data/gradient/tags/items/pelts/cow.json

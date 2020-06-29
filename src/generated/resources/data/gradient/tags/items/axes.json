@@ -2,6 +2,14 @@
   "replace": false,
   "values": [
     "gradient:stone_hatchet",
-    "gradient:stone_mattock"
+    "gradient:stone_mattock",
+    "gradient:bronze_mattock",
+    "gradient:copper_mattock",
+    "gradient:gold_mattock",
+    "gradient:iron_mattock",
+    "gradient:lead_mattock",
+    "gradient:magnesium_mattock",
+    "gradient:tin_mattock",
+    "gradient:zinc_mattock"
   ]
 }

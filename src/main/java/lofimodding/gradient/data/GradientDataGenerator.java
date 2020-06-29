@@ -1484,6 +1484,11 @@ public final class GradientDataGenerator {
       this.getBuilder(GradientTags.Items.AXES).add(GradientItems.STONE_HATCHET.get(), GradientItems.STONE_MATTOCK.get());
       this.getBuilder(GradientTags.Items.HAMMERS).add(GradientItems.STONE_HAMMER.get());
 
+      for(final Metal metal : Minerals.metals()) {
+        this.getBuilder(GradientTags.Items.AXES).add(GradientItems.METAL_MATTOCKS.get(metal).get());
+        this.getBuilder(GradientTags.Items.HAMMERS).add(GradientItems.METAL_HAMMERS.get(metal).get());
+      }
+
       this.getBuilder(GradientTags.Items.FIBRE_TORCH_LIGHTERS).add(GradientItems.LIT_FIBRE_TORCH.get(), Items.TORCH, Items.FLINT_AND_STEEL);
 
       for(final Ore ore : Minerals.ores()) {

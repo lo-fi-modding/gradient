@@ -1,6 +1,14 @@
 {
   "replace": false,
   "values": [
-    "gradient:stone_hammer"
+    "gradient:stone_hammer",
+    "gradient:bronze_hammer",
+    "gradient:copper_hammer",
+    "gradient:gold_hammer",
+    "gradient:iron_hammer",
+    "gradient:lead_hammer",
+    "gradient:magnesium_hammer",
+    "gradient:tin_hammer",
+    "gradient:zinc_hammer"
   ]
 }
