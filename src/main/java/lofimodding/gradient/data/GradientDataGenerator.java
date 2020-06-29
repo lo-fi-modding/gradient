@@ -1415,7 +1415,7 @@ public final class GradientDataGenerator {
       this.age2("hardened_planks", "Hard Planks", "Harden planks by placing them next to a firepit, or chopping hardened logs");
       this.age2("hardened_stick", "Hard Sticks", "Chop hardened planks into sticks");
       this.age2("stone_pickaxe", "Mining 201", "Craft a stone pickaxe");
-      this.age2("ore", "I Dig It", "Mine your first metal with a pickaxe or hammer");
+      this.age2("ore", "I Dig It", "Mine your first metal");
       this.age2("clay_crucible", "Melting Point", "Make a clay crucible to begin your journey into the bronze age");
       this.age2("clay_cast", "Casting Call", "Make a clay cast to cast your molten metal");
       this.age2("coal", "Getting Dirty", "Track down some coal ore and use your pickaxe or hammer to harvest it");
@@ -1428,6 +1428,7 @@ public final class GradientDataGenerator {
       this.age2("wooden_axle", "Connected", "Craft a wooden axle");
       this.age2("wooden_gear", "Geared Up", "Craft an wooden gear");
       this.age2("wooden_gearbox", "Detour", "Craft a wooden gearbox to route your mechanical energy");
+      this.age2("wooden_crank", "Crank It Up To 11", "Craft a wooden crank to power your dreams");
     }
 
     private void age1(final String key, final String title, final String description) {
