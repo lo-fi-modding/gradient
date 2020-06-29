@@ -34,7 +34,8 @@ public abstract class ProcessorBlock<Energy extends IEnergySource<Energy>, Tile 
   @Override
   public void addInformation(final ItemStack stack, @Nullable final IBlockReader world, final List<ITextComponent> tooltip, final ITooltipFlag flag) {
     super.addInformation(stack, world, tooltip, flag);
-    tooltip.add(new TranslationTextComponent("gradient.processor.tooltip", this.tier.getLocalizedName(), this.tier.getTier()));
+    tooltip.add(new TranslationTextComponent("gradient.processor.tooltip.1", this.tier.getLocalizedName(), this.tier.getTier()));
+    tooltip.add(new TranslationTextComponent("gradient.processor.tooltip.2"));
   }
 
   @Override
