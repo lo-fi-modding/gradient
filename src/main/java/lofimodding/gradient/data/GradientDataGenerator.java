@@ -1417,8 +1417,6 @@ public final class GradientDataGenerator {
       this.age2("tool_station", "Tools On Tools On Tools", "For the BIG projects");
       this.age2("stone_pickaxe", "Mining 201", "Craft a stone pickaxe");
       this.age2("ore", "I Dig It", "Mine your first metal");
-      this.age2("clay_crucible", "Melting Point", "Make a clay crucible to begin your journey into the bronze age");
-      this.age2("clay_cast", "Casting Call", "Make a clay cast to cast your molten metal");
       this.age2("coal", "Getting Dirty", "Track down some coal ore and use your pickaxe or hammer to harvest it");
       this.age2("stone_mattock", "Two For One", "Craft a stone mattock");
       this.age2("till", "Hoedown", "Till dirt with your mattock");
@@ -1435,7 +1433,12 @@ public final class GradientDataGenerator {
       this.age2("mechanical_grindstone", "Extra Fine", "Craft a mechanical grindstone");
       this.age2("mechanical_mixing_basin", "Mix And Match", "Craft a mechanical mixing basin");
       this.age2("mechanical_pump", "I Want These Pillows POUMPED", "Craft a mechanical pump");
+      this.age2("recipe_filter", "Lock It Down", "Craft a recipe filter");
       this.age2("crushed_ore", "I've Got A Crush On You", "Use your mechanical grindstone to crush some ore");
+      this.age2("clay_crucible", "Melting Point", "Make a clay crucible to begin your journey into the bronze age");
+      this.age2("clay_metal_mixer", "Alloy Allure", "Make a clay metal mixer to create your first alloy");
+      this.age2("clay_cast", "Casting Call", "Make a clay cast to cast your molten metal");
+      this.age2("bronze", "Now You're On To Something", "Cast your first of many bronze ingots");
     }
 
     private void age1(final String key, final String title, final String description) {

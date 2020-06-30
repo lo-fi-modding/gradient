@@ -1,5 +1,5 @@
 {
-  "parent": "gradient:age2/crushed_ore",
+  "parent": "gradient:age2/mechanical_grindstone",
   "display": {
     "icon": {
       "item": "gradient:clay_crucible"
@@ -14,14 +14,14 @@
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false,
-    "x": 10.0,
-    "y": -0.5
+    "x": 9.0,
+    "y": 2.75
   },
   "criteria": {
     "has_parent_0": {
       "trigger": "gradient:advancement_unlocked",
       "conditions": {
-        "id": "gradient:age2/crushed_ore"
+        "id": "gradient:age2/mechanical_grindstone"
       }
     },
     "has_clay_crucible": {

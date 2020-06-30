@@ -1,35 +1,38 @@
 {
-  "parent": "gradient:age2/wooden_gear",
+  "parent": "gradient:age2/clay_metal_mixer",
   "display": {
     "icon": {
-      "item": "gradient:wooden_hopper"
+      "item": "gradient:bronze_ingot"
     },
     "title": {
-      "translate": "advancements.gradient.age2.wooden_hopper.title"
+      "translate": "advancements.gradient.age2.bronze.title"
     },
     "description": {
-      "translate": "advancements.gradient.age2.wooden_hopper.description"
+      "translate": "advancements.gradient.age2.bronze.description"
     },
-    "frame": "task",
+    "frame": "challenge",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false,
-    "x": 6.0,
-    "y": 5.25
+    "x": 12.0,
+    "y": 2.25
+  },
+  "rewards": {
+    "function": "gradient:grant_age_3"
   },
   "criteria": {
     "has_parent_0": {
       "trigger": "gradient:advancement_unlocked",
       "conditions": {
-        "id": "gradient:age2/wooden_gear"
+        "id": "gradient:age2/clay_metal_mixer"
       }
     },
-    "has_wooden_hopper": {
+    "has_bronze": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "gradient:wooden_hopper"
+            "item": "gradient:bronze_ingot"
           }
         ]
       }
@@ -40,7 +43,7 @@
       "has_parent_0"
     ],
     [
-      "has_wooden_hopper"
+      "has_bronze"
     ]
   ]
 }

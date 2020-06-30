@@ -1,5 +1,5 @@
 {
-  "parent": "gradient:age2/clay_crucible",
+  "parent": "gradient:age2/clay_metal_mixer",
   "display": {
     "icon": {
       "item": "gradient:clay_cast_ingot"
@@ -10,18 +10,18 @@
     "description": {
       "translate": "advancements.gradient.age2.clay_cast.description"
     },
-    "frame": "goal",
+    "frame": "task",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false,
     "x": 11.0,
-    "y": -0.5
+    "y": 2.25
   },
   "criteria": {
     "has_parent_0": {
       "trigger": "gradient:advancement_unlocked",
       "conditions": {
-        "id": "gradient:age2/clay_crucible"
+        "id": "gradient:age2/clay_metal_mixer"
       }
     },
     "has_clay_cast": {
