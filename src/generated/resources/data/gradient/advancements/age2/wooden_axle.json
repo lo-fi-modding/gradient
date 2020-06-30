@@ -21,10 +21,16 @@
     "has_parent_0": {
       "trigger": "gradient:advancement_unlocked",
       "conditions": {
-        "id": "gradient:age2/leather"
+        "id": "gradient:age2/clay_furnace"
       }
     },
     "has_parent_1": {
+      "trigger": "gradient:advancement_unlocked",
+      "conditions": {
+        "id": "gradient:age2/leather"
+      }
+    },
+    "has_parent_2": {
       "trigger": "gradient:advancement_unlocked",
       "conditions": {
         "id": "gradient:age2/tool_station"
@@ -47,6 +53,9 @@
     ],
     [
       "has_parent_1"
+    ],
+    [
+      "has_parent_2"
     ],
     [
       "has_wooden_axle"
