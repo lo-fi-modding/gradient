@@ -1,8 +1,8 @@
 {
-  "parent": "gradient:age2/stone_pickaxe",
+  "parent": "gradient:age2/coal",
   "display": {
     "icon": {
-      "item": "gradient:copper_nugget"
+      "item": "gradient:copper_ore"
     },
     "title": {
       "translate": "advancements.gradient.age2.ore.title"
@@ -14,14 +14,14 @@
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false,
-    "x": 6.0,
-    "y": -0.75
+    "x": 7.0,
+    "y": 1.75
   },
   "criteria": {
     "has_parent_0": {
       "trigger": "gradient:advancement_unlocked",
       "conditions": {
-        "id": "gradient:age2/stone_pickaxe"
+        "id": "gradient:age2/coal"
       }
     },
     "has_nugget": {

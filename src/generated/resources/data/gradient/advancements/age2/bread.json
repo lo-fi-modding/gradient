@@ -10,12 +10,12 @@
     "description": {
       "translate": "advancements.gradient.age2.bread.description"
     },
-    "frame": "task",
+    "frame": "goal",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false,
     "x": 8.0,
-    "y": 1.25
+    "y": 0.75
   },
   "criteria": {
     "has_parent_0": {

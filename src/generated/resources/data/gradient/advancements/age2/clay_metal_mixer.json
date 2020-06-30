@@ -1,47 +1,41 @@
 {
-  "parent": "gradient:age2/tool_station",
+  "parent": "gradient:age2/clay_crucible",
   "display": {
     "icon": {
-      "item": "minecraft:lead"
+      "item": "gradient:clay_metal_mixer"
     },
     "title": {
-      "translate": "advancements.gradient.age2.leash.title"
+      "translate": "advancements.gradient.age2.clay_metal_mixer.title"
     },
     "description": {
-      "translate": "advancements.gradient.age2.leash.description"
+      "translate": "advancements.gradient.age2.clay_metal_mixer.description"
     },
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false,
-    "x": 5.0,
-    "y": 3.0
+    "x": 10.0,
+    "y": 2.25
   },
   "criteria": {
     "has_parent_0": {
       "trigger": "gradient:advancement_unlocked",
       "conditions": {
-        "id": "gradient:age2/clay_furnace"
+        "id": "gradient:age2/crushed_ore"
       }
     },
     "has_parent_1": {
       "trigger": "gradient:advancement_unlocked",
       "conditions": {
-        "id": "gradient:age2/leather"
+        "id": "gradient:age2/clay_crucible"
       }
     },
-    "has_parent_2": {
-      "trigger": "gradient:advancement_unlocked",
-      "conditions": {
-        "id": "gradient:age2/tool_station"
-      }
-    },
-    "has_leash": {
+    "has_clay_metal_mixer": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:lead"
+            "item": "gradient:clay_metal_mixer"
           }
         ]
       }
@@ -55,10 +49,7 @@
       "has_parent_1"
     ],
     [
-      "has_parent_2"
-    ],
-    [
-      "has_leash"
+      "has_clay_metal_mixer"
     ]
   ]
 }

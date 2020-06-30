@@ -15,7 +15,7 @@
     "hidden": false,
     "background": "minecraft:textures/block/farmland.png",
     "x": 0.0,
-    "y": 0.5
+    "y": 2.25
   },
   "criteria": {
     "has_age_2": {

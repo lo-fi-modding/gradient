@@ -15,7 +15,7 @@
     "announce_to_chat": true,
     "hidden": false,
     "x": 0.5,
-    "y": -2.5
+    "y": 0.375
   },
   "criteria": {
     "has_parent_0": {

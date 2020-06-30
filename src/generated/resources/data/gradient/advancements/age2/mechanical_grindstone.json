@@ -1,35 +1,35 @@
 {
-  "parent": "gradient:age2/root",
+  "parent": "gradient:age2/wooden_crank",
   "display": {
     "icon": {
-      "item": "minecraft:clay_ball"
+      "item": "gradient:mechanical_grindstone"
     },
     "title": {
-      "translate": "advancements.gradient.age2.clay.title"
+      "translate": "advancements.gradient.age2.mechanical_grindstone.title"
     },
     "description": {
-      "translate": "advancements.gradient.age2.clay.description"
+      "translate": "advancements.gradient.age2.mechanical_grindstone.description"
     },
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false,
-    "x": 3.0,
-    "y": 1.0
+    "x": 8.0,
+    "y": 2.75
   },
   "criteria": {
     "has_parent_0": {
       "trigger": "gradient:advancement_unlocked",
       "conditions": {
-        "id": "gradient:age2/root"
+        "id": "gradient:age2/wooden_crank"
       }
     },
-    "has_clay": {
+    "has_mechanical_grindstone": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:clay_ball"
+            "item": "gradient:mechanical_grindstone"
           }
         ]
       }
@@ -40,7 +40,7 @@
       "has_parent_0"
     ],
     [
-      "has_clay"
+      "has_mechanical_grindstone"
     ]
   ]
 }

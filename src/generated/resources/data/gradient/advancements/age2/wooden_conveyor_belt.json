@@ -1,45 +1,45 @@
 {
-  "parent": "gradient:age2/stone_pickaxe",
+  "parent": "gradient:age2/wooden_hopper",
   "display": {
     "icon": {
-      "item": "minecraft:coal"
+      "item": "gradient:wooden_conveyor_belt"
     },
     "title": {
-      "translate": "advancements.gradient.age2.coal.title"
+      "translate": "advancements.gradient.age2.wooden_conveyor_belt.title"
     },
     "description": {
-      "translate": "advancements.gradient.age2.coal.description"
+      "translate": "advancements.gradient.age2.wooden_conveyor_belt.description"
     },
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false,
-    "x": 6.0,
-    "y": 1.75
+    "x": 7.0,
+    "y": 5.25
   },
   "criteria": {
     "has_parent_0": {
       "trigger": "gradient:advancement_unlocked",
       "conditions": {
-        "id": "gradient:age2/stone_pickaxe"
+        "id": "gradient:age2/wooden_hopper"
       }
     },
-    "has_nugget": {
+    "has_wooden_conveyor_belt": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "gradient:coal_nugget"
+            "item": "gradient:wooden_conveyor_belt"
           }
         ]
       }
     },
-    "has_ore": {
+    "has_wooden_conveyor_belt_driver": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "tag": "minecraft:coals"
+            "item": "gradient:wooden_conveyor_belt_driver"
           }
         ]
       }
@@ -50,8 +50,10 @@
       "has_parent_0"
     ],
     [
-      "has_nugget",
-      "has_ore"
+      "has_wooden_conveyor_belt"
+    ],
+    [
+      "has_wooden_conveyor_belt_driver"
     ]
   ]
 }

@@ -14,8 +14,8 @@
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false,
-    "x": 2.5,
-    "y": -2.5
+    "x": 5.0,
+    "y": -0.5
   },
   "criteria": {
     "has_parent_0": {
