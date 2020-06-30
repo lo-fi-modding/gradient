@@ -1,35 +1,35 @@
 {
-  "parent": "gradient:age2/hardened_wood",
+  "parent": "gradient:age2/wooden_gear",
   "display": {
     "icon": {
-      "item": "gradient:hardened_planks"
+      "item": "gradient:wooden_hopper"
     },
     "title": {
-      "translate": "advancements.gradient.age2.hardened_planks.title"
+      "translate": "advancements.gradient.age2.wooden_hopper.title"
     },
     "description": {
-      "translate": "advancements.gradient.age2.hardened_planks.description"
+      "translate": "advancements.gradient.age2.wooden_hopper.description"
     },
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false,
-    "x": 2.0,
-    "y": 0.75
+    "x": 6.0,
+    "y": 3.75
   },
   "criteria": {
     "has_parent_0": {
       "trigger": "gradient:advancement_unlocked",
       "conditions": {
-        "id": "gradient:age2/hardened_wood"
+        "id": "gradient:age2/wooden_gear"
       }
     },
-    "has_hardened_planks": {
+    "has_wooden_hopper": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "gradient:hardened_planks"
+            "item": "gradient:wooden_hopper"
           }
         ]
       }
@@ -40,7 +40,7 @@
       "has_parent_0"
     ],
     [
-      "has_hardened_planks"
+      "has_wooden_hopper"
     ]
   ]
 }

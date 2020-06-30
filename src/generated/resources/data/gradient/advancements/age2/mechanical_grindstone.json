@@ -1,35 +1,35 @@
 {
-  "parent": "gradient:age2/hardened_wood",
+  "parent": "gradient:age2/wooden_crank",
   "display": {
     "icon": {
-      "item": "gradient:hardened_planks"
+      "item": "gradient:mechanical_grindstone"
     },
     "title": {
-      "translate": "advancements.gradient.age2.hardened_planks.title"
+      "translate": "advancements.gradient.age2.mechanical_grindstone.title"
     },
     "description": {
-      "translate": "advancements.gradient.age2.hardened_planks.description"
+      "translate": "advancements.gradient.age2.mechanical_grindstone.description"
     },
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false,
-    "x": 2.0,
-    "y": 0.75
+    "x": 8.0,
+    "y": 1.625
   },
   "criteria": {
     "has_parent_0": {
       "trigger": "gradient:advancement_unlocked",
       "conditions": {
-        "id": "gradient:age2/hardened_wood"
+        "id": "gradient:age2/wooden_crank"
       }
     },
-    "has_hardened_planks": {
+    "has_mechanical_grindstone": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "gradient:hardened_planks"
+            "item": "gradient:mechanical_grindstone"
           }
         ]
       }
@@ -40,7 +40,7 @@
       "has_parent_0"
     ],
     [
-      "has_hardened_planks"
+      "has_mechanical_grindstone"
     ]
   ]
 }

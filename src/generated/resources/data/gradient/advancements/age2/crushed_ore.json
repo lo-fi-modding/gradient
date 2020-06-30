@@ -1,41 +1,41 @@
 {
-  "parent": "gradient:age2/wooden_gearbox",
+  "parent": "gradient:age2/mechanical_grindstone",
   "display": {
     "icon": {
-      "item": "gradient:wooden_crank"
+      "item": "gradient:copper_crushed"
     },
     "title": {
-      "translate": "advancements.gradient.age2.wooden_crank.title"
+      "translate": "advancements.gradient.age2.crushed_ore.title"
     },
     "description": {
-      "translate": "advancements.gradient.age2.wooden_crank.description"
+      "translate": "advancements.gradient.age2.crushed_ore.description"
     },
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false,
-    "x": 7.0,
-    "y": 2.125
+    "x": 9.0,
+    "y": 1.0375
   },
   "criteria": {
     "has_parent_0": {
       "trigger": "gradient:advancement_unlocked",
       "conditions": {
-        "id": "gradient:age2/saddle"
+        "id": "gradient:age2/ore"
       }
     },
     "has_parent_1": {
       "trigger": "gradient:advancement_unlocked",
       "conditions": {
-        "id": "gradient:age2/wooden_gearbox"
+        "id": "gradient:age2/mechanical_grindstone"
       }
     },
-    "has_wooden_crank": {
+    "has_crushed_ore": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "gradient:wooden_crank"
+            "tag": "forge:crushed_ores"
           }
         ]
       }
@@ -49,7 +49,7 @@
       "has_parent_1"
     ],
     [
-      "has_wooden_crank"
+      "has_crushed_ore"
     ]
   ]
 }

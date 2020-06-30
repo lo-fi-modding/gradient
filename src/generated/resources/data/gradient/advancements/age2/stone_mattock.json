@@ -1,5 +1,5 @@
 {
-  "parent": "gradient:age2/hardened_stick",
+  "parent": "gradient:age2/tool_station",
   "display": {
     "icon": {
       "item": "gradient:stone_mattock",
@@ -16,7 +16,7 @@
     "announce_to_chat": true,
     "hidden": false,
     "x": 5.0,
-    "y": 1.25
+    "y": 5.0
   },
   "criteria": {
     "has_parent_0": {
@@ -28,7 +28,7 @@
     "has_parent_1": {
       "trigger": "gradient:advancement_unlocked",
       "conditions": {
-        "id": "gradient:age2/hardened_stick"
+        "id": "gradient:age2/tool_station"
       }
     },
     "has_stone_mattock": {

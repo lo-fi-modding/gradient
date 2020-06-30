@@ -1,5 +1,5 @@
 {
-  "parent": "gradient:age2/hardened_stick",
+  "parent": "gradient:age2/tool_station",
   "display": {
     "icon": {
       "item": "gradient:stone_pickaxe",
@@ -28,7 +28,7 @@
     "has_parent_1": {
       "trigger": "gradient:advancement_unlocked",
       "conditions": {
-        "id": "gradient:age2/hardened_stick"
+        "id": "gradient:age2/tool_station"
       }
     },
     "has_stone_pickaxe": {
