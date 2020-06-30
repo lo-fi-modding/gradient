@@ -1,6 +1,7 @@
 package lofimodding.gradient.data;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lofimodding.gradient.GradientRecipeSerializers;
@@ -28,11 +29,13 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
 public final class GradientRecipeBuilder {
-  private GradientRecipeBuilder() { }
+  private GradientRecipeBuilder() {
+  }
 
   public static Grinding grinding(final IItemProvider item) {
     return new Grinding(item, 1);
@@ -88,6 +91,10 @@ public final class GradientRecipeBuilder {
 
   public static ShapelessToolStation shapelessToolStation() {
     return new ShapelessToolStation();
+  }
+
+  public static ShapedToolStation shapedToolStation() {
+    return new ShapedToolStation();
   }
 
   public static class Grinding {
@@ -278,7 +285,8 @@ public final class GradientRecipeBuilder {
     private final Advancement.Builder advancementBuilder = Advancement.Builder.builder();
     private String group;
 
-    protected Fuel() { }
+    protected Fuel() {
+    }
 
     public Fuel ticks(final int ticks) {
       this.ticks = ticks;
@@ -1377,6 +1385,10 @@ public final class GradientRecipeBuilder {
       return this;
     }
 
+    public ShapelessToolStation addOutput(final IItemProvider output) {
+      return this.addOutput(new ItemStack(output));
+    }
+
     public ShapelessToolStation addCriterion(final String key, final ICriterionInstance criterion) {
       this.advancementBuilder.withCriterion(key, criterion);
       return this;
@@ -1468,6 +1480,183 @@ public final class GradientRecipeBuilder {
       @Override
       public IRecipeSerializer<?> getSerializer() {
         return GradientRecipeSerializers.SHAPELESS_TOOL_STATION.get();
+      }
+
+      @Override
+      public ResourceLocation getID() {
+        return this.id;
+      }
+
+      @Override
+      @Nullable
+      public JsonObject getAdvancementJson() {
+        return this.advancementBuilder.serialize();
+      }
+
+      @Override
+      @Nullable
+      public ResourceLocation getAdvancementID() {
+        return this.advancementId;
+      }
+    }
+  }
+
+  public static class ShapedToolStation {
+    private final Set<Stage> stages = new HashSet<>();
+    private final List<String> pattern = Lists.newArrayList();
+    private final Map<Character, Ingredient> key = Maps.newLinkedHashMap();
+    private final List<ToolType> tools = new ArrayList<>();
+    private final List<ItemStack> outputs = new ArrayList<>();
+    private final Advancement.Builder advancementBuilder = Advancement.Builder.builder();
+    private String group;
+
+    public ShapedToolStation stage(final Stage stage) {
+      this.stages.add(stage);
+      return this;
+    }
+
+    public ShapedToolStation key(final Character symbol, final Tag<Item> tag) {
+      return this.key(symbol, Ingredient.fromTag(tag));
+    }
+
+    public ShapedToolStation key(final Character symbol, final IItemProvider item) {
+      return this.key(symbol, Ingredient.fromItems(item));
+    }
+
+    public ShapedToolStation key(final Character symbol, final Ingredient ingredient) {
+      if(this.key.containsKey(symbol)) {
+        throw new IllegalArgumentException("Symbol '" + symbol + "' is already defined!");
+      }
+
+      if(symbol == ' ') {
+        throw new IllegalArgumentException("Symbol ' ' (whitespace) is reserved and cannot be defined");
+      }
+
+      this.key.put(symbol, ingredient);
+      return this;
+    }
+
+    public ShapedToolStation patternLine(final String pattern) {
+      if(!this.pattern.isEmpty() && pattern.length() != this.pattern.get(0).length()) {
+        throw new IllegalArgumentException("Pattern must be the same width on every line!");
+      }
+
+      this.pattern.add(pattern);
+      return this;
+    }
+
+    public ShapedToolStation addToolType(final ToolType toolType) {
+      this.tools.add(toolType);
+      return this;
+    }
+
+    public ShapedToolStation addOutput(final ItemStack output) {
+      this.outputs.add(output);
+      return this;
+    }
+
+    public ShapedToolStation addOutput(final IItemProvider output) {
+      return this.addOutput(new ItemStack(output));
+    }
+
+    public ShapedToolStation addCriterion(final String key, final ICriterionInstance criterion) {
+      this.advancementBuilder.withCriterion(key, criterion);
+      return this;
+    }
+
+    public ShapedToolStation setGroup(final String group) {
+      this.group = group;
+      return this;
+    }
+
+    public void build(final Consumer<IFinishedRecipe> finished, final String save) {
+      this.build(finished, new ResourceLocation(save));
+    }
+
+    public void build(final Consumer<IFinishedRecipe> finished, final ResourceLocation save) {
+      this.validate(save);
+      this.advancementBuilder.withParentId(new ResourceLocation("recipes/root")).withCriterion("has_the_recipe", new RecipeUnlockedTrigger.Instance(save)).withRewards(AdvancementRewards.Builder.recipe(save)).withRequirementsStrategy(IRequirementsStrategy.OR);
+      finished.accept(new ShapedToolStation.Result(save, this.stages, this.group == null ? "" : this.group, this.pattern, this.key, this.tools, this.outputs, this.advancementBuilder, new ResourceLocation(save.getNamespace(), "recipes/" + this.outputs.get(0).getItem().getGroup().getPath() + '/' + save.getPath())));
+    }
+
+    private void validate(final ResourceLocation name) {
+      if(this.advancementBuilder.getCriteria().isEmpty()) {
+        throw new IllegalStateException("No way of obtaining recipe " + name);
+      }
+    }
+
+    public static class Result implements IFinishedRecipe {
+      private final ResourceLocation id;
+      private final Set<Stage> stages;
+      private final String group;
+      private final List<String> pattern;
+      private final Map<Character, Ingredient> key;
+      private final List<ToolType> tools;
+      private final List<ItemStack> outputs;
+      private final Advancement.Builder advancementBuilder;
+      private final ResourceLocation advancementId;
+
+      protected Result(final ResourceLocation id, final Set<Stage> stages, final String group, final List<String> pattern, final Map<Character, Ingredient> key, final List<ToolType> tools, final List<ItemStack> outputs, final Advancement.Builder advancementBuilder, final ResourceLocation advancementId) {
+        this.id = id;
+        this.stages = stages;
+        this.group = group;
+        this.pattern = pattern;
+        this.key = key;
+        this.tools = tools;
+        this.outputs = outputs;
+        this.advancementBuilder = advancementBuilder;
+        this.advancementId = advancementId;
+      }
+
+      @Override
+      public void serialize(final JsonObject json) {
+        if(!this.group.isEmpty()) {
+          json.addProperty("group", this.group);
+        }
+
+        final JsonArray stages = new JsonArray();
+        for(final Stage stage : this.stages) {
+          stages.add(stage.getRegistryName().toString());
+        }
+        json.add("stages", stages);
+
+        final JsonArray pattern = new JsonArray();
+        for(final String s : this.pattern) {
+          pattern.add(s);
+        }
+        json.add("pattern", pattern);
+
+        final JsonObject key = new JsonObject();
+        for(final Map.Entry<Character, Ingredient> entry : this.key.entrySet()) {
+          key.add(String.valueOf(entry.getKey()), entry.getValue().serialize());
+        }
+        json.add("key", key);
+
+        final JsonArray tools = new JsonArray();
+        for(final ToolType toolType : this.tools) {
+          tools.add(toolType.getName());
+        }
+
+        json.add("tools", tools);
+
+        final JsonArray outputs = new JsonArray();
+        for(final ItemStack output : this.outputs) {
+          final JsonObject obj = new JsonObject();
+          obj.addProperty("item", output.getItem().getRegistryName().toString());
+
+          if(output.getCount() > 1) {
+            obj.addProperty("count", output.getCount());
+          }
+
+          outputs.add(obj);
+        }
+
+        json.add("outputs", outputs);
+      }
+
+      @Override
+      public IRecipeSerializer<?> getSerializer() {
+        return GradientRecipeSerializers.SHAPED_TOOL_STATION.get();
       }
 
       @Override

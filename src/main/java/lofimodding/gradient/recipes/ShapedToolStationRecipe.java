@@ -10,51 +10,38 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.crafting.RecipeItemHelper;
 import net.minecraft.item.crafting.ShapedRecipe;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ToolType;
-import net.minecraftforge.common.util.RecipeMatcher;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
-public class ShapelessToolStationRecipe implements IToolStationRecipe {
-  private static final RecipeItemHelper RECIPE_ITEM_HELPER = new RecipeItemHelper();
-  private static final List<ItemStack> INPUT_STACKS = new ArrayList<>();
-
+public class ShapedToolStationRecipe implements IToolStationRecipe {
   private final ResourceLocation id;
   private final String group;
   private final int width;
+  private final int height;
   private final NonNullList<Ingredient> ingredients;
   private final NonNullList<ToolType> tools;
   private final NonNullList<ItemStack> outputs;
-  private final boolean simple;
 
-  public ShapelessToolStationRecipe(final ResourceLocation id, final String group, final NonNullList<Ingredient> ingredients, final NonNullList<ToolType> tools, final NonNullList<ItemStack> outputs) {
+  public ShapedToolStationRecipe(final ResourceLocation id, final String group, final int width, final int height, final NonNullList<Ingredient> ingredients, final NonNullList<ToolType> tools, final NonNullList<ItemStack> outputs) {
     if(ingredients.size() > 5 * 5) {
       throw new JsonSyntaxException("Recipe has too many ingredients");
     }
 
-    if(ingredients.size() > 4 * 4) {
-      this.width = 5;
-    } else if(ingredients.size() > 3 * 3) {
-      this.width = 4;
-    } else {
-      this.width = 3;
-    }
-
     this.id = id;
     this.group = group;
+    this.width = width;
+    this.height = height;
     this.ingredients = ingredients;
     this.tools = tools;
     this.outputs = outputs;
-    this.simple = ingredients.stream().allMatch(Ingredient::isSimple);
   }
 
   @Override
@@ -62,39 +49,52 @@ public class ShapelessToolStationRecipe implements IToolStationRecipe {
     return this.width;
   }
 
+  @SuppressWarnings("deprecation")
   @Override
-  public boolean recipeMatches(final IItemHandler recipe, final int width, final int height) {
-    return this.handlerContainsIngredients(recipe, this.ingredients);
+  @Deprecated
+  public boolean canFit(final int width, final int height) {
+    return width >= this.width && height >= this.height;
   }
 
-  private boolean handlerContainsIngredients(final IItemHandler tools, final NonNullList<Ingredient> ingredients) {
-    RECIPE_ITEM_HELPER.clear();
-    INPUT_STACKS.clear();
+  @Override
+  public boolean recipeMatches(final IItemHandler recipe, final int width, final int height) {
+    for(int x = 0; x <= width - this.width; ++x) {
+      for(int y = 0; y <= height - this.height; ++y) {
+        if(this.checkMatch(recipe, width, height, x, y, true)) {
+          return true;
+        }
 
-    int ingredientCount = 0;
-    for(int slot = 0; slot < tools.getSlots(); ++slot) {
-      final ItemStack stack = tools.getStackInSlot(slot);
-
-      if(!stack.isEmpty()) {
-        ++ingredientCount;
-
-        if(this.simple) {
-          RECIPE_ITEM_HELPER.accountStack(stack);
-        } else {
-          INPUT_STACKS.add(stack);
+        if(this.checkMatch(recipe, width, height, x, y, false)) {
+          return true;
         }
       }
     }
 
-    if(ingredientCount != ingredients.size()) {
-      return false;
+    return false;
+  }
+
+  private boolean checkMatch(final IItemHandler inv, final int width, final int height, final int xOffset, final int yOffset, final boolean reversed) {
+    for(int x = 0; x < width; ++x) {
+      for(int y = 0; y < height; ++y) {
+        final int k = x - xOffset;
+        final int l = y - yOffset;
+        Ingredient ingredient = Ingredient.EMPTY;
+
+        if(k >= 0 && l >= 0 && k < this.width && l < this.height) {
+          if(reversed) {
+            ingredient = this.ingredients.get(this.width - k - 1 + l * this.width);
+          } else {
+            ingredient = this.ingredients.get(k + l * this.width);
+          }
+        }
+
+        if(!ingredient.test(inv.getStackInSlot(x + y * width))) {
+          return false;
+        }
+      }
     }
 
-    if(this.simple) {
-      return RECIPE_ITEM_HELPER.canCraft(this, null);
-    }
-
-    return RecipeMatcher.findMatches(INPUT_STACKS, ingredients) != null;
+    return true;
   }
 
   @Override
@@ -134,18 +134,19 @@ public class ShapelessToolStationRecipe implements IToolStationRecipe {
 
   @Override
   public IRecipeSerializer<?> getSerializer() {
-    return GradientRecipeSerializers.SHAPELESS_TOOL_STATION.get();
+    return GradientRecipeSerializers.SHAPED_TOOL_STATION.get();
   }
 
-  public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<ShapelessToolStationRecipe> {
+  public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<ShapedToolStationRecipe> {
     @Override
-    public ShapelessToolStationRecipe read(final ResourceLocation id, final JsonObject json) {
+    public ShapedToolStationRecipe read(final ResourceLocation id, final JsonObject json) {
       final String group = JSONUtils.getString(json, "group", "");
 
-      final NonNullList<Ingredient> ingredients = readIngredients(JSONUtils.getJsonArray(json, "ingredients"));
-      if(ingredients.isEmpty()) {
-        throw new JsonParseException("No ingredients for shapeless tool station recipe");
-      }
+      final Map<String, Ingredient> map = ShapedRecipe.deserializeKey(JSONUtils.getJsonObject(json, "key"));
+      final String[] pattern = ShapedRecipe.shrink(ShapedRecipe.patternFromJson(JSONUtils.getJsonArray(json, "pattern")));
+      final int width = pattern[0].length();
+      final int height = pattern.length;
+      final NonNullList<Ingredient> ingredients = ShapedRecipe.deserializeIngredients(pattern, map, width, height);
 
       final NonNullList<ToolType> tools = readToolTypes(JSONUtils.getJsonArray(json, "tools"));
 
@@ -160,20 +161,7 @@ public class ShapelessToolStationRecipe implements IToolStationRecipe {
         throw new JsonParseException("No outputs for shapeless tool station recipe");
       }
 
-      return new ShapelessToolStationRecipe(id, group, ingredients, tools, outputs);
-    }
-
-    private static NonNullList<Ingredient> readIngredients(final JsonArray json) {
-      final NonNullList<Ingredient> ingredients = NonNullList.create();
-
-      for(int i = 0; i < json.size(); ++i) {
-        final Ingredient ingredient = Ingredient.deserialize(json.get(i));
-        if(!ingredient.hasNoMatchingItems()) {
-          ingredients.add(ingredient);
-        }
-      }
-
-      return ingredients;
+      return new ShapedToolStationRecipe(id, group, width, height, ingredients, tools, outputs);
     }
 
     private static NonNullList<ToolType> readToolTypes(final JsonArray json) {
@@ -196,10 +184,12 @@ public class ShapelessToolStationRecipe implements IToolStationRecipe {
     }
 
     @Override
-    public ShapelessToolStationRecipe read(final ResourceLocation id, final PacketBuffer buffer) {
+    public ShapedToolStationRecipe read(final ResourceLocation id, final PacketBuffer buffer) {
       final String group = buffer.readString(32767);
 
-      final NonNullList<Ingredient> ingredients = NonNullList.withSize(buffer.readVarInt(), Ingredient.EMPTY);
+      final int width = buffer.readVarInt();
+      final int height = buffer.readVarInt();
+      final NonNullList<Ingredient> ingredients = NonNullList.withSize(width * height, Ingredient.EMPTY);
 
       for(int i = 0; i < ingredients.size(); ++i) {
         ingredients.set(i, Ingredient.read(buffer));
@@ -217,14 +207,15 @@ public class ShapelessToolStationRecipe implements IToolStationRecipe {
         outputs.set(i, buffer.readItemStack());
       }
 
-      return new ShapelessToolStationRecipe(id, group, ingredients, tools, outputs);
+      return new ShapedToolStationRecipe(id, group, width, height, ingredients, tools, outputs);
     }
 
     @Override
-    public void write(final PacketBuffer buffer, final ShapelessToolStationRecipe recipe) {
+    public void write(final PacketBuffer buffer, final ShapedToolStationRecipe recipe) {
       buffer.writeString(recipe.group);
 
-      buffer.writeVarInt(recipe.ingredients.size());
+      buffer.writeVarInt(recipe.width);
+      buffer.writeVarInt(recipe.height);
       for(final Ingredient ingredient : recipe.ingredients) {
         ingredient.write(buffer);
       }

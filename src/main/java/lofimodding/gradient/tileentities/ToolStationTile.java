@@ -370,10 +370,10 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
 
   @Nullable
   private IRecipe<CraftingInventory> findRecipe() {
-    final IRecipe<CraftingInventory> shapelessToolStation = RecipeUtils.getRecipe(IToolStationRecipe.TYPE, recipe -> recipe.recipeMatches(this.recipeInv)).orElse(null);
+    final IRecipe<CraftingInventory> toolStationRecipe = RecipeUtils.getRecipe(IToolStationRecipe.TYPE, recipe -> recipe.recipeMatches(this.recipeInv, this.getCraftingSize(), this.getCraftingSize())).orElse(null);
 
-    if(shapelessToolStation != null) {
-      return shapelessToolStation;
+    if(toolStationRecipe != null) {
+      return toolStationRecipe;
     }
 
     //TODO refactor this crafting stuff

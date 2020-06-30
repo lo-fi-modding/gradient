@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "gradient:age2/wooden_gearbox"
+      "gradient:tool_station/age2/wooden_gearbox"
     ]
   },
   "criteria": {
@@ -29,7 +29,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "gradient:age2/wooden_gearbox"
+        "recipe": "gradient:tool_station/age2/wooden_gearbox"
       }
     }
   },

@@ -3,7 +3,8 @@ package lofimodding.gradient.integrations.jei;
 import lofimodding.gradient.Gradient;
 import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientRecipeSerializers;
-import lofimodding.gradient.recipes.ShapelessToolStationRecipe;
+import lofimodding.gradient.recipes.IToolStationRecipe;
+import lofimodding.gradient.recipes.ShapedToolStationRecipe;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -21,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ToolStationRecipeCategory implements IRecipeCategory<ShapelessToolStationRecipe> {
+public class ToolStationRecipeCategory implements IRecipeCategory<IToolStationRecipe> {
   private static final ResourceLocation BACKGROUND_LOCATION = Gradient.loc("textures/gui/recipe_tool_station.png");
   private static final Map<ToolType, IDrawable> TOOL_ICONS = new HashMap<>();
   private final IGuiHelper guiHelper;
@@ -36,8 +37,8 @@ public class ToolStationRecipeCategory implements IRecipeCategory<ShapelessToolS
   }
 
   @Override
-  public Class<? extends ShapelessToolStationRecipe> getRecipeClass() {
-    return ShapelessToolStationRecipe.class;
+  public Class<? extends IToolStationRecipe> getRecipeClass() {
+    return IToolStationRecipe.class;
   }
 
   @Override
@@ -56,20 +57,22 @@ public class ToolStationRecipeCategory implements IRecipeCategory<ShapelessToolS
   }
 
   @Override
-  public void setIngredients(final ShapelessToolStationRecipe recipe, final IIngredients ingredients) {
+  public void setIngredients(final IToolStationRecipe recipe, final IIngredients ingredients) {
     ingredients.setInputIngredients(recipe.getIngredients());
     ingredients.setOutputs(VanillaTypes.ITEM, recipe.getOutputs());
   }
 
   @Override
-  public void setRecipe(final IRecipeLayout recipeLayout, final ShapelessToolStationRecipe recipe, final IIngredients ingredients) {
+  public void setRecipe(final IRecipeLayout recipeLayout, final IToolStationRecipe recipe, final IIngredients ingredients) {
     final IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
     final List<List<ItemStack>> inputs = ingredients.getInputs(VanillaTypes.ITEM);
     final List<List<ItemStack>> outputs = ingredients.getOutputs(VanillaTypes.ITEM);
 
+    final int width = recipe instanceof ShapedToolStationRecipe ? recipe.getWidth() : 5;
+
     for(int slot = 0; slot < recipe.getIngredients().size(); slot++) {
-      final int x = slot % 5;
-      final int y = slot / 5;
+      final int x = slot % width;
+      final int y = slot / width;
 
       guiItemStacks.init(slot, true, 22 + x * 18, y * 18);
       guiItemStacks.set(slot, inputs.get(slot));
@@ -85,7 +88,7 @@ public class ToolStationRecipeCategory implements IRecipeCategory<ShapelessToolS
   }
 
   @Override
-  public void draw(final ShapelessToolStationRecipe recipe, final double mouseX, final double mouseY) {
+  public void draw(final IToolStationRecipe recipe, final double mouseX, final double mouseY) {
     for(int slot = 0; slot < recipe.getTools().size(); slot++) {
       final ToolType type = recipe.getTools().get(slot);
       final IDrawable drawable = TOOL_ICONS.computeIfAbsent(type, key -> this.guiHelper.drawableBuilder(Gradient.loc("textures/gui/tool_type_" + key.getName() + ".png"), 0, 0, 16, 16).setTextureSize(16, 16).build());
@@ -95,7 +98,7 @@ public class ToolStationRecipeCategory implements IRecipeCategory<ShapelessToolS
   }
 
   @Override
-  public List<String> getTooltipStrings(final ShapelessToolStationRecipe recipe, final double mouseX, final double mouseY) {
+  public List<String> getTooltipStrings(final IToolStationRecipe recipe, final double mouseX, final double mouseY) {
     final List<String> tooltip = new ArrayList<>();
 
     for(int slot = 0; slot < recipe.getTools().size(); slot++) {

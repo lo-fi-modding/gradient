@@ -13,7 +13,7 @@ public interface IToolStationRecipe extends IRecipe<CraftingInventory> {
   IRecipeType<IToolStationRecipe> TYPE = IRecipeType.register("tool_station");
 
   int getWidth();
-  boolean recipeMatches(final IItemHandler recipe);
+  boolean recipeMatches(final IItemHandler recipe, final int width, final int height);
   NonNullList<ToolType> getTools();
   NonNullList<ItemStack> getOutputs();
 

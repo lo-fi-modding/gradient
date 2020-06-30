@@ -8,6 +8,7 @@ import lofimodding.gradient.recipes.GrindingRecipe;
 import lofimodding.gradient.recipes.HardeningRecipe;
 import lofimodding.gradient.recipes.MeltingRecipe;
 import lofimodding.gradient.recipes.MixingRecipe;
+import lofimodding.gradient.recipes.ShapedToolStationRecipe;
 import lofimodding.gradient.recipes.ShapelessToolStationRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -29,6 +30,7 @@ public final class GradientRecipeSerializers {
   public static final RegistryObject<IRecipeSerializer<MeltingRecipe>> MELTING = REGISTRY.register("melting", MeltingRecipe.Serializer::new);
   public static final RegistryObject<IRecipeSerializer<MixingRecipe>> MIXING = REGISTRY.register("mixing", MixingRecipe.Serializer::new);
   public static final RegistryObject<IRecipeSerializer<ShapelessToolStationRecipe>> SHAPELESS_TOOL_STATION = REGISTRY.register("shapeless_tool_station", ShapelessToolStationRecipe.Serializer::new);
+  public static final RegistryObject<IRecipeSerializer<ShapedToolStationRecipe>> SHAPED_TOOL_STATION = REGISTRY.register("shaped_tool_station", ShapedToolStationRecipe.Serializer::new);
 
   static void init(final IEventBus bus) {
     Gradient.LOGGER.info("Registering recipe serializers...");

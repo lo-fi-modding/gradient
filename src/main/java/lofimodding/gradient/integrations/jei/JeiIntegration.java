@@ -13,9 +13,9 @@ import lofimodding.gradient.recipes.DryingRecipe;
 import lofimodding.gradient.recipes.FuelRecipe;
 import lofimodding.gradient.recipes.GrindingRecipe;
 import lofimodding.gradient.recipes.HardeningRecipe;
+import lofimodding.gradient.recipes.IToolStationRecipe;
 import lofimodding.gradient.recipes.MeltingRecipe;
 import lofimodding.gradient.recipes.MixingRecipe;
-import lofimodding.gradient.recipes.ShapelessToolStationRecipe;
 import lofimodding.gradient.science.Metal;
 import lofimodding.gradient.science.Minerals;
 import mezz.jei.api.IModPlugin;
@@ -99,7 +99,7 @@ public class JeiIntegration implements IModPlugin {
     registration.addRecipes(filterRecipes(HardeningRecipe.class), GradientRecipeSerializers.HARDENING.getId());
     registration.addRecipes(filterRecipes(MeltingRecipe.class), GradientRecipeSerializers.MELTING.getId());
     registration.addRecipes(filterRecipes(MixingRecipe.class), GradientRecipeSerializers.MIXING.getId());
-    registration.addRecipes(filterRecipes(ShapelessToolStationRecipe.class), GradientRecipeSerializers.SHAPELESS_TOOL_STATION.getId());
+    registration.addRecipes(filterRecipes(IToolStationRecipe.class), GradientRecipeSerializers.SHAPELESS_TOOL_STATION.getId());
 
     registration.addRecipes(getCastingRecipes(), Gradient.loc("casting"));
 
@@ -173,7 +173,7 @@ public class JeiIntegration implements IModPlugin {
 
   private static <T extends IRecipe<?>> Collection<T> filterRecipes(final Class<T> recipeClass) {
     return Gradient.getRecipeManager().getRecipes().stream()
-      .filter(recipe -> recipe.getClass().isAssignableFrom(recipeClass))
+      .filter(recipe -> recipeClass.isAssignableFrom(recipe.getClass()))
       .map(recipeClass::cast)
       .collect(Collectors.toList());
   }

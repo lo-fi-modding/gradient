@@ -12,6 +12,7 @@ import lofimodding.gradient.GradientItems;
 import lofimodding.gradient.GradientLoot;
 import lofimodding.gradient.GradientStages;
 import lofimodding.gradient.GradientTags;
+import lofimodding.gradient.GradientToolTypes;
 import lofimodding.gradient.blocks.ClayMetalMixerBlock;
 import lofimodding.gradient.blocks.DryingRackBlock;
 import lofimodding.gradient.blocks.FirepitBlock;
@@ -2083,19 +2084,6 @@ public final class GradientDataGenerator {
         .build(finished, Gradient.loc("age2/" + GradientIds.WOODEN_AXLE));
 
       StagedRecipeBuilder
-        .shaped(GradientItems.WOODEN_GEARBOX.get())
-        .stage(GradientStages.AGE_2.get())
-        .patternLine("PGP")
-        .patternLine("GAG")
-        .patternLine("PGP")
-        .key('P', GradientItems.HARDENED_PLANKS.get())
-        .key('G', GradientItems.WOODEN_GEAR.get())
-        .key('A', GradientItems.WOODEN_AXLE.get())
-        .addCriterion("has_wooden_gear", this.hasItem(GradientItems.WOODEN_GEAR.get()))
-        .addCriterion("has_wooden_axle", this.hasItem(GradientItems.WOODEN_AXLE.get()))
-        .build(finished, Gradient.loc("age2/" + GradientIds.WOODEN_GEARBOX));
-
-      StagedRecipeBuilder
         .shaped(GradientItems.WOODEN_CONVEYOR_BELT.get())
         .stage(GradientStages.AGE_2.get())
         .patternLine("SSS")
@@ -2524,6 +2512,21 @@ public final class GradientDataGenerator {
         .addOutput(new ItemStack(GradientItems.HARDENED_STICK.get(), 2))
         .addCriterion("has_hardened_planks", this.hasItem(GradientItems.HARDENED_PLANKS.get()))
         .build(finished, Gradient.loc("tool_station/age2/" + GradientIds.HARDENED_STICK));
+
+      GradientRecipeBuilder
+        .shapedToolStation()
+        .stage(GradientStages.AGE_2.get())
+        .patternLine("PGP")
+        .patternLine("GAG")
+        .patternLine("PGP")
+        .key('P', GradientItems.HARDENED_PLANKS.get())
+        .key('G', GradientItems.WOODEN_GEAR.get())
+        .key('A', GradientItems.WOODEN_AXLE.get())
+        .addToolType(GradientToolTypes.HAMMER)
+        .addOutput(GradientItems.WOODEN_GEARBOX.get())
+        .addCriterion("has_wooden_gear", this.hasItem(GradientItems.WOODEN_GEAR.get()))
+        .addCriterion("has_wooden_axle", this.hasItem(GradientItems.WOODEN_AXLE.get()))
+        .build(finished, Gradient.loc("tool_station/age2/" + GradientIds.WOODEN_GEARBOX));
     }
   }
 
