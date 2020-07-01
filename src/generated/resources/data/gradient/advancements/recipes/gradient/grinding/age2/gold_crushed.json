@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "gradient:age2/hematite_crushed"
+      "gradient:grinding/age2/gold_crushed"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ores/hematite"
+            "tag": "forge:ores/gold"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "gradient:age2/hematite_crushed"
+        "recipe": "gradient:grinding/age2/gold_crushed"
       }
     }
   },

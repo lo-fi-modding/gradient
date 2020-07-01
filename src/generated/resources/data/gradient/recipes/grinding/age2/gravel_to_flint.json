@@ -1,0 +1,16 @@
+{
+  "type": "gradient:grinding",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "tier": 1,
+  "ticks": 120,
+  "ingredients": [
+    {
+      "tag": "forge:gravel"
+    }
+  ],
+  "result": {
+    "item": "minecraft:flint"
+  }
+}

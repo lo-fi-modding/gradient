@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "gradient:grinding/age2/sugar_cane_paste"
+    ]
+  },
+  "criteria": {
+    "has_sugar_cane": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:sugar_cane"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "gradient:grinding/age2/sugar_cane_paste"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_sugar_cane",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,9 +1,8 @@
 {
-  "type": "progression:shaped_staged",
+  "type": "gradient:shaped_tool_station",
   "stages": [
     "gradient:age_2"
   ],
-  "damage_tools": true,
   "pattern": [
     "P P",
     "PGP",
@@ -17,7 +16,12 @@
       "item": "gradient:wooden_gear"
     }
   },
-  "result": {
-    "item": "gradient:wooden_hopper"
-  }
+  "tools": [
+    "hammer"
+  ],
+  "outputs": [
+    {
+      "item": "gradient:wooden_hopper"
+    }
+  ]
 }

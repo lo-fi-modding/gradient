@@ -2,16 +2,16 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "gradient:age2/gold_crushed"
+      "gradient:grinding/age2/flour"
     ]
   },
   "criteria": {
-    "has_ore": {
+    "has_wheat": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "tag": "forge:ores/gold"
+            "item": "minecraft:wheat"
           }
         ]
       }
@@ -19,13 +19,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "gradient:age2/gold_crushed"
+        "recipe": "gradient:grinding/age2/flour"
       }
     }
   },
   "requirements": [
     [
-      "has_ore",
+      "has_wheat",
       "has_the_recipe"
     ]
   ]

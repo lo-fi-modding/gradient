@@ -2,16 +2,16 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "gradient:age2/flour"
+      "gradient:grinding/age2/azurite_crushed"
     ]
   },
   "criteria": {
-    "has_wheat": {
+    "has_ore": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:wheat"
+            "tag": "forge:ores/azurite"
           }
         ]
       }
@@ -19,13 +19,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "gradient:age2/flour"
+        "recipe": "gradient:grinding/age2/azurite_crushed"
       }
     }
   },
   "requirements": [
     [
-      "has_wheat",
+      "has_ore",
       "has_the_recipe"
     ]
   ]

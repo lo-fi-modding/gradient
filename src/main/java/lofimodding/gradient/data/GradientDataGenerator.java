@@ -1561,6 +1561,7 @@ public final class GradientDataGenerator {
 
     @Override
     protected void registerRecipes(final Consumer<IFinishedRecipe> finished) {
+      this.registerGrindingRecipes(finished);
       this.registerFuelRecipes(finished);
       this.registerCookingRecipes(finished);
       this.registerHardeningRecipes(finished);
@@ -1625,14 +1626,6 @@ public final class GradientDataGenerator {
         .key('S', GradientItems.HARDENED_PLANKS.get())
         .addCriterion("has_hardened_planks", this.hasItem(GradientItems.HARDENED_PLANKS.get()))
         .build(finished, Gradient.loc("age2/" + GradientIds.HARDENED_PLANKS_SLAB));
-
-      GradientRecipeBuilder
-        .grinding(GradientItems.MULCH.get())
-        .stage(GradientStages.AGE_2.get())
-        .ticks(40)
-        .addIngredient(GradientItems.BARK.get())
-        .addCriterion("has_bark", this.hasItem(GradientItems.BARK.get()))
-        .build(finished, Gradient.loc("age2/" + GradientIds.MULCH));
 
       StagedRecipeBuilder
         .shapelessRecipe(GradientItems.RAW_HIDE.get())
@@ -1887,14 +1880,6 @@ public final class GradientDataGenerator {
         .build(finished, Gradient.loc("age1/" + GradientIds.HIDE_BOOTS));
 
       GradientRecipeBuilder
-        .grinding(GradientItems.SUGAR_CANE_PASTE.get(), 2)
-        .stage(GradientStages.AGE_2.get())
-        .ticks(80)
-        .addIngredient(Items.SUGAR_CANE)
-        .addCriterion("has_sugar_cane", this.hasItem(Items.SUGAR_CANE))
-        .build(finished, Gradient.loc("age2/" + GradientIds.SUGAR_CANE_PASTE));
-
-      GradientRecipeBuilder
         .mixing(GradientItems.DOUGH.get())
         .stage(GradientStages.AGE_2.get())
         .ticks(180)
@@ -1903,14 +1888,6 @@ public final class GradientDataGenerator {
         .addIngredient(Items.SUGAR)
         .addCriterion("has_flour", this.hasItem(GradientItems.FLOUR.get()))
         .build(finished, Gradient.loc("age2/" + GradientIds.DOUGH));
-
-      GradientRecipeBuilder
-        .grinding(GradientItems.FLOUR.get())
-        .stage(GradientStages.AGE_2.get())
-        .ticks(80)
-        .addIngredient(Items.WHEAT)
-        .addCriterion("has_wheat", this.hasItem(Items.WHEAT))
-        .build(finished, Gradient.loc("age2/" + GradientIds.FLOUR));
 
       GradientRecipeBuilder
         .cooking(Items.BREAD)
@@ -2049,17 +2026,6 @@ public final class GradientDataGenerator {
         .addCriterion("has_clay_ball", this.hasItem(Items.CLAY_BALL))
         .build(finished, Gradient.loc("age2/" + GradientIds.UNHARDENED_CLAY_CAST_BLANK));
 
-      for(final Ore ore : Minerals.ores()) {
-        GradientRecipeBuilder
-          .grinding(GradientItems.CRUSHED(ore).get())
-          .stage(GradientStages.AGE_2.get())
-          .tier(ProcessorTier.MECHANICAL)
-          .ticks((int)(ore.hardness * 2.0f * 20.0f))
-          .addIngredient(GradientTags.Items.ORE.get(ore))
-          .addCriterion("has_ore", this.hasItem(GradientTags.Items.ORE.get(ore)))
-          .build(finished, Gradient.loc("age2/" + GradientIds.CRUSHED(ore)));
-      }
-
       StagedRecipeBuilder
         .shaped(GradientItems.WOODEN_GEAR.get())
         .stage(GradientStages.AGE_2.get())
@@ -2083,18 +2049,6 @@ public final class GradientDataGenerator {
         .build(finished, Gradient.loc("age2/" + GradientIds.WOODEN_AXLE));
 
       StagedRecipeBuilder
-        .shaped(GradientItems.WOODEN_HOPPER.get())
-        .stage(GradientStages.AGE_2.get())
-        .patternLine("P P")
-        .patternLine("PGP")
-        .patternLine(" P ")
-        .key('P', GradientItems.HARDENED_PLANKS.get())
-        .key('G', GradientItems.WOODEN_GEAR.get())
-        .addCriterion("has_wooden_gear", this.hasItem(GradientItems.WOODEN_GEAR.get()))
-        .addCriterion("has_hardened_planks", this.hasItem(GradientItems.HARDENED_PLANKS.get()))
-        .build(finished, Gradient.loc("age2/" + GradientIds.WOODEN_HOPPER));
-
-      StagedRecipeBuilder
         .shaped(GradientItems.TOOL_STATION.get())
         .stage(GradientStages.AGE_2.get())
         .patternLine("SSS")
@@ -2104,6 +2058,52 @@ public final class GradientDataGenerator {
         .key('P', GradientItems.HARDENED_PLANKS.get())
         .addCriterion("has_hardened_planks", this.hasItem(GradientItems.HARDENED_PLANKS.get()))
         .build(finished, Gradient.loc("age2/" + GradientIds.TOOL_STATION));
+    }
+
+    private void registerGrindingRecipes(final Consumer<IFinishedRecipe> finished) {
+      GradientRecipeBuilder
+        .grinding(GradientItems.MULCH.get())
+        .stage(GradientStages.AGE_2.get())
+        .ticks(40)
+        .addIngredient(GradientItems.BARK.get())
+        .addCriterion("has_bark", this.hasItem(GradientItems.BARK.get()))
+        .build(finished, Gradient.loc("grinding/age2/" + GradientIds.MULCH));
+
+      GradientRecipeBuilder
+        .grinding(GradientItems.SUGAR_CANE_PASTE.get(), 2)
+        .stage(GradientStages.AGE_2.get())
+        .ticks(80)
+        .addIngredient(Items.SUGAR_CANE)
+        .addCriterion("has_sugar_cane", this.hasItem(Items.SUGAR_CANE))
+        .build(finished, Gradient.loc("grinding/age2/" + GradientIds.SUGAR_CANE_PASTE));
+
+      GradientRecipeBuilder
+        .grinding(GradientItems.FLOUR.get())
+        .stage(GradientStages.AGE_2.get())
+        .ticks(80)
+        .addIngredient(Items.WHEAT)
+        .addCriterion("has_wheat", this.hasItem(Items.WHEAT))
+        .build(finished, Gradient.loc("grinding/age2/" + GradientIds.FLOUR));
+
+      for(final Ore ore : Minerals.ores()) {
+        GradientRecipeBuilder
+          .grinding(GradientItems.CRUSHED(ore).get())
+          .stage(GradientStages.AGE_2.get())
+          .tier(ProcessorTier.MECHANICAL)
+          .ticks((int)(ore.hardness * 2.0f * 20.0f))
+          .addIngredient(GradientTags.Items.ORE.get(ore))
+          .addCriterion("has_ore", this.hasItem(GradientTags.Items.ORE.get(ore)))
+          .build(finished, Gradient.loc("grinding/age2/" + GradientIds.CRUSHED(ore)));
+      }
+
+      GradientRecipeBuilder
+        .grinding(Items.FLINT)
+        .stage(GradientStages.AGE_2.get())
+        .tier(ProcessorTier.MECHANICAL)
+        .ticks(120)
+        .addIngredient(Tags.Items.GRAVEL)
+        .addCriterion("has_gravel", this.hasItem(Tags.Items.GRAVEL))
+        .build(finished, Gradient.loc("grinding/age2/gravel_to_flint"));
     }
 
     private void registerFuelRecipes(final Consumer<IFinishedRecipe> finished) {
@@ -2487,6 +2487,20 @@ public final class GradientDataGenerator {
         .addCriterion("has_wooden_gear", this.hasItem(GradientItems.WOODEN_GEAR.get()))
         .addCriterion("has_wooden_axle", this.hasItem(GradientItems.WOODEN_AXLE.get()))
         .build(finished, Gradient.loc("tool_station/age2/" + GradientIds.WOODEN_GEARBOX));
+
+      GradientRecipeBuilder
+        .shapedToolStation()
+        .stage(GradientStages.AGE_2.get())
+        .patternLine("P P")
+        .patternLine("PGP")
+        .patternLine(" P ")
+        .key('P', GradientItems.HARDENED_PLANKS.get())
+        .key('G', GradientItems.WOODEN_GEAR.get())
+        .addToolType(GradientToolTypes.HAMMER)
+        .addOutput(GradientItems.WOODEN_HOPPER.get())
+        .addCriterion("has_wooden_gear", this.hasItem(GradientItems.WOODEN_GEAR.get()))
+        .addCriterion("has_hardened_planks", this.hasItem(GradientItems.HARDENED_PLANKS.get()))
+        .build(finished, Gradient.loc("tool_station/age2/" + GradientIds.WOODEN_HOPPER));
 
       GradientRecipeBuilder
         .shapedToolStation()

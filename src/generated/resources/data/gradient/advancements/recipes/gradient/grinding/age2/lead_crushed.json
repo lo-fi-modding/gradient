@@ -2,16 +2,16 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "gradient:age2/sugar_cane_paste"
+      "gradient:grinding/age2/lead_crushed"
     ]
   },
   "criteria": {
-    "has_sugar_cane": {
+    "has_ore": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "minecraft:sugar_cane"
+            "tag": "forge:ores/lead"
           }
         ]
       }
@@ -19,13 +19,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "gradient:age2/sugar_cane_paste"
+        "recipe": "gradient:grinding/age2/lead_crushed"
       }
     }
   },
   "requirements": [
     [
-      "has_sugar_cane",
+      "has_ore",
       "has_the_recipe"
     ]
   ]

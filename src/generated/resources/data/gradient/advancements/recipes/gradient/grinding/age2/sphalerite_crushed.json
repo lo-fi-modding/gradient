@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "gradient:age2/cassiterite_crushed"
+      "gradient:grinding/age2/sphalerite_crushed"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ores/cassiterite"
+            "tag": "forge:ores/sphalerite"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "gradient:age2/cassiterite_crushed"
+        "recipe": "gradient:grinding/age2/sphalerite_crushed"
       }
     }
   },
