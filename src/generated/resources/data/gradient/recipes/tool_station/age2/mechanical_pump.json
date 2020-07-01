@@ -1,0 +1,33 @@
+{
+  "type": "gradient:shaped_tool_station",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "pattern": [
+    "WBW",
+    "GFG",
+    "W W"
+  ],
+  "key": {
+    "B": {
+      "item": "gradient:wooden_gearbox"
+    },
+    "G": {
+      "item": "gradient:wooden_gear"
+    },
+    "W": {
+      "item": "gradient:hardened_planks"
+    },
+    "F": {
+      "item": "gradient:empty_waterskin"
+    }
+  },
+  "tools": [
+    "hammer"
+  ],
+  "outputs": [
+    {
+      "item": "gradient:mechanical_pump"
+    }
+  ]
+}

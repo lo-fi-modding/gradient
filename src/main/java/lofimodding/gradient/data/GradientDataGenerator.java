@@ -2584,6 +2584,31 @@ public final class GradientDataGenerator {
         .addCriterion("has_hardened_stick", this.hasItem(GradientItems.HARDENED_STICK.get()))
         .addCriterion("has_hardened_log", this.hasItem(GradientItems.HARDENED_LOG.get()))
         .build(finished, Gradient.loc("tool_station/age2/" + GradientIds.MECHANICAL_MIXING_BASIN));
+
+      GradientRecipeBuilder
+        .shapedToolStation()
+        .stage(GradientStages.AGE_2.get())
+        .patternLine("WBW")
+        .patternLine("GFG")
+        .patternLine("W W")
+        .key('B', GradientItems.WOODEN_GEARBOX.get())
+        .key('G', GradientItems.WOODEN_GEAR.get())
+        .key('W', GradientItems.HARDENED_PLANKS.get())
+        .key('F', GradientItems.EMPTY_WATERSKIN.get())
+        .addToolType(GradientToolTypes.HAMMER)
+        .addOutput(GradientItems.MECHANICAL_PUMP.get())
+        .addCriterion("has_wooden_gearbox", this.hasItem(GradientItems.WOODEN_GEARBOX.get()))
+        .build(finished, Gradient.loc("tool_station/age2/" + GradientIds.MECHANICAL_PUMP));
+
+      GradientRecipeBuilder
+        .shapelessToolStation()
+        .stage(GradientStages.AGE_2.get())
+        .addIngredient(Items.PAPER)
+        .addIngredient(GradientItems.WOODEN_GEAR.get())
+        .addOutput(GradientItems.RECIPE_FILTER.get())
+        .addOutput(GradientItems.WOODEN_GEAR.get())
+        .addCriterion("has_wooden_gear", this.hasItem(GradientItems.WOODEN_GEAR.get()))
+        .build(finished, Gradient.loc("tool_station/age2/" + GradientIds.RECIPE_FILTER));
     }
   }
 

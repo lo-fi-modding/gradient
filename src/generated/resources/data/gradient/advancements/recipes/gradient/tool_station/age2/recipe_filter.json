@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "gradient:tool_station/age2/recipe_filter"
+    ]
+  },
+  "criteria": {
+    "has_wooden_gear": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "gradient:wooden_gear"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "gradient:tool_station/age2/recipe_filter"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_wooden_gear",
+      "has_the_recipe"
+    ]
+  ]
+}

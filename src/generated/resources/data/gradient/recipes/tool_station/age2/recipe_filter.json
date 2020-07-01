@@ -1,0 +1,23 @@
+{
+  "type": "gradient:shapeless_tool_station",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "gradient:wooden_gear"
+    }
+  ],
+  "tools": [],
+  "outputs": [
+    {
+      "item": "gradient:recipe_filter"
+    },
+    {
+      "item": "gradient:wooden_gear"
+    }
+  ]
+}
