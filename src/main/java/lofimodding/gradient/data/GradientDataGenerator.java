@@ -2520,11 +2520,12 @@ public final class GradientDataGenerator {
       GradientRecipeBuilder
         .shapedToolStation()
         .stage(GradientStages.AGE_2.get())
-        .patternLine("PAP")
-        .patternLine("GGG")
+        .patternLine("PBP")
+        .patternLine("GAG")
         .patternLine("APA")
         .key('P', GradientItems.HARDENED_PLANKS.get())
         .key('G', GradientItems.WOODEN_GEAR.get())
+        .key('B', GradientItems.WOODEN_GEARBOX.get())
         .key('A', GradientItems.WOODEN_AXLE.get())
         .addToolType(GradientToolTypes.HAMMER)
         .addOutput(GradientItems.WOODEN_CONVEYOR_BELT_DRIVER.get())
@@ -2549,6 +2550,40 @@ public final class GradientDataGenerator {
         .addCriterion("has_wooden_gear", this.hasItem(GradientItems.WOODEN_GEAR.get()))
         .addCriterion("has_hardened_planks", this.hasItem(GradientItems.HARDENED_PLANKS.get()))
         .build(finished, Gradient.loc("tool_station/age2/" + GradientIds.WOODEN_CRANK));
+
+      GradientRecipeBuilder
+        .shapedToolStation()
+        .stage(GradientStages.AGE_2.get())
+        .patternLine("SGS")
+        .patternLine("HBH")
+        .patternLine("CCC")
+        .key('G', GradientItems.WOODEN_GEARBOX.get())
+        .key('S', GradientItems.HARDENED_PLANKS_SLAB.get())
+        .key('H', GradientItems.HARDENED_STICK.get())
+        .key('B', Blocks.COBBLESTONE_SLAB)
+        .key('C', Tags.Items.COBBLESTONE)
+        .addToolType(GradientToolTypes.HAMMER)
+        .addOutput(GradientItems.MECHANICAL_GRINDSTONE.get())
+        .addCriterion("has_hardened_planks_slab", this.hasItem(GradientItems.HARDENED_PLANKS_SLAB.get()))
+        .addCriterion("has_hardened_stick", this.hasItem(GradientItems.HARDENED_STICK.get()))
+        .build(finished, Gradient.loc("tool_station/age2/" + GradientIds.MECHANICAL_GRINDSTONE));
+
+      GradientRecipeBuilder
+        .shapedToolStation()
+        .stage(GradientStages.AGE_2.get())
+        .patternLine("BGB")
+        .patternLine("WSW")
+        .patternLine("CWC")
+        .key('G', GradientItems.WOODEN_GEARBOX.get())
+        .key('B', GradientItems.HARDENED_LOG_SLAB.get())
+        .key('S', GradientItems.HARDENED_STICK.get())
+        .key('W', GradientItems.HARDENED_LOG.get())
+        .key('C', Items.CLAY_BALL)
+        .addToolType(GradientToolTypes.HAMMER)
+        .addOutput(GradientItems.MECHANICAL_MIXING_BASIN.get())
+        .addCriterion("has_hardened_stick", this.hasItem(GradientItems.HARDENED_STICK.get()))
+        .addCriterion("has_hardened_log", this.hasItem(GradientItems.HARDENED_LOG.get()))
+        .build(finished, Gradient.loc("tool_station/age2/" + GradientIds.MECHANICAL_MIXING_BASIN));
     }
   }
 

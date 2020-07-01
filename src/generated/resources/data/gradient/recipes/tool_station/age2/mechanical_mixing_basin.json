@@ -1,0 +1,36 @@
+{
+  "type": "gradient:shaped_tool_station",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "pattern": [
+    "BGB",
+    "WSW",
+    "CWC"
+  ],
+  "key": {
+    "G": {
+      "item": "gradient:wooden_gearbox"
+    },
+    "B": {
+      "item": "gradient:hardened_log_slab"
+    },
+    "S": {
+      "item": "gradient:hardened_stick"
+    },
+    "W": {
+      "item": "gradient:hardened_log"
+    },
+    "C": {
+      "item": "minecraft:clay_ball"
+    }
+  },
+  "tools": [
+    "hammer"
+  ],
+  "outputs": [
+    {
+      "item": "gradient:mechanical_mixing_basin"
+    }
+  ]
+}

@@ -4,8 +4,8 @@
     "gradient:age_2"
   ],
   "pattern": [
-    "PAP",
-    "GGG",
+    "PBP",
+    "GAG",
     "APA"
   ],
   "key": {
@@ -14,6 +14,9 @@
     },
     "G": {
       "item": "gradient:wooden_gear"
+    },
+    "B": {
+      "item": "gradient:wooden_gearbox"
     },
     "A": {
       "item": "gradient:wooden_axle"

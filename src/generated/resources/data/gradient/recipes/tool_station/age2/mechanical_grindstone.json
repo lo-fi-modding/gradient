@@ -1,0 +1,36 @@
+{
+  "type": "gradient:shaped_tool_station",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "pattern": [
+    "SGS",
+    "HBH",
+    "CCC"
+  ],
+  "key": {
+    "G": {
+      "item": "gradient:wooden_gearbox"
+    },
+    "S": {
+      "item": "gradient:hardened_planks_slab"
+    },
+    "H": {
+      "item": "gradient:hardened_stick"
+    },
+    "B": {
+      "item": "minecraft:cobblestone_slab"
+    },
+    "C": {
+      "tag": "forge:cobblestone"
+    }
+  },
+  "tools": [
+    "hammer"
+  ],
+  "outputs": [
+    {
+      "item": "gradient:mechanical_grindstone"
+    }
+  ]
+}
