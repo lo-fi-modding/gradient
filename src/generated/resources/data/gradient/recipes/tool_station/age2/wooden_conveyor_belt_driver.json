@@ -1,9 +1,8 @@
 {
-  "type": "progression:shaped_staged",
+  "type": "gradient:shaped_tool_station",
   "stages": [
     "gradient:age_2"
   ],
-  "damage_tools": true,
   "pattern": [
     "PAP",
     "GGG",
@@ -20,7 +19,12 @@
       "item": "gradient:wooden_axle"
     }
   },
-  "result": {
-    "item": "gradient:wooden_conveyor_belt_driver"
-  }
+  "tools": [
+    "hammer"
+  ],
+  "outputs": [
+    {
+      "item": "gradient:wooden_conveyor_belt_driver"
+    }
+  ]
 }

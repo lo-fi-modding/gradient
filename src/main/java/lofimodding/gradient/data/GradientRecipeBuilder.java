@@ -1389,6 +1389,10 @@ public final class GradientRecipeBuilder {
       return this.addOutput(new ItemStack(output));
     }
 
+    public ShapelessToolStation addOutput(final IItemProvider output, final int count) {
+      return this.addOutput(new ItemStack(output, count));
+    }
+
     public ShapelessToolStation addCriterion(final String key, final ICriterionInstance criterion) {
       this.advancementBuilder.withCriterion(key, criterion);
       return this;
@@ -1557,6 +1561,10 @@ public final class GradientRecipeBuilder {
 
     public ShapedToolStation addOutput(final IItemProvider output) {
       return this.addOutput(new ItemStack(output));
+    }
+
+    public ShapedToolStation addOutput(final IItemProvider output, final int amount) {
+      return this.addOutput(new ItemStack(output, amount));
     }
 
     public ShapedToolStation addCriterion(final String key, final ICriterionInstance criterion) {

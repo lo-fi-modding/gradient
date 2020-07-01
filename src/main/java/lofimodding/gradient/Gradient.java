@@ -29,6 +29,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.RecipeManager;
+import net.minecraft.item.crafting.ShapedRecipe;
 import net.minecraft.item.crafting.ShapelessRecipe;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.EnumTypeAdapterFactory;
@@ -92,6 +93,8 @@ public class Gradient {
     GradientSounds.init(modBus);
     GradientStages.init(modBus);
     GradientTileEntities.init(modBus);
+
+    ShapedRecipe.setCraftingSize(5, 5);
   }
 
   @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)

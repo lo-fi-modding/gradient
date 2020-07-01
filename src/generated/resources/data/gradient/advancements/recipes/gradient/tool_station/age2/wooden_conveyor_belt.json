@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "gradient:age2/wooden_conveyor_belt_driver"
+      "gradient:tool_station/age2/wooden_conveyor_belt"
     ]
   },
   "criteria": {
@@ -29,7 +29,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "gradient:age2/wooden_conveyor_belt_driver"
+        "recipe": "gradient:tool_station/age2/wooden_conveyor_belt"
       }
     }
   },

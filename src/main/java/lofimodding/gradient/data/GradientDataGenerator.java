@@ -44,7 +44,6 @@ import net.minecraft.enchantment.Enchantments;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.BlockTags;
@@ -2084,32 +2083,6 @@ public final class GradientDataGenerator {
         .build(finished, Gradient.loc("age2/" + GradientIds.WOODEN_AXLE));
 
       StagedRecipeBuilder
-        .shaped(GradientItems.WOODEN_CONVEYOR_BELT.get())
-        .stage(GradientStages.AGE_2.get())
-        .patternLine("SSS")
-        .patternLine("AGA")
-        .patternLine("SSS")
-        .key('S', GradientItems.HARDENED_PLANKS_SLAB.get())
-        .key('G', GradientItems.WOODEN_GEAR.get())
-        .key('A', GradientItems.WOODEN_AXLE.get())
-        .addCriterion("has_wooden_gear", this.hasItem(GradientItems.WOODEN_GEAR.get()))
-        .addCriterion("has_wooden_axle", this.hasItem(GradientItems.WOODEN_AXLE.get()))
-        .build(finished, Gradient.loc("age2/" + GradientIds.WOODEN_CONVEYOR_BELT));
-
-      StagedRecipeBuilder
-        .shaped(GradientItems.WOODEN_CONVEYOR_BELT_DRIVER.get())
-        .stage(GradientStages.AGE_2.get())
-        .patternLine("PAP")
-        .patternLine("GGG")
-        .patternLine("APA")
-        .key('P', GradientItems.HARDENED_PLANKS.get())
-        .key('G', GradientItems.WOODEN_GEAR.get())
-        .key('A', GradientItems.WOODEN_AXLE.get())
-        .addCriterion("has_wooden_gear", this.hasItem(GradientItems.WOODEN_GEAR.get()))
-        .addCriterion("has_wooden_axle", this.hasItem(GradientItems.WOODEN_AXLE.get()))
-        .build(finished, Gradient.loc("age2/" + GradientIds.WOODEN_CONVEYOR_BELT_DRIVER));
-
-      StagedRecipeBuilder
         .shaped(GradientItems.WOODEN_HOPPER.get())
         .stage(GradientStages.AGE_2.get())
         .patternLine("P P")
@@ -2120,19 +2093,6 @@ public final class GradientDataGenerator {
         .addCriterion("has_wooden_gear", this.hasItem(GradientItems.WOODEN_GEAR.get()))
         .addCriterion("has_hardened_planks", this.hasItem(GradientItems.HARDENED_PLANKS.get()))
         .build(finished, Gradient.loc("age2/" + GradientIds.WOODEN_HOPPER));
-
-      StagedRecipeBuilder
-        .shaped(GradientItems.WOODEN_CRANK.get())
-        .stage(GradientStages.AGE_2.get())
-        .patternLine("S S")
-        .patternLine("PPP")
-        .patternLine("PGP")
-        .key('S', GradientItems.HARDENED_STICK.get())
-        .key('P', GradientItems.HARDENED_PLANKS.get())
-        .key('G', GradientItems.WOODEN_GEARBOX.get())
-        .addCriterion("has_wooden_gear", this.hasItem(GradientItems.WOODEN_GEAR.get()))
-        .addCriterion("has_hardened_planks", this.hasItem(GradientItems.HARDENED_PLANKS.get()))
-        .build(finished, Gradient.loc("age2/" + GradientIds.WOODEN_CRANK));
 
       StagedRecipeBuilder
         .shaped(GradientItems.TOOL_STATION.get())
@@ -2500,7 +2460,7 @@ public final class GradientDataGenerator {
         .stage(GradientStages.AGE_2.get())
         .addIngredient(GradientItems.HARDENED_LOG.get())
         .addToolType(ToolType.AXE)
-        .addOutput(new ItemStack(GradientItems.HARDENED_PLANKS.get(), 2))
+        .addOutput(GradientItems.HARDENED_PLANKS.get(), 3)
         .addCriterion("has_hardened_log", this.hasItem(GradientItems.HARDENED_LOG.get()))
         .build(finished, Gradient.loc("tool_station/age2/" + GradientIds.HARDENED_PLANKS));
 
@@ -2509,7 +2469,7 @@ public final class GradientDataGenerator {
         .stage(GradientStages.AGE_2.get())
         .addIngredient(GradientItems.HARDENED_PLANKS.get())
         .addToolType(ToolType.AXE)
-        .addOutput(new ItemStack(GradientItems.HARDENED_STICK.get(), 2))
+        .addOutput(GradientItems.HARDENED_STICK.get(), 3)
         .addCriterion("has_hardened_planks", this.hasItem(GradientItems.HARDENED_PLANKS.get()))
         .build(finished, Gradient.loc("tool_station/age2/" + GradientIds.HARDENED_STICK));
 
@@ -2527,6 +2487,54 @@ public final class GradientDataGenerator {
         .addCriterion("has_wooden_gear", this.hasItem(GradientItems.WOODEN_GEAR.get()))
         .addCriterion("has_wooden_axle", this.hasItem(GradientItems.WOODEN_AXLE.get()))
         .build(finished, Gradient.loc("tool_station/age2/" + GradientIds.WOODEN_GEARBOX));
+
+      GradientRecipeBuilder
+        .shapedToolStation()
+        .stage(GradientStages.AGE_2.get())
+        .patternLine("SSS")
+        .patternLine("AGA")
+        .patternLine("SSS")
+        .key('S', GradientItems.HARDENED_PLANKS_SLAB.get())
+        .key('G', GradientItems.WOODEN_GEAR.get())
+        .key('A', GradientItems.WOODEN_AXLE.get())
+        .addToolType(GradientToolTypes.HAMMER)
+        .addOutput(GradientItems.WOODEN_CONVEYOR_BELT.get(), 2)
+        .addCriterion("has_wooden_gear", this.hasItem(GradientItems.WOODEN_GEAR.get()))
+        .addCriterion("has_wooden_axle", this.hasItem(GradientItems.WOODEN_AXLE.get()))
+        .build(finished, Gradient.loc("tool_station/age2/" + GradientIds.WOODEN_CONVEYOR_BELT));
+
+      GradientRecipeBuilder
+        .shapedToolStation()
+        .stage(GradientStages.AGE_2.get())
+        .patternLine("PAP")
+        .patternLine("GGG")
+        .patternLine("APA")
+        .key('P', GradientItems.HARDENED_PLANKS.get())
+        .key('G', GradientItems.WOODEN_GEAR.get())
+        .key('A', GradientItems.WOODEN_AXLE.get())
+        .addToolType(GradientToolTypes.HAMMER)
+        .addOutput(GradientItems.WOODEN_CONVEYOR_BELT_DRIVER.get())
+        .addCriterion("has_wooden_gear", this.hasItem(GradientItems.WOODEN_GEAR.get()))
+        .addCriterion("has_wooden_axle", this.hasItem(GradientItems.WOODEN_AXLE.get()))
+        .build(finished, Gradient.loc("tool_station/age2/" + GradientIds.WOODEN_CONVEYOR_BELT_DRIVER));
+
+      GradientRecipeBuilder
+        .shapedToolStation()
+        .stage(GradientStages.AGE_2.get())
+        .patternLine("S S")
+        .patternLine("BBB")
+        .patternLine("PGP")
+        .patternLine("PAP")
+        .key('S', GradientItems.HARDENED_STICK.get())
+        .key('P', GradientItems.HARDENED_PLANKS.get())
+        .key('B', GradientItems.HARDENED_PLANKS_SLAB.get())
+        .key('G', GradientItems.WOODEN_GEARBOX.get())
+        .key('A', GradientItems.WOODEN_AXLE.get())
+        .addToolType(GradientToolTypes.HAMMER)
+        .addOutput(GradientItems.WOODEN_CRANK.get())
+        .addCriterion("has_wooden_gear", this.hasItem(GradientItems.WOODEN_GEAR.get()))
+        .addCriterion("has_hardened_planks", this.hasItem(GradientItems.HARDENED_PLANKS.get()))
+        .build(finished, Gradient.loc("tool_station/age2/" + GradientIds.WOODEN_CRANK));
     }
   }
 

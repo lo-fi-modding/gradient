@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "gradient:age2/wooden_crank"
+      "gradient:tool_station/age2/wooden_conveyor_belt_driver"
     ]
   },
   "criteria": {
@@ -16,12 +16,12 @@
         ]
       }
     },
-    "has_hardened_planks": {
+    "has_wooden_axle": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "gradient:hardened_planks"
+            "item": "gradient:wooden_axle"
           }
         ]
       }
@@ -29,14 +29,14 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "gradient:age2/wooden_crank"
+        "recipe": "gradient:tool_station/age2/wooden_conveyor_belt_driver"
       }
     }
   },
   "requirements": [
     [
       "has_wooden_gear",
-      "has_hardened_planks",
+      "has_wooden_axle",
       "has_the_recipe"
     ]
   ]

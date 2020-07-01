@@ -1,0 +1,37 @@
+{
+  "type": "gradient:shaped_tool_station",
+  "stages": [
+    "gradient:age_2"
+  ],
+  "pattern": [
+    "S S",
+    "BBB",
+    "PGP",
+    "PAP"
+  ],
+  "key": {
+    "S": {
+      "item": "gradient:hardened_stick"
+    },
+    "P": {
+      "item": "gradient:hardened_planks"
+    },
+    "B": {
+      "item": "gradient:hardened_planks_slab"
+    },
+    "G": {
+      "item": "gradient:wooden_gearbox"
+    },
+    "A": {
+      "item": "gradient:wooden_axle"
+    }
+  },
+  "tools": [
+    "hammer"
+  ],
+  "outputs": [
+    {
+      "item": "gradient:wooden_crank"
+    }
+  ]
+}
