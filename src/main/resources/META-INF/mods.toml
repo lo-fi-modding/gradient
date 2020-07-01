@@ -48,5 +48,5 @@ A long-term technological progression mod.
   modId="progression"
   mandatory=true
   versionRange="[1.15.2-1.0.0,)"
-  ordering="NONE"
+  ordering="AFTER"
   side="BOTH"

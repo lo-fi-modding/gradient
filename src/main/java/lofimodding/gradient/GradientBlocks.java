@@ -55,7 +55,7 @@ import java.util.function.Supplier;
 public final class GradientBlocks {
   private GradientBlocks() { }
 
-  private static final DeferredRegister<Block> REGISTRY = new DeferredRegister<>(ForgeRegistries.BLOCKS, Gradient.MOD_ID);
+  private static final DeferredRegister<Block> REGISTRY = DeferredRegister.create(ForgeRegistries.BLOCKS, Gradient.MOD_ID);
 
   public static final RegistryObject<PebbleBlock> PEBBLE = REGISTRY.register(GradientIds.PEBBLE, () -> new PebbleBlock(Block.Properties.create(Material.EARTH).hardnessAndResistance(0.0f).doesNotBlockMovement()));
 

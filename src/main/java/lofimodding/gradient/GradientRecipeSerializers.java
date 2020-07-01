@@ -19,7 +19,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public final class GradientRecipeSerializers {
   private GradientRecipeSerializers() { }
 
-  private static final DeferredRegister<IRecipeSerializer<?>> REGISTRY = new DeferredRegister<>(ForgeRegistries.RECIPE_SERIALIZERS, Gradient.MOD_ID);
+  private static final DeferredRegister<IRecipeSerializer<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Gradient.MOD_ID);
 
   public static final RegistryObject<IRecipeSerializer<AlloyRecipe>> ALLOY = REGISTRY.register("alloy", AlloyRecipe.Serializer::new);
   public static final RegistryObject<IRecipeSerializer<CookingRecipe>> COOKING = REGISTRY.register("cooking", CookingRecipe.Serializer::new);

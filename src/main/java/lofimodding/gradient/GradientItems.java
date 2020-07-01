@@ -45,7 +45,7 @@ import java.util.Map;
 public final class GradientItems {
   private GradientItems() { }
 
-  private static final DeferredRegister<Item> REGISTRY = new DeferredRegister<>(ForgeRegistries.ITEMS, Gradient.MOD_ID);
+  private static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, Gradient.MOD_ID);
 
   public static final ItemGroup GROUP = new GradientItemGroup();
 

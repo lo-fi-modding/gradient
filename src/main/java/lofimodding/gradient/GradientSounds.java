@@ -9,7 +9,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public final class GradientSounds {
   private GradientSounds() { }
 
-  private static final DeferredRegister<SoundEvent> REGISTRY = new DeferredRegister<>(ForgeRegistries.SOUND_EVENTS, Gradient.MOD_ID);
+  private static final DeferredRegister<SoundEvent> REGISTRY = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, Gradient.MOD_ID);
 
   public static final RegistryObject<SoundEvent> FIRE_STARTER = REGISTRY.register("fire_starter", () -> new SoundEvent(Gradient.loc("fire_starter")));
   public static final RegistryObject<SoundEvent> GRINDSTONE = REGISTRY.register("grindstone", () -> new SoundEvent(Gradient.loc("grindstone")));

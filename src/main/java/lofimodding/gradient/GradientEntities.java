@@ -11,7 +11,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public final class GradientEntities {
   private GradientEntities() { }
 
-  private static final DeferredRegister<EntityType<?>> REGISTRY = new DeferredRegister<>(ForgeRegistries.ENTITIES, Gradient.MOD_ID);
+  private static final DeferredRegister<EntityType<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.ENTITIES, Gradient.MOD_ID);
 
   public static final RegistryObject<EntityType<PebbleEntity>> PEBBLE = REGISTRY.register(GradientIds.PEBBLE, () -> EntityType.Builder.<PebbleEntity>create(PebbleEntity::new, EntityClassification.MISC).size(0.25F, 0.25F).build(GradientIds.PEBBLE));
 

@@ -16,7 +16,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public final class GradientLoot {
   private GradientLoot() { }
 
-  private static final DeferredRegister<GlobalLootModifierSerializer<?>> REGISTRY = new DeferredRegister<>(ForgeRegistries.LOOT_MODIFIER_SERIALIZERS, Gradient.MOD_ID);
+  private static final DeferredRegister<GlobalLootModifierSerializer<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.LOOT_MODIFIER_SERIALIZERS, Gradient.MOD_ID);
 
   public static final RegistryObject<GlobalLootModifierSerializer<AppendLootModifier>> APPEND_LOOT = REGISTRY.register("append_loot", AppendLootModifier.Serializer::new);
   public static final RegistryObject<GlobalLootModifierSerializer<RemoveLootModifier>> REMOVE_LOOT = REGISTRY.register("remove_loot", RemoveLootModifier.Serializer::new);
