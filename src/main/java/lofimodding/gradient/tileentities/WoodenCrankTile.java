@@ -222,7 +222,7 @@ public class WoodenCrankTile extends TileEntity implements ITickableTileEntity {
       this.actualTicks++;
 
       if(this.lastTicks != 0 && this.actualTicks < this.lastTicks + 20) {
-        final float energy = this.lastTicks / 20000.0f * this.workers.size();
+        final float energy = 1.0f / this.lastTicks * 200.0f * this.workers.size();
         this.energy.addEnergy(energy, IEnergyStorage.Action.EXECUTE);
       }
 

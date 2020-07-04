@@ -41,6 +41,7 @@ public class WoodenAxleTile extends TileEntity {
 
     @Override
     public void setEnergyTransferred(final float amount) {
+      super.setEnergyTransferred(amount);
       WoodenAxleTile.this.handleEnergyTransferred(amount);
     }
   };
