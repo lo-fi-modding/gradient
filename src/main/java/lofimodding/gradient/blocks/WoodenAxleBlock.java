@@ -101,7 +101,15 @@ public class WoodenAxleBlock extends RotatedPillarBlock {
   @Override
   public void addInformation(final ItemStack stack, @Nullable final IBlockReader world, final List<ITextComponent> tooltip, final ITooltipFlag flag) {
     super.addInformation(stack, world, tooltip, flag);
-    tooltip.add(new TranslationTextComponent(this.getTranslationKey() + ".tooltip", Config.ENET.WOODEN_AXLE_MAX_ENERGY.get()));
+    tooltip.add(new TranslationTextComponent("gradient.mu_per_tick", Config.ENET.WOODEN_AXLE_MAX_ENERGY.get()));
+
+    final double loss = Config.ENET.WOODEN_AXLE_LOSS_PER_BLOCK.get();
+
+    if(loss == 0.0f) {
+      tooltip.add(new TranslationTextComponent("gradient.mu_lossless"));
+    } else {
+      tooltip.add(new TranslationTextComponent("gradient.mu_loss", loss));
+    }
   }
 
   @SuppressWarnings("deprecation")

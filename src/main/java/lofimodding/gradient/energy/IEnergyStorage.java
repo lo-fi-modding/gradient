@@ -27,6 +27,11 @@ public interface IEnergyStorage extends IEnergyNode {
   float sourceEnergy(float maxSource, Action action);
 
   /**
+   * Resets tracker for the energy sourced this tick
+   */
+  void resetEnergySourced();
+
+  /**
    * Returns the amount of energy currently stored.
    */
   float getEnergy();

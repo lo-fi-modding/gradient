@@ -36,9 +36,24 @@ public class CreativeGeneratorTile extends TileEntity implements INamedContainer
     }
 
     @Override
+    public float getMaxSource() {
+      return CreativeGeneratorTile.this.maxSource;
+    }
+
+    private float energyRequested;
+
+    @Override
     public float removeEnergy(final float amount, final Action action) {
-      CreativeGeneratorTile.this.energyRequested = Math.min(this.getEnergy(), amount);
-      return CreativeGeneratorTile.this.energyRequested;
+      final float energyRequested = Math.min(this.getEnergy(), amount);
+      this.energyRequested += energyRequested;
+      return energyRequested;
+    }
+
+    @Override
+    public void resetEnergySourced() {
+      super.resetEnergySourced();
+      CreativeGeneratorTile.this.energyRequested = this.energyRequested;
+      this.energyRequested = 0.0f;
     }
   };
 
@@ -49,7 +64,7 @@ public class CreativeGeneratorTile extends TileEntity implements INamedContainer
     public int get(final int index) {
       switch(index) {
         case 0:
-          return Float.floatToIntBits(CreativeGeneratorTile.this.energy.getEnergy());
+          return Float.floatToIntBits(CreativeGeneratorTile.this.maxSource);
 
         case 1:
           return Float.floatToIntBits(CreativeGeneratorTile.this.energyRequested);
@@ -62,7 +77,8 @@ public class CreativeGeneratorTile extends TileEntity implements INamedContainer
     public void set(final int index, final int value) {
       switch(index) {
         case 0:
-          CreativeGeneratorTile.this.energy.setEnergy(Float.intBitsToFloat(value));
+          CreativeGeneratorTile.this.maxSource = Float.intBitsToFloat(value);
+          CreativeGeneratorTile.this.energy.setEnergy(CreativeGeneratorTile.this.maxSource);
           break;
 
         case 1:
@@ -76,6 +92,7 @@ public class CreativeGeneratorTile extends TileEntity implements INamedContainer
     }
   };
 
+  private float maxSource;
   private float energyRequested;
 
   public CreativeGeneratorTile() {
@@ -83,6 +100,7 @@ public class CreativeGeneratorTile extends TileEntity implements INamedContainer
   }
 
   public void setEnergy(final float energy) {
+    this.maxSource = energy;
     this.energy.setEnergy(energy);
   }
 
@@ -111,12 +129,14 @@ public class CreativeGeneratorTile extends TileEntity implements INamedContainer
 
   @Override
   public CompoundNBT write(final CompoundNBT nbt) {
+    nbt.putFloat("MaxSource", this.maxSource);
     nbt.put("Energy", this.energy.write());
     return super.write(nbt);
   }
 
   @Override
   public void read(final CompoundNBT nbt) {
+    this.maxSource = nbt.getFloat("MaxSource");
     final CompoundNBT energy = nbt.getCompound("Energy");
     this.energy.read(energy);
     super.read(nbt);

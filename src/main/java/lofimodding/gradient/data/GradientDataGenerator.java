@@ -1133,6 +1133,10 @@ public final class GradientDataGenerator {
         this.add(GradientFluids.METAL(metal).get(), "Molten " + metalName);
       }
 
+      this.add("gradient.mu_per_tick", "%d MU/t maximum");
+      this.add("gradient.mu_loss", "%d MU/t lost per block");
+      this.add("gradient.mu_lossless", "Lossless");
+
       this.add("meltable.melt_temp", "Melting Point: %f °C");
       this.add("meltable.melt_time", "Melting Time: %d ticks");
       this.add("meltable.amount", "Amount: %f mB");
@@ -1292,7 +1296,6 @@ public final class GradientDataGenerator {
 
       this.add(GradientItems.WOODEN_GEAR.get(), "Wooden Gear");
       this.add(GradientItems.WOODEN_AXLE.get(), "Wooden Axle");
-      this.add(GradientItems.WOODEN_AXLE.get().getTranslationKey() + ".tooltip", "%d KU/t maximum");
       this.add(GradientItems.WOODEN_GEARBOX.get(), "Wooden Gearbox");
       this.add(GradientItems.WOODEN_CONVEYOR_BELT.get(), "Wooden Conveyor Belt");
       this.add(GradientItems.WOODEN_CONVEYOR_BELT_DRIVER.get(), "Wooden Conveyor Belt Driver");

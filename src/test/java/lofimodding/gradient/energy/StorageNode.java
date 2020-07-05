@@ -32,9 +32,18 @@ public class StorageNode implements IEnergyStorage {
     return this.addEnergy(Math.min(this.maxSink, maxSink), action);
   }
 
+  private float sourcedThisTick;
+
   @Override
   public float sourceEnergy(final float maxSource, final Action action) {
-    return this.removeEnergy(Math.min(this.getMaxSource(), maxSource), action);
+    final float sourced = this.removeEnergy(Math.min(this.getMaxSource() - this.sourcedThisTick, maxSource), action);
+    this.sourcedThisTick += sourced;
+    return sourced;
+  }
+
+  @Override
+  public void resetEnergySourced() {
+    this.sourcedThisTick = 0.0f;
   }
 
   @Override

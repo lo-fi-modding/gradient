@@ -34,6 +34,11 @@ public class WoodenAxleTile extends TileEntity {
 
   private final IKineticEnergyTransfer transfer = new KineticEnergyTransfer() {
     @Override
+    public float getLoss() {
+      return Config.ENET.WOODEN_AXLE_LOSS_PER_BLOCK.get().floatValue();
+    }
+
+    @Override
     public void resetEnergyTransferred() {
       WoodenAxleTile.this.handleBreaking(this.getEnergyTransferred());
       super.resetEnergyTransferred();

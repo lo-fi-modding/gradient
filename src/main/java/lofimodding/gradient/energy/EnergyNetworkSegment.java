@@ -382,37 +382,67 @@ public class EnergyNetworkSegment<STORAGE extends IEnergyStorage, TRANSFER exten
         final STORAGE source = entry.getKey();
         final List<BlockPos> path = entry.getValue();
 
-        final float sourced = source.sourceEnergy(share, IEnergyStorage.Action.EXECUTE);
+        float loss = 0.0f;
 
+        // Calculate loss for the path
+        for(int i = 1; i < path.size() - 1; i++) {
+          final BlockPos pathPos = path.get(i);
+          final Direction facingFrom = WorldUtils.getFacingTowards(pathPos, path.get(i - 1));
+          final TileEntity transferEntity = this.getNode(pathPos).te;
+
+          loss += transferEntity.getCapability(this.transfer, facingFrom).map(IEnergyTransfer::getLoss).orElse(0.0f);
+        }
+
+        // Try to get the requested energy, adding extra to account for loss
+        final float sourced = source.sourceEnergy(share + loss, IEnergyStorage.Action.EXECUTE);
+
+        // If we can't pull the whole amount, the energy source has either been
+        // emptied or we've hit its max source per tick. Reset it and remove it.
         if(MathHelper.flLess(sourced, share)) {
-          deficit += share - sourced;
+          entry.getKey().resetEnergySourced();
           it.remove();
         }
 
+        float adjusted = sourced;
+
+        // Let each transfer node along the path know that energy was routed through it
         for(int i = 1; i < path.size() - 1; i++) {
           final BlockPos pathPos = path.get(i);
           final Direction facingFrom = WorldUtils.getFacingTowards(pathPos, path.get(i - 1));
           final Direction facingTo = WorldUtils.getFacingTowards(pathPos, path.get(i + 1));
           final TileEntity transferEntity = this.getNode(pathPos).te;
 
-          transferEntity.getCapability(this.transfer, facingFrom).ifPresent(transfer -> {
+          final float adj = adjusted;
+          adjusted = transferEntity.getCapability(this.transfer, facingFrom).map(transfer -> {
             if(Config.ENET.ENABLE_NODE_DEBUG.get()) {
-              Gradient.LOGGER.info("Routing {} through {}", sourced, pathPos);
+              Gradient.LOGGER.info("Routing {} through {}", adj, pathPos);
             }
 
-            transfer.transfer(sourced, facingFrom, facingTo);
-          });
+            transfer.transfer(adj, facingFrom, facingTo);
+            return adj - transfer.getLoss();
+          }).orElse(adjusted);
         }
 
-        total += sourced;
+        // If we didn't pull the full share, add it to the deficit
+        if(MathHelper.flLess(adjusted, share)) {
+          deficit += share - adjusted;
+        }
+
+        total += adjusted;
       }
 
+      // If there's no deficit, or all sources have been emptied/maxed out, we're done
       if(MathHelper.flEq(deficit, 0.0f) || this.extractEnergySources.isEmpty()) {
         break;
       }
 
+      // Split the remaining deficit between the remaining sources
       share = deficit / this.extractEnergySources.size();
       deficit = 0.0f;
+    }
+
+    for(final STORAGE storage : this.extractEnergySources.keySet()) {
+      storage.resetEnergySourced();
     }
 
     this.extractEnergySources.clear();
