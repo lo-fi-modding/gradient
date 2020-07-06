@@ -98,22 +98,22 @@ public final class Config {
       this.WOODEN_AXLE_MAX_ENERGY = builder
         .comment("Maximum energy a wooden axle may carry. It will still transfer the energy; however, it will break by doing so.")
         .translation("config.gradient.enet.wooden_axle_max_energy")
-        .defineInRange("wooden_axle_max_energy", 5.0d, Double.MIN_NORMAL, Double.MAX_VALUE);
+        .defineInRange("wooden_axle_max_energy", 5.0d, 0.0d, Double.MAX_VALUE);
 
       this.WOODEN_AXLE_LOSS_PER_BLOCK = builder
         .comment("The amount of energy lost by a wooden axle per block.")
         .translation("config.gradient.enet.wooden_axle_loss_per_block")
-        .defineInRange("wooden_axle_loss_per_block", 0.0d, Double.MIN_NORMAL, Double.MAX_VALUE);
+        .defineInRange("wooden_axle_loss_per_block", 0.0d, 0.0d, Double.MAX_VALUE);
 
       this.WOODEN_GEARBOX_MAX_ENERGY = builder
         .comment("Maximum energy a wooden gearbox may carry. It will still transfer the energy; however, it will break by doing so.")
         .translation("config.gradient.enet.wooden_gearbox_max_energy")
-        .defineInRange("wooden_gearbox_max_energy", 20.0d, Double.MIN_NORMAL, Double.MAX_VALUE);
+        .defineInRange("wooden_gearbox_max_energy", 20.0d, 0.0d, Double.MAX_VALUE);
 
       this.WOODEN_GEARBOX_LOSS_PER_BLOCK = builder
         .comment("The amount of energy lost by a wooden gearbox per block.")
         .translation("config.gradient.enet.wooden_gearbox_loss_per_block")
-        .defineInRange("wooden_gearbox_loss_per_block", 0.05d, Double.MIN_NORMAL, Double.MAX_VALUE);
+        .defineInRange("wooden_gearbox_loss_per_block", 0.05d, 0.0d, Double.MAX_VALUE);
 
       this.ENABLE_NODE_DEBUG = builder
         .comment("Enable verbose debug logging for connecting/disconnecting nodes.")
