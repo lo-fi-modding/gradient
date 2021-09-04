@@ -47,6 +47,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.world.RegisterDimensionsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -69,6 +70,8 @@ import java.util.function.Predicate;
 public class Gradient {
   public static final String MOD_ID = "gradient";
   public static final Logger LOGGER = LogManager.getLogger();
+
+  public static final Proxy PROXY = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> ServerProxy::new);
 
   public Gradient() {
     ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.INTEROP_SPEC, MOD_ID + "_interop-server.toml");

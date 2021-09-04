@@ -8,7 +8,6 @@ import lofimodding.gradient.containers.ToolStationContainer;
 import lofimodding.gradient.recipes.IToolStationRecipe;
 import lofimodding.gradient.utils.RecipeUtils;
 import lofimodding.gradient.utils.WorldUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.CraftingInventory;
@@ -30,11 +29,10 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
-import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -191,6 +189,7 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
     return this.recipe != null;
   }
 
+  @Nullable
   public IRecipe<CraftingInventory> getRecipe() {
     return this.recipe;
   }
@@ -352,12 +351,7 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
 
     //TODO refactor this crafting stuff
 
-    final PlayerEntity player;
-    if(this.world.isRemote) {
-      player = Minecraft.getInstance().player;
-    } else {
-      player = FakePlayerFactory.getMinecraft((ServerWorld)this.world);
-    }
+    final PlayerEntity player = Gradient.PROXY.getPlayerOrFakePlayer(this.world);
 
     final CraftingInventory crafting = new CraftingInventory(new WorkbenchContainer(0, player.inventory), this.getCraftingSize(), this.getCraftingSize());
     for(int i = 0; i < this.recipeInv.getSlots(); i++) {
@@ -377,13 +371,7 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
 
     //TODO refactor this crafting stuff
 
-    final PlayerEntity player;
-    if(this.world.isRemote) {
-      player = Minecraft.getInstance().player;
-    } else {
-      player = FakePlayerFactory.getMinecraft((ServerWorld)this.world);
-    }
-
+    final PlayerEntity player = Gradient.PROXY.getPlayerOrFakePlayer(this.world);
     final CraftingInventory crafting = new CraftingInventory(new WorkbenchContainer(0, player.inventory), this.getCraftingSize(), this.getCraftingSize());
     for(int slot = 0; slot < this.recipeInv.getSlots(); slot++) {
       crafting.setInventorySlotContents(slot, this.recipeInv.getStackInSlot(slot));
@@ -519,7 +507,7 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
 
   @Override
   public ITextComponent getDisplayName() {
-    return GradientBlocks.TOOL_STATION.get().getNameTextComponent();
+    return new TranslationTextComponent(GradientBlocks.TOOL_STATION.get().getTranslationKey());
   }
 
   @Override
