@@ -35,13 +35,19 @@ public class EnergyStorage implements IEnergyStorage {
   @Override
   public float sourceEnergy(final float maxSource, final Action action) {
     final float sourced = this.removeEnergy(Math.min(this.getMaxSource() - this.sourcedThisTick, maxSource), action);
-    this.sourcedThisTick += sourced;
+
+    if(action.execute()) {
+      this.sourcedThisTick += sourced;
+    }
+
     return sourced;
   }
 
   @Override
-  public void resetEnergySourced() {
+  public float resetEnergySourced() {
+    final float sourced = this.sourcedThisTick;
     this.sourcedThisTick = 0.0f;
+    return sourced;
   }
 
   @Override

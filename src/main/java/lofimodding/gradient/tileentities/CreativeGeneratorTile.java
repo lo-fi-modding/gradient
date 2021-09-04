@@ -45,15 +45,20 @@ public class CreativeGeneratorTile extends TileEntity implements INamedContainer
     @Override
     public float removeEnergy(final float amount, final Action action) {
       final float energyRequested = Math.min(this.getEnergy(), amount);
-      this.energyRequested += energyRequested;
+
+      if(action.execute()) {
+        this.energyRequested += energyRequested;
+      }
+
       return energyRequested;
     }
 
     @Override
-    public void resetEnergySourced() {
-      super.resetEnergySourced();
+    public float resetEnergySourced() {
       CreativeGeneratorTile.this.energyRequested = this.energyRequested;
+      CreativeGeneratorTile.this.markDirty();
       this.energyRequested = 0.0f;
+      return super.resetEnergySourced();
     }
   };
 
@@ -67,6 +72,10 @@ public class CreativeGeneratorTile extends TileEntity implements INamedContainer
           return Float.floatToIntBits(CreativeGeneratorTile.this.maxSource);
 
         case 1:
+          //TODO don't need to sync it cause of this...
+          //TODO but why is the server's value 0?
+
+          //TODO sinks are getting reset multiple times
           return Float.floatToIntBits(CreativeGeneratorTile.this.energyRequested);
       }
 
@@ -84,6 +93,8 @@ public class CreativeGeneratorTile extends TileEntity implements INamedContainer
         case 1:
           CreativeGeneratorTile.this.energyRequested = Float.intBitsToFloat(value);
       }
+
+      CreativeGeneratorTile.this.markDirty();
     }
 
     @Override
@@ -102,6 +113,7 @@ public class CreativeGeneratorTile extends TileEntity implements INamedContainer
   public void setEnergy(final float energy) {
     this.maxSource = energy;
     this.energy.setEnergy(energy);
+    this.markDirty();
   }
 
   @Override

@@ -17,9 +17,11 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class EnergyNetwork<STORAGE extends IEnergyStorage, TRANSFER extends IEnergyTransfer> {
@@ -77,15 +79,12 @@ public class EnergyNetwork<STORAGE extends IEnergyStorage, TRANSFER extends IEne
       }
 
       for(final Direction facing : Direction.values()) {
-        te.getCapability(this.storage, facing).ifPresent(storage -> {
-          if(storage.canSink()) {
-            this.tickSinkNodes.put(storage, new Tuple<>(te.getPos(), facing));
-          }
-        });
+        te.getCapability(this.storage, facing)
+          .filter(IEnergyStorage::canSink)
+          .ifPresent(storage -> this.tickSinkNodes.put(storage, new Tuple<>(te.getPos(), facing)));
 
-        te.getCapability(this.transfer, facing).ifPresent(transfer -> {
-          this.tickTransferNodes.put(transfer, new Tuple<>(te.getPos(), facing));
-        });
+        te.getCapability(this.transfer, facing)
+          .ifPresent(transfer -> this.tickTransferNodes.put(transfer, new Tuple<>(te.getPos(), facing)));
       }
     }
 
@@ -102,13 +101,33 @@ public class EnergyNetwork<STORAGE extends IEnergyStorage, TRANSFER extends IEne
       transfer.resetEnergyTransferred();
     }
 
+    final float availableEnergy = this.getAvailableEnergy();
+
+    if(Config.ENET.ENABLE_TICK_DEBUG.get()) {
+      Gradient.LOGGER.info("Total available energy {}", availableEnergy);
+    }
+
+    if(MathHelper.flEq(availableEnergy, 0.0f)) {
+      for(final TileEntity te : this.allNodes.values()) {
+        for(final Direction facing : Direction.values()) {
+          te.getCapability(this.storage, facing)
+            .ifPresent(IEnergyStorage::resetEnergySourced);
+        }
+      }
+
+      return this.state;
+    }
+
+    float totalRequested = 0.0f;
+    final Map<STORAGE, Tuple<Tuple<BlockPos, Direction>, Float>> requestedEnergy = new HashMap<>();
+
     for(final Map.Entry<STORAGE, Tuple<BlockPos, Direction>> entry : this.tickSinkNodes.entrySet()) {
       final STORAGE sink = entry.getKey();
       final BlockPos pos = entry.getValue().a;
       final Direction facing = entry.getValue().b;
 
       if(Config.ENET.ENABLE_TICK_DEBUG.get()) {
-        Gradient.LOGGER.info("Ticking sink {} @ {}", sink, pos);
+        Gradient.LOGGER.info("Ticking sink {} @ {} {}", sink, pos, facing);
       }
 
       final float requested = sink.getRequestedEnergy();
@@ -118,17 +137,47 @@ public class EnergyNetwork<STORAGE extends IEnergyStorage, TRANSFER extends IEne
       }
 
       if(!MathHelper.flEq(requested, 0.0f)) {
-        final float energy = this.requestEnergy(pos, requested);
-
-        if(Config.ENET.ENABLE_TICK_DEBUG.get()) {
-          Gradient.LOGGER.info("{} got {} energy", sink, energy);
-        }
-
-        if(!MathHelper.flEq(energy, 0.0f)) {
-          sink.sinkEnergy(energy, IEnergyStorage.Action.EXECUTE);
-          this.state.addStorage(pos, facing, sink.getEnergy());
-        }
+        totalRequested += requested;
+        requestedEnergy.put(sink, new Tuple<>(entry.getValue(), requested));
       }
+    }
+
+    // Scale energy based on what's available in one tick (only scale it down, not up, hence the min)
+    final float energyScale = Math.min(1.0f, availableEnergy / totalRequested);
+
+    if(Config.ENET.ENABLE_TICK_DEBUG.get()) {
+      Gradient.LOGGER.info("Total requested {}", totalRequested);
+      Gradient.LOGGER.info("Energy scale {}", energyScale);
+    }
+
+    final Set<STORAGE> sources = new HashSet<>();
+
+    for(final Map.Entry<STORAGE, Tuple<Tuple<BlockPos, Direction>, Float>> entry : requestedEnergy.entrySet()) {
+      final STORAGE sink = entry.getKey();
+      final BlockPos pos = entry.getValue().a.a;
+      final Direction facing = entry.getValue().a.b;
+      final float requested = entry.getValue().b;
+      final float scaled = this.requestEnergy(sources, pos, requested * energyScale);
+
+      if(Config.ENET.ENABLE_TICK_DEBUG.get()) {
+        Gradient.LOGGER.info("{} got {} energy", sink, scaled);
+      }
+
+      if(!MathHelper.flEq(scaled, 0.0f)) {
+        sink.sinkEnergy(scaled, IEnergyStorage.Action.EXECUTE);
+        this.state.addStorage(pos, facing, sink.getEnergy());
+      }
+    }
+
+//    for(final TileEntity te : this.allNodes.values()) {
+//      for(final Direction facing : Direction.values()) {
+//        te.getCapability(this.storage, facing)
+//          .ifPresent(IEnergyStorage::resetEnergySourced);
+//      }
+//    }
+
+    for(final STORAGE source : sources) {
+      source.resetEnergySourced();
     }
 
     return this.state;
@@ -136,6 +185,16 @@ public class EnergyNetwork<STORAGE extends IEnergyStorage, TRANSFER extends IEne
 
   public int size() {
     return this.networks.size();
+  }
+
+  public float getAvailableEnergy() {
+    float total = 0.0f;
+
+    for(final EnergyNetworkSegment<STORAGE, TRANSFER> segment : this.networks) {
+      total += segment.getAvailableEnergy();
+    }
+
+    return total;
   }
 
   public List<EnergyNetworkSegment<STORAGE, TRANSFER>> getNetworksForBlock(final BlockPos pos) {
@@ -396,7 +455,7 @@ public class EnergyNetwork<STORAGE extends IEnergyStorage, TRANSFER extends IEne
 
   private final Map<EnergyNetworkSegment<STORAGE, TRANSFER>, Direction> extractNetworks = new HashMap<>();
 
-  public float requestEnergy(final BlockPos requestPosition, final float amount) {
+  public float requestEnergy(final Set<STORAGE> sources, final BlockPos requestPosition, final float amount) {
     for(final EnergyNetworkSegment<STORAGE, TRANSFER> network : this.networks) {
       if(network.contains(requestPosition)) {
         final EnergyNetworkSegment.EnergyNode node = network.getNode(requestPosition);
@@ -447,7 +506,7 @@ public class EnergyNetwork<STORAGE extends IEnergyStorage, TRANSFER extends IEne
         final EnergyNetworkSegment<STORAGE, TRANSFER> network = entry.getKey();
         final Direction requestSide = entry.getValue();
 
-        final float sourced = network.requestEnergy(requestPosition, requestSide, share);
+        final float sourced = network.requestEnergy(sources, requestPosition, requestSide, share);
 
         if(MathHelper.flLess(sourced, share)) {
           deficit += share - sourced;

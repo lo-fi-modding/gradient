@@ -261,7 +261,6 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
     }
 
     for(int i = 0; i < amount; i++) {
-      outer:
       for(final Ingredient ingredient : this.recipe.getIngredients()) {
         for(int slot = 0; slot < temp.getSlots(); slot++) {
           final ItemStack stack = temp.getStackInSlot(slot);
@@ -270,7 +269,7 @@ public class ToolStationTile extends TileEntity implements INamedContainerProvid
             final ItemStack newStack = stack.copy();
             newStack.shrink(1);
             temp.setStackInSlot(slot, newStack);
-            continue outer;
+            break;
           }
         }
 

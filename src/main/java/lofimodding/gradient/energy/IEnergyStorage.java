@@ -28,8 +28,10 @@ public interface IEnergyStorage extends IEnergyNode {
 
   /**
    * Resets tracker for the energy sourced this tick
+   *
+   * @return The amount of energy sourced this tick
    */
-  void resetEnergySourced();
+  float resetEnergySourced();
 
   /**
    * Returns the amount of energy currently stored.

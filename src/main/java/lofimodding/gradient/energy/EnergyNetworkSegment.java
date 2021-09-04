@@ -336,7 +336,7 @@ public class EnergyNetworkSegment<STORAGE extends IEnergyStorage, TRANSFER exten
 
   private final Map<STORAGE, List<BlockPos>> extractEnergySources = new HashMap<>();
 
-  public float requestEnergy(final BlockPos sink, final Direction sinkSide, final float amount) {
+  public float requestEnergy(final Set<STORAGE> sources, final BlockPos sink, final Direction sinkSide, final float amount) {
     this.checkValidity();
 
     // Find all of the energy sources
@@ -399,8 +399,9 @@ public class EnergyNetworkSegment<STORAGE extends IEnergyStorage, TRANSFER exten
         // If we can't pull the whole amount, the energy source has either been
         // emptied or we've hit its max source per tick. Reset it and remove it.
         if(MathHelper.flLess(sourced, share)) {
-          entry.getKey().resetEnergySourced();
           it.remove();
+        } else {
+          sources.add(source);
         }
 
         float adjusted = sourced;
@@ -439,10 +440,6 @@ public class EnergyNetworkSegment<STORAGE extends IEnergyStorage, TRANSFER exten
       // Split the remaining deficit between the remaining sources
       share = deficit / this.extractEnergySources.size();
       deficit = 0.0f;
-    }
-
-    for(final STORAGE storage : this.extractEnergySources.keySet()) {
-      storage.resetEnergySourced();
     }
 
     this.extractEnergySources.clear();
